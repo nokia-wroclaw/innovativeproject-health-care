@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+
+    backend:
+        image: backend
+        build: ./backend
+        volumes:
+            - "./backend:/backend"
+
+    nginx:
+        image: nginx
+        build: ./nginx
+        ports:
+            - 8080:80
+            - 5000:5000
+        volumes:
+            - "./frontend:/frontend"
+        depends_on:
+            - backend
+
+    frontend:
+        image: frontend
+        build: ./frontend
+        volumes:
+            - "./frontend:/frontend"
+        depends_on:
+            - backend
+            - nginx
