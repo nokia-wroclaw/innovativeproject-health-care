@@ -3,27 +3,21 @@ version: '3'
 services:
 
     backend:
+        restart: always
         image: backend
         build: ./backend
         volumes:
-            - "./backend:/backend"
-
-    nginx:
-        image: nginx
-        build: ./nginx
-        ports:
-            - 8080:80
-            - 5000:5000
-        volumes:
-            - "./frontend:/frontend"
-        depends_on:
-            - backend
+            - "./backend:/srv/www/backend"
 
     frontend:
+        restart: always
         image: frontend
-        build: ./frontend
+        build:
+            context: .
+            dockerfile: ./frontend/Dockerfile
+        ports:
+            - 8080:80
         volumes:
-            - "./frontend:/frontend"
+            - "./nginx.conf:/etc/nginx/conf.d/nginx.conf"
         depends_on:
             - backend
-            - nginx
