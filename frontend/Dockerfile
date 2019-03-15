@@ -1,8 +1,8 @@
 FROM node:latest
 WORKDIR /srv/www/frontend
-COPY frontend/package.json .
+COPY package.json .
 RUN npm install
-COPY ./frontend .
+COPY . .
 RUN npm run build
 
 FROM nginx:latest

@@ -12,9 +12,7 @@ services:
     frontend:
         restart: always
         image: frontend
-        build:
-            context: .
-            dockerfile: ./frontend/Dockerfile
+        build: ./frontend
         ports:
             - 8080:80
         volumes:
