@@ -6,16 +6,14 @@ services:
         restart: always
         image: backend
         build: ./backend
-        volumes:
-            - "./backend:/srv/www/backend"
 
     frontend:
         restart: always
         image: frontend
-        build: ./frontend
+        build:
+            context: .
+            dockerfile: ./frontend/Dockerfile
         ports:
             - 8080:80
-        volumes:
-            - "./nginx.conf:/etc/nginx/conf.d/nginx.conf"
         depends_on:
             - backend
