@@ -12,12 +12,8 @@ class LoginForm extends Component {
   };
 
   schema = {
-    username: Joi.string()
-      .required()
-      .label("Username"),
-    password: Joi.string()
-      .required()
-      .label("Password")
+    username: Joi.string().required(),
+    password: Joi.string().required()
   };
 
   validate = () => {
@@ -59,7 +55,6 @@ class LoginForm extends Component {
           value={account.username}
           placeholder="name or e-mail"
           onChange={this.handleChange}
-          label={Boolean(errors.username) ? errors.username : null}
           error={Boolean(errors.username)}
         />
         <Form.Input
@@ -68,7 +63,6 @@ class LoginForm extends Component {
           placeholder="password"
           onChange={this.handleChange}
           type="password"
-          label={Boolean(errors.password) ? errors.password : null}
           error={Boolean(errors.password)}
         />
         <Form.Field style={{ display: "flex", justifyContent: "center" }}>
