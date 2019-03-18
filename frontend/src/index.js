@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
+import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import store from "./store";
 import * as serviceWorker from "./serviceWorker";
@@ -8,7 +9,9 @@ import "semantic-ui-css/semantic.min.css";
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
+      <App />
+    </BrowserRouter>
   </Provider>,
   document.getElementById("root")
 );

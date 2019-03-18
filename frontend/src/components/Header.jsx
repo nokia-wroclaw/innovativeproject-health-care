@@ -1,45 +1,40 @@
 import React from "react";
 import {
   Grid,
-  Header,
-  Button,
+  Header as SemanticHeader,
   Segment,
-  Container,
-  Popup
+  Container
 } from "semantic-ui-react";
-import LoginForm from "./LoginForm";
+import colors from "../styles/colors";
+import LoginButton from "./LoginButton";
+import UserDisplayName from "./UserDisplayName";
+import Menu from "./Menu";
 
-const PageHeader = () => {
+//user should be read from store - if (user === null) -> user is not logged in
+const user = null;
+
+const Header = () => {
   return (
-    <Segment inverted vertical color="blue" padded="very">
-      <Container>
-        <Grid columns={2}>
-          <Grid.Row>
-            <Grid.Column mobile={16} tablet={13} computer={13}>
-              <Header size="huge" textAlign="left" inverted>
-                Squad health check
-              </Header>
-            </Grid.Column>
-            <Grid.Column mobile={16} tablet={3} computer={3}>
-              <Popup
-                trigger={
-                  <Button
-                    content="login"
-                    inverted
-                    color="grey"
-                    floated="right"
-                  />
-                }
-                content={<LoginForm />}
-                on="click"
-                position="bottom right"
-              />
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
-      </Container>
-    </Segment>
+    <React.Fragment>
+      <Segment inverted vertical color={colors.header} padded="very">
+        <Container>
+          <Grid columns={2}>
+            <Grid.Row>
+              <Grid.Column mobile={16} tablet={13} computer={13}>
+                <SemanticHeader size="huge" textAlign="left" inverted>
+                  Squad health check
+                </SemanticHeader>
+              </Grid.Column>
+              <Grid.Column mobile={16} tablet={3} computer={3}>
+                {user ? <UserDisplayName /> : <LoginButton />}
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        </Container>
+      </Segment>
+      {user ? <Menu /> : null}
+    </React.Fragment>
   );
 };
 
-export default PageHeader;
+export default Header;

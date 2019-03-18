@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Button, Form } from "semantic-ui-react";
 import Joi from "joi";
+import colors from "../styles/colors";
 
 class LoginForm extends Component {
   state = {
@@ -66,7 +67,7 @@ class LoginForm extends Component {
           error={Boolean(errors.password)}
         />
         <Form.Field style={{ display: "flex", justifyContent: "center" }}>
-          <Button type="submit" color="green">
+          <Button type="submit" color={colors.formLoginButton}>
             login
           </Button>
         </Form.Field>
