@@ -1,0 +1,21 @@
+# LDAP configuration
+# Server URL
+LDAP_URL = 'example.com'
+# Server port
+LDAP_PORT = 389
+# User to bind as for searching
+LDAP_USER = 'cn=admin,dc=example,dc=com'
+# Password of this user
+LDAP_PASS = 'password'
+# Base directory
+LDAP_BASE_DN = 'dc=example,dc=com'
+# Attribute used for binding users
+LDAP_RDN_ATTR = 'uid'
+# Attribute which will be used as user's id
+LDAP_ID_ATTR = 'employeeNumber'
+# Attribute which will be used as user's login
+LDAP_LOGIN_ATTR = 'uid'
+# Attribute which will be used as user's full name
+LDAP_NAME_ATTR = 'cn'
+# Attribute which will be used as user's email adress
+LDAP_MAIL_ATTR = 'mail'
