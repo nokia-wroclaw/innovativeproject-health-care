@@ -9,6 +9,8 @@ LDAP_USER = 'cn=admin,dc=example,dc=com'
 LDAP_PASS = 'password'
 # Base directory
 LDAP_BASE_DN = 'dc=example,dc=com'
+# Attribute used for binding users
+LDAP_RDN_ATTR = 'uid'
 # Attribute which will be used as user's id
 LDAP_ID_ATTR = 'employeeNumber'
 # Attribute which will be used as user's login

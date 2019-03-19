@@ -11,6 +11,7 @@ class LdapConn:
         self.passwd = conf.LDAP_PASS
         self.base_dn = conf.LDAP_BASE_DN
         self.id_attr = conf.LDAP_ID_ATTR
+        self.rdn_attr = conf.LDAP_RDN_ATTR
         self.login_attr = conf.LDAP_LOGIN_ATTR
         self.name_attr = conf.LDAP_NAME_ATTR
         self.mail_attr = conf.LDAP_MAIL_ATTR
@@ -49,7 +50,7 @@ class LdapConn:
         conn = Connection(self.server, self.user, self.passwd, auto_bind=True,
                           read_only=True)
         get_attr = [self.id_attr, self.login_attr, self.name_attr,
-                    self.mail_attr]
+                    self.mail_attr, self.rdn_attr]
         conn.search(self.base_dn, filter, attributes=get_attr)
 
         matches = []
@@ -59,20 +60,37 @@ class LdapConn:
                 'id': attributes[self.id_attr][0],
                 'login': attributes[self.login_attr][0],
                 'name': attributes[self.name_attr][0],
-                'mail': attributes[self.mail_attr][0]
+                'mail': attributes[self.mail_attr][0],
+                'rdn': attributes[self.rdn_attr][0]
             })
 
         return matches
 
     def authenticate(self, login, password):
-        '''Verifies given credentials by trying to bind to the server.
+        '''Verifies given credentials.
 
-        :param string login: user's login
+        If simple bind of given values fails this method will perform exact
+        search of login against login and mail attributes to try to find
+        user's correct dn.
+
+        :param string login: user's login or mail
         :param string password: user's password
-        :return: Whether credentials are correct
+        :return: whether credentials are correct
         :rtype: bool
         '''
 
-        dn = '%s=%s,%s' % (self.login_attr, login, self.base_dn)
+        dn = '%s=%s,%s' % (self.rdn_attr, login, self.base_dn)
         conn = Connection(self.server, dn, password, read_only=True)
+
+        if conn.bind():
+            return True
+
+        matches = self.search(login, True, [self.login_attr, self.mail_attr])
+
+        if len(matches) != 1:
+            return False
+
+        dn = '%s=%s,%s' % (self.rdn_attr, matches[0]['rdn'], self.base_dn)
+        conn = Connection(self.server, dn, password, read_only=True)
+
         return conn.bind()
