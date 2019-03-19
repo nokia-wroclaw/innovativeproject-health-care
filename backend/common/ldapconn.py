@@ -14,17 +14,38 @@ class LdapConn:
         self.login_attr = conf.LDAP_LOGIN_ATTR
         self.name_attr = conf.LDAP_NAME_ATTR
         self.mail_attr = conf.LDAP_MAIL_ATTR
+
+        self.search_exact = False
+        self.search_attributes = [self.name_attr, self.login_attr,
+                                  self.mail_attr]
+
         self.server = Server(self.url, get_info=ALL)
 
-    def search(self, phrase):
-        '''Performs LDAP search using wildcard to get non-exact matches.
+    def search(self, phrase, exact=None, attributes=None):
+        '''Performs exact or non-exact LDAP search by given phrase, in
+        specified attributes.
 
         :param string phrase: phrase to search
+        :param bool exact: whether matches have to be exact
+        :param list attributes: list of attributes to search in
         :return: list of matches
-        :rtype: list of dicts containing user's attributes
+        :rtype: list of dicts containing users' attributes
         '''
 
-        filter = '(%s=%s*)' % (self.name_attr, phrase)
+        if exact is None:
+            exact = self.search_exact
+
+        if attributes is None:
+            attributes = self.search_attributes
+
+        if not exact:
+            phrase += '*'
+
+        filter = '(|'
+        for attr in attributes:
+            filter += '(%s=%s)' % (attr, phrase)
+        filter += ')'
+
         conn = Connection(self.server, self.user, self.passwd, auto_bind=True,
                           read_only=True)
         get_attr = [self.id_attr, self.login_attr, self.name_attr,
@@ -32,7 +53,6 @@ class LdapConn:
         conn.search(self.base_dn, filter, attributes=get_attr)
 
         matches = []
-
         for match in conn.response:
             attributes = match['attributes']
             matches.append({
