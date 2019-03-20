@@ -1,4 +1,4 @@
-from ldap3 import Server, Connection, ALL
+from ldap3 import Server, Connection, NONE
 import backend.config as conf
 
 
@@ -7,6 +7,8 @@ class LdapConn:
 
     def __init__(self):
         self.url = conf.LDAP_URL
+        self.port = conf.LDAP_PORT
+        self.ssl = conf.LDAP_SSL
         self.user = conf.LDAP_USER
         self.passwd = conf.LDAP_PASS
         self.base_dn = conf.LDAP_BASE_DN
@@ -20,7 +22,7 @@ class LdapConn:
         self.search_attributes = [self.name_attr, self.login_attr,
                                   self.mail_attr]
 
-        self.server = Server(self.url, get_info=ALL)
+        self.server = Server(self.url, self.port, self.ssl, get_info=NONE)
 
     def search(self, phrase, exact=None, attributes=None):
         '''Performs exact or non-exact LDAP search by given phrase, in

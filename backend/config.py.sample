@@ -6,7 +6,9 @@ JWT_SECRET_KEY = 'secret-key'
 # Server URL
 LDAP_URL = 'example.com'
 # Server port
-LDAP_PORT = 389
+LDAP_PORT = 636
+# Whether to use SSL
+LDAP_SSL = True
 # User to bind as for searching
 LDAP_USER = 'cn=admin,dc=example,dc=com'
 # Password of this user
