@@ -1,3 +1,7 @@
+# JWT
+# Secret key
+JWT_SECRET_KEY = 'secret-key'
+
 # LDAP configuration
 # Server URL
 LDAP_URL = 'example.com'
