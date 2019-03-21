@@ -1,4 +1,4 @@
-import { LOGIN } from "./types";
+import { LOGIN, QUESTION_ANSWERED } from "./types";
 
 export const onLogin = () => dispatch => {
   fetch("https://jsonplaceholder.typicode.com/posts")
@@ -10,3 +10,8 @@ export const onLogin = () => dispatch => {
       })
     );
 };
+
+export const setAnswer = (questionId, answer) => ({
+  type: QUESTION_ANSWERED,
+  payload: { questionId, answer }
+});
