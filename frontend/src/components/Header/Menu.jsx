@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Menu as SemanticMenu, Sticky } from "semantic-ui-react";
-import colors from "../styles/colors";
+import colors from "../../styles/colors";
 
 class Menu extends Component {
   state = {

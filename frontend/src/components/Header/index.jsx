@@ -5,13 +5,13 @@ import {
   Segment,
   Container
 } from "semantic-ui-react";
-import colors from "../styles/colors";
+import colors from "../../styles/colors";
 import LoginButton from "./LoginButton";
 import UserDisplayName from "./UserDisplayName";
 import Menu from "./Menu";
 
 //user should be read from store - if (user === null) -> user is not logged in
-const user = null;
+const user = {};
 
 const Header = () => {
   return (

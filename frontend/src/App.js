@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Switch, Route } from "react-router-dom";
-import HomePage from "./components/HomePage";
-import SurveyPage from "./components/SurveyPage";
+import HomePage from "./components/HomePage/";
+import SurveyPage from "./components/SurveyPage/";
 
 class App extends Component {
   render() {

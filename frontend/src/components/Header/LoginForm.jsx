@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Button, Form } from "semantic-ui-react";
 import Joi from "joi";
-import colors from "../styles/colors";
+import colors from "../../styles/colors";
 
 class LoginForm extends Component {
   state = {
