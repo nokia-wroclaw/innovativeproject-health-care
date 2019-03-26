@@ -7,7 +7,11 @@ from backend import config
 from backend.resources import auth
 
 app = Flask(__name__)
+
 app.config.from_object(config)
+app.config['JWT_IDENTITY_CLAIM'] = 'sub'
+app.config['JWT_USER_CLAIMS'] = 'user'
+
 api = Api(app)
 jwt = JWTManager(app)
 
