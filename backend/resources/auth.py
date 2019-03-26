@@ -29,8 +29,9 @@ class Auth(Resource):
         if not auth:
             abort(401)
 
-        user = self.ldap.search(credentials.username, True)
-        token = create_access_token(user, expires_delta=timedelta(hours=1))
+        user = self.ldap.search(credentials.username, True)[0]
+        token = create_access_token(user['id'], user_claims=user,
+                                    expires_delta=timedelta(hours=1))
 
         response = jsonify({'access_token': token})
         response.status_code = 200
