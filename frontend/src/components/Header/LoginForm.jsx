@@ -1,7 +1,11 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import jwtDecode from "jwt-decode";
 import { Button, Form } from "semantic-ui-react";
 import Joi from "joi";
 import colors from "../../styles/colors";
+import { login } from "../../services/authService";
+import { setUser } from "./../../store/actions/";
 
 class LoginForm extends Component {
   state = {
@@ -38,27 +42,25 @@ class LoginForm extends Component {
     this.setState({ account, errors });
   };
 
-  handleSubmit = e => {
+  handleSubmit = async e => {
     e.preventDefault();
     const errors = this.validate();
     this.setState({ errors: errors || {} });
     if (errors) return;
 
     const { username, password } = this.state.account;
-    // var formData = new FormData();
-    // formData.append("username", username);
-    // formData.append("password", password);
-    fetch("http://localhost:5000/auth", {
-      method: "POST",
-      headers: {
-        Authorization: "Basic " + btoa(`${username}:${password}`),
-        mode: "no-cors"
-      }
-      // body: formData
-    })
-      .then(response => response.json())
-      .then(response => console.log(response))
-      .catch(err => console.log("err: ", err));
+    try {
+      const response = await login(username, password);
+      const jwt = response.data.access_token;
+      localStorage.setItem("jwt", jwt);
+      const { user } = jwtDecode(jwt);
+      this.props.setUser(user);
+      this.props.history.push("/survey");
+    } catch {
+      const errors = { ...this.state.errors };
+      errors.loginFailed = true;
+      this.setState({ errors });
+    }
   };
 
   render() {
@@ -80,9 +82,12 @@ class LoginForm extends Component {
           type="password"
           error={Boolean(errors.password)}
         />
+        {errors.loginFailed && (
+          <p style={{ color: "red" }}>Invalid username or password</p>
+        )}
         <Form.Field style={{ display: "flex", justifyContent: "center" }}>
           <Button type="submit" color={colors.formLoginButton}>
-            login
+            Login
           </Button>
         </Form.Field>
       </Form>
@@ -90,4 +95,7 @@ class LoginForm extends Component {
   }
 }
 
-export default LoginForm;
+export default connect(
+  null,
+  { setUser }
+)(LoginForm);

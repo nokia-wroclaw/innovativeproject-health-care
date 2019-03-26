@@ -3,18 +3,18 @@ import { Button, Popup } from "semantic-ui-react";
 import LoginForm from "./LoginForm";
 import colors from "../../styles/colors";
 
-const LoginButton = () => {
+const LoginButton = props => {
   return (
     <Popup
       trigger={
         <Button
-          content="login"
+          content="Login"
           inverted
           color={colors.headerLoginButton}
           floated="right"
         />
       }
-      content={<LoginForm />}
+      content={<LoginForm history={props.history} />}
       on="click"
       position="bottom right"
     />

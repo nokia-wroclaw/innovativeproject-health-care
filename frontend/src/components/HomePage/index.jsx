@@ -2,10 +2,10 @@ import React from "react";
 import { Container } from "semantic-ui-react";
 import Header from "../Header";
 
-const HomePage = () => {
+const HomePage = props => {
   return (
     <React.Fragment>
-      <Header />
+      <Header history={props.history} />
       <Container textAlign="justified" style={{ paddingTop: 10 }}>
         <p>
           Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean

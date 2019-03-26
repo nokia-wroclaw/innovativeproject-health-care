@@ -1,15 +1,13 @@
-import { LOGIN, QUESTION_ANSWERED } from "./types";
+import { LOGIN, LOGOUT, QUESTION_ANSWERED } from "./types";
 
-export const onLogin = () => dispatch => {
-  fetch("https://jsonplaceholder.typicode.com/posts")
-    .then(res => res.json())
-    .then(data =>
-      dispatch({
-        type: LOGIN,
-        payload: data
-      })
-    );
-};
+export const setUser = user => ({
+  type: LOGIN,
+  payload: user
+});
+
+export const logoutUser = () => ({
+  type: LOGOUT
+});
 
 export const setAnswer = (questionId, answer) => ({
   type: QUESTION_ANSWERED,

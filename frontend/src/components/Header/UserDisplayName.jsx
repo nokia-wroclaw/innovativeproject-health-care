@@ -1,17 +1,17 @@
 import React from "react";
+import { connect } from "react-redux";
 import { Header } from "semantic-ui-react";
 
-const UserDisplayName = () => {
+const UserDisplayName = ({ user }) => {
   return (
-    <React.Fragment>
-      <Header size="medium" textAlign="right" style={{ margin: 0 }} inverted>
-        Jan Kowalski
-      </Header>
-      <Header size="small" textAlign="right" style={{ margin: 0 }} inverted>
-        admin
-      </Header>
-    </React.Fragment>
+    <Header size="medium" inverted>
+      {user.name}
+    </Header>
   );
 };
 
-export default UserDisplayName;
+const mapStateToProps = state => ({
+  user: state.user.userData
+});
+
+export default connect(mapStateToProps)(UserDisplayName);
