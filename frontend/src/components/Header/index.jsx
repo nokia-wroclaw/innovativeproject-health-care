@@ -11,7 +11,7 @@ import UserDisplayName from "./UserDisplayName";
 import Menu from "./Menu";
 
 //user should be read from store - if (user === null) -> user is not logged in
-const user = {};
+const user = null;
 
 const Header = () => {
   return (

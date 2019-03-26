@@ -44,7 +44,21 @@ class LoginForm extends Component {
     this.setState({ errors: errors || {} });
     if (errors) return;
 
-    //call backend
+    const { username, password } = this.state.account;
+    // var formData = new FormData();
+    // formData.append("username", username);
+    // formData.append("password", password);
+    fetch("http://localhost:5000/auth", {
+      method: "POST",
+      headers: {
+        Authorization: "Basic " + btoa(`${username}:${password}`),
+        mode: "no-cors"
+      }
+      // body: formData
+    })
+      .then(response => response.json())
+      .then(response => console.log(response))
+      .catch(err => console.log("err: ", err));
   };
 
   render() {

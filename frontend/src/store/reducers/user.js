@@ -7,7 +7,8 @@ const initialState = {
     { name: "fill survey", path: "/survey" },
     { name: "results for your tribe", path: "/tribe_overview" },
     { name: "statistics", path: "/statistics" },
-    { name: "action items", path: "/action_items" }
+    { name: "action items", path: "/action_items" },
+    { name: "users management", path: "/users_management" }
   ]
 };
 
