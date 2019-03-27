@@ -2,9 +2,17 @@
 # Secret key
 JWT_SECRET_KEY = 'secret-key'
 
-# Database
-# Database URI 
-SQLALCHEMY_DATABASE_URI = 'postgresql://user:password@localhost/database'
+# Postgres connection
+# DB server URL
+PG_URL = 'localhost'
+# Server port
+PG_PORT = 5432
+# User to login as
+PG_USER = 'user'
+# Password for this user
+PG_PASS = 'password'
+# Database name
+PG_DB = 'healthcheck'
 
 # LDAP configuration
 # Server URL
