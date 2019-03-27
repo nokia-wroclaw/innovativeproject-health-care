@@ -5,7 +5,6 @@ from flask_jwt_extended import JWTManager
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from backend import config
-from backend.resources import auth
 
 app = Flask(__name__)
 
@@ -17,6 +16,9 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 api = Api(app)
 jwt = JWTManager(app)
 db = SQLAlchemy(app)
+
+# Needs to be imported after creating the db object
+from backend.resources import auth  # noqa: E402
 
 if os.environ.get('FLASK_ENV') == 'development':
     CORS(app)
