@@ -2,6 +2,10 @@
 # Secret key
 JWT_SECRET_KEY = 'secret-key'
 
+# Database
+# Database URI 
+SQLALCHEMY_DATABASE_URI = 'postgresql://user:password@localhost/database'
+
 # LDAP configuration
 # Server URL
 LDAP_URL = 'example.com'
