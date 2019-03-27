@@ -1,9 +1,9 @@
-from backend import db
+from backend.app import db
 
 
 class Action(db.Model):
 
-    _tablename_ = 'actions'
+    __tablename__ = 'actions'
 
     id = db.Column(db.Integer, primary_key=True)
     team_id = db.Column(db.Integer, db.ForeignKey('teams.id'))
@@ -14,3 +14,10 @@ class Action(db.Model):
 
     team = db.relationship('Team', back_populates='actions', lazy='joined')
     user = db.relationship('User', back_populates='actions', lazy='joined')
+
+    def __init_(self, team_id, user_id, date, message, status):
+        self.team_id = team_id
+        self.user_id = user_id
+        self.date = date
+        self.message = message
+        self.status = status

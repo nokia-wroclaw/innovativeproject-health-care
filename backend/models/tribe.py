@@ -1,9 +1,9 @@
-from backend import db
+from backend.app import db
 
 
 class Tribe(db.Model):
 
-    _tablename_ = 'tribes'
+    __tablename__ = 'tribes'
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64))
@@ -13,3 +13,6 @@ class Tribe(db.Model):
     surveys = db.relationship('Survey', back_populates='tribe', lazy='select')
     editors = db.relationship('User', back_populates='editing',
                               secondary='editors', lazy='joined')
+
+    def __init__(self, name):
+        self.name = name

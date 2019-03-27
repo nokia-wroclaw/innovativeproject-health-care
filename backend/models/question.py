@@ -1,9 +1,9 @@
-from backend import db
+from backend.app import db
 
 
 class Question(db.Model):
 
-    _tablename_ = 'questions'
+    __tablename__ = 'questions'
 
     id = db.Column(db.Integer, primary_key=True)
     question = db.Column(db.String)
@@ -11,3 +11,7 @@ class Question(db.Model):
 
     surveys = db.relationship('SurveyQuestionLink', back_populates='question',
                               lazy='select')
+
+    def __init__(self, question, draft):
+        self.question = question
+        self.draft = draft

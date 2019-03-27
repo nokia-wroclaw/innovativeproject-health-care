@@ -1,9 +1,9 @@
-from backend import db
+from backend.app import db
 
 
 class Team(db.Model):
 
-    _tablename_ = 'teams'
+    __tablename__ = 'teams'
 
     id = db.Column(db.Integer, primary_key=True)
     tribe_id = db.Column(db.Integer, db.ForeignKey('tribes.id'))
@@ -13,3 +13,7 @@ class Team(db.Model):
     actions = db.relationship('Action', back_populates='team', lazy='select')
     users = db.relationship('TeamUserLink', back_populates='team',
                             lazy='select')
+
+    def __init__(self, tribe_id, name):
+        self.tribe_id = tribe_id
+        self.name = name
