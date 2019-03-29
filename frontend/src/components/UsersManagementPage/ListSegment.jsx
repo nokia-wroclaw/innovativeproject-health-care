@@ -16,8 +16,8 @@ class ListSegment extends Component {
         </Segment>
         <Segment attached>
           <List>
-            {items.map(item => (
-              <List.Item>{item}</List.Item>
+            {items.map((item, i) => (
+              <List.Item key={i}>{item}</List.Item>
             ))}
           </List>
         </Segment>

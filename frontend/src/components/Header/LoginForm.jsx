@@ -1,11 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import jwtDecode from "jwt-decode";
 import { Button, Form } from "semantic-ui-react";
 import Joi from "joi";
 import colors from "../../styles/colors";
-import { login } from "../../services/authService";
-import { setUser } from "./../../store/actions/";
+import { login } from "../../store/actions/auth";
 
 class LoginForm extends Component {
   state = {
@@ -49,13 +47,10 @@ class LoginForm extends Component {
     if (errors) return;
 
     const { username, password } = this.state.account;
+    const { login, history } = this.props;
     try {
-      const response = await login(username, password);
-      const jwt = response.data.access_token;
-      localStorage.setItem("jwt", jwt);
-      const { user } = jwtDecode(jwt);
-      this.props.setUser(user);
-      this.props.history.push("/survey");
+      await login(username, password);
+      history.push(this.props.nextPath);
     } catch {
       const errors = { ...this.state.errors };
       errors.loginFailed = true;
@@ -95,7 +90,11 @@ class LoginForm extends Component {
   }
 }
 
+const mapStateToProps = state => ({
+  nextPath: state.user.firstPath
+});
+
 export default connect(
-  null,
-  { setUser }
+  mapStateToProps,
+  { login }
 )(LoginForm);
