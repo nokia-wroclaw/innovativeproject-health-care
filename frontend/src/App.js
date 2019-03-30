@@ -7,6 +7,7 @@ import { setUser } from "./store/actions/auth";
 import HomePage from "./components/HomePage/";
 import SurveyPage from "./components/SurveyPage/";
 import UsersManagementPage from "./components/UsersManagementPage/";
+import AdminPanel from "./components/AdminPanel/";
 
 class App extends Component {
   componentDidMount() {
@@ -20,6 +21,7 @@ class App extends Component {
   render() {
     return (
       <Switch>
+        <Route path="/admin_panel" component={AdminPanel} />
         <Route path="/users_management" component={UsersManagementPage} />
         <Route path="/fill_survey" component={SurveyPage} />
         <Route path="/" component={HomePage} />
