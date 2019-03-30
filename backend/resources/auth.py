@@ -2,7 +2,9 @@ from datetime import timedelta
 from flask import request, abort, jsonify
 from flask_restful import Resource
 from flask_jwt_extended import create_access_token
+from backend.app import app
 from backend.common.ldapconn import LdapConn
+from backend.models import User
 
 
 class Auth(Resource):
@@ -20,17 +22,30 @@ class Auth(Resource):
 
         credentials = request.authorization
 
+        # If user didn't send credentials
         if not credentials:
             abort(401)
 
         auth = self.ldap.authenticate(credentials.username,
                                       credentials.password)
 
+        # If credentials are incorrect
         if not auth:
             abort(401)
 
-        user = self.ldap.search(credentials.username, True)[0]
-        token = create_access_token(user['id'], user_claims=user,
+        # Retrive user data from LDAP and create user object
+        ldap_user = self.ldap.search(credentials.username, True)[0]
+        user = User.from_ldap(ldap_user)
+
+        # Try to fetch user id from db
+        exists = User.query.filter_by(id=user.id).first()
+ 
+        # Abort if user is not in db and is not an admin
+        if exists is None:
+            if user.is_admin() is False:
+                abort(401)
+
+        token = create_access_token(user.id, user_claims=user.get_json(),
                                     expires_delta=timedelta(hours=1))
 
         response = jsonify({'access_token': token})
