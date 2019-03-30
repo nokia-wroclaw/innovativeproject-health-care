@@ -4,12 +4,14 @@ import {
   Grid,
   Header as SemanticHeader,
   Segment,
-  Container
+  Container,
+  Responsive
 } from "semantic-ui-react";
 import colors from "../../styles/colors";
 import LoginButton from "./LoginButton";
 import UserDisplayName from "./UserDisplayName";
 import Menu from "./Menu";
+import MobileMenu from "./MobileMenu";
 import LogoutButton from "./LogoutButton";
 
 class Header extends Component {
@@ -23,7 +25,7 @@ class Header extends Component {
               <Grid.Row>
                 <Grid.Column mobile={16} tablet={10} computer={10}>
                   <SemanticHeader size="huge" textAlign="left" inverted>
-                    Squad health check
+                    Squad health care
                   </SemanticHeader>
                 </Grid.Column>
                 <Grid.Column mobile={16} tablet={6} computer={6}>
@@ -40,7 +42,16 @@ class Header extends Component {
             </Grid>
           </Container>
         </Segment>
-        {user ? <Menu /> : null}
+        {user ? (
+          <React.Fragment>
+            <Responsive minWidth={Responsive.onlyTablet.minWidth}>
+              <Menu />
+            </Responsive>
+            <Responsive {...Responsive.onlyMobile}>
+              <MobileMenu />
+            </Responsive>
+          </React.Fragment>
+        ) : null}
       </React.Fragment>
     );
   }

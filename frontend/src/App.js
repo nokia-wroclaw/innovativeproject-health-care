@@ -21,7 +21,7 @@ class App extends Component {
     return (
       <Switch>
         <Route path="/users_management" component={UsersManagementPage} />
-        <Route path="/survey" component={SurveyPage} />
+        <Route path="/fill_survey" component={SurveyPage} />
         <Route path="/" component={HomePage} />
       </Switch>
     );

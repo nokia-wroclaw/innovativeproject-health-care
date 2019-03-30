@@ -1,7 +1,14 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { Menu as SemanticMenu, Sticky } from "semantic-ui-react";
+import {
+  Menu as SemanticMenu,
+  Sticky,
+  Dropdown,
+  Responsive,
+  Container,
+  Accordion
+} from "semantic-ui-react";
 import { setMenuOption } from "../../store/actions";
 import colors from "../../styles/colors";
 
@@ -10,13 +17,12 @@ const Menu = ({ menu, active, setMenuOption }) => {
     <Sticky>
       <SemanticMenu
         inverted
-        stackable
         pointing
         secondary
         color={colors.menu}
         style={{ margin: 0 }}
       >
-        {menu.map(option => (
+        {menu.slice(0, 4).map(option => (
           <SemanticMenu.Item
             as={Link}
             to={option.path}
@@ -26,6 +32,22 @@ const Menu = ({ menu, active, setMenuOption }) => {
             onClick={() => setMenuOption(option.name)}
           />
         ))}
+
+        <Dropdown item text="More">
+          <Dropdown.Menu>
+            {menu.slice(4).map(option => (
+              <Dropdown.Item
+                as={Link}
+                to={option.path}
+                key={option.name}
+                active={active === option.name}
+                onClick={() => setMenuOption(option.name)}
+              >
+                {option.name}
+              </Dropdown.Item>
+            ))}
+          </Dropdown.Menu>
+        </Dropdown>
       </SemanticMenu>
     </Sticky>
   );
