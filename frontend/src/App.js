@@ -3,7 +3,7 @@ import { Switch, Route } from "react-router-dom";
 import { connect } from "react-redux";
 import jwtDecode from "jwt-decode";
 
-import { setUser } from "./store/actions/index";
+import { setUser } from "./store/actions/auth";
 import HomePage from "./components/HomePage/";
 import SurveyPage from "./components/SurveyPage/";
 import UsersManagementPage from "./components/UsersManagementPage/";

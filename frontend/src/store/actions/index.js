@@ -1,12 +1,8 @@
-import { LOGIN, LOGOUT, QUESTION_ANSWERED } from "./types";
+import { OPTION_SELECTED, QUESTION_ANSWERED } from "./types";
 
-export const setUser = user => ({
-  type: LOGIN,
-  payload: user
-});
-
-export const logoutUser = () => ({
-  type: LOGOUT
+export const setMenuOption = optionName => ({
+  type: OPTION_SELECTED,
+  payload: optionName
 });
 
 export const setAnswer = (questionId, answer) => ({
