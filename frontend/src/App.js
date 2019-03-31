@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import jwtDecode from "jwt-decode";
 
 import { setUser } from "./store/actions/auth";
+import authorization from "./services/authorization";
 import HomePage from "./components/HomePage/";
 import SurveyPage from "./components/SurveyPage/";
 import UsersManagementPage from "./components/UsersManagementPage/";
@@ -21,6 +22,9 @@ class App extends Component {
   render() {
     return (
       <Switch>
+        {/* 
+          if authorization.isAdmin(this.props.user) <Route ...> else <Redirect ...>
+        */}
         <Route path="/admin_panel" component={AdminPanel} />
         <Route path="/users_management" component={UsersManagementPage} />
         <Route path="/fill_survey" component={SurveyPage} />
@@ -30,7 +34,11 @@ class App extends Component {
   }
 }
 
+const mapStateToProps = state => ({
+  user: state.user.userData
+});
+
 export default connect(
-  null,
+  mapStateToProps,
   { setUser }
 )(App);

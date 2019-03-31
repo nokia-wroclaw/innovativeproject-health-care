@@ -33,21 +33,23 @@ const Menu = ({ menu, active, setMenuOption }) => {
           />
         ))}
 
-        <Dropdown item text="More">
-          <Dropdown.Menu>
-            {menu.slice(4).map(option => (
-              <Dropdown.Item
-                as={Link}
-                to={option.path}
-                key={option.name}
-                active={active === option.name}
-                onClick={() => setMenuOption(option.name)}
-              >
-                {option.name}
-              </Dropdown.Item>
-            ))}
-          </Dropdown.Menu>
-        </Dropdown>
+        {menu.length > 4 ? (
+          <Dropdown item text="More">
+            <Dropdown.Menu>
+              {menu.slice(4).map(option => (
+                <Dropdown.Item
+                  as={Link}
+                  to={option.path}
+                  key={option.name}
+                  active={active === option.name}
+                  onClick={() => setMenuOption(option.name)}
+                >
+                  {option.name}
+                </Dropdown.Item>
+              ))}
+            </Dropdown.Menu>
+          </Dropdown>
+        ) : null}
       </SemanticMenu>
     </Sticky>
   );
