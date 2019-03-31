@@ -12,7 +12,7 @@ const SectionContent = ({ text, onDelete }) => {
           </Grid.Column>
           <Grid.Column width={3} floated="right" textAlign="center">
             <i
-              className="fa fa-minus-circle"
+              className="fa fa-minus-square-o"
               aria-hidden="true"
               style={{
                 fontSize: "1.3em",
