@@ -17,7 +17,8 @@ class User(db.Model):
     editing = db.relationship('Tribe', back_populates='editors',
                               secondary='editors', lazy='select')
 
-    def __init__(self, login, mail, full_name, editor):
+    def __init__(self, id, login, mail, full_name, editor):
+        self.id = id
         self.login = login
         self.mail = mail
         self.full_name = full_name
@@ -29,9 +30,25 @@ class User(db.Model):
         if user is not None:
             return user
         else:
-            user = User(data['login'], data['mail'], data['name'], False)
-            user.id = data['id']
+            user = User(data['id'], data['login'], data['mail'], data['name'],
+                        False)
             return user
+
+    @staticmethod
+    def from_id(id):
+        user = User.query.filter_by(id=self.id).first()
+        if user is not None:
+            return user
+        else:
+            ldap = LdapConn()
+            data = ldap.search(id, True)[0]
+            user = User(data['id'], data['login'], data['mail'], data['name'],
+                        False)
+            return user
+
+    def in_db(self):
+        user = User.query.filter_by(id=self.id).first()
+        return True if user is not None else False;
 
     def is_admin(self):
         if self.login in app.config['APP_ADMINS']:
@@ -53,7 +70,7 @@ class User(db.Model):
                 return True
         return False
 
-    def get_roles(self):
+    def roles(self):
         roles = []
 
         if self.is_admin():
@@ -85,8 +102,8 @@ class User(db.Model):
             'login': self.login,
             'mail': self.mail,
             'name': self.full_name,
-            'roles': self.get_roles(),
+            'roles': self.roles(),
             'teams': self.team_ids(),
             'managing': self.managing_ids(),
-            'editor': self.editing_ids(),
+            'editing': self.editing_ids(),
         }
