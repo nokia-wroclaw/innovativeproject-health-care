@@ -43,6 +43,8 @@ class User(db.Model):
         else:
             ldap = LdapConn()
             data = ldap.search(id, True, [app.config['LDAP_ID_ATTR']])[0]
+            if data is None:
+                return None
             user = User(data['id'], data['login'], data['mail'], data['name'],
                         False)
             return user
@@ -97,14 +99,20 @@ class User(db.Model):
         return [e.id
                 for e in self.editing]
 
-    def get_json(self):
-        return {
+    def serialize(self, verbose=False):
+        data = {
             'id': self.id,
             'login': self.login,
             'mail': self.mail,
             'name': self.full_name,
+        }
+        if not verbose:
+            return data
+        extra = {
             'roles': self.roles(),
             'teams': self.team_ids(),
             'managing': self.managing_ids(),
             'editing': self.editing_ids(),
         }
+        data.update(extra)
+        return data

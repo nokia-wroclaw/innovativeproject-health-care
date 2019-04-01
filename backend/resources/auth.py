@@ -40,7 +40,7 @@ class Auth(Resource):
         if (user.in_db() or user.is_admin()) is False:
             abort(401)
 
-        token = create_access_token(user.id, user_claims=user.get_json(),
+        token = create_access_token(user.id, user_claims=user.serialize(True),
                                     expires_delta=timedelta(hours=1))
 
         response = jsonify({'access_token': token})
