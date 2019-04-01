@@ -27,7 +27,7 @@ class User(db.Model):
     def from_ldap(data):
         user = User.query.filter_by(id=data['id']).first()
         if user is not None:
-            return user;
+            return user
         else:
             user = User(data['login'], data['mail'], data['name'], False)
             user.id = data['id']
@@ -53,10 +53,40 @@ class User(db.Model):
                 return True
         return False
 
+    def get_roles(self):
+        roles = []
+
+        if self.is_admin():
+            roles.append('admin')
+        if self.is_editor():
+            roles.append('editor')
+        if self.is_manager():
+            roles.append('manager')
+        if self.is_user():
+            roles.append('user')
+
+        return roles
+
+    def team_ids(self):
+        return [t.team_id if t.manager is False else None
+                for t in self.teams]
+
+    def managing_ids(self):
+        return [t.team_id if t.manager is True else None
+                for t in self.teams]
+
+    def editing_ids(self):
+        return [e.id
+                for e in self.editing]
+
     def get_json(self):
         return {
             'id': self.id,
             'login': self.login,
             'mail': self.mail,
-            'name': self.full_name
+            'name': self.full_name,
+            'roles': self.get_roles(),
+            'teams': self.team_ids(),
+            'managing': self.managing_ids(),
+            'editor': self.editing_ids(),
         }
