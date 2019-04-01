@@ -1,4 +1,5 @@
 from backend.app import db, app
+from backend.common.ldapconn import LdapConn
 
 
 class User(db.Model):
@@ -36,19 +37,19 @@ class User(db.Model):
 
     @staticmethod
     def from_id(id):
-        user = User.query.filter_by(id=self.id).first()
+        user = User.query.filter_by(id=id).first()
         if user is not None:
             return user
         else:
             ldap = LdapConn()
-            data = ldap.search(id, True)[0]
+            data = ldap.search(id, True, [app.config['LDAP_ID_ATTR']])[0]
             user = User(data['id'], data['login'], data['mail'], data['name'],
                         False)
             return user
 
     def in_db(self):
         user = User.query.filter_by(id=self.id).first()
-        return True if user is not None else False;
+        return True if user is not None else False
 
     def is_admin(self):
         if self.login in app.config['APP_ADMINS']:
