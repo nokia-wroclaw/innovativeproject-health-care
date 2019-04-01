@@ -1,28 +1,26 @@
 from ldap3 import Server, Connection, NONE
-import backend.config as conf
+from backend.app import app
 
 
 class LdapConn:
     '''Handle LDAP searches and authentication.'''
 
     def __init__(self):
-        self.url = conf.LDAP_URL
-        self.port = conf.LDAP_PORT
-        self.ssl = conf.LDAP_SSL
-        self.user = conf.LDAP_USER
-        self.passwd = conf.LDAP_PASS
-        self.base_dn = conf.LDAP_BASE_DN
-        self.id_attr = conf.LDAP_ID_ATTR
-        self.rdn_attr = conf.LDAP_RDN_ATTR
-        self.login_attr = conf.LDAP_LOGIN_ATTR
-        self.name_attr = conf.LDAP_NAME_ATTR
-        self.mail_attr = conf.LDAP_MAIL_ATTR
-
         self.search_exact = False
-        self.search_attributes = [self.name_attr, self.login_attr,
-                                  self.mail_attr]
-
-        self.server = Server(self.url, self.port, self.ssl, get_info=NONE)
+        self.search_attributes = [app.config['LDAP_NAME_ATTR'],
+                                  app.config['LDAP_LOGIN_ATTR'],
+                                  app.config['LDAP_MAIL_ATTR']]
+        self.get_attributes = [app.config['LDAP_ID_ATTR'],
+                               app.config['LDAP_LOGIN_ATTR'],
+                               app.config['LDAP_NAME_ATTR'],
+                               app.config['LDAP_MAIL_ATTR'],
+                               app.config['LDAP_RDN_ATTR']]
+        self.auth_attributes = [app.config['LDAP_LOGIN_ATTR'],
+                                app.config['LDAP_MAIL_ATTR']]
+        self.server = Server(app.config['LDAP_URL'],
+                             app.config['LDAP_PORT'],
+                             app.config['LDAP_SSL'],
+                             get_info=NONE)
 
     def search(self, phrase, exact=None, attributes=None):
         '''Performs exact or non-exact LDAP search by given phrase, in
@@ -49,21 +47,21 @@ class LdapConn:
             filter += '(%s=%s)' % (attr, phrase)
         filter += ')'
 
-        conn = Connection(self.server, self.user, self.passwd, auto_bind=True,
+        conn = Connection(self.server, app.config['LDAP_USER'],
+                          app.config['LDAP_PASS'], auto_bind=True,
                           read_only=True)
-        get_attr = [self.id_attr, self.login_attr, self.name_attr,
-                    self.mail_attr, self.rdn_attr]
-        conn.search(self.base_dn, filter, attributes=get_attr)
+        conn.search(app.config['LDAP_BASE_DN'], filter,
+                    attributes=self.get_attributes)
 
         matches = []
         for match in conn.response:
             attributes = match['attributes']
             matches.append({
-                'id': attributes[self.id_attr][0],
-                'login': attributes[self.login_attr][0],
-                'name': attributes[self.name_attr][0],
-                'mail': attributes[self.mail_attr][0],
-                'rdn': attributes[self.rdn_attr][0]
+                'id': attributes[app.config['LDAP_ID_ATTR']][0],
+                'login': attributes[app.config['LDAP_LOGIN_ATTR']][0],
+                'name': attributes[app.config['LDAP_NAME_ATTR']][0],
+                'mail': attributes[app.config['LDAP_MAIL_ATTR']][0],
+                'rdn': attributes[app.config['LDAP_RDN_ATTR']][0]
             })
 
         return matches
@@ -81,18 +79,20 @@ class LdapConn:
         :rtype: bool
         '''
 
-        dn = '%s=%s,%s' % (self.rdn_attr, login, self.base_dn)
+        dn = '%s=%s,%s' % (app.config['LDAP_RDN_ATTR'], login,
+                           app.config['LDAP_BASE_DN'])
         conn = Connection(self.server, dn, password, read_only=True)
 
         if conn.bind():
             return True
 
-        matches = self.search(login, True, [self.login_attr, self.mail_attr])
+        matches = self.search(login, True, self.auth_attributes)
 
         if len(matches) != 1:
             return False
 
-        dn = '%s=%s,%s' % (self.rdn_attr, matches[0]['rdn'], self.base_dn)
+        dn = '%s=%s,%s' % (app.config['LDAP_RDN_ATTR'], matches[0]['rdn'],
+                           app.config['LDAP_BASE_DN'])
         conn = Connection(self.server, dn, password, read_only=True)
 
         return conn.bind()
