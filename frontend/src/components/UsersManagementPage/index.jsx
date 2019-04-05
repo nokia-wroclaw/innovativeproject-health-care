@@ -1,14 +1,7 @@
 import React, { Component } from "react";
-import {
-  Container,
-  Grid,
-  Segment,
-  Header as SemanticHeader,
-  List,
-  SegmentGroup
-} from "semantic-ui-react";
+import { Container, Grid } from "semantic-ui-react";
 import Header from "../Header";
-import ListSegment from "./ListSegment";
+import Section from "./Section";
 
 const tribes = [
   {
@@ -37,16 +30,28 @@ class UsersManagementPage extends Component {
         <Container>
           <Grid>
             <Grid.Column width={5}>
-              <ListSegment
+              <Section
                 title="Tribes"
-                items={["tribe 0", "tribe 1", "tribe 3"]}
+                data={["tribe 0", "tirbe 1"]}
+                onAdd={() => console.log("on add")}
+                onDelete={() => console.log("on delete")}
               />
             </Grid.Column>
             <Grid.Column width={5}>
-              <ListSegment title="Teams" items={Object.keys(tribes[1])} />
+              <Section
+                title="Teams"
+                data={Object.keys(tribes[1])}
+                onAdd={() => console.log("on add")}
+                onDelete={() => console.log("on delete")}
+              />
             </Grid.Column>
             <Grid.Column width={5}>
-              <ListSegment title="Users" items={tribes[1].team2} />
+              <Section
+                title="Users"
+                data={tribes[1].team2}
+                onAdd={() => console.log("on add")}
+                onDelete={() => console.log("on delete")}
+              />
             </Grid.Column>
           </Grid>
         </Container>

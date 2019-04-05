@@ -41,6 +41,7 @@ const isManager = user => {
 };
 
 export default {
+  adminMenu,
   userMenu,
   getMenu,
   isAdmin,

@@ -1,7 +1,7 @@
 import { LOGIN, LOGOUT, OPTION_SELECTED } from "../actions/types";
 import authorization from "../../services/authorization";
 
-const menu = authorization.userMenu;
+const menu = authorization.adminMenu;
 
 const initialState = { firstPath: menu[0].path };
 const activeOption = menu[0].name;

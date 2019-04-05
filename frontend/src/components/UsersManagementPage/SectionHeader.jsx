@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Header, Card, Grid, Input, Button } from "semantic-ui-react";
+import SectionIcon from "./SectionIcon";
 
 class SectionHeader extends Component {
   state = {
@@ -23,24 +24,23 @@ class SectionHeader extends Component {
   };
 
   render() {
-    const { title, onAdd } = this.props;
+    const { title, onAdd, onEdit } = this.props;
     return (
       <React.Fragment>
         <Card.Content>
           <Grid>
             <Grid.Row columns={3}>
-              <Grid.Column width={13} floated="left">
+              <Grid.Column width={10} floated="left">
                 <Header as="h4">{title}</Header>
               </Grid.Column>
-              <Grid.Column width={3} floated="right" textAlign="center">
-                <i
+              <Grid.Column width={5} floated="right" textAlign="right">
+                <SectionIcon className="fa fa-pencil" onClick={onEdit} />
+                <SectionIcon
                   className={
                     this.state.showInput
                       ? "fa fa-chevron-circle-up"
                       : "fa fa-plus-circle"
                   }
-                  aria-hidden="true"
-                  style={{ fontSize: "1.3em", cursor: "pointer" }}
                   onClick={() =>
                     this.setState({ showInput: !this.state.showInput })
                   }
