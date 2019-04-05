@@ -21,12 +21,15 @@ jwt = JWTManager(app)
 db = SQLAlchemy(app)
 
 # Needs to be imported after creating the db object
-from backend.resources import auth  # noqa: E402
+from backend.resources import (auth, editors, editor, users) # noqa: E402
 
 if os.environ.get('FLASK_ENV') == 'development':
     CORS(app)
 
 api.add_resource(auth.Auth, '/auth')
+api.add_resource(editors.Editors, '/editors')
+api.add_resource(editor.Editor, '/editors/<user_id>')
+api.add_resource(users.Users, '/users')
 
 if __name__ == '__main__':
     app.run(debug=True)
