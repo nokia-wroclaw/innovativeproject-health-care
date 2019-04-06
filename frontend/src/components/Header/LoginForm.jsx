@@ -11,7 +11,8 @@ class LoginForm extends Component {
       username: "",
       password: ""
     },
-    errors: {}
+    errors: {},
+    loading: false
   };
 
   schema = {
@@ -42,6 +43,7 @@ class LoginForm extends Component {
 
   handleSubmit = async e => {
     e.preventDefault();
+    this.setState({ loading: true });
     const errors = this.validate();
     this.setState({ errors: errors || {} });
     if (errors) return;
@@ -54,7 +56,7 @@ class LoginForm extends Component {
     } catch {
       const errors = { ...this.state.errors };
       errors.loginFailed = true;
-      this.setState({ errors });
+      this.setState({ errors, loading: false });
     }
   };
 
@@ -81,7 +83,11 @@ class LoginForm extends Component {
           <p style={{ color: "red" }}>Invalid username or password</p>
         )}
         <Form.Field style={{ display: "flex", justifyContent: "center" }}>
-          <Button type="submit" color={colors.formLoginButton}>
+          <Button
+            type="submit"
+            color={colors.formLoginButton}
+            loading={this.state.loading}
+          >
             Login
           </Button>
         </Form.Field>
