@@ -40,11 +40,13 @@ const isManager = user => {
   return user.roles.includes("manager");
 };
 
+export const getJwt = () => localStorage.getItem("jwt");
+
 export default {
-  adminMenu,
   userMenu,
   getMenu,
   isAdmin,
   isEditor,
-  isManager
+  isManager,
+  getJwt
 };

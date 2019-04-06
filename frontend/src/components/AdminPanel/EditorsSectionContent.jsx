@@ -1,25 +1,23 @@
 import React from "react";
+import { connect } from "react-redux";
+import { deleteEditor } from "./../../store/actions/editors";
 import { Card, Grid } from "semantic-ui-react";
 import colors from "../../styles/colors";
+import SectionIcon from "./../common/SectionIcon";
 
-const SectionContent = ({ text, onDelete }) => {
+const EditorsSectionContent = props => {
   return (
     <Card.Content>
       <Grid>
         <Grid.Row columns={2}>
           <Grid.Column width={13} floated="left">
-            {text}
+            {props.editor.name}
           </Grid.Column>
           <Grid.Column width={3} floated="right" textAlign="center">
-            <i
+            <SectionIcon
               className="fa fa-minus-square-o"
-              aria-hidden="true"
-              style={{
-                fontSize: "1.3em",
-                cursor: "pointer",
-                color: colors.red
-              }}
-              onClick={onDelete}
+              color={colors.red}
+              onClick={() => props.deleteEditor(props.editor)}
             />
           </Grid.Column>
         </Grid.Row>
@@ -28,4 +26,7 @@ const SectionContent = ({ text, onDelete }) => {
   );
 };
 
-export default SectionContent;
+export default connect(
+  null,
+  { deleteEditor }
+)(EditorsSectionContent);

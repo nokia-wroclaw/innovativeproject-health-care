@@ -1,7 +1,7 @@
 import { LOGIN, LOGOUT } from "./types";
 import axios from "axios";
 import jwtDecode from "jwt-decode";
-import endpoints from "../../httpEndpoints";
+import { endpoints } from "../../services/http";
 
 export const setUser = user => ({
   type: LOGIN,

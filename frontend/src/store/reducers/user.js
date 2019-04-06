@@ -1,7 +1,7 @@
 import { LOGIN, LOGOUT, OPTION_SELECTED } from "../actions/types";
 import authorization from "../../services/authorization";
 
-const menu = authorization.adminMenu;
+const menu = authorization.userMenu;
 
 const initialState = { firstPath: menu[0].path };
 const activeOption = menu[0].name;
@@ -11,7 +11,7 @@ export default function(state = initialState, action) {
     case LOGIN:
       return {
         userData: action.payload,
-        menu, // menu: authorization.getMenu(action.payload),
+        menu: authorization.getMenu(action.payload),
         activeOption
       };
     case OPTION_SELECTED:

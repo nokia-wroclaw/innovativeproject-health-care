@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Container } from "semantic-ui-react";
 import Header from "../Header";
 import "../../styles/common.css";
-import Section from "./Section";
+import EditorsSection from "./EditorsSection";
 
 class AdminPanel extends Component {
   render() {
@@ -10,8 +10,7 @@ class AdminPanel extends Component {
       <React.Fragment>
         <Header />
         <Container className="flex-center">
-          <Section
-            title="Editors"
+          <EditorsSection
             onAdd={() => console.log("on add")}
             onDelete={() => console.log("on delete")}
           />
