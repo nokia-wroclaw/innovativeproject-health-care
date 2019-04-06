@@ -9,7 +9,8 @@ export default function(state = initialState, action) {
 
     case ADD_EDITOR:
       const editors = [...state];
-      if (!editors.includes(action.payload)) editors.push(action.payload);
+      if (!editors.find(editor => editor.id === action.payload.id))
+        editors.push(action.payload);
       return editors;
 
     case DELETE_EDITOR:

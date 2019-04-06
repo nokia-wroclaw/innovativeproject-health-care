@@ -6,7 +6,7 @@ import { setEditors } from "./../../store/actions/editors";
 import { connect } from "react-redux";
 
 class EditorsSection extends Component {
-  componentDidMount() {
+  componentWillMount() {
     this.props.setEditors();
   }
 

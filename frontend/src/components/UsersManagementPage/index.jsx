@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import { Container, Grid } from "semantic-ui-react";
 import Header from "../Header";
-import Section from "./Section";
+import dummyData from "./dummyData";
+import TribesSection from "./TribesSection";
+import TeamsSection from "./TeamsSection";
+import UsersSection from "./UsersSection";
 
 const tribes = [
   {
@@ -27,28 +30,31 @@ class UsersManagementPage extends Component {
     return (
       <React.Fragment>
         <Header />
-        <Container>
-          <Grid>
+        <Container style={{ width: "90%" }}>
+          <Grid stackable>
             <Grid.Column width={5}>
-              <Section
+              <TribesSection
                 title="Tribes"
-                data={["tribe 0", "tirbe 1"]}
+                // data={[...dummyData.map(item => item.name)]}
+                data={[]}
                 onAdd={() => console.log("on add")}
                 onDelete={() => console.log("on delete")}
               />
             </Grid.Column>
             <Grid.Column width={5}>
-              <Section
+              <TeamsSection
                 title="Teams"
-                data={Object.keys(tribes[1])}
+                // data={Object.keys(tribes[1])}
+                data={[]}
                 onAdd={() => console.log("on add")}
                 onDelete={() => console.log("on delete")}
               />
             </Grid.Column>
             <Grid.Column width={5}>
-              <Section
+              <UsersSection
                 title="Users"
-                data={tribes[1].team2}
+                // data={tribes[1].team2}
+                data={[]}
                 onAdd={() => console.log("on add")}
                 onDelete={() => console.log("on delete")}
               />

@@ -3,7 +3,7 @@ import { Card } from "semantic-ui-react";
 import SectionHeader from "./SectionHeader";
 import SectionContent from "./SectionContent";
 
-class Section extends Component {
+class TribesSection extends Component {
   state = {
     showMinus: false
   };
@@ -32,4 +32,4 @@ class Section extends Component {
   }
 }
 
-export default Section;
+export default TribesSection;

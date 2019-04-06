@@ -1,26 +1,19 @@
 import React, { Component } from "react";
-import { Header, Card, Grid, Input, Button } from "semantic-ui-react";
-import SectionIcon from "../common/SectionIcon";
+import { Header, Card, Grid, Input, Button, Form } from "semantic-ui-react";
+import SectionIcon from "../../common/SectionIcon";
 
 class SectionHeader extends Component {
   state = {
     showInput: false,
     inputValue: "",
-    dataList: ["abcd", "efghij"]
+    addButtonDisadbed: true
   };
 
   handleChange = ({ currentTarget: input }) => {
     const inputValue = input.value;
     this.setState({ inputValue });
-
-    // if (inputValue.length = 2) call backend to get data list...
-    // this.setState({dataList: ...})
-
-    // if (inputValue.length > 2) {
-    // const {dataList} = this.state;
-    // dataList.filter(user => user.name.startsWith(inputValue));
-    // this.setState({dataList});
-    //}
+    if (inputValue.length) this.setState({ addButtonDisadbed: false });
+    else this.setState({ addButtonDisadbed: true });
   };
 
   render() {
@@ -52,23 +45,25 @@ class SectionHeader extends Component {
 
         {this.state.showInput && (
           <Card.Content>
-            <Input
-              type="text"
-              placeholder="Search..."
-              action
-              onChange={this.handleChange}
-              list="sectionItems"
-            >
-              <input />
-              <datalist id="sectionItems">
-                {this.state.dataList.map((option, i) => (
-                  <option value={option} key={i} />
-                ))}
-              </datalist>
-              <Button onClick={onAdd} color="violet">
-                Add
-              </Button>
-            </Input>
+            <Form onSubmit={onAdd}>
+              <Form.Field style={{ width: "70%" }}>
+                <Input
+                  type="text"
+                  placeholder="Team name..."
+                  action
+                  onChange={this.handleChange}
+                >
+                  <input />
+                  <Button
+                    type="submit"
+                    color="violet"
+                    disabled={this.state.addButtonDisadbed}
+                  >
+                    Add
+                  </Button>
+                </Input>
+              </Form.Field>
+            </Form>
           </Card.Content>
         )}
       </React.Fragment>
