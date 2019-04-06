@@ -10,10 +10,7 @@ class AdminPanel extends Component {
       <React.Fragment>
         <Header />
         <Container className="flex-center">
-          <EditorsSection
-            onAdd={() => console.log("on add")}
-            onDelete={() => console.log("on delete")}
-          />
+          <EditorsSection />
         </Container>
       </React.Fragment>
     );

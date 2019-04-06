@@ -1,14 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import {
-  Menu as SemanticMenu,
-  Sticky,
-  Dropdown,
-  Responsive,
-  Container,
-  Accordion
-} from "semantic-ui-react";
+import { Menu as SemanticMenu, Sticky, Dropdown } from "semantic-ui-react";
 import { setMenuOption } from "../../store/actions";
 import colors from "../../styles/colors";
 
