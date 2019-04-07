@@ -14,11 +14,11 @@ class Users(Resource):
 
         args = request.args
         if not args['q']:
-            abort(422, 'No search phrase given.')
+            abort(400, 'No search phrase given.')
         phrase = args['q']
 
         if len(phrase) <= 3:
-            abort(422, 'Search phrase to short, minimun length is 4 character')
+            abort(400, 'Search phrase to short, minimun length is 4 character')
 
         ldap = LdapConn()
         matches = ldap.search(phrase)
