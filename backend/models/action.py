@@ -21,3 +21,14 @@ class Action(db.Model):
         self.date = date
         self.message = message
         self.status = status
+
+    def serialize(self):
+        data = {
+            'id': self.id,
+            'team_id': self.team_id,
+            'user_id': self.user_id,
+            'date': self.date,
+            'message': self.message,
+            'status': self.status,
+        }
+        return data
