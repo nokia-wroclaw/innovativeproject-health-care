@@ -11,3 +11,10 @@ class Period(db.Model):
     def __init__(self, tribe_id, date_start):
         self.tribe_id = tribe_id
         self.date_start = date_start
+
+    def serialize(self):
+        data = {
+            'tribe_id': self.tribe_id,
+            'date_start': self.date_start,
+        }
+        return data
