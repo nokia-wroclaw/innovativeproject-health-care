@@ -1,9 +1,9 @@
 from flask import abort, request, jsonify
 from flask_restful import Resource
 from sqlalchemy import exc
-from flask_jwt_extended import get_jwt_identity
+from flask_jwt_extended import current_user
 from backend.common.permissions import roles_allowed
-from backend.models import User, Tribe
+from backend.models import Tribe
 from backend.app import db
 
 
@@ -18,9 +18,10 @@ class Tribes(Resource):
         if 'name' not in json:
             abort(400, 'No tribe data given.')
 
-        editor = User.from_id(get_jwt_identity())
         tribe = Tribe(json['name'])
-        tribe.editors.append(editor)
+
+        if current_user.is_editor():
+            tribe.editors.append(current_user)
 
         try:
             db.session.add(tribe)
