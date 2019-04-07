@@ -42,9 +42,10 @@ class User(db.Model):
             return user
         else:
             ldap = LdapConn()
-            data = ldap.search(id, True, [app.config['LDAP_ID_ATTR']])[0]
-            if data is None:
+            data = ldap.search(id, True, [app.config['LDAP_ID_ATTR']])
+            if len(data) != 1:
                 return None
+            data = data[0]
             user = User(data['id'], data['login'], data['mail'], data['name'],
                         False)
             return user
