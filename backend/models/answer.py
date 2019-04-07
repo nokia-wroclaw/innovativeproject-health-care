@@ -18,3 +18,13 @@ class Answer(db.Model):
         self.date = date
         self.answer = answer
         self.comment = comment
+
+    def serialize(self):
+        data = {
+            'id': self.id,
+            'question_id': self.question_id,
+            'date': self.date,
+            'answer': self.answer,
+            'comment': self.comment,
+        }
+        return data
