@@ -1,13 +1,13 @@
 from flask import jsonify
 from flask_restful import Resource
-from backend.common.permissions import admin_required
+from backend.common.permissions import roles_allowed
 from backend.models import User
 
 
 class Editors(Resource):
     '''Editors collection.'''
 
-    @admin_required
+    @roles_allowed(['admin'])
     def get(self):
         '''Get all editors.'''
 

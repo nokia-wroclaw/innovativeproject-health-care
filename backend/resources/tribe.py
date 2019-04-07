@@ -2,7 +2,7 @@ from flask import Response, abort, jsonify, request
 from flask_restful import Resource
 from flask_jwt_extended import current_user
 from sqlalchemy import exc
-from backend.common.permissions import editor_required
+from backend.common.permissions import roles_allowed
 from backend.app import db
 from backend.models import Tribe
 
@@ -10,7 +10,7 @@ from backend.models import Tribe
 class TribeRes(Resource):
     '''Single tribe identified by id.'''
 
-    @editor_required
+    @roles_allowed(['admin', 'editor'])
     def put(self, tribe_id):
         '''Updates tribe with given id.'''
 
@@ -33,6 +33,7 @@ class TribeRes(Resource):
         response.status_code = 200
         return response
 
+    @roles_allowed(['admin', 'editor'])
     def get(self, tribe_id):
         '''Returns data of tribe with given id.'''
 
@@ -42,7 +43,7 @@ class TribeRes(Resource):
         response.status_code = 200
         return response
 
-    @editor_required
+    @roles_allowed(['admin', 'editor'])
     def delete(self, tribe_id):
         '''Deletes tribe with given id.'''
 
@@ -74,6 +75,6 @@ class TribeRes(Resource):
         Aborts with 403 code if not.
         '''
 
-        if (user.is_admin() is False
-                and int(tribe_id) not in user.editing_ids()):
+        if (user.is_admin() is False and
+                int(tribe_id) not in user.editing_ids()):
             return abort(403)

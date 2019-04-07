@@ -1,7 +1,7 @@
 from flask import Response, abort
 from flask_restful import Resource
 from sqlalchemy import exc
-from backend.common.permissions import admin_required
+from backend.common.permissions import roles_allowed
 from backend.app import db
 from backend.models import User
 
@@ -9,7 +9,7 @@ from backend.models import User
 class Editor(Resource):
     '''Editor management: create, delete.'''
 
-    @admin_required
+    @roles_allowed(['admin'])
     def put(self, user_id):
         '''Creates editor with given id.'''
 
@@ -40,7 +40,7 @@ class Editor(Resource):
         response.status_code = 201
         return response
 
-    @admin_required
+    @roles_allowed(['admin'])
     def delete(self, user_id):
         '''Deletes editor with given id.'''
 
@@ -55,12 +55,12 @@ class Editor(Resource):
         if (user.in_db() or user.is_editor()) is False:
             abort(404, 'Requested editor does not exist.')
 
-        user.editor = False   
+        user.editor = False
         user.editing.clear()
-        
+
         try:
             db.session.add(user)
-            db.session.commit() 
+            db.session.commit()
         except exc.SQLAlchemyError:
             abort(400)
 

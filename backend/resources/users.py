@@ -1,6 +1,6 @@
 from flask import abort, request, jsonify
 from flask_restful import Resource
-from flask_jwt_extended import jwt_required
+from backend.common.permissions import roles_allowed
 from backend.common.ldapconn import LdapConn
 from backend.models import User
 
@@ -8,7 +8,7 @@ from backend.models import User
 class Users(Resource):
     '''All users available to system.'''
 
-    @jwt_required
+    @roles_allowed(['admin', 'editor', 'manager'])
     def get(self):
         ''' Get available users from db and LDAP. Search phrase required.'''
 
@@ -18,7 +18,7 @@ class Users(Resource):
         phrase = args['q']
 
         if len(phrase) <= 3:
-            abort(400, 'Search phrase to short, minimun length is 4 character')
+            abort(400, 'Search phrase too short, minimun length is 4 character')
 
         ldap = LdapConn()
         matches = ldap.search(phrase)

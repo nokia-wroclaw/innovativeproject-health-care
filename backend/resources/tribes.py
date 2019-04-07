@@ -2,7 +2,7 @@ from flask import abort, request, jsonify
 from flask_restful import Resource
 from sqlalchemy import exc
 from flask_jwt_extended import get_jwt_identity
-from backend.common.permissions import editor_required
+from backend.common.permissions import roles_allowed
 from backend.models import User, Tribe
 from backend.app import db
 
@@ -10,7 +10,7 @@ from backend.app import db
 class Tribes(Resource):
     '''Tribes collection resource.'''
 
-    @editor_required
+    @roles_allowed(['admin', 'editor'])
     def post(self):
         '''Creates a new tribe with given name.'''
 
@@ -33,7 +33,7 @@ class Tribes(Resource):
         response.status_code = 201
         return response
 
-    @editor_required
+    @roles_allowed(['admin', 'editor'])
     def get(self):
         '''Lists all exisiting tribes.'''
 
