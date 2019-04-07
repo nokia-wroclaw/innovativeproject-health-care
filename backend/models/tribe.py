@@ -16,3 +16,27 @@ class Tribe(db.Model):
 
     def __init__(self, name):
         self.name = name
+
+    def teams_ids(self):
+        return [t.id for t in self.teams]
+
+    def surveys_ids(self):
+        return [s.id for s in self.surveys]
+
+    def editors_ids(self):
+        return [e.id for e in self.editors]
+
+    def serialize(self, verbose=False):
+        data = {
+            'id': self.id,
+            'name': self.name,
+        }
+        if not verbose:
+            return data
+        extra = {
+            'editors': self.editors_ids(),
+            'teams': self.teams_ids(),
+            'surveys': self.surveys_ids(),
+        }
+        data.update(extra)
+        return data
