@@ -24,7 +24,7 @@ db = SQLAlchemy(app)
 from backend.common import jwt_ext  # noqa: E402, F401
 # Needs to be imported after creating the db object
 from backend.resources import (auth, editors, editor, users, tribes,
-        tribe)  # noqa: E402
+        tribe, tribe_editors)  # noqa: E402
 
 if os.environ.get('FLASK_ENV') == 'development':
     CORS(app)
@@ -35,6 +35,7 @@ api.add_resource(editor.Editor, '/editors/<user_id>')
 api.add_resource(users.Users, '/users')
 api.add_resource(tribes.Tribes, '/tribes')
 api.add_resource(tribe.TribeRes, '/tribes/<tribe_id>')
+api.add_resource(tribe_editors.TribeEditors, '/tribes/<tribe_id>/editors/<user_id>')
 
 if __name__ == '__main__':
     app.run(debug=True)
