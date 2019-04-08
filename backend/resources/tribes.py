@@ -8,11 +8,11 @@ from backend.app import db
 
 
 class Tribes(Resource):
-    '''Tribes collection resource.'''
+    """Tribes collection resource."""
 
     @roles_allowed(['admin', 'editor'])
     def post(self):
-        '''Creates a new tribe with given name.'''
+        """Creates a new tribe with given name."""
 
         json = request.get_json()
         if 'name' not in json:
@@ -36,7 +36,7 @@ class Tribes(Resource):
 
     @roles_allowed(['admin', 'editor'])
     def get(self):
-        '''Lists all exisiting tribes.'''
+        """Lists all exisiting tribes."""
 
         tribes = Tribe.query.all()
 

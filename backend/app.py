@@ -21,7 +21,7 @@ jwt = JWTManager(app)
 db = SQLAlchemy(app)
 
 # Need to be imported after creating the jwt object
-from backend.common import jwt  # noqa: E402, F401
+from backend.common import jwt_ext  # noqa: E402, F401
 # Needs to be imported after creating the db object
 from backend.resources import (auth, editors, editor, users, tribes,
         tribe)  # noqa: E402

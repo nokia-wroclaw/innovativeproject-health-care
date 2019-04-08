@@ -3,7 +3,7 @@ from backend.app import app
 
 
 class LdapConn:
-    '''Handle LDAP searches and authentication.'''
+    """Handle LDAP searches and authentication."""
 
     def __init__(self):
         self.search_exact = False
@@ -23,7 +23,7 @@ class LdapConn:
                              get_info=NONE)
 
     def search(self, phrase, exact=None, attributes=None):
-        '''Performs exact or non-exact LDAP search by given phrase, in
+        """Performs exact or non-exact LDAP search by given phrase, in
         specified attributes.
 
         :param string phrase: phrase to search
@@ -31,7 +31,7 @@ class LdapConn:
         :param list attributes: list of attributes to search in
         :return: list of matches
         :rtype: list of dicts containing users' attributes
-        '''
+        """
 
         if exact is None:
             exact = self.search_exact
@@ -67,7 +67,7 @@ class LdapConn:
         return matches
 
     def authenticate(self, login, password):
-        '''Verifies given credentials.
+        """Verifies given credentials.
 
         If simple bind of given values fails this method will perform exact
         search of login against login and mail attributes to try to find
@@ -77,7 +77,7 @@ class LdapConn:
         :param string password: user's password
         :return: whether credentials are correct
         :rtype: bool
-        '''
+        """
 
         dn = '%s=%s,%s' % (app.config['LDAP_RDN_ATTR'], login,
                            app.config['LDAP_BASE_DN'])

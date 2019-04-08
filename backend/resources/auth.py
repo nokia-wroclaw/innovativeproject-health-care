@@ -7,17 +7,17 @@ from backend.models import User
 
 
 class Auth(Resource):
-    '''User authentication'''
+    """User authentication"""
 
     def __init__(self):
         self.ldap = LdapConn()
 
     def post(self):
-        '''Auhenticates user.
+        """Authenticates user.
 
         This method authenticates users credentials sent by HTTP Basic Auth.
-        If authentication is succesfull JWT containing user data is returned.
-        '''
+        If authentication is successful JWT containing user data is returned.
+        """
 
         credentials = request.authorization
 
@@ -32,7 +32,7 @@ class Auth(Resource):
         if not auth:
             abort(401)
 
-        # Retrive user data from LDAP and create user object
+        # Retrieve user data from LDAP and create user object
         ldap_user = self.ldap.search(credentials.username, True)[0]
         user = User.from_ldap(ldap_user)
 
