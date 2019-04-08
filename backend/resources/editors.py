@@ -5,11 +5,11 @@ from backend.models import User
 
 
 class Editors(Resource):
-    '''Editors collection.'''
+    """Editors collection."""
 
     @roles_allowed(['admin'])
     def get(self):
-        '''Get all editors.'''
+        """Get all editors."""
 
         editors = User.query.filter_by(editor=True).all()
 
