@@ -99,6 +99,18 @@ class User(db.Model):
         return [e.id
                 for e in self.editing]
 
+    def revalidate(self):
+        """Deletes user from database if he doesn't have at least one role
+        other than admin.
+        """
+
+        for role in self.roles():
+            if role != 'admin':
+                return
+
+        db.session.delete(self)
+        db.session.commit()
+
     def serialize(self, verbose=False):
         data = {
             'id': self.id,

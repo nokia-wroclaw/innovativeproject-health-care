@@ -64,6 +64,8 @@ class Editor(Resource):
         except exc.SQLAlchemyError:
             abort(400)
 
+        user.revalidate()
+
         response = Response()
         response.status_code = 200
         return response
