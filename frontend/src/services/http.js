@@ -10,8 +10,11 @@ export const endpoints = {
   deleteEditor: `${baseURL}/editors/` //${id}
 };
 
-export const httpConfig = {
-  headers: {
-    Authorization: `Bearer ${getJwt()}`
-  }
+export const getHttpConfig = () => {
+  const jwt = getJwt();
+  return {
+    headers: {
+      Authorization: `Bearer ${jwt}`
+    }
+  };
 };

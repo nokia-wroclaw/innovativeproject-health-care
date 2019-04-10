@@ -1,27 +1,46 @@
 import React from "react";
-import { Container } from "semantic-ui-react";
+import { Container, Header as SemanticHeader } from "semantic-ui-react";
 import Header from "../Header";
 
 const HomePage = props => {
   return (
     <React.Fragment>
       <Header history={props.history} />
-      <Container textAlign="justified" style={{ paddingTop: 10 }}>
-        <p>
-          Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
-          commodo ligula eget dolor. Aenean massa strong. Cum sociis natoque
-          penatibus et magnis dis parturient montes, nascetur ridiculus mus.
-          Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.
-          Nulla consequat massa quis enim. Donec pede justo, fringilla vel,
-          aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut,
-          imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede link
-          mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum
-          semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula,
-          porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante,
-          dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla
-          ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam
-          ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi.
-        </p>
+      <Container textAlign="justified">
+        <div className="flex-space-evenly" style={{ flexWrap: "wrap" }}>
+          <div
+            style={{
+              paddingTop: 20,
+              maxWidth: 700,
+              fontSize: "0.9em",
+              margin: "1em"
+            }}
+          >
+            <p>
+              Health-check is a clever way of measuring a team’s feelings: once
+              a month, team members are asked to rate their satisfaction with
+              certain areas, such as ‘Delivering value’ or ‘Teamwork’. Squad
+              Health Care allows us to find problems when they are small and
+              define proper solution.
+              <br />
+              Additionally we are engaging all employees to be active in
+              organization improvement topic. It is a massive amount of people
+              who are thinking about
+              <p style={{ fontWeight: "bold" }}>
+                “What has to change to create better work environment?”.
+              </p>
+            </p>
+          </div>
+          <div>
+            <i
+              className="fa fa-users"
+              aria-hidden="true"
+              style={{
+                fontSize: 150
+              }}
+            />
+          </div>
+        </div>
       </Container>
     </React.Fragment>
   );

@@ -1,8 +1,8 @@
 import axios from "axios";
-import { endpoints, httpConfig } from "./http";
+import { endpoints, getHttpConfig } from "./http";
 
 export const getUsersByName = async phrase => {
   const URL = `${endpoints.getUsersByName}${phrase}`;
-  const response = await axios.get(URL, httpConfig);
+  const response = await axios.get(URL, getHttpConfig());
   return response;
 };
