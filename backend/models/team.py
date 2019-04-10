@@ -17,3 +17,11 @@ class Team(db.Model):
     def __init__(self, tribe_id, name):
         self.tribe_id = tribe_id
         self.name = name
+
+    def serialize(self):
+        data = {
+            'id': self.id,
+            'tribe_id': self.tribe_id,
+            'name': self.name,
+        }
+        return data

@@ -3,7 +3,6 @@ from backend.common.ldapconn import LdapConn
 
 
 class User(db.Model):
-
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -99,6 +98,18 @@ class User(db.Model):
     def editing_ids(self):
         return [e.id
                 for e in self.editing]
+
+    def revalidate(self):
+        """Deletes user from database if he doesn't have at least one role
+        other than admin.
+        """
+
+        for role in self.roles():
+            if role != 'admin':
+                return
+
+        db.session.delete(self)
+        db.session.commit()
 
     def serialize(self, verbose=False):
         data = {

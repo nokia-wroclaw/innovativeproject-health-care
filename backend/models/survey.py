@@ -20,3 +20,13 @@ class Survey(db.Model):
         self.date = date
         self.draft = draft
         self.period = period
+
+    def serialize(self):
+        data = {
+            'id': self.id,
+            'tribe_id': self.tribe_id,
+            'date': self.date,
+            'draft': self.draft,
+            'period': self.period,
+        }
+        return data

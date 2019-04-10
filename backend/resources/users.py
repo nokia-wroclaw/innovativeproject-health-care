@@ -6,11 +6,11 @@ from backend.models import User
 
 
 class Users(Resource):
-    '''All users available to system.'''
+    """All users available to system."""
 
     @roles_allowed(['admin', 'editor', 'manager'])
     def get(self):
-        ''' Get available users from db and LDAP. Search phrase required.'''
+        """ Get available users from db and LDAP. Search phrase required."""
 
         args = request.args
         if not args['q']:
@@ -18,7 +18,7 @@ class Users(Resource):
         phrase = args['q']
 
         if len(phrase) <= 3:
-            abort(400, 'Search phrase too short, minimun length is 4 character')
+            abort(400, 'Search phrase too short, minimum length is 4 character')
 
         ldap = LdapConn()
         matches = ldap.search(phrase)

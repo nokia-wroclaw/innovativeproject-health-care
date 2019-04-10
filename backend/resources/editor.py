@@ -7,11 +7,11 @@ from backend.models import User
 
 
 class Editor(Resource):
-    '''Editor management: create, delete.'''
+    """Editor management: create, delete."""
 
     @roles_allowed(['admin'])
     def put(self, user_id):
-        '''Creates editor with given id.'''
+        """Creates editor with given id."""
 
         # Get user data from db or ldap
         user = User.from_id(user_id)
@@ -42,7 +42,7 @@ class Editor(Resource):
 
     @roles_allowed(['admin'])
     def delete(self, user_id):
-        '''Deletes editor with given id.'''
+        """Deletes editor with given id."""
 
         # Get user data from db or ldap
         user = User.from_id(user_id)
@@ -63,6 +63,8 @@ class Editor(Resource):
             db.session.commit()
         except exc.SQLAlchemyError:
             abort(400)
+
+        user.revalidate()
 
         response = Response()
         response.status_code = 200

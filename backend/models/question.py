@@ -15,3 +15,11 @@ class Question(db.Model):
     def __init__(self, question, draft):
         self.question = question
         self.draft = draft
+
+    def serialize(self):
+        data = {
+            'id': self.id,
+            'question': self.question,
+            'draft': self.draft,
+        }
+        return data
