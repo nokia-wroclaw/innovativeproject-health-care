@@ -1,13 +1,12 @@
 import React, { Component } from "react";
-import Header from "../Header";
+import TemplatePage from "../common/TemplatePage/";
 
 class StatisticsPage extends Component {
   render() {
     return (
-      <React.Fragment>
-        <Header />
+      <TemplatePage>
         <h3>Statistics page</h3>
-      </React.Fragment>
+      </TemplatePage>
     );
   }
 }

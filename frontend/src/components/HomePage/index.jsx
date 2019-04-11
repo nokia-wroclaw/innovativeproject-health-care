@@ -1,11 +1,10 @@
 import React from "react";
-import { Container, Header as SemanticHeader } from "semantic-ui-react";
-import Header from "../Header";
+import { Container } from "semantic-ui-react";
+import TemplatePage from "../common/TemplatePage/";
 
 const HomePage = props => {
   return (
-    <React.Fragment>
-      <Header history={props.history} />
+    <TemplatePage history={props.history}>
       <Container textAlign="justified">
         <div className="flex-space-evenly" style={{ flexWrap: "wrap" }}>
           <div
@@ -26,9 +25,10 @@ const HomePage = props => {
               Additionally we are engaging all employees to be active in
               organization improvement topic. It is a massive amount of people
               who are thinking about
-              <p style={{ fontWeight: "bold" }}>
+              <br />
+              <span style={{ fontWeight: "bold" }}>
                 “What has to change to create better work environment?”.
-              </p>
+              </span>
             </p>
           </div>
           <div>
@@ -42,7 +42,7 @@ const HomePage = props => {
           </div>
         </div>
       </Container>
-    </React.Fragment>
+    </TemplatePage>
   );
 };
 

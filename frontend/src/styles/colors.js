@@ -3,5 +3,6 @@ export default {
   menu: "blue",
   headerLoginButton: "grey",
   formLoginButton: "green",
-  red: "#E80000"
+  red: "#E80000",
+  footer: "black"
 };

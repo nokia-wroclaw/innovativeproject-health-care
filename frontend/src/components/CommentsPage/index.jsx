@@ -1,13 +1,12 @@
 import React, { Component } from "react";
-import Header from "../Header";
+import TemplatePage from "../common/TemplatePage/";
 
 class CommentsPage extends Component {
   render() {
     return (
-      <React.Fragment>
-        <Header />
+      <TemplatePage>
         <h3>Comments page</h3>
-      </React.Fragment>
+      </TemplatePage>
     );
   }
 }

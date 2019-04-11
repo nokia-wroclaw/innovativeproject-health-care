@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { Container, Grid } from "semantic-ui-react";
-import Header from "../Header";
 import dummyData from "./dummyData";
 import TribesSection from "./TribesSection";
 import TeamsSection from "./TeamsSection";
 import UsersSection from "./UsersSection";
+import TemplatePage from "../common/TemplatePage/";
 
 const tribes = [
   {
@@ -28,8 +28,7 @@ const tribes = [
 class UsersManagementPage extends Component {
   render() {
     return (
-      <React.Fragment>
-        <Header />
+      <TemplatePage>
         <Container style={{ width: "90%" }}>
           <Grid stackable>
             <Grid.Column width={5}>
@@ -61,7 +60,7 @@ class UsersManagementPage extends Component {
             </Grid.Column>
           </Grid>
         </Container>
-      </React.Fragment>
+      </TemplatePage>
     );
   }
 }

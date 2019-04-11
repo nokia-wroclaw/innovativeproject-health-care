@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Popup } from "semantic-ui-react";
 import { setAnswer } from "../../store/actions";
-import "../../styles/checkbox.css";
+import "./checkbox.css";
 
 const ColoredCheckbox = ({
   color,

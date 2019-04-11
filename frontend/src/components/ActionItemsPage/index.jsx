@@ -1,13 +1,12 @@
 import React, { Component } from "react";
-import Header from "../Header";
+import TemplatePage from "../common/TemplatePage/";
 
 class ActionItemsPage extends Component {
   render() {
     return (
-      <React.Fragment>
-        <Header />
+      <TemplatePage>
         <h3>Action items page</h3>
-      </React.Fragment>
+      </TemplatePage>
     );
   }
 }

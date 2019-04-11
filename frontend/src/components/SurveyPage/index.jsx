@@ -1,14 +1,13 @@
 import React, { Component } from "react";
-import Header from "../Header";
 import Survey from "./Survey";
+import TemplatePage from "../common/TemplatePage/";
 
 class SurveyPage extends Component {
   render() {
     return (
-      <React.Fragment>
-        <Header />
+      <TemplatePage>
         <Survey />
-      </React.Fragment>
+      </TemplatePage>
     );
   }
 }

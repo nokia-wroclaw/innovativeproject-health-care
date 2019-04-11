@@ -1,7 +1,7 @@
 import React from "react";
 import { Segment, TextArea, SegmentGroup } from "semantic-ui-react";
 import Question from "./Question";
-import "../../styles/checkbox.css";
+import "./checkbox.css";
 
 const QuestionSegment = ({ question }) => {
   let textareaClassName;
