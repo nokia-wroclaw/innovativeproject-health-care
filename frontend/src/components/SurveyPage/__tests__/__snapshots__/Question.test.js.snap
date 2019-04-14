@@ -1,0 +1,403 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Question should match snapshot 1`] = `
+ShallowWrapper {
+  Symbol(enzyme.__root__): [Circular],
+  Symbol(enzyme.__unrendered__): <Question
+    question={Object {}}
+  />,
+  Symbol(enzyme.__renderer__): Object {
+    "batchedUpdates": [Function],
+    "checkPropTypes": [Function],
+    "getNode": [Function],
+    "render": [Function],
+    "simulateError": [Function],
+    "simulateEvent": [Function],
+    "unmount": [Function],
+  },
+  Symbol(enzyme.__node__): Object {
+    "instance": null,
+    "key": undefined,
+    "nodeType": "function",
+    "props": Object {
+      "children": Array [
+        <GridColumn
+          computer={13}
+          mobile={10}
+          tablet={13}
+        >
+          <Header
+            as="h5"
+          />
+        </GridColumn>,
+        <GridColumn
+          computer={3}
+          mobile={6}
+          tablet={3}
+        >
+          <div
+            className="flex-space-evenly"
+          >
+            <Connect(ColoredCheckbox)
+              color="green"
+              hintText="It's OK"
+              value={2}
+            />
+            <Connect(ColoredCheckbox)
+              color="yellow"
+              hintText="It's not bad but could be better"
+              value={1}
+            />
+            <Connect(ColoredCheckbox)
+              color="red"
+              hintText="It's really bad"
+              value={0}
+            />
+          </div>
+        </GridColumn>,
+      ],
+    },
+    "ref": null,
+    "rendered": Array [
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "function",
+        "props": Object {
+          "children": <Header
+            as="h5"
+          />,
+          "computer": 13,
+          "mobile": 10,
+          "tablet": 13,
+        },
+        "ref": null,
+        "rendered": Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "function",
+          "props": Object {
+            "as": "h5",
+            "children": undefined,
+          },
+          "ref": null,
+          "rendered": null,
+          "type": [Function],
+        },
+        "type": [Function],
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "function",
+        "props": Object {
+          "children": <div
+            className="flex-space-evenly"
+          >
+            <Connect(ColoredCheckbox)
+              color="green"
+              hintText="It's OK"
+              value={2}
+            />
+            <Connect(ColoredCheckbox)
+              color="yellow"
+              hintText="It's not bad but could be better"
+              value={1}
+            />
+            <Connect(ColoredCheckbox)
+              color="red"
+              hintText="It's really bad"
+              value={0}
+            />
+          </div>,
+          "computer": 3,
+          "mobile": 6,
+          "tablet": 3,
+        },
+        "ref": null,
+        "rendered": Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": Array [
+              <Connect(ColoredCheckbox)
+                color="green"
+                hintText="It's OK"
+                value={2}
+              />,
+              <Connect(ColoredCheckbox)
+                color="yellow"
+                hintText="It's not bad but could be better"
+                value={1}
+              />,
+              <Connect(ColoredCheckbox)
+                color="red"
+                hintText="It's really bad"
+                value={0}
+              />,
+            ],
+            "className": "flex-space-evenly",
+          },
+          "ref": null,
+          "rendered": Array [
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "class",
+              "props": Object {
+                "answer": undefined,
+                "color": "green",
+                "hintText": "It's OK",
+                "questionId": undefined,
+                "value": 2,
+              },
+              "ref": null,
+              "rendered": null,
+              "type": [Function],
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "class",
+              "props": Object {
+                "answer": undefined,
+                "color": "yellow",
+                "hintText": "It's not bad but could be better",
+                "questionId": undefined,
+                "value": 1,
+              },
+              "ref": null,
+              "rendered": null,
+              "type": [Function],
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "class",
+              "props": Object {
+                "answer": undefined,
+                "color": "red",
+                "hintText": "It's really bad",
+                "questionId": undefined,
+                "value": 0,
+              },
+              "ref": null,
+              "rendered": null,
+              "type": [Function],
+            },
+          ],
+          "type": "div",
+        },
+        "type": [Function],
+      },
+    ],
+    "type": [Function],
+  },
+  Symbol(enzyme.__nodes__): Array [
+    Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "function",
+      "props": Object {
+        "children": Array [
+          <GridColumn
+            computer={13}
+            mobile={10}
+            tablet={13}
+          >
+            <Header
+              as="h5"
+            />
+          </GridColumn>,
+          <GridColumn
+            computer={3}
+            mobile={6}
+            tablet={3}
+          >
+            <div
+              className="flex-space-evenly"
+            >
+              <Connect(ColoredCheckbox)
+                color="green"
+                hintText="It's OK"
+                value={2}
+              />
+              <Connect(ColoredCheckbox)
+                color="yellow"
+                hintText="It's not bad but could be better"
+                value={1}
+              />
+              <Connect(ColoredCheckbox)
+                color="red"
+                hintText="It's really bad"
+                value={0}
+              />
+            </div>
+          </GridColumn>,
+        ],
+      },
+      "ref": null,
+      "rendered": Array [
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "function",
+          "props": Object {
+            "children": <Header
+              as="h5"
+            />,
+            "computer": 13,
+            "mobile": 10,
+            "tablet": 13,
+          },
+          "ref": null,
+          "rendered": Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "function",
+            "props": Object {
+              "as": "h5",
+              "children": undefined,
+            },
+            "ref": null,
+            "rendered": null,
+            "type": [Function],
+          },
+          "type": [Function],
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "function",
+          "props": Object {
+            "children": <div
+              className="flex-space-evenly"
+            >
+              <Connect(ColoredCheckbox)
+                color="green"
+                hintText="It's OK"
+                value={2}
+              />
+              <Connect(ColoredCheckbox)
+                color="yellow"
+                hintText="It's not bad but could be better"
+                value={1}
+              />
+              <Connect(ColoredCheckbox)
+                color="red"
+                hintText="It's really bad"
+                value={0}
+              />
+            </div>,
+            "computer": 3,
+            "mobile": 6,
+            "tablet": 3,
+          },
+          "ref": null,
+          "rendered": Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "children": Array [
+                <Connect(ColoredCheckbox)
+                  color="green"
+                  hintText="It's OK"
+                  value={2}
+                />,
+                <Connect(ColoredCheckbox)
+                  color="yellow"
+                  hintText="It's not bad but could be better"
+                  value={1}
+                />,
+                <Connect(ColoredCheckbox)
+                  color="red"
+                  hintText="It's really bad"
+                  value={0}
+                />,
+              ],
+              "className": "flex-space-evenly",
+            },
+            "ref": null,
+            "rendered": Array [
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "class",
+                "props": Object {
+                  "answer": undefined,
+                  "color": "green",
+                  "hintText": "It's OK",
+                  "questionId": undefined,
+                  "value": 2,
+                },
+                "ref": null,
+                "rendered": null,
+                "type": [Function],
+              },
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "class",
+                "props": Object {
+                  "answer": undefined,
+                  "color": "yellow",
+                  "hintText": "It's not bad but could be better",
+                  "questionId": undefined,
+                  "value": 1,
+                },
+                "ref": null,
+                "rendered": null,
+                "type": [Function],
+              },
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "class",
+                "props": Object {
+                  "answer": undefined,
+                  "color": "red",
+                  "hintText": "It's really bad",
+                  "questionId": undefined,
+                  "value": 0,
+                },
+                "ref": null,
+                "rendered": null,
+                "type": [Function],
+              },
+            ],
+            "type": "div",
+          },
+          "type": [Function],
+        },
+      ],
+      "type": [Function],
+    },
+  ],
+  Symbol(enzyme.__options__): Object {
+    "adapter": ReactSixteenAdapter {
+      "options": Object {
+        "enableComponentDidUpdateOnSetState": true,
+        "legacyContextMode": "parent",
+        "lifecycles": Object {
+          "componentDidUpdate": Object {
+            "onSetState": true,
+          },
+          "getChildContext": Object {
+            "calledByRenderer": false,
+          },
+          "getDerivedStateFromError": true,
+          "getDerivedStateFromProps": Object {
+            "hasShouldComponentUpdateBug": false,
+          },
+          "getSnapshotBeforeUpdate": true,
+          "setState": Object {
+            "skipsComponentDidUpdateOnNullish": true,
+          },
+        },
+      },
+    },
+  },
+}
+`;

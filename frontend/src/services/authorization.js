@@ -29,15 +29,27 @@ const getMenu = user => {
 };
 
 const isAdmin = user => {
-  return user.roles.includes("admin");
+  try {
+    return user.roles.includes("admin");
+  } catch {
+    return false;
+  }
 };
 
 const isEditor = user => {
-  return user.roles.includes("editor");
+  try {
+    return user.roles.includes("editor");
+  } catch {
+    return false;
+  }
 };
 
 const isManager = user => {
-  return user.roles.includes("manager");
+  try {
+    return user.roles.includes("manager");
+  } catch {
+    return false;
+  }
 };
 
 export const getJwt = () => localStorage.getItem("jwt");

@@ -1,0 +1,441 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Footer should match snapshot 1`] = `
+ShallowWrapper {
+  Symbol(enzyme.__root__): [Circular],
+  Symbol(enzyme.__unrendered__): <Footer />,
+  Symbol(enzyme.__renderer__): Object {
+    "batchedUpdates": [Function],
+    "checkPropTypes": [Function],
+    "getNode": [Function],
+    "render": [Function],
+    "simulateError": [Function],
+    "simulateEvent": [Function],
+    "unmount": [Function],
+  },
+  Symbol(enzyme.__node__): Object {
+    "instance": null,
+    "key": undefined,
+    "nodeType": "function",
+    "props": Object {
+      "children": <Container>
+        <Grid
+          columns={2}
+          stackable={true}
+        >
+          <GridRow>
+            <GridColumn
+              floated="left"
+            >
+              <Header
+                as="h4"
+              >
+                Nokia Innovative Project 2019
+              </Header>
+            </GridColumn>
+            <GridColumn
+              floated="right"
+            >
+              <Header
+                as="h4"
+                textAlign="right"
+              >
+                Bazyli Cyran | Agata Toczyńska | Paweł Komorowski
+              </Header>
+            </GridColumn>
+          </GridRow>
+        </Grid>
+      </Container>,
+      "className": "footer",
+      "color": "black",
+      "padded": true,
+      "secondary": true,
+      "style": Object {
+        "borderRadius": 0,
+      },
+    },
+    "ref": null,
+    "rendered": Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "function",
+      "props": Object {
+        "children": <Grid
+          columns={2}
+          stackable={true}
+        >
+          <GridRow>
+            <GridColumn
+              floated="left"
+            >
+              <Header
+                as="h4"
+              >
+                Nokia Innovative Project 2019
+              </Header>
+            </GridColumn>
+            <GridColumn
+              floated="right"
+            >
+              <Header
+                as="h4"
+                textAlign="right"
+              >
+                Bazyli Cyran | Agata Toczyńska | Paweł Komorowski
+              </Header>
+            </GridColumn>
+          </GridRow>
+        </Grid>,
+      },
+      "ref": null,
+      "rendered": Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "function",
+        "props": Object {
+          "children": <GridRow>
+            <GridColumn
+              floated="left"
+            >
+              <Header
+                as="h4"
+              >
+                Nokia Innovative Project 2019
+              </Header>
+            </GridColumn>
+            <GridColumn
+              floated="right"
+            >
+              <Header
+                as="h4"
+                textAlign="right"
+              >
+                Bazyli Cyran | Agata Toczyńska | Paweł Komorowski
+              </Header>
+            </GridColumn>
+          </GridRow>,
+          "columns": 2,
+          "stackable": true,
+        },
+        "ref": null,
+        "rendered": Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "function",
+          "props": Object {
+            "children": Array [
+              <GridColumn
+                floated="left"
+              >
+                <Header
+                  as="h4"
+                >
+                  Nokia Innovative Project 2019
+                </Header>
+              </GridColumn>,
+              <GridColumn
+                floated="right"
+              >
+                <Header
+                  as="h4"
+                  textAlign="right"
+                >
+                  Bazyli Cyran | Agata Toczyńska | Paweł Komorowski
+                </Header>
+              </GridColumn>,
+            ],
+          },
+          "ref": null,
+          "rendered": Array [
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "function",
+              "props": Object {
+                "children": <Header
+                  as="h4"
+                >
+                  Nokia Innovative Project 2019
+                </Header>,
+                "floated": "left",
+              },
+              "ref": null,
+              "rendered": Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "function",
+                "props": Object {
+                  "as": "h4",
+                  "children": "Nokia Innovative Project 2019",
+                },
+                "ref": null,
+                "rendered": "Nokia Innovative Project 2019",
+                "type": [Function],
+              },
+              "type": [Function],
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "function",
+              "props": Object {
+                "children": <Header
+                  as="h4"
+                  textAlign="right"
+                >
+                  Bazyli Cyran | Agata Toczyńska | Paweł Komorowski
+                </Header>,
+                "floated": "right",
+              },
+              "ref": null,
+              "rendered": Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "function",
+                "props": Object {
+                  "as": "h4",
+                  "children": "Bazyli Cyran | Agata Toczyńska | Paweł Komorowski",
+                  "textAlign": "right",
+                },
+                "ref": null,
+                "rendered": "Bazyli Cyran | Agata Toczyńska | Paweł Komorowski",
+                "type": [Function],
+              },
+              "type": [Function],
+            },
+          ],
+          "type": [Function],
+        },
+        "type": [Function],
+      },
+      "type": [Function],
+    },
+    "type": [Function],
+  },
+  Symbol(enzyme.__nodes__): Array [
+    Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "function",
+      "props": Object {
+        "children": <Container>
+          <Grid
+            columns={2}
+            stackable={true}
+          >
+            <GridRow>
+              <GridColumn
+                floated="left"
+              >
+                <Header
+                  as="h4"
+                >
+                  Nokia Innovative Project 2019
+                </Header>
+              </GridColumn>
+              <GridColumn
+                floated="right"
+              >
+                <Header
+                  as="h4"
+                  textAlign="right"
+                >
+                  Bazyli Cyran | Agata Toczyńska | Paweł Komorowski
+                </Header>
+              </GridColumn>
+            </GridRow>
+          </Grid>
+        </Container>,
+        "className": "footer",
+        "color": "black",
+        "padded": true,
+        "secondary": true,
+        "style": Object {
+          "borderRadius": 0,
+        },
+      },
+      "ref": null,
+      "rendered": Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "function",
+        "props": Object {
+          "children": <Grid
+            columns={2}
+            stackable={true}
+          >
+            <GridRow>
+              <GridColumn
+                floated="left"
+              >
+                <Header
+                  as="h4"
+                >
+                  Nokia Innovative Project 2019
+                </Header>
+              </GridColumn>
+              <GridColumn
+                floated="right"
+              >
+                <Header
+                  as="h4"
+                  textAlign="right"
+                >
+                  Bazyli Cyran | Agata Toczyńska | Paweł Komorowski
+                </Header>
+              </GridColumn>
+            </GridRow>
+          </Grid>,
+        },
+        "ref": null,
+        "rendered": Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "function",
+          "props": Object {
+            "children": <GridRow>
+              <GridColumn
+                floated="left"
+              >
+                <Header
+                  as="h4"
+                >
+                  Nokia Innovative Project 2019
+                </Header>
+              </GridColumn>
+              <GridColumn
+                floated="right"
+              >
+                <Header
+                  as="h4"
+                  textAlign="right"
+                >
+                  Bazyli Cyran | Agata Toczyńska | Paweł Komorowski
+                </Header>
+              </GridColumn>
+            </GridRow>,
+            "columns": 2,
+            "stackable": true,
+          },
+          "ref": null,
+          "rendered": Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "function",
+            "props": Object {
+              "children": Array [
+                <GridColumn
+                  floated="left"
+                >
+                  <Header
+                    as="h4"
+                  >
+                    Nokia Innovative Project 2019
+                  </Header>
+                </GridColumn>,
+                <GridColumn
+                  floated="right"
+                >
+                  <Header
+                    as="h4"
+                    textAlign="right"
+                  >
+                    Bazyli Cyran | Agata Toczyńska | Paweł Komorowski
+                  </Header>
+                </GridColumn>,
+              ],
+            },
+            "ref": null,
+            "rendered": Array [
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "function",
+                "props": Object {
+                  "children": <Header
+                    as="h4"
+                  >
+                    Nokia Innovative Project 2019
+                  </Header>,
+                  "floated": "left",
+                },
+                "ref": null,
+                "rendered": Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "function",
+                  "props": Object {
+                    "as": "h4",
+                    "children": "Nokia Innovative Project 2019",
+                  },
+                  "ref": null,
+                  "rendered": "Nokia Innovative Project 2019",
+                  "type": [Function],
+                },
+                "type": [Function],
+              },
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "function",
+                "props": Object {
+                  "children": <Header
+                    as="h4"
+                    textAlign="right"
+                  >
+                    Bazyli Cyran | Agata Toczyńska | Paweł Komorowski
+                  </Header>,
+                  "floated": "right",
+                },
+                "ref": null,
+                "rendered": Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "function",
+                  "props": Object {
+                    "as": "h4",
+                    "children": "Bazyli Cyran | Agata Toczyńska | Paweł Komorowski",
+                    "textAlign": "right",
+                  },
+                  "ref": null,
+                  "rendered": "Bazyli Cyran | Agata Toczyńska | Paweł Komorowski",
+                  "type": [Function],
+                },
+                "type": [Function],
+              },
+            ],
+            "type": [Function],
+          },
+          "type": [Function],
+        },
+        "type": [Function],
+      },
+      "type": [Function],
+    },
+  ],
+  Symbol(enzyme.__options__): Object {
+    "adapter": ReactSixteenAdapter {
+      "options": Object {
+        "enableComponentDidUpdateOnSetState": true,
+        "legacyContextMode": "parent",
+        "lifecycles": Object {
+          "componentDidUpdate": Object {
+            "onSetState": true,
+          },
+          "getChildContext": Object {
+            "calledByRenderer": false,
+          },
+          "getDerivedStateFromError": true,
+          "getDerivedStateFromProps": Object {
+            "hasShouldComponentUpdateBug": false,
+          },
+          "getSnapshotBeforeUpdate": true,
+          "setState": Object {
+            "skipsComponentDidUpdateOnNullish": true,
+          },
+        },
+      },
+    },
+  },
+}
+`;

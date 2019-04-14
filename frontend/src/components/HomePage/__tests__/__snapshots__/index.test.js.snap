@@ -1,0 +1,629 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HomePage should match snapshot 1`] = `
+ShallowWrapper {
+  Symbol(enzyme.__root__): [Circular],
+  Symbol(enzyme.__unrendered__): <HomePage />,
+  Symbol(enzyme.__renderer__): Object {
+    "batchedUpdates": [Function],
+    "checkPropTypes": [Function],
+    "getNode": [Function],
+    "render": [Function],
+    "simulateError": [Function],
+    "simulateEvent": [Function],
+    "unmount": [Function],
+  },
+  Symbol(enzyme.__node__): Object {
+    "instance": null,
+    "key": undefined,
+    "nodeType": "function",
+    "props": Object {
+      "children": <Container
+        textAlign="justified"
+      >
+        <div
+          className="flex-space-evenly"
+          style={
+            Object {
+              "flexWrap": "wrap",
+            }
+          }
+        >
+          <div
+            style={
+              Object {
+                "fontSize": "0.9em",
+                "margin": "1em",
+                "maxWidth": 700,
+                "paddingTop": 20,
+              }
+            }
+          >
+            <p>
+              Health-check is a clever way of measuring a team’s feelings: once a month, team members are asked to rate their satisfaction with certain areas, such as ‘Delivering value’ or ‘Teamwork’. Squad Health Care allows us to find problems when they are small and define proper solution.
+              <br />
+              Additionally we are engaging all employees to be active in organization improvement topic. It is a massive amount of people who are thinking about
+              <br />
+              <span
+                style={
+                  Object {
+                    "fontWeight": "bold",
+                  }
+                }
+              >
+                “What has to change to create better work environment?”.
+              </span>
+            </p>
+          </div>
+          <div>
+            <i
+              aria-hidden="true"
+              className="fa fa-users"
+              style={
+                Object {
+                  "fontSize": 150,
+                }
+              }
+            />
+          </div>
+        </div>
+      </Container>,
+      "history": undefined,
+    },
+    "ref": null,
+    "rendered": Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "function",
+      "props": Object {
+        "children": <div
+          className="flex-space-evenly"
+          style={
+            Object {
+              "flexWrap": "wrap",
+            }
+          }
+        >
+          <div
+            style={
+              Object {
+                "fontSize": "0.9em",
+                "margin": "1em",
+                "maxWidth": 700,
+                "paddingTop": 20,
+              }
+            }
+          >
+            <p>
+              Health-check is a clever way of measuring a team’s feelings: once a month, team members are asked to rate their satisfaction with certain areas, such as ‘Delivering value’ or ‘Teamwork’. Squad Health Care allows us to find problems when they are small and define proper solution.
+              <br />
+              Additionally we are engaging all employees to be active in organization improvement topic. It is a massive amount of people who are thinking about
+              <br />
+              <span
+                style={
+                  Object {
+                    "fontWeight": "bold",
+                  }
+                }
+              >
+                “What has to change to create better work environment?”.
+              </span>
+            </p>
+          </div>
+          <div>
+            <i
+              aria-hidden="true"
+              className="fa fa-users"
+              style={
+                Object {
+                  "fontSize": 150,
+                }
+              }
+            />
+          </div>
+        </div>,
+        "textAlign": "justified",
+      },
+      "ref": null,
+      "rendered": Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "children": Array [
+            <div
+              style={
+                Object {
+                  "fontSize": "0.9em",
+                  "margin": "1em",
+                  "maxWidth": 700,
+                  "paddingTop": 20,
+                }
+              }
+            >
+              <p>
+                Health-check is a clever way of measuring a team’s feelings: once a month, team members are asked to rate their satisfaction with certain areas, such as ‘Delivering value’ or ‘Teamwork’. Squad Health Care allows us to find problems when they are small and define proper solution.
+                <br />
+                Additionally we are engaging all employees to be active in organization improvement topic. It is a massive amount of people who are thinking about
+                <br />
+                <span
+                  style={
+                    Object {
+                      "fontWeight": "bold",
+                    }
+                  }
+                >
+                  “What has to change to create better work environment?”.
+                </span>
+              </p>
+            </div>,
+            <div>
+              <i
+                aria-hidden="true"
+                className="fa fa-users"
+                style={
+                  Object {
+                    "fontSize": 150,
+                  }
+                }
+              />
+            </div>,
+          ],
+          "className": "flex-space-evenly",
+          "style": Object {
+            "flexWrap": "wrap",
+          },
+        },
+        "ref": null,
+        "rendered": Array [
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "children": <p>
+                Health-check is a clever way of measuring a team’s feelings: once a month, team members are asked to rate their satisfaction with certain areas, such as ‘Delivering value’ or ‘Teamwork’. Squad Health Care allows us to find problems when they are small and define proper solution.
+                <br />
+                Additionally we are engaging all employees to be active in organization improvement topic. It is a massive amount of people who are thinking about
+                <br />
+                <span
+                  style={
+                    Object {
+                      "fontWeight": "bold",
+                    }
+                  }
+                >
+                  “What has to change to create better work environment?”.
+                </span>
+              </p>,
+              "style": Object {
+                "fontSize": "0.9em",
+                "margin": "1em",
+                "maxWidth": 700,
+                "paddingTop": 20,
+              },
+            },
+            "ref": null,
+            "rendered": Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": Array [
+                  "Health-check is a clever way of measuring a team’s feelings: once a month, team members are asked to rate their satisfaction with certain areas, such as ‘Delivering value’ or ‘Teamwork’. Squad Health Care allows us to find problems when they are small and define proper solution.",
+                  <br />,
+                  "Additionally we are engaging all employees to be active in organization improvement topic. It is a massive amount of people who are thinking about",
+                  <br />,
+                  <span
+                    style={
+                      Object {
+                        "fontWeight": "bold",
+                      }
+                    }
+                  >
+                    “What has to change to create better work environment?”.
+                  </span>,
+                ],
+              },
+              "ref": null,
+              "rendered": Array [
+                "Health-check is a clever way of measuring a team’s feelings: once a month, team members are asked to rate their satisfaction with certain areas, such as ‘Delivering value’ or ‘Teamwork’. Squad Health Care allows us to find problems when they are small and define proper solution.",
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "host",
+                  "props": Object {},
+                  "ref": null,
+                  "rendered": null,
+                  "type": "br",
+                },
+                "Additionally we are engaging all employees to be active in organization improvement topic. It is a massive amount of people who are thinking about",
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "host",
+                  "props": Object {},
+                  "ref": null,
+                  "rendered": null,
+                  "type": "br",
+                },
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "host",
+                  "props": Object {
+                    "children": "“What has to change to create better work environment?”.",
+                    "style": Object {
+                      "fontWeight": "bold",
+                    },
+                  },
+                  "ref": null,
+                  "rendered": "“What has to change to create better work environment?”.",
+                  "type": "span",
+                },
+              ],
+              "type": "p",
+            },
+            "type": "div",
+          },
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "children": <i
+                aria-hidden="true"
+                className="fa fa-users"
+                style={
+                  Object {
+                    "fontSize": 150,
+                  }
+                }
+              />,
+            },
+            "ref": null,
+            "rendered": Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "aria-hidden": "true",
+                "className": "fa fa-users",
+                "style": Object {
+                  "fontSize": 150,
+                },
+              },
+              "ref": null,
+              "rendered": null,
+              "type": "i",
+            },
+            "type": "div",
+          },
+        ],
+        "type": "div",
+      },
+      "type": [Function],
+    },
+    "type": [Function],
+  },
+  Symbol(enzyme.__nodes__): Array [
+    Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "function",
+      "props": Object {
+        "children": <Container
+          textAlign="justified"
+        >
+          <div
+            className="flex-space-evenly"
+            style={
+              Object {
+                "flexWrap": "wrap",
+              }
+            }
+          >
+            <div
+              style={
+                Object {
+                  "fontSize": "0.9em",
+                  "margin": "1em",
+                  "maxWidth": 700,
+                  "paddingTop": 20,
+                }
+              }
+            >
+              <p>
+                Health-check is a clever way of measuring a team’s feelings: once a month, team members are asked to rate their satisfaction with certain areas, such as ‘Delivering value’ or ‘Teamwork’. Squad Health Care allows us to find problems when they are small and define proper solution.
+                <br />
+                Additionally we are engaging all employees to be active in organization improvement topic. It is a massive amount of people who are thinking about
+                <br />
+                <span
+                  style={
+                    Object {
+                      "fontWeight": "bold",
+                    }
+                  }
+                >
+                  “What has to change to create better work environment?”.
+                </span>
+              </p>
+            </div>
+            <div>
+              <i
+                aria-hidden="true"
+                className="fa fa-users"
+                style={
+                  Object {
+                    "fontSize": 150,
+                  }
+                }
+              />
+            </div>
+          </div>
+        </Container>,
+        "history": undefined,
+      },
+      "ref": null,
+      "rendered": Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "function",
+        "props": Object {
+          "children": <div
+            className="flex-space-evenly"
+            style={
+              Object {
+                "flexWrap": "wrap",
+              }
+            }
+          >
+            <div
+              style={
+                Object {
+                  "fontSize": "0.9em",
+                  "margin": "1em",
+                  "maxWidth": 700,
+                  "paddingTop": 20,
+                }
+              }
+            >
+              <p>
+                Health-check is a clever way of measuring a team’s feelings: once a month, team members are asked to rate their satisfaction with certain areas, such as ‘Delivering value’ or ‘Teamwork’. Squad Health Care allows us to find problems when they are small and define proper solution.
+                <br />
+                Additionally we are engaging all employees to be active in organization improvement topic. It is a massive amount of people who are thinking about
+                <br />
+                <span
+                  style={
+                    Object {
+                      "fontWeight": "bold",
+                    }
+                  }
+                >
+                  “What has to change to create better work environment?”.
+                </span>
+              </p>
+            </div>
+            <div>
+              <i
+                aria-hidden="true"
+                className="fa fa-users"
+                style={
+                  Object {
+                    "fontSize": 150,
+                  }
+                }
+              />
+            </div>
+          </div>,
+          "textAlign": "justified",
+        },
+        "ref": null,
+        "rendered": Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": Array [
+              <div
+                style={
+                  Object {
+                    "fontSize": "0.9em",
+                    "margin": "1em",
+                    "maxWidth": 700,
+                    "paddingTop": 20,
+                  }
+                }
+              >
+                <p>
+                  Health-check is a clever way of measuring a team’s feelings: once a month, team members are asked to rate their satisfaction with certain areas, such as ‘Delivering value’ or ‘Teamwork’. Squad Health Care allows us to find problems when they are small and define proper solution.
+                  <br />
+                  Additionally we are engaging all employees to be active in organization improvement topic. It is a massive amount of people who are thinking about
+                  <br />
+                  <span
+                    style={
+                      Object {
+                        "fontWeight": "bold",
+                      }
+                    }
+                  >
+                    “What has to change to create better work environment?”.
+                  </span>
+                </p>
+              </div>,
+              <div>
+                <i
+                  aria-hidden="true"
+                  className="fa fa-users"
+                  style={
+                    Object {
+                      "fontSize": 150,
+                    }
+                  }
+                />
+              </div>,
+            ],
+            "className": "flex-space-evenly",
+            "style": Object {
+              "flexWrap": "wrap",
+            },
+          },
+          "ref": null,
+          "rendered": Array [
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": <p>
+                  Health-check is a clever way of measuring a team’s feelings: once a month, team members are asked to rate their satisfaction with certain areas, such as ‘Delivering value’ or ‘Teamwork’. Squad Health Care allows us to find problems when they are small and define proper solution.
+                  <br />
+                  Additionally we are engaging all employees to be active in organization improvement topic. It is a massive amount of people who are thinking about
+                  <br />
+                  <span
+                    style={
+                      Object {
+                        "fontWeight": "bold",
+                      }
+                    }
+                  >
+                    “What has to change to create better work environment?”.
+                  </span>
+                </p>,
+                "style": Object {
+                  "fontSize": "0.9em",
+                  "margin": "1em",
+                  "maxWidth": 700,
+                  "paddingTop": 20,
+                },
+              },
+              "ref": null,
+              "rendered": Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": Array [
+                    "Health-check is a clever way of measuring a team’s feelings: once a month, team members are asked to rate their satisfaction with certain areas, such as ‘Delivering value’ or ‘Teamwork’. Squad Health Care allows us to find problems when they are small and define proper solution.",
+                    <br />,
+                    "Additionally we are engaging all employees to be active in organization improvement topic. It is a massive amount of people who are thinking about",
+                    <br />,
+                    <span
+                      style={
+                        Object {
+                          "fontWeight": "bold",
+                        }
+                      }
+                    >
+                      “What has to change to create better work environment?”.
+                    </span>,
+                  ],
+                },
+                "ref": null,
+                "rendered": Array [
+                  "Health-check is a clever way of measuring a team’s feelings: once a month, team members are asked to rate their satisfaction with certain areas, such as ‘Delivering value’ or ‘Teamwork’. Squad Health Care allows us to find problems when they are small and define proper solution.",
+                  Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "host",
+                    "props": Object {},
+                    "ref": null,
+                    "rendered": null,
+                    "type": "br",
+                  },
+                  "Additionally we are engaging all employees to be active in organization improvement topic. It is a massive amount of people who are thinking about",
+                  Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "host",
+                    "props": Object {},
+                    "ref": null,
+                    "rendered": null,
+                    "type": "br",
+                  },
+                  Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "host",
+                    "props": Object {
+                      "children": "“What has to change to create better work environment?”.",
+                      "style": Object {
+                        "fontWeight": "bold",
+                      },
+                    },
+                    "ref": null,
+                    "rendered": "“What has to change to create better work environment?”.",
+                    "type": "span",
+                  },
+                ],
+                "type": "p",
+              },
+              "type": "div",
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": <i
+                  aria-hidden="true"
+                  className="fa fa-users"
+                  style={
+                    Object {
+                      "fontSize": 150,
+                    }
+                  }
+                />,
+              },
+              "ref": null,
+              "rendered": Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "aria-hidden": "true",
+                  "className": "fa fa-users",
+                  "style": Object {
+                    "fontSize": 150,
+                  },
+                },
+                "ref": null,
+                "rendered": null,
+                "type": "i",
+              },
+              "type": "div",
+            },
+          ],
+          "type": "div",
+        },
+        "type": [Function],
+      },
+      "type": [Function],
+    },
+  ],
+  Symbol(enzyme.__options__): Object {
+    "adapter": ReactSixteenAdapter {
+      "options": Object {
+        "enableComponentDidUpdateOnSetState": true,
+        "legacyContextMode": "parent",
+        "lifecycles": Object {
+          "componentDidUpdate": Object {
+            "onSetState": true,
+          },
+          "getChildContext": Object {
+            "calledByRenderer": false,
+          },
+          "getDerivedStateFromError": true,
+          "getDerivedStateFromProps": Object {
+            "hasShouldComponentUpdateBug": false,
+          },
+          "getSnapshotBeforeUpdate": true,
+          "setState": Object {
+            "skipsComponentDidUpdateOnNullish": true,
+          },
+        },
+      },
+    },
+  },
+}
+`;
