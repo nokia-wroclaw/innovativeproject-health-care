@@ -7,7 +7,7 @@ import colors from "../../styles/colors";
 
 const Menu = ({ menu, active, setMenuOption }) => {
   return (
-    <Sticky>
+    <Sticky style={{ boxShadow: "0 2px 8px rgba(0, 0, 0, 0.2)" }}>
       <SemanticMenu
         inverted
         pointing

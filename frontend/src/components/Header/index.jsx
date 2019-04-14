@@ -19,7 +19,13 @@ class Header extends Component {
     const { user } = this.props;
     return (
       <React.Fragment>
-        <Segment inverted vertical color={colors.header} padded="very">
+        <Segment
+          inverted
+          vertical
+          color={colors.header}
+          padded="very"
+          style={{ boxShadow: "0 2px 8px rgba(0, 0, 0, 0.2)" }}
+        >
           <Container>
             <Grid columns={2}>
               <Grid.Row>
