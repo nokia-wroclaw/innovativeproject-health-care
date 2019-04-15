@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Header, Card, Grid, Input, Button, Form } from "semantic-ui-react";
-import SectionIcon from "../../common/SectionIcon";
+import SectionIcon from "../../common/SectionIcon/";
 
 class SectionHeader extends Component {
   state = {

@@ -8,7 +8,7 @@ const TemplatePage = props => {
   return (
     <div className="template-page-container">
       <LoginModal />
-      <Header history={props.history} />
+      <Header />
       <div className="template-page-content">{props.children}</div>
       <Footer />
     </div>

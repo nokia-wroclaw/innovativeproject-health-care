@@ -2,9 +2,9 @@ import React from "react";
 import { Container } from "semantic-ui-react";
 import TemplatePage from "../common/TemplatePage/";
 
-const HomePage = props => {
+const HomePage = () => {
   return (
-    <TemplatePage history={props.history}>
+    <TemplatePage>
       <Container textAlign="justified">
         <div className="flex-space-evenly" style={{ flexWrap: "wrap" }}>
           <div

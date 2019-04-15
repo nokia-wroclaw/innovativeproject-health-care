@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Button, Form } from "semantic-ui-react";
 import Joi from "joi";
-import colors from "../../styles/colors";
-import { login } from "../../store/actions/auth";
+import colors from "../../../styles/colors";
+import { login } from "../../../store/actions/user";
 
 class LoginForm extends Component {
   state = {
@@ -49,10 +49,9 @@ class LoginForm extends Component {
     if (errors) return;
 
     const { username, password } = this.state.account;
-    const { login, history } = this.props;
+    const { login } = this.props;
     try {
       await login(username, password);
-      history.push(this.props.nextPath);
     } catch {
       const errors = { ...this.state.errors };
       errors.loginFailed = true;
@@ -96,11 +95,7 @@ class LoginForm extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  nextPath: state.user.menu ? state.user.menu[0].path : "/"
-});
-
 export default connect(
-  mapStateToProps,
+  null,
   { login }
 )(LoginForm);

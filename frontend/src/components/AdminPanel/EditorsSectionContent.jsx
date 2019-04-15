@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { deleteEditor } from "./../../store/actions/editors";
 import { Card, Grid } from "semantic-ui-react";
 import colors from "../../styles/colors";
-import SectionIcon from "./../common/SectionIcon";
+import SectionIcon from "../common/SectionIcon/";
 
 const EditorsSectionContent = props => {
   return (

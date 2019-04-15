@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Popup } from "semantic-ui-react";
-import LoginForm from "./LoginForm";
+import LoginForm from "../common/LoginForm";
 import colors from "../../styles/colors";
 
 const LoginButton = props => {
@@ -14,7 +14,7 @@ const LoginButton = props => {
           floated="right"
         />
       }
-      content={<LoginForm history={props.history} />}
+      content={<LoginForm />}
       on="click"
       position="bottom right"
     />

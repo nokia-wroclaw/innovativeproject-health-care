@@ -10,3 +10,6 @@ export const DELETE_EDITOR = "DELETE_EDITOR";
 export const SET_TRIBES = "SET_TRIBES";
 export const ADD_TRIBE = "ADD_TRIBE";
 export const DELETE_TRIBE = "DELETE_TRIBE";
+
+export const OPEN_LOGIN_MODAL = "OPEN_LOGIN_MODAL";
+export const CLOSE_LOGIN_MODAL = "CLOSE_LOGIN_MODAL ";

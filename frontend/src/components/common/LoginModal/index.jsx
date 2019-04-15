@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Modal } from "semantic-ui-react";
-import LoginForm from "../../Header/LoginForm";
+import LoginForm from "../LoginForm";
 
 const LoginModal = ({ open }) => {
   return (
@@ -15,7 +15,7 @@ const LoginModal = ({ open }) => {
 };
 
 const mapStateToProps = state => ({
-  open: state.openLoginModal
+  open: state.general.openLoginModal
 });
 
-export default connect()(LoginModal);
+export default connect(mapStateToProps)(LoginModal);

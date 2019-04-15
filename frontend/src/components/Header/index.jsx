@@ -38,10 +38,10 @@ class Header extends Component {
                   {user ? (
                     <Container textAlign="right">
                       <UserDisplayName />
-                      <LogoutButton history={this.props.history} />
+                      <LogoutButton />
                     </Container>
                   ) : (
-                    <LoginButton history={this.props.history} />
+                    <LoginButton />
                   )}
                 </Grid.Column>
               </Grid.Row>

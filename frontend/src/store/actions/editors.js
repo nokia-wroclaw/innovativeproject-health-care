@@ -1,6 +1,7 @@
 import { SET_EDITORS, ADD_EDITOR, DELETE_EDITOR } from "./types";
 import axios from "axios";
 import { endpoints, getHttpConfig } from "../../services/http";
+import { openLoginModal } from "./general";
 
 export const setEditors = () => dispatch => {
   return axios
@@ -12,7 +13,7 @@ export const setEditors = () => dispatch => {
       });
     })
     .catch(() => {
-      throw new Error();
+      dispatch(openLoginModal());
     });
 };
 
@@ -24,7 +25,10 @@ export const addEditor = editor => dispatch => {
         type: ADD_EDITOR,
         payload: editor
       })
-    );
+    )
+    .catch(() => {
+      dispatch(openLoginModal());
+    });
 };
 
 export const deleteEditor = editor => dispatch => {
@@ -35,5 +39,8 @@ export const deleteEditor = editor => dispatch => {
         type: DELETE_EDITOR,
         payload: editor
       })
-    );
+    )
+    .catch(() => {
+      dispatch(openLoginModal());
+    });
 };

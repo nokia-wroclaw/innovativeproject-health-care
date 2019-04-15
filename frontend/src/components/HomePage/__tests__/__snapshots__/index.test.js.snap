@@ -68,7 +68,6 @@ ShallowWrapper {
           </div>
         </div>
       </Container>,
-      "history": undefined,
     },
     "ref": null,
     "rendered": Object {
@@ -362,7 +361,6 @@ ShallowWrapper {
             </div>
           </div>
         </Container>,
-        "history": undefined,
       },
       "ref": null,
       "rendered": Object {

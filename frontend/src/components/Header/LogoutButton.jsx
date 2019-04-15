@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
-import { logout } from "../../store/actions/auth";
+import { logout } from "../../store/actions/user";
 import { Popup } from "semantic-ui-react";
 
 const LogoutButton = ({ logout }) => {

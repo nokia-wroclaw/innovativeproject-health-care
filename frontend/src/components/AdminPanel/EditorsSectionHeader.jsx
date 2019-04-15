@@ -3,7 +3,8 @@ import { connect } from "react-redux";
 import { Header, Card, Grid, Input, Button, Form } from "semantic-ui-react";
 import { getUsersByName } from "../../services/inputHints";
 import { addEditor } from "../../store/actions/editors";
-import SectionIcon from "./../common/SectionIcon";
+import { openLoginModal } from "./../../store/actions/general";
+import SectionIcon from "../common/SectionIcon/";
 
 class EditorsSectionHeader extends Component {
   constructor(props) {
@@ -36,9 +37,11 @@ class EditorsSectionHeader extends Component {
     await this.setState({ inputValue });
 
     if (inputValue.length === 4) {
-      getUsersByName(inputValue).then(({ data }) =>
-        this.setState({ dataList: data })
-      );
+      getUsersByName(inputValue)
+        .then(({ data }) => this.setState({ dataList: data }))
+        .catch(() => {
+          this.props.openLoginModal();
+        });
     }
     this.validateInput();
   };
@@ -118,5 +121,5 @@ class EditorsSectionHeader extends Component {
 
 export default connect(
   null,
-  { addEditor }
+  { addEditor, openLoginModal }
 )(EditorsSectionHeader);

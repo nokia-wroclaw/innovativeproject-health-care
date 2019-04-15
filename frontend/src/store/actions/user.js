@@ -1,7 +1,8 @@
-import { LOGIN, LOGOUT } from "./types";
+import { LOGIN, LOGOUT, OPTION_SELECTED } from "./types";
 import axios from "axios";
 import jwtDecode from "jwt-decode";
 import { endpoints } from "../../services/http";
+import { closeLoginModal } from "./general";
 
 export const setUser = user => ({
   type: LOGIN,
@@ -21,6 +22,7 @@ export const login = (username, password) => dispatch => {
     localStorage.setItem("jwt", jwt);
     const { user } = jwtDecode(jwt);
     dispatch(setUser(user));
+    dispatch(closeLoginModal());
   });
 };
 
@@ -30,3 +32,8 @@ export const logout = () => {
     type: LOGOUT
   };
 };
+
+export const setMenuOption = optionName => ({
+  type: OPTION_SELECTED,
+  payload: optionName
+});

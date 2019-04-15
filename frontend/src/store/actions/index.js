@@ -1,9 +1,4 @@
-import { OPTION_SELECTED, QUESTION_ANSWERED } from "./types";
-
-export const setMenuOption = optionName => ({
-  type: OPTION_SELECTED,
-  payload: optionName
-});
+import { QUESTION_ANSWERED } from "./types";
 
 export const setAnswer = (questionId, answer) => ({
   type: QUESTION_ANSWERED,

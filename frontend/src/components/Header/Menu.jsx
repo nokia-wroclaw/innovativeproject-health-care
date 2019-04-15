@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Menu as SemanticMenu, Sticky, Dropdown } from "semantic-ui-react";
-import { setMenuOption } from "../../store/actions";
+import { setMenuOption } from "../../store/actions/user";
 import colors from "../../styles/colors";
 
 const Menu = ({ menu, active, setMenuOption }) => {
