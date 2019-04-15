@@ -18,7 +18,6 @@ export const login = (username, password) => dispatch => {
 
   return axios.post(endpoints.login, {}, config).then(response => {
     const jwt = response.data.access_token;
-    // localStorage.removeItem("jwt");
     localStorage.setItem("jwt", jwt);
     const { user } = jwtDecode(jwt);
     dispatch(setUser(user));
