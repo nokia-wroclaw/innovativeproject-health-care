@@ -49,9 +49,10 @@ class LoginForm extends Component {
     if (errors) return;
 
     const { username, password } = this.state.account;
-    const { login } = this.props;
+    const { login, reload } = this.props;
     try {
       await login(username, password);
+      if (reload) window.location.reload();
     } catch {
       const errors = { ...this.state.errors };
       errors.loginFailed = true;

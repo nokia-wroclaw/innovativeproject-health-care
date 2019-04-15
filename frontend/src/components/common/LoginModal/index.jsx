@@ -8,7 +8,7 @@ const LoginModal = ({ open }) => {
     <Modal open={open}>
       <Modal.Header>Please, confirm your identity</Modal.Header>
       <Modal.Content>
-        <LoginForm />
+        <LoginForm reload={true} />
       </Modal.Content>
     </Modal>
   );
