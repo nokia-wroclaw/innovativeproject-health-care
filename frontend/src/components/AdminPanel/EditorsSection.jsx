@@ -13,12 +13,14 @@ class EditorsSection extends Component {
   render() {
     const { editors } = this.props;
     return (
-      <Card style={{ margin: "10px" }}>
-        <EditorsSectionHeader />
-        {editors.map(editor => (
-          <EditorsSectionContent key={editor.id} editor={editor} />
-        ))}
-      </Card>
+      <React.Fragment>
+        <Card style={{ margin: "10px" }}>
+          <EditorsSectionHeader />
+          {editors.map(editor => (
+            <EditorsSectionContent key={editor.id} editor={editor} />
+          ))}
+        </Card>
+      </React.Fragment>
     );
   }
 }

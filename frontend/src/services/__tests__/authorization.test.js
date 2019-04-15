@@ -58,3 +58,33 @@ describe('isManager should return true when given object has "roles" array prope
     expect(auth.isManager(user4)).toBe(false);
   });
 });
+
+describe('isUser should return true when given object has "roles" array property that includes "user"', () => {
+  it('should return true for object.roles = ["user"]', () => {
+    expect(auth.isUser(user1)).toBe(true);
+  });
+  it('should return true for object.roles = ["user", "maneger", "editor", "admin"]', () => {
+    expect(auth.isUser(user2)).toBe(true);
+  });
+  it("should return false for empty object", () => {
+    expect(auth.isUser(user3)).toBe(false);
+  });
+  it("should return false for object.roles = []", () => {
+    expect(auth.isUser(user4)).toBe(false);
+  });
+});
+
+describe("getMenu should return menu depending on user's role", () => {
+  it('sholud return 4-element array for object.roles=["user"]', () => {
+    expect(auth.getMenu(user1).length).toEqual(4);
+  });
+  it('sholud return 8-element array for object.roles = ["user", "maneger", "editor", "admin"]', () => {
+    expect(auth.getMenu(user2).length).toEqual(8);
+  });
+  it("sholud return empty array for empty object", () => {
+    expect(auth.getMenu(user3).length).toEqual(0);
+  });
+  it('sholud return empty array for object.roles = []"', () => {
+    expect(auth.getMenu(user4).length).toEqual(0);
+  });
+});

@@ -6,26 +6,30 @@ const userMenu = [
 ];
 
 const managerMenu = [
-  ...userMenu,
+  //...userMenu,
   { name: "Comments", path: "/users_comments" },
   { name: "Edit survey", path: "/edit_survey" }
 ];
 
 const editorMenu = [
-  ...managerMenu,
+  //...managerMenu,
   { name: "Users management", path: "/users_management" }
 ];
 
 const adminMenu = [
-  ...editorMenu,
+  // ...editorMenu,
   { name: "Admin panel", path: "/admin_panel" }
 ];
 
 const getMenu = user => {
-  if (user.roles.includes("admin")) return adminMenu;
-  if (user.roles.includes("editor")) return editorMenu;
-  if (user.roles.includes("manager")) return managerMenu;
-  return userMenu;
+  let menu = [];
+  try {
+    if (user.roles.includes("user")) menu = [...menu, ...userMenu];
+    if (user.roles.includes("manager")) menu = [...menu, ...managerMenu];
+    if (user.roles.includes("editor")) menu = [...menu, ...editorMenu];
+    if (user.roles.includes("admin")) menu = [...menu, ...adminMenu];
+  } catch {}
+  return menu;
 };
 
 const isAdmin = user => {
@@ -52,6 +56,14 @@ const isManager = user => {
   }
 };
 
+const isUser = user => {
+  try {
+    return user.roles.includes("user");
+  } catch {
+    return false;
+  }
+};
+
 export const getJwt = () => localStorage.getItem("jwt");
 
 export default {
@@ -60,5 +72,6 @@ export default {
   isAdmin,
   isEditor,
   isManager,
+  isUser,
   getJwt
 };

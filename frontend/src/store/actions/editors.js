@@ -3,12 +3,17 @@ import axios from "axios";
 import { endpoints, getHttpConfig } from "../../services/http";
 
 export const setEditors = () => dispatch => {
-  return axios.get(endpoints.getEditors, getHttpConfig()).then(response => {
-    dispatch({
-      type: SET_EDITORS,
-      payload: response.data
+  return axios
+    .get(endpoints.getEditors, getHttpConfig())
+    .then(response => {
+      dispatch({
+        type: SET_EDITORS,
+        payload: response.data
+      });
+    })
+    .catch(() => {
+      throw new Error();
     });
-  });
 };
 
 export const addEditor = editor => dispatch => {

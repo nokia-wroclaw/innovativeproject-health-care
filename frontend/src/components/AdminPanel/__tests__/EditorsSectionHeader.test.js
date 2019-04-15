@@ -1,9 +1,12 @@
 import React from "react";
-import { shallow } from "enzyme";
+import { shallow, mount } from "enzyme";
+import { Provider } from "react-redux";
+import configureStore from "redux-mock-store";
 import EditorsSectionHeader from "../EditorsSectionHeader";
 
 describe("EditorsSectionHeader", () => {
-  it("should match snapshot", () => {
-    expect(shallow(<EditorsSectionHeader />)).toMatchSnapshot();
+  it("should render without crashing", () => {
+    const wrapper = shallow(<EditorsSectionHeader />);
+    expect(wrapper.isEmptyRender()).toBe(false);
   });
 });

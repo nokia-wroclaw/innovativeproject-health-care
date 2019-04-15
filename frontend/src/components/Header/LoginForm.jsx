@@ -97,7 +97,7 @@ class LoginForm extends Component {
 }
 
 const mapStateToProps = state => ({
-  nextPath: state.user.firstPath
+  nextPath: state.user.menu ? state.user.menu[0].path : "/"
 });
 
 export default connect(
