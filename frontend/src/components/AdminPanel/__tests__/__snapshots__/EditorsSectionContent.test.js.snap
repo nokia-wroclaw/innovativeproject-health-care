@@ -3,7 +3,13 @@
 exports[`EditorsSectionContent should match snapshot 1`] = `
 ShallowWrapper {
   Symbol(enzyme.__root__): [Circular],
-  Symbol(enzyme.__unrendered__): <Connect(EditorsSectionContent) />,
+  Symbol(enzyme.__unrendered__): <EditorsSectionContent
+    editor={
+      Object {
+        "name": "John",
+      }
+    }
+  />,
   Symbol(enzyme.__renderer__): Object {
     "batchedUpdates": [Function],
     "checkPropTypes": [Function],
@@ -18,28 +24,136 @@ ShallowWrapper {
     "key": undefined,
     "nodeType": "function",
     "props": Object {
-      "children": [Function],
+      "children": <Grid>
+        <GridRow
+          columns={2}
+        >
+          <GridColumn
+            floated="left"
+            width={13}
+          >
+            John
+          </GridColumn>
+          <GridColumn
+            floated="right"
+            textAlign="center"
+            width={3}
+          >
+            <SectionIcon
+              className="fa fa-minus-square-o"
+              color="#E80000"
+              onClick={[Function]}
+            />
+          </GridColumn>
+        </GridRow>
+      </Grid>,
     },
     "ref": null,
-    "rendered": [Function],
-    "type": Object {
-      "$$typeof": Symbol(react.context),
-      "_calculateChangedBits": null,
-      "_context": Object {
-        "$$typeof": Symbol(react.context),
-        "Consumer": [Circular],
-        "Provider": Object {
-          "$$typeof": Symbol(react.provider),
-          "_context": [Circular],
-        },
-        "_calculateChangedBits": null,
-        "_currentRenderer": null,
-        "_currentRenderer2": null,
-        "_currentValue": null,
-        "_currentValue2": null,
-        "_threadCount": 0,
+    "rendered": Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "function",
+      "props": Object {
+        "children": <GridRow
+          columns={2}
+        >
+          <GridColumn
+            floated="left"
+            width={13}
+          >
+            John
+          </GridColumn>
+          <GridColumn
+            floated="right"
+            textAlign="center"
+            width={3}
+          >
+            <SectionIcon
+              className="fa fa-minus-square-o"
+              color="#E80000"
+              onClick={[Function]}
+            />
+          </GridColumn>
+        </GridRow>,
       },
+      "ref": null,
+      "rendered": Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "function",
+        "props": Object {
+          "children": Array [
+            <GridColumn
+              floated="left"
+              width={13}
+            >
+              John
+            </GridColumn>,
+            <GridColumn
+              floated="right"
+              textAlign="center"
+              width={3}
+            >
+              <SectionIcon
+                className="fa fa-minus-square-o"
+                color="#E80000"
+                onClick={[Function]}
+              />
+            </GridColumn>,
+          ],
+          "columns": 2,
+        },
+        "ref": null,
+        "rendered": Array [
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "function",
+            "props": Object {
+              "children": "John",
+              "floated": "left",
+              "width": 13,
+            },
+            "ref": null,
+            "rendered": "John",
+            "type": [Function],
+          },
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "function",
+            "props": Object {
+              "children": <SectionIcon
+                className="fa fa-minus-square-o"
+                color="#E80000"
+                onClick={[Function]}
+              />,
+              "floated": "right",
+              "textAlign": "center",
+              "width": 3,
+            },
+            "ref": null,
+            "rendered": Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "function",
+              "props": Object {
+                "className": "fa fa-minus-square-o",
+                "color": "#E80000",
+                "onClick": [Function],
+              },
+              "ref": null,
+              "rendered": null,
+              "type": [Function],
+            },
+            "type": [Function],
+          },
+        ],
+        "type": [Function],
+      },
+      "type": [Function],
     },
+    "type": [Function],
   },
   Symbol(enzyme.__nodes__): Array [
     Object {
@@ -47,28 +161,136 @@ ShallowWrapper {
       "key": undefined,
       "nodeType": "function",
       "props": Object {
-        "children": [Function],
+        "children": <Grid>
+          <GridRow
+            columns={2}
+          >
+            <GridColumn
+              floated="left"
+              width={13}
+            >
+              John
+            </GridColumn>
+            <GridColumn
+              floated="right"
+              textAlign="center"
+              width={3}
+            >
+              <SectionIcon
+                className="fa fa-minus-square-o"
+                color="#E80000"
+                onClick={[Function]}
+              />
+            </GridColumn>
+          </GridRow>
+        </Grid>,
       },
       "ref": null,
-      "rendered": [Function],
-      "type": Object {
-        "$$typeof": Symbol(react.context),
-        "_calculateChangedBits": null,
-        "_context": Object {
-          "$$typeof": Symbol(react.context),
-          "Consumer": [Circular],
-          "Provider": Object {
-            "$$typeof": Symbol(react.provider),
-            "_context": [Circular],
-          },
-          "_calculateChangedBits": null,
-          "_currentRenderer": null,
-          "_currentRenderer2": null,
-          "_currentValue": null,
-          "_currentValue2": null,
-          "_threadCount": 0,
+      "rendered": Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "function",
+        "props": Object {
+          "children": <GridRow
+            columns={2}
+          >
+            <GridColumn
+              floated="left"
+              width={13}
+            >
+              John
+            </GridColumn>
+            <GridColumn
+              floated="right"
+              textAlign="center"
+              width={3}
+            >
+              <SectionIcon
+                className="fa fa-minus-square-o"
+                color="#E80000"
+                onClick={[Function]}
+              />
+            </GridColumn>
+          </GridRow>,
         },
+        "ref": null,
+        "rendered": Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "function",
+          "props": Object {
+            "children": Array [
+              <GridColumn
+                floated="left"
+                width={13}
+              >
+                John
+              </GridColumn>,
+              <GridColumn
+                floated="right"
+                textAlign="center"
+                width={3}
+              >
+                <SectionIcon
+                  className="fa fa-minus-square-o"
+                  color="#E80000"
+                  onClick={[Function]}
+                />
+              </GridColumn>,
+            ],
+            "columns": 2,
+          },
+          "ref": null,
+          "rendered": Array [
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "function",
+              "props": Object {
+                "children": "John",
+                "floated": "left",
+                "width": 13,
+              },
+              "ref": null,
+              "rendered": "John",
+              "type": [Function],
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "function",
+              "props": Object {
+                "children": <SectionIcon
+                  className="fa fa-minus-square-o"
+                  color="#E80000"
+                  onClick={[Function]}
+                />,
+                "floated": "right",
+                "textAlign": "center",
+                "width": 3,
+              },
+              "ref": null,
+              "rendered": Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "function",
+                "props": Object {
+                  "className": "fa fa-minus-square-o",
+                  "color": "#E80000",
+                  "onClick": [Function],
+                },
+                "ref": null,
+                "rendered": null,
+                "type": [Function],
+              },
+              "type": [Function],
+            },
+          ],
+          "type": [Function],
+        },
+        "type": [Function],
       },
+      "type": [Function],
     },
   ],
   Symbol(enzyme.__options__): Object {
@@ -95,6 +317,5 @@ ShallowWrapper {
       },
     },
   },
-  Symbol(enzyme.__childContext__): null,
 }
 `;

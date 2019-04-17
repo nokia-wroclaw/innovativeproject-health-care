@@ -61,7 +61,7 @@ class LoginForm extends Component {
   };
 
   render() {
-    const { account, errors } = this.state;
+    const { account, errors, loading } = this.state;
     return (
       <Form onSubmit={this.handleSubmit}>
         <Form.Input
@@ -86,7 +86,7 @@ class LoginForm extends Component {
           <Button
             type="submit"
             color={colors.formLoginButton}
-            loading={this.state.loading}
+            loading={loading}
           >
             Login
           </Button>

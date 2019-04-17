@@ -6,7 +6,7 @@ import { addEditor } from "../../store/actions/editors";
 import { openLoginModal } from "./../../store/actions/general";
 import SectionIcon from "../common/SectionIcon/";
 
-class EditorsSectionHeader extends Component {
+export class EditorsSectionHeader extends Component {
   constructor(props) {
     super(props);
     this.state = {

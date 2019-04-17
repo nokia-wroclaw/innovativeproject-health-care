@@ -5,7 +5,7 @@ import EditorsSectionContent from "./EditorsSectionContent";
 import { setEditors } from "./../../store/actions/editors";
 import { connect } from "react-redux";
 
-class EditorsSection extends Component {
+export class EditorsSection extends Component {
   componentWillMount() {
     this.props.setEditors();
   }
@@ -14,7 +14,7 @@ class EditorsSection extends Component {
     const { editors } = this.props;
     return (
       <React.Fragment>
-        <Card style={{ margin: "10px" }}>
+        <Card style={{ margin: "10px" }} className="editors-section-card">
           <EditorsSectionHeader />
           {editors.map(editor => (
             <EditorsSectionContent key={editor.id} editor={editor} />

@@ -5,19 +5,19 @@ import { Card, Grid } from "semantic-ui-react";
 import colors from "../../styles/colors";
 import SectionIcon from "../common/SectionIcon/";
 
-const EditorsSectionContent = props => {
+export const EditorsSectionContent = ({ editor, deleteEditor }) => {
   return (
     <Card.Content>
       <Grid>
         <Grid.Row columns={2}>
           <Grid.Column width={13} floated="left">
-            {props.editor.name}
+            {editor.name}
           </Grid.Column>
           <Grid.Column width={3} floated="right" textAlign="center">
             <SectionIcon
               className="fa fa-minus-square-o"
               color={colors.red}
-              onClick={() => props.deleteEditor(props.editor)}
+              onClick={() => deleteEditor(editor)}
             />
           </Grid.Column>
         </Grid.Row>

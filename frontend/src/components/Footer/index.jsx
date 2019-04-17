@@ -9,7 +9,7 @@ const Footer = () => {
       color={colors.footer}
       className="footer"
       padded
-      style={{ borderRadius: 0 }}
+      style={{ borderRadius: 0, boxShadow: "0 -2px 8px rgba(0, 0, 0, 0.15)" }}
     >
       <Container>
         <Grid stackable columns={2}>
