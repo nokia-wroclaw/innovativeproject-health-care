@@ -23,6 +23,8 @@ describe("EditorsSection", () => {
   });
 
   it("should have 4 children in Card when editors prop is 3-element array", () => {
-    expect(wrapper.find(".editors-section-card").children()).toHaveLength(4);
+    const header = wrapper.find(".editors-section-header").length;
+    const len = mockEditors.length + header;
+    expect(wrapper.find(".editors-section-card").children()).toHaveLength(len);
   });
 });

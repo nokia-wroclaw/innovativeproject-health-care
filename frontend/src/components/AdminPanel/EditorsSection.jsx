@@ -15,7 +15,7 @@ export class EditorsSection extends Component {
     return (
       <React.Fragment>
         <Card style={{ margin: "10px" }} className="editors-section-card">
-          <EditorsSectionHeader />
+          <EditorsSectionHeader className="editors-section-header" />
           {editors.map(editor => (
             <EditorsSectionContent key={editor.id} editor={editor} />
           ))}
