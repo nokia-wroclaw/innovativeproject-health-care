@@ -12,7 +12,7 @@ class TeamRes(Resource):
 
     @roles_allowed(['admin', 'editor'])
     def get(self, team_id):
-        """Returns data of tribe with given id."""
+        """Returns data of team with given id."""
 
         team = Team.get_if_exists(team_id)
 
@@ -22,7 +22,7 @@ class TeamRes(Resource):
 
     @roles_allowed(['admin', 'editor'])
     def put(self, team_id):
-        """Updates tribe with given id."""
+        """Updates team with given id."""
 
         team = Team.get_if_exists(team_id)
         Tribe.validate_access(team.tribe_id, current_user)
@@ -35,6 +35,8 @@ class TeamRes(Resource):
             team.name = json['name']
 
         if 'tribe_id' in json:
+            # Check if tribe with given id exists
+            Tribe.get_if_exists(json['tribe_id'])
             team.tribe_id = json['tribe_id']
 
         try:
