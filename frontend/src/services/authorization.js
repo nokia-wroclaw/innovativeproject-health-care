@@ -13,7 +13,7 @@ const managerMenu = [
 
 const editorMenu = [
   //...managerMenu,
-  { name: "Users management", path: "/users_management" }
+  { name: "Tribes management", path: "/tribes_management" }
 ];
 
 const adminMenu = [

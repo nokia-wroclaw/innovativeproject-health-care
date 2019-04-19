@@ -7,7 +7,8 @@ import { setUser } from "./store/actions/user";
 // import authorization from "./services/authorization";
 import HomePage from "./components/HomePage";
 import SurveyPage from "./components/SurveyPage";
-import UsersManagementPage from "./components/UsersManagementPage";
+// import UsersManagementPage from "./components/UsersManagementPage";
+import TribesManagementPage from "./components/TribesManagementPage";
 import AdminPanel from "./components/AdminPanel";
 import StatisticsPage from "./components/StatisticsPage";
 import ResultsMatrixPage from "./components/ResultsMatrixPage";
@@ -31,7 +32,7 @@ class App extends Component {
           if authorization.isAdmin(this.props.user) <Route ...> else <Redirect ...>
         */}
         <Route path="/admin_panel" component={AdminPanel} />
-        <Route path="/users_management" component={UsersManagementPage} />
+        <Route path="/tribes_management" component={TribesManagementPage} />
         <Route path="/tribe_overview" component={ResultsMatrixPage} />
         <Route path="/fill_survey" component={SurveyPage} />
         <Route path="/statistics" component={StatisticsPage} />
