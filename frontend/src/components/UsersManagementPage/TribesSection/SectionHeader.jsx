@@ -17,14 +17,14 @@ class SectionHeader extends Component {
   };
 
   render() {
-    const { title, onAdd, onEdit } = this.props;
+    const { onEdit } = this.props;
     return (
       <React.Fragment>
         <Card.Content>
           <Grid>
             <Grid.Row columns={3}>
               <Grid.Column width={10} floated="left">
-                <Header as="h4">{title}</Header>
+                <Header as="h4">Tribes</Header>
               </Grid.Column>
               <Grid.Column width={5} floated="right" textAlign="right">
                 <SectionIcon className="fa fa-pencil" onClick={onEdit} />
@@ -45,7 +45,7 @@ class SectionHeader extends Component {
 
         {this.state.showInput && (
           <Card.Content>
-            <Form onSubmit={onAdd}>
+            <Form onSubmit={() => {}}>
               <Form.Field style={{ width: "70%" }}>
                 <Input
                   type="text"

@@ -32,19 +32,13 @@ class UsersManagementPage extends Component {
         <Container style={{ width: "90%" }}>
           <Grid stackable>
             <Grid.Column width={5}>
-              <TribesSection
-                title="Tribes"
-                // data={[...dummyData.map(item => item.name)]}
-                data={[]}
-                onAdd={() => console.log("on add")}
-                onDelete={() => console.log("on delete")}
-              />
+              <TribesSection data={[...dummyData.map(item => item.name)]} />
             </Grid.Column>
             <Grid.Column width={5}>
               <TeamsSection
                 title="Teams"
-                // data={Object.keys(tribes[1])}
-                data={[]}
+                data={Object.keys(tribes[1])}
+                // data={[]}
                 onAdd={() => console.log("on add")}
                 onDelete={() => console.log("on delete")}
               />
@@ -52,8 +46,8 @@ class UsersManagementPage extends Component {
             <Grid.Column width={5}>
               <UsersSection
                 title="Users"
-                // data={tribes[1].team2}
-                data={[]}
+                data={tribes[1].team2}
+                // data={[]}
                 onAdd={() => console.log("on add")}
                 onDelete={() => console.log("on delete")}
               />

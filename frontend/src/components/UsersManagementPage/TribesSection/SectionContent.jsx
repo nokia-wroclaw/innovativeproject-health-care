@@ -3,7 +3,7 @@ import { Card, Grid } from "semantic-ui-react";
 import colors from "../../../styles/colors";
 import SectionIcon from "../../common/SectionIcon/";
 
-const SectionContent = ({ text, onDelete, showMinus, active }) => {
+const SectionContent = ({ tribe, showMinus, active }) => {
   return (
     <Card.Content>
       <Grid>
@@ -13,10 +13,10 @@ const SectionContent = ({ text, onDelete, showMinus, active }) => {
               <SectionIcon
                 className="fa fa-minus-square-o"
                 color={colors.red}
-                onClick={onDelete}
+                onClick={() => {}}
               />
             ) : null}
-            <span>{text}</span>
+            <span>{tribe}</span>
           </Grid.Column>
           <Grid.Column width={3} floated="right" textAlign="center">
             {active ? (

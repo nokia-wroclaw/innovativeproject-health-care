@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Header, Card, Grid, Input, Button, Form } from "semantic-ui-react";
+import { Header, Card, Grid } from "semantic-ui-react";
 import { getUsersByName } from "../../services/inputHints";
 import { addEditor } from "../../store/actions/editors";
 import { openLoginModal } from "./../../store/actions/general";

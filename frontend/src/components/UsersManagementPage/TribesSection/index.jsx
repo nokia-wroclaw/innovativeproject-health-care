@@ -11,19 +11,16 @@ class TribesSection extends Component {
     return (
       <Card style={{ margin: "10px" }}>
         <SectionHeader
-          title={this.props.title}
-          onAdd={this.props.onAdd}
           onEdit={() =>
             this.setState({
               showMinus: !this.state.showMinus
             })
           }
         />
-        {this.props.data.map((editor, i) => (
+        {this.props.data.map((tribe, i) => (
           <SectionContent
             key={i}
-            text={editor}
-            onDelete={this.props.onDelete}
+            tribe={tribe}
             showMinus={this.state.showMinus}
           />
         ))}
