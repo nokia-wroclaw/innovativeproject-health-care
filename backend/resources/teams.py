@@ -21,9 +21,6 @@ class Teams(Resource):
         if 'name' not in json:
             abort(400, 'No team data given')
 
-        # Check if tribe with given id exists
-        Tribe.get_if_exists(tribe_id)
-
         team = Team(tribe_id, json['name'])
 
         try:

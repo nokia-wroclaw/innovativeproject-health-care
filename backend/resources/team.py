@@ -28,14 +28,36 @@ class TeamRes(Resource):
         Tribe.validate_access(team.tribe_id, current_user)
 
         json = request.get_json()
-        if 'name' not in json and 'tribe_id' not in json:
-            abort(400, 'No tribe data given.')
+        if 'name' not in json or 'tribe_id' not in json:
+            abort(400, 'No team data given.')
+
+        Tribe.get_if_exists(json['tribe_id'])
+        team.name = json['name']
+        team.tribe_id = json['tribe_id']
+
+        try:
+            db.session.add(team)
+            db.session.commit()
+        except exc.SQLAlchemyError:
+            abort(400)
+
+        response = Response()
+        response.status_code = 200
+        return response
+
+    @roles_allowed(['admin', 'editor'])
+    def patch(self, team_id):
+        """Allows partial updates of team with given id."""
+
+        team = Team.get_if_exists(team_id)
+        Tribe.validate_access(team.tribe_id, current_user)
+
+        json = request.get_json()
 
         if 'name' in json:
             team.name = json['name']
 
         if 'tribe_id' in json:
-            # Check if tribe with given id exists
             Tribe.get_if_exists(json['tribe_id'])
             team.tribe_id = json['tribe_id']
 
