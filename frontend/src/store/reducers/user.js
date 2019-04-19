@@ -1,11 +1,11 @@
-import { LOGIN, LOGOUT, OPTION_SELECTED } from "../actions/types";
+import { SET_USER, LOGOUT, OPTION_SELECTED } from "../actions/types";
 import authorization from "../../services/authorization";
 
 const initialState = {};
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    case LOGIN:
+    case SET_USER:
       const menu = authorization.getMenu(action.payload);
       // const activeOption = menu[0].name;
 

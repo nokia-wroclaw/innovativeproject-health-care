@@ -1,11 +1,11 @@
-import { LOGIN, LOGOUT, OPTION_SELECTED } from "./types";
+import { SET_USER, LOGOUT, OPTION_SELECTED } from "./types";
 import axios from "axios";
 import jwtDecode from "jwt-decode";
 import { endpoints } from "../../services/http";
 import { closeLoginModal } from "./general";
 
 export const setUser = user => ({
-  type: LOGIN,
+  type: SET_USER,
   payload: user
 });
 
