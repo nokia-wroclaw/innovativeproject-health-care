@@ -5,6 +5,9 @@ import { getUsersByName } from "../../services/inputHints";
 import { addEditor } from "../../store/actions/editors";
 import { openLoginModal } from "./../../store/actions/general";
 import SectionIcon from "../common/SectionIcon/";
+import AddEditorForm from "./AddEditorForm";
+
+const lettersCountForFetchingUsers = 4;
 
 export class EditorsSectionHeader extends Component {
   constructor(props) {
@@ -32,11 +35,11 @@ export class EditorsSectionHeader extends Component {
     } else this.setState({ addButtonDisadbed: true });
   };
 
-  handleChange = async ({ currentTarget: input }) => {
+  handleInputChange = async ({ currentTarget: input }) => {
     const inputValue = input.value;
     await this.setState({ inputValue });
 
-    if (inputValue.length === 4) {
+    if (inputValue.length === lettersCountForFetchingUsers) {
       getUsersByName(inputValue)
         .then(({ data }) => this.setState({ dataList: data }))
         .catch(() => {
@@ -46,7 +49,7 @@ export class EditorsSectionHeader extends Component {
     this.validateInput();
   };
 
-  onAdd = () => {
+  handleAddButtonClick = () => {
     const editor = this.state.dataList.find(
       user => `${user.id}` === `${this.state.userId}`
     );
@@ -82,37 +85,13 @@ export class EditorsSectionHeader extends Component {
         </Card.Content>
 
         {this.state.showInput && (
-          <Card.Content>
-            <Form onSubmit={this.onAdd}>
-              <Form.Field>
-                <Input
-                  type="text"
-                  placeholder="Search..."
-                  action
-                  onChange={this.handleChange}
-                  list="editorsList"
-                >
-                  <input />
-                  <datalist id="editorsList" ref={this.editorsListRef}>
-                    {this.state.dataList.map(user => (
-                      <option
-                        value={`${user.name} (${user.login})`}
-                        key={user.id}
-                        userid={user.id}
-                      />
-                    ))}
-                  </datalist>
-                  <Button
-                    type="submit"
-                    color="violet"
-                    disabled={this.state.addButtonDisadbed}
-                  >
-                    Add
-                  </Button>
-                </Input>
-              </Form.Field>
-            </Form>
-          </Card.Content>
+          <AddEditorForm
+            onAddButtonClick={this.handleAddButtonClick}
+            onInputChange={this.handleInputChange}
+            dataListRef={this.editorsListRef}
+            usersDataList={this.state.dataList}
+            addButtonDisadbed={this.state.addButtonDisadbed}
+          />
         )}
       </React.Fragment>
     );
