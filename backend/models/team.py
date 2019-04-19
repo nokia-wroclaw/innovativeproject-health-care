@@ -1,3 +1,4 @@
+from flask import abort
 from backend.app import db
 
 
@@ -25,3 +26,15 @@ class Team(db.Model):
             'name': self.name,
         }
         return data
+
+    @staticmethod
+    def get_if_exists(team_id):
+        """Fetches team with given id if it exists, aborts with
+        404 status otherwise.
+        """
+
+        tribe = Team.query.filter_by(id=team_id).first()
+        if tribe is None:
+            abort(404, 'Could not find team with given id.')
+        return tribe
+
