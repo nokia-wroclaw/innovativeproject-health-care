@@ -3,6 +3,17 @@ import axios from "axios";
 import { endpoints, getHttpConfig } from "../../services/http";
 import { openLoginModal } from "./general";
 
+// export const setTribes = () => dispatch => {
+//   const config = getHttpConfig();
+//   return axios
+//     .get(`${endpoints.getTribe}1`, config)
+//     .then(response => {
+//       console.log(response);
+//     })
+//     .catch(() => {
+//       dispatch(openLoginModal());
+//     });
+// };
 export const setTribes = () => dispatch => {
   const config = getHttpConfig();
   return axios

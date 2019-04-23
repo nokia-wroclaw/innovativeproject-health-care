@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { Accordion, Container } from "semantic-ui-react";
+import { Accordion, Container, Header } from "semantic-ui-react";
 import TemplatePage from "../common/TemplatePage/";
 import { setTribes } from "./../../store/actions/tribes";
+import TribeDetails from "./TribeDetails";
 
 const TribesManagementPage = props => {
   useEffect(() => {
@@ -10,23 +11,21 @@ const TribesManagementPage = props => {
   }, []);
 
   const rootPanels = [
-    ...props.tribes.map(tribe => ({
-      key: tribe.id,
-      title: tribe.name,
-      content: "hello"
-    }))
+    ...props.tribes.map(tribe => {
+      const details = <TribeDetails id={tribe.id} />;
+      return {
+        key: tribe.id,
+        title: tribe.name,
+        content: { content: details }
+      };
+    })
   ];
 
   return (
     <TemplatePage>
-      <Container>
-        <Accordion
-          fluid
-          styled
-          panels={rootPanels}
-          exclusive={false}
-          style={{ marginTop: "1em" }}
-        />
+      <Container style={{ marginTop: "1em" }}>
+        <Header as="h3">Your tribes</Header>
+        <Accordion fluid styled panels={rootPanels} exclusive={false} />
       </Container>
     </TemplatePage>
   );
