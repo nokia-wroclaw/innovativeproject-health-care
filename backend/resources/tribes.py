@@ -99,6 +99,23 @@ class TribeRes(Resource):
         return response
 
 
+class TribeEditorsRes(Resource):
+    """All editors of given tribe collection."""
+
+    @roles_allowed(['admin'])
+    def get(self, tribe_id):
+        """Returns all editors of tribe with specified id."""
+
+        Tribe.validate_access(tribe_id, current_user)
+        tribe = Tribe.get_if_exists(tribe_id)
+
+        editors = [e.serialize() for e in tribe.editors]
+
+        response = jsonify(editors)
+        response.status_code = 200
+        return response
+
+
 class TribeEditorRes(Resource):
     """Editors of specific tribe."""
 
