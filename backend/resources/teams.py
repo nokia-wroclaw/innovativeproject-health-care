@@ -4,7 +4,7 @@ from flask_jwt_extended import current_user
 from sqlalchemy import exc
 from backend.common.permissions import roles_allowed
 from backend.app import db
-from backend.models import Team, Tribe
+from backend.models import Team, Tribe, TeamUserLink, User
 
 
 class TeamsRes(Resource):
@@ -30,7 +30,7 @@ class TeamsRes(Resource):
             abort(400)
 
         response = jsonify(team.serialize())
-        response.headers['Location'] = '/tribes/%d/teams/%d'\
+        response.headers['Location'] = '/tribes/%d/teams/%d' \
                                        % (team.tribe_id, team.id)
         response.status_code = 201
 
@@ -125,6 +125,84 @@ class TeamRes(Resource):
             db.session.commit()
         except exc.SQLAlchemyError:
             abort(400)
+
+        response = Response()
+        response.status_code = 200
+        return response
+
+
+class TeamManagersRes(Resource):
+    """Collection of managers of the specific team."""
+
+    @roles_allowed(['admin', 'editor'])
+    def get(self, team_id):
+        """"Returns list of all managers of the team with specified id."""
+
+        team = Team.get_if_exists(team_id)
+        Tribe.validate_access(team.tribe_id, current_user)
+
+        manager_links = TeamUserLink.query.filter_by(team_id=team_id,
+                                                     manager=True).all()
+
+        response = jsonify([l.user.serialize() for l in manager_links])
+        response.status_code = 200
+        return response
+
+
+class TeamManagerRes(Resource):
+    """Single team manager resource."""
+
+    @roles_allowed(['admin', 'editor'])
+    def put(self, team_id, user_id):
+        """Adds user with given id to the managers of the team."""
+
+        team = Team.get_if_exists(team_id)
+        user = User.get_if_exists(user_id)
+        Tribe.validate_access(team.tribe_id, current_user)
+
+        if int(team_id) in user.managing_ids():
+            response = Response()
+            response.status_code = 200
+            return response
+
+        manager_link = TeamUserLink(team_id=team_id,
+                                    user_id=user_id,
+                                    manager=True)
+        team.users.append(manager_link)
+
+        try:
+            db.session.add(user)
+            db.session.add(team)
+            db.session.commit()
+        except exc.SQLAlchemyError:
+            abort(400)
+
+        response = Response()
+        response.status_code = 201
+        return response
+
+    @roles_allowed(['admin', 'editor'])
+    def delete(self, team_id, user_id):
+        """Removes user with given id from the managers of the team."""
+
+        team = Team.get_if_exists(team_id)
+        user = User.get_if_exists(user_id)
+        Tribe.validate_access(team.tribe_id, current_user)
+
+        manager_link = TeamUserLink.query.filter_by(user_id=user_id,
+                                                    team_id=team_id,
+                                                    manager=True).first()
+
+        if manager_link is None:
+            abort(404, 'Requested manager does not exist.')
+
+        try:
+            db.session.delete(manager_link)
+            db.session.commit()
+        except exc.SQLAlchemyError:
+            abort(400)
+
+        user.revalidate()
 
         response = Response()
         response.status_code = 200

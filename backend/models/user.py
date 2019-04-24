@@ -1,3 +1,4 @@
+from flask import abort
 from backend.app import db, app
 from backend.common.ldapconn import LdapConn
 
@@ -48,6 +49,17 @@ class User(db.Model):
             user = User(data['id'], data['login'], data['mail'], data['name'],
                         False)
             return user
+
+    @staticmethod
+    def get_if_exists(user_id):
+        """Fetches user with given id if it exists, aborts with
+        404 status otherwise.
+        """
+
+        user = User.from_id(user_id)
+        if user is None:
+            abort(404, 'Could not find user with given id.')
+        return user
 
     def in_db(self):
         user = User.query.filter_by(id=self.id).first()

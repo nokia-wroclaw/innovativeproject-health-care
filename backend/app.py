@@ -38,6 +38,8 @@ api.add_resource(tribes.TribeEditorsRes, '/tribes/<tribe_id>/editors')
 api.add_resource(tribes.TribeEditorRes, '/tribes/<tribe_id>/editors/<user_id>')
 api.add_resource(teams.TeamsRes, '/tribes/<tribe_id>/teams')
 api.add_resource(teams.TeamRes, '/teams/<team_id>')
+api.add_resource(teams.TeamManagersRes, '/teams/<team_id>/managers')
+api.add_resource(teams.TeamManagerRes, '/teams/<team_id>/managers/<user_id>')
 
 if __name__ == '__main__':
     app.run(debug=True)
