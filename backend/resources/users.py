@@ -70,3 +70,17 @@ class UsersRes(Resource):
         response = jsonify([u.serialize(True) for u in users])
         response.status_code = 200
         return response
+
+
+class UserRes(Resource):
+    """Single user with specified id."""
+
+    @roles_allowed(['admin', 'editor', 'manager'])
+    def get(self, user_id):
+        """Get full info of the user with specified id."""
+
+        user = User.get_if_exists(user_id)
+
+        response = jsonify(user.serialize(verbose=True))
+        response.status_code = 200
+        return response

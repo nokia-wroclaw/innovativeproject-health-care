@@ -30,6 +30,7 @@ if os.environ.get('FLASK_ENV') == 'development':
 
 api.add_resource(users.AuthRes, '/auth')
 api.add_resource(users.UsersRes, '/users')
+api.add_resource(users.UserRes, '/users/<user_id>')
 api.add_resource(editors.EditorsRes, '/editors')
 api.add_resource(editors.EditorRes, '/editors/<user_id>')
 api.add_resource(tribes.TribesRes, '/tribes')
