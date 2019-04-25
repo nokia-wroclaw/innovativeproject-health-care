@@ -6,6 +6,17 @@ import colors from "../../styles/colors";
 import SectionIcon from "../common/SectionIcon/";
 
 export const EditorsSectionContent = ({ editor, deleteEditor }) => {
+  const handleDeleteEditor = editor => {
+    if (
+      window.confirm(
+        `Are you sure you want to remove ${editor.name} (${
+          editor.login
+        }) form editors list?`
+      )
+    )
+      deleteEditor(editor);
+  };
+
   return (
     <Card.Content>
       <Grid>
@@ -17,7 +28,7 @@ export const EditorsSectionContent = ({ editor, deleteEditor }) => {
             <SectionIcon
               className="fa fa-minus-square-o"
               color={colors.red}
-              onClick={() => deleteEditor(editor)}
+              onClick={() => handleDeleteEditor(editor)}
             />
           </Grid.Column>
         </Grid.Row>
