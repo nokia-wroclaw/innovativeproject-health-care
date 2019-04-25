@@ -207,3 +207,81 @@ class TeamManagerRes(Resource):
         response = Response()
         response.status_code = 200
         return response
+
+
+class TeamUsersRes(Resource):
+    """Collection of team members."""
+
+    @roles_allowed(['admin', 'editor'])
+    def get(self, team_id):
+        """Returns all members of the team."""
+
+        team = Team.get_if_exists(team_id)
+        Tribe.validate_access(team.tribe_id, current_user)
+
+        user_links = TeamUserLink.query.filter_by(team_id=team_id,
+                                                  manager=False).all()
+
+        response = jsonify([l.user.serialize() for l in user_links])
+        response.status_code = 200
+        return response
+
+
+class TeamUserRes(Resource):
+    """Single team member."""
+
+    @roles_allowed(['admin', 'editor'])
+    def put(self, team_id, user_id):
+        """Adds user with given id to the team."""
+
+        team = Team.get_if_exists(team_id)
+        user = User.get_if_exists(user_id)
+        Tribe.validate_access(team.tribe_id, current_user)
+
+        if int(team_id) in user.team_ids():
+            response = Response()
+            response.status_code = 200
+            return response
+
+        user_link = TeamUserLink(team_id=team_id,
+                                 user_id=user_id,
+                                 manager=False)
+        team.users.append(user_link)
+
+        try:
+            db.session.add(user)
+            db.session.add(team)
+            db.session.commit()
+        except exc.SQLAlchemyError:
+            abort(400)
+
+        response = Response()
+        response.status_code = 201
+        return response
+
+    @roles_allowed(['admin', 'editor'])
+    def delete(self, team_id, user_id):
+        """Deletes user with given id from team."""
+
+        team = Team.get_if_exists(team_id)
+        user = User.get_if_exists(user_id)
+        Tribe.validate_access(team.tribe_id, current_user)
+
+        user_link = TeamUserLink.query.filter_by(user_id=user_id,
+                                                 team_id=team_id,
+                                                 manager=False).first()
+
+        if user_link is None:
+            abort(404, 'Requested member does not exist.')
+
+        try:
+            db.session.delete(user_link)
+            db.session.commit()
+        except exc.SQLAlchemyError:
+            abort(400)
+
+        user.revalidate()
+
+        response = Response()
+        response.status_code = 200
+        return response

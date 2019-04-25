@@ -100,12 +100,10 @@ class User(db.Model):
         return roles
 
     def team_ids(self):
-        return [t.team_id if t.manager is False else None
-                for t in self.teams]
+        return [t.team_id for t in self.teams if t.manager is False]
 
     def managing_ids(self):
-        return [t.team_id if t.manager is True else None
-                for t in self.teams]
+        return [t.team_id for t in self.teams if t.manager is True]
 
     def editing_ids(self):
         return [e.id

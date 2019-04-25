@@ -41,6 +41,9 @@ api.add_resource(teams.TeamsRes, '/tribes/<tribe_id>/teams')
 api.add_resource(teams.TeamRes, '/teams/<team_id>')
 api.add_resource(teams.TeamManagersRes, '/teams/<team_id>/managers')
 api.add_resource(teams.TeamManagerRes, '/teams/<team_id>/managers/<user_id>')
+api.add_resource(teams.TeamUsersRes, '/teams/<team_id>/users')
+api.add_resource(teams.TeamUserRes, '/teams/<team_id>/users/<user_id>')
+
 
 if __name__ == '__main__':
     app.run(debug=True)
