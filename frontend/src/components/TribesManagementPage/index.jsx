@@ -1,17 +1,10 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import {
-  Accordion,
-  Container,
-  Header,
-  Button,
-  Item,
-  Icon,
-  Popup
-} from "semantic-ui-react";
+import { Accordion, Container, Header, Item } from "semantic-ui-react";
 import TemplatePage from "../common/TemplatePage/";
 import { setTribes, addTribe } from "./../../store/actions/tribes";
 import TribeDetails from "./TribeDetails";
+import AddTribePopup from "./AddTribePopup";
 
 const TribesManagementPage = props => {
   useEffect(() => {
@@ -39,23 +32,7 @@ const TribesManagementPage = props => {
     <TemplatePage>
       <Container>
         <Item style={{ margin: "1em 0" }}>
-          <Popup
-            trigger={
-              <Button
-                icon
-                labelPosition="left"
-                floated="right"
-                compact
-                secondary
-              >
-                <Icon name="plus" />
-                New tribe
-              </Button>
-            }
-            content={<input />}
-            on="click"
-            position="bottom center"
-          />
+          <AddTribePopup />
           <Header as="h3">Your tribes</Header>
         </Item>
         <Accordion

@@ -1,29 +1,25 @@
-import React, { Component } from "react";
-import { Card } from "semantic-ui-react";
-import EditorsSectionHeader from "./EditorsSectionHeader";
-import EditorsSectionContent from "./EditorsSectionContent";
-import { setEditors } from "./../../store/actions/editors";
+import React, { useEffect } from "react";
+import {
+  setEditors,
+  addEditor,
+  deleteEditor
+} from "./../../store/actions/editors";
 import { connect } from "react-redux";
+import EditingCard from "../common/EditingCard/EditingCard";
 
-export class EditorsSection extends Component {
-  componentWillMount() {
-    this.props.setEditors();
-  }
-
-  render() {
-    const { editors } = this.props;
-    return (
-      <React.Fragment>
-        <Card style={{ margin: "10px" }} className="editors-section-card">
-          <EditorsSectionHeader className="editors-section-header" />
-          {editors.map(editor => (
-            <EditorsSectionContent key={editor.id} editor={editor} />
-          ))}
-        </Card>
-      </React.Fragment>
-    );
-  }
-}
+const EditorsSection = props => {
+  useEffect(() => {
+    props.setEditors();
+  }, []);
+  return (
+    <EditingCard
+      data={props.editors}
+      title="Editors"
+      onAddBtnClick={props.addEditor}
+      onItemDelete={props.deleteEditor}
+    />
+  );
+};
 
 const mapStateToProps = state => ({
   editors: state.editors
@@ -31,5 +27,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { setEditors }
+  { setEditors, addEditor, deleteEditor }
 )(EditorsSection);

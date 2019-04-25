@@ -22,8 +22,7 @@ export const setTribes = () => dispatch => {
       });
     })
     .catch(error => {
-      console.log(error);
-      dispatch(openLoginModal());
+      if (error.response.status === 401) dispatch(openLoginModal());
     });
 };
 
@@ -40,8 +39,8 @@ export const setTribeEditors = tribe_id => dispatch => {
         }
       });
     })
-    .catch(() => {
-      dispatch(openLoginModal());
+    .catch(error => {
+      if (error.response.status === 401) dispatch(openLoginModal());
     });
 };
 
@@ -58,8 +57,8 @@ export const setTeamsInTribe = tribe_id => dispatch => {
         }
       });
     })
-    .catch(() => {
-      dispatch(openLoginModal());
+    .catch(error => {
+      if (error.response.status === 401) dispatch(openLoginModal());
     });
 };
 
@@ -77,8 +76,8 @@ export const setTeamManagers = (tribe_id, team_id) => dispatch => {
         }
       });
     })
-    .catch(() => {
-      dispatch(openLoginModal());
+    .catch(error => {
+      if (error.response.status === 401) dispatch(openLoginModal());
     });
 };
 
@@ -97,8 +96,8 @@ export const setTeamMembers = (tribe_id, team_id) => dispatch => {
         }
       });
     })
-    .catch(() => {
-      dispatch(openLoginModal());
+    .catch(error => {
+      if (error.response.status === 401) dispatch(openLoginModal());
     });
 };
 
@@ -117,7 +116,10 @@ export const addTribe = name => dispatch => {
       // dispatch({
       //   type: ADD_TRIBE
       // })
-    );
+    )
+    .catch(error => {
+      if (error.response.status === 401) dispatch(openLoginModal());
+    });
 };
 
 // export const deleteTribe = tribe => dispatch => {

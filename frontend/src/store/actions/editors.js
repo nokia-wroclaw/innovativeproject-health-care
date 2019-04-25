@@ -12,8 +12,8 @@ export const setEditors = () => dispatch => {
         payload: response.data
       });
     })
-    .catch(() => {
-      dispatch(openLoginModal());
+    .catch(error => {
+      if (error.response.status === 401) dispatch(openLoginModal());
     });
 };
 
@@ -26,8 +26,8 @@ export const addEditor = editor => dispatch => {
         payload: editor
       })
     )
-    .catch(() => {
-      dispatch(openLoginModal());
+    .catch(error => {
+      if (error.response.status === 401) dispatch(openLoginModal());
     });
 };
 
@@ -40,7 +40,7 @@ export const deleteEditor = editor => dispatch => {
         payload: editor
       })
     )
-    .catch(() => {
-      dispatch(openLoginModal());
+    .catch(error => {
+      if (error.response.status === 401) dispatch(openLoginModal());
     });
 };

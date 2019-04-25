@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Header, Card, Grid } from "semantic-ui-react";
-import SectionIcon from "../common/SectionIcon/";
-import AddEditorForm from "./AddEditorForm";
+import SectionIcon from "../../common/SectionIcon/";
+import FormWithUsersDataList from "../../common/FormWithUsersDataList/";
 
-export const EditorsSectionHeader = () => {
+export const EditingCardHeader = ({ title, onAddBtnClick }) => {
   const [showInput, setShowInput] = useState(false);
   return (
     <React.Fragment>
@@ -11,7 +11,7 @@ export const EditorsSectionHeader = () => {
         <Grid>
           <Grid.Row columns={3}>
             <Grid.Column width={13} floated="left">
-              <Header as="h4">Editors</Header>
+              <Header as="h4">{title}</Header>
             </Grid.Column>
             <Grid.Column width={3} floated="right" textAlign="center">
               <SectionIcon
@@ -25,9 +25,13 @@ export const EditorsSectionHeader = () => {
         </Grid>
       </Card.Content>
 
-      {showInput && <AddEditorForm />}
+      {showInput && (
+        <Card.Content>
+          <FormWithUsersDataList buttonText="Add" handleClick={onAddBtnClick} />
+        </Card.Content>
+      )}
     </React.Fragment>
   );
 };
 
-export default EditorsSectionHeader;
+export default EditingCardHeader;
