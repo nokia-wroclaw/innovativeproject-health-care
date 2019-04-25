@@ -1,8 +1,16 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { Accordion, Container, Header } from "semantic-ui-react";
+import {
+  Accordion,
+  Container,
+  Header,
+  Button,
+  Item,
+  Icon,
+  Popup
+} from "semantic-ui-react";
 import TemplatePage from "../common/TemplatePage/";
-import { setTribes } from "./../../store/actions/tribes";
+import { setTribes, addTribe } from "./../../store/actions/tribes";
 import TribeDetails from "./TribeDetails";
 
 const TribesManagementPage = props => {
@@ -29,8 +37,27 @@ const TribesManagementPage = props => {
 
   return (
     <TemplatePage>
-      <Container style={{ marginTop: "1em" }}>
-        <Header as="h3">Your tribes</Header>
+      <Container>
+        <Item style={{ margin: "1em 0" }}>
+          <Popup
+            trigger={
+              <Button
+                icon
+                labelPosition="left"
+                floated="right"
+                compact
+                secondary
+              >
+                <Icon name="plus" />
+                New tribe
+              </Button>
+            }
+            content={<input />}
+            on="click"
+            position="bottom center"
+          />
+          <Header as="h3">Your tribes</Header>
+        </Item>
         <Accordion
           className="tribes-accordion"
           fluid
@@ -49,5 +76,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { setTribes }
+  { setTribes, addTribe }
 )(TribesManagementPage);

@@ -1,14 +1,17 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { Button, Item, Label, Accordion } from "semantic-ui-react";
-import { setTribeEditors, setTribeTeams } from "../../store/actions/tribes";
+import { setTribeEditors, setTeamsInTribe } from "../../store/actions/tribes";
 import TeamDetails from "./TeamDetails";
+import TribeSettings from "./TribeSettings";
 import "./style.css";
 
 const TribeDetails = ({ id, editors, teams, ...props }) => {
+  const [openSettings, setOpenSettings] = useState(false);
+
   useEffect(() => {
     props.setTribeEditors(id);
-    props.setTribeTeams(id);
+    props.setTeamsInTribe(id);
   }, []);
 
   let teamPanels = [];
@@ -18,6 +21,7 @@ const TribeDetails = ({ id, editors, teams, ...props }) => {
         const details = (
           <TeamDetails
             id={team.id}
+            tribe_id={id}
             managers={team.managers}
             members={team.members}
           />
@@ -40,8 +44,13 @@ const TribeDetails = ({ id, editors, teams, ...props }) => {
         compact
         secondary
         basic
+        onClick={() => setOpenSettings(true)}
       />
-
+      <TribeSettings
+        open={openSettings}
+        tribe_id={id}
+        close={() => setOpenSettings(false)}
+      />
       <Item style={{ paddingTop: "1em" }}>
         Editors ({editors ? editors.length : 0}): <br />
         {editors
@@ -67,5 +76,5 @@ const TribeDetails = ({ id, editors, teams, ...props }) => {
 
 export default connect(
   null,
-  { setTribeEditors, setTribeTeams }
+  { setTribeEditors, setTeamsInTribe }
 )(TribeDetails);
