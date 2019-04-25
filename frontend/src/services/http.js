@@ -14,7 +14,9 @@ export const endpoints = {
   postTribe: `${baseURL}/tribes`,
   putTribe: `${baseURL}/tribes/`, //${id}
   deleteTribe: `${baseURL}/tribes/`, //${id}
-  getTribe: `${baseURL}/tribes/` //${id}
+  getTribe: `${baseURL}/tribes/`, //${id}
+  //--- Teams ---
+  teams: `${baseURL}/teams/`
 };
 
 export const getHttpConfig = () => {

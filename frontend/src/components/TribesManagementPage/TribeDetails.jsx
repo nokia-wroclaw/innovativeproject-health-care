@@ -1,55 +1,71 @@
 import React, { useEffect } from "react";
-import { Button, Item, Label, Icon, Accordion } from "semantic-ui-react";
+import { connect } from "react-redux";
+import { Button, Item, Label, Accordion } from "semantic-ui-react";
+import { setTribeEditors, setTribeTeams } from "../../store/actions/tribes";
 import TeamDetails from "./TeamDetails";
+import "./style.css";
 
-const TribeDetails = ({ id }) => {
-  useEffect(() => {}, []);
+const TribeDetails = ({ id, editors, teams, ...props }) => {
+  useEffect(() => {
+    props.setTribeEditors(id);
+    props.setTribeTeams(id);
+  }, []);
 
-  const details = <TeamDetails />;
-  const teams = [
-    { key: "team 1", title: "team 1", content: { content: details } },
-    { key: "team 2", title: "team 2", content: { content: details } }
-  ];
+  let teamPanels = [];
+  try {
+    teamPanels = [
+      ...teams.map(team => {
+        const details = (
+          <TeamDetails
+            id={team.id}
+            managers={team.managers}
+            members={team.members}
+          />
+        );
+        return {
+          key: team.id,
+          title: team.name,
+          content: { content: details }
+        };
+      })
+    ];
+  } catch {}
+
   return (
     <React.Fragment>
-      <Item>
-        <Button
-          content="rename tribe"
-          icon="edit"
-          labelPosition="right"
-          compact
-          secondary
-        />
-        <Button
-          content="new team"
-          icon="plus circle"
-          labelPosition="right"
-          compact
-          primary
-        />
-      </Item>
+      <Button
+        content="Tribe settings"
+        icon="cogs"
+        labelPosition="left"
+        compact
+        secondary
+        basic
+      />
 
       <Item style={{ paddingTop: "1em" }}>
-        <b>Editors: </b>
-        <Label>
-          Agata Toczyńska (agata)
-          <Icon name="delete" />
-        </Label>
-        <Label>
-          Paweł Komorowski (pawel)
-          <Icon name="delete" />
-        </Label>
-        <Label color="blue">
-          <Icon name="plus" />
-          add editor
-        </Label>
+        Editors ({editors ? editors.length : 0}): <br />
+        {editors
+          ? editors.map(editor => (
+              <Label color="violet" key={editor.id}>
+                {editor.name}
+                <Label.Detail>({editor.login})</Label.Detail>
+              </Label>
+            ))
+          : null}
       </Item>
       <Item style={{ paddingTop: "1em" }}>
-        <b>Teams: </b>
-        <Accordion.Accordion panels={teams} exclusive={false} />
+        Teams ({teamPanels.length}):
+        <Accordion.Accordion
+          className="teams-accordion"
+          panels={teamPanels}
+          exclusive={false}
+        />
       </Item>
     </React.Fragment>
   );
 };
 
-export default TribeDetails;
+export default connect(
+  null,
+  { setTribeEditors, setTribeTeams }
+)(TribeDetails);

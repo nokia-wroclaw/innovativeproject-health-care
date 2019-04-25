@@ -10,9 +10,15 @@ const TribesManagementPage = props => {
     props.setTribes();
   }, []);
 
-  const rootPanels = [
+  const tribePanels = [
     ...props.tribes.map(tribe => {
-      const details = <TribeDetails id={tribe.id} />;
+      const details = (
+        <TribeDetails
+          id={tribe.id}
+          editors={tribe.editors}
+          teams={tribe.teams}
+        />
+      );
       return {
         key: tribe.id,
         title: tribe.name,
@@ -25,7 +31,13 @@ const TribesManagementPage = props => {
     <TemplatePage>
       <Container style={{ marginTop: "1em" }}>
         <Header as="h3">Your tribes</Header>
-        <Accordion fluid styled panels={rootPanels} exclusive={false} />
+        <Accordion
+          className="tribes-accordion"
+          fluid
+          styled
+          panels={tribePanels}
+          exclusive={false}
+        />
       </Container>
     </TemplatePage>
   );
