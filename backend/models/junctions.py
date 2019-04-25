@@ -9,7 +9,7 @@ class TeamUserLink(db.Model):
                         primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'),
                         primary_key=True)
-    manager = db.Column(db.Boolean)
+    manager = db.Column(db.Boolean, primary_key=True)
     team = db.relationship('Team', back_populates='users', lazy='joined')
     user = db.relationship('User', back_populates='teams', lazy='joined')
 
