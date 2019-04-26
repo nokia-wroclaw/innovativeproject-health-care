@@ -25,7 +25,7 @@ const ColoredCheckbox = ({
             checked={value === answer}
             onChange={() => {}}
           />
-          <span className={`checkmark ${color}`} />
+          <span className={`checkmark ${color}-outline`} />
         </div>
       }
       content={hintText}

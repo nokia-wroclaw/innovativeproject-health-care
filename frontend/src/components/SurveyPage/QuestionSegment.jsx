@@ -7,10 +7,10 @@ const QuestionSegment = ({ question }) => {
   let textareaClassName;
   switch (question.answer) {
     case 0:
-      textareaClassName = "red";
+      textareaClassName = "red-outline";
       break;
     case 1:
-      textareaClassName = "yellow";
+      textareaClassName = "yellow-outline";
       break;
     default:
       textareaClassName = "";

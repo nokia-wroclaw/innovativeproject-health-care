@@ -3,22 +3,17 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
 import { logout } from "../../store/actions/user";
-import { Popup } from "semantic-ui-react";
+import { Popup, Icon } from "semantic-ui-react";
 
 const LogoutButton = ({ logout }) => {
   return (
     <Popup
       trigger={
         <Link to="/">
-          <i
-            className="fa fa-sign-out"
-            aria-hidden="true"
-            style={{ fontSize: 20, cursor: "pointer", color: "white" }}
-            onClick={logout}
-          />
+          <Icon name="log out" link onClick={logout} inverted size="large" />
         </Link>
       }
-      content="Logout"
+      content="Log out"
       position="bottom right"
     />
   );

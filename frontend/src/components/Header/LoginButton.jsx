@@ -8,7 +8,7 @@ const LoginButton = props => {
     <Popup
       trigger={
         <Button
-          content="Login"
+          content="Log in"
           inverted
           color={colors.headerLoginButton}
           floated="right"

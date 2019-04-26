@@ -68,17 +68,17 @@
   transform: rotate(45deg);
 }
 
-.green {
+.green-outline {
   background-color: rgba(39, 174, 96, 0.3);
   border: 1px #27ae60 solid;
 }
 
-.yellow {
+.yellow-outline {
   background-color: rgba(242, 201, 76, 0.3) !important;
   border: 1px #f2c94c solid !important;
 }
 
-.red {
+.red-outline {
   background-color: rgba(235, 87, 87, 0.2) !important;
   border: 1px #eb5757 solid !important;
 }

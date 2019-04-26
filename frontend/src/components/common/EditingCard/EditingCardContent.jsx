@@ -1,7 +1,5 @@
 import React from "react";
-import { Card, Grid } from "semantic-ui-react";
-import colors from "../../../styles/colors";
-import SectionIcon from "../../common/SectionIcon/";
+import { Card, Grid, Icon } from "semantic-ui-react";
 
 export const EditingCardContent = ({ item, onDelete, alertMsg }) => {
   const defaultMsg = `Are you sure you want to remove ${item.name}?`;
@@ -19,10 +17,11 @@ export const EditingCardContent = ({ item, onDelete, alertMsg }) => {
             {item.name}
           </Grid.Column>
           <Grid.Column width={3} floated="right" textAlign="center">
-            <SectionIcon
-              className="fa fa-minus-square-o"
-              color={colors.red}
+            <Icon
+              name="minus square outline"
               onClick={() => handleDelete(item)}
+              color="red"
+              link
             />
           </Grid.Column>
         </Grid.Row>

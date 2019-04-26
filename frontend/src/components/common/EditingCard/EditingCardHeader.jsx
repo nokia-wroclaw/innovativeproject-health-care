@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { Header, Card, Grid } from "semantic-ui-react";
-import SectionIcon from "../../common/SectionIcon/";
+import { Header, Card, Grid, Icon } from "semantic-ui-react";
 import FormWithUsersDataList from "../../common/FormWithUsersDataList/";
 
 export const EditingCardHeader = ({ title, onAddBtnClick }) => {
@@ -14,10 +13,9 @@ export const EditingCardHeader = ({ title, onAddBtnClick }) => {
               <Header as="h4">{title}</Header>
             </Grid.Column>
             <Grid.Column width={3} floated="right" textAlign="center">
-              <SectionIcon
-                className={
-                  showInput ? "fa fa-chevron-circle-up" : "fa fa-plus-circle"
-                }
+              <Icon
+                name={showInput ? "chevron up" : "plus"}
+                link
                 onClick={() => setShowInput(!showInput)}
               />
             </Grid.Column>
