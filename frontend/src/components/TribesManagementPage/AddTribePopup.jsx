@@ -1,6 +1,7 @@
 import React from "react";
-import { Button, Item, Icon, Popup, Form } from "semantic-ui-react";
+import { Button, Icon, Popup } from "semantic-ui-react";
 import "../../styles/common.css";
+import AddTribeForm from "./AddTribeForm";
 
 const AddTribePopup = () => {
   return (
@@ -11,17 +12,7 @@ const AddTribePopup = () => {
           New tribe
         </Button>
       }
-      content={
-        <Form onSubmit={() => {}}>
-          <Form.Field>
-            <input placeholder="Tribe name" />
-          </Form.Field>
-
-          <Button type="submit" floated="right">
-            Add
-          </Button>
-        </Form>
-      }
+      content={<AddTribeForm />}
       on="click"
       position="bottom center"
     />

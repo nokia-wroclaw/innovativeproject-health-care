@@ -111,12 +111,12 @@ export const addTribe = name => dispatch => {
       },
       config
     )
-    .then(
-      response => console.log(response)
-      // dispatch({
-      //   type: ADD_TRIBE
-      // })
-    )
+    .then(response => {
+      dispatch({
+        type: ADD_TRIBE,
+        payload: response.data
+      });
+    })
     .catch(error => {
       if (error.response.status === 401) dispatch(openLoginModal());
     });

@@ -50,8 +50,9 @@ export default function(state = initialState, action) {
       return tribes;
 
     case ADD_TRIBE:
-      //...
-      return state;
+      tribes = [...state];
+      tribes.push(action.payload);
+      return tribes;
 
     case DELETE_TRIBE:
       //...
