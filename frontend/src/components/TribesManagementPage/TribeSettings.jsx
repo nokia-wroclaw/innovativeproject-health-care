@@ -10,6 +10,14 @@ const TribeSettings = ({ open, tribe_id, close, ...props }) => {
     <Modal open={open}>
       <Modal.Header>
         <input defaultValue={tribe.name} />
+        <Button
+          icon="trash alternate"
+          labelPosition="left"
+          floated="right"
+          content="Detele Tribe"
+          basic
+          negative
+        />
       </Modal.Header>
 
       <Modal.Content>
