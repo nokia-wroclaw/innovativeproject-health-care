@@ -23,7 +23,7 @@ db = SQLAlchemy(app)
 # Need to be imported after creating the jwt object
 from backend.common import jwt_ext  # noqa: E402, F401
 # Needs to be imported after creating the db object
-from backend.resources import (users, editors, tribes, teams)  # noqa: E402
+from backend.resources import (users, editors, tribes, teams, surveys)  # noqa: E402
 
 if os.environ.get('FLASK_ENV') == 'development':
     CORS(app)
@@ -43,6 +43,7 @@ api.add_resource(teams.TeamManagersRes, '/teams/<team_id>/managers')
 api.add_resource(teams.TeamManagerRes, '/teams/<team_id>/managers/<user_id>')
 api.add_resource(teams.TeamUsersRes, '/teams/<team_id>/users')
 api.add_resource(teams.TeamUserRes, '/teams/<team_id>/users/<user_id>')
+api.add_resource(surveys.TribeSurveysRes, '/tribes/<tribe_id>/surveys')
 
 
 if __name__ == '__main__':

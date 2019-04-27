@@ -18,11 +18,13 @@ class SurveyQuestionLink(db.Model):
 
     __tablename__ = 'survey_questions'
 
-    survey_id = db.Column(db.Integer, db.ForeignKey('surveys.id'),
+    survey_id = db.Column(db.Integer,
+                          db.ForeignKey('surveys.id'),
                           primary_key=True)
-    question_id = db.Column(db.Integer, db.ForeignKey('questions.id'),
+    question_id = db.Column(db.Integer,
+                            db.ForeignKey('questions.id'),
                             primary_key=True)
-    order = db.Column(db.Integer)
+    order = db.Column(db.Integer, nullable=False)
     survey = db.relationship('Survey', back_populates='questions',
                              lazy='joined')
     question = db.relationship('Question', back_populates='surveys',
