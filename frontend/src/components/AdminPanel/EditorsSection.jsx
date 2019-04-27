@@ -11,6 +11,7 @@ const EditorsSection = props => {
   useEffect(() => {
     props.setEditors();
   }, []);
+
   return (
     <EditingCard
       data={props.editors}

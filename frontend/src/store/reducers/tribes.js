@@ -5,7 +5,9 @@ import {
   ADD_TRIBE,
   DELETE_TRIBE,
   SET_TEAM_MANAGERS,
-  SET_TEAM_MEMBERS
+  SET_TEAM_MEMBERS,
+  ADD_EDITOR_TO_TRIBE,
+  DELETE_EDITOR_FROM_TRIBE
 } from "../actions/types";
 
 const initialState = [];
@@ -55,8 +57,22 @@ export default function(state = initialState, action) {
       return tribes;
 
     case DELETE_TRIBE:
-      //...
-      return state;
+      tribes = [...state];
+      return tribes.filter(tribe => tribe.id !== action.payload);
+
+    case ADD_EDITOR_TO_TRIBE:
+      tribes = [...state];
+      targetTribe = tribes.find(tribe => tribe.id === action.payload.tribe_id);
+      targetTribe.editors.push(action.payload.user);
+      return tribes;
+
+    case DELETE_EDITOR_FROM_TRIBE:
+      tribes = [...state];
+      targetTribe = tribes.find(tribe => tribe.id === action.payload.tribe_id);
+      targetTribe.editors = targetTribe.editors.filter(
+        user => user.id !== action.payload.user.id
+      );
+      return tribes;
 
     default:
       return state;

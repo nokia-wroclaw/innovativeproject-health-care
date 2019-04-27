@@ -5,7 +5,9 @@ import {
   SET_TEAM_MANAGERS,
   SET_TEAM_MEMBERS,
   ADD_TRIBE,
-  DELETE_TRIBE
+  DELETE_TRIBE,
+  ADD_EDITOR_TO_TRIBE,
+  DELETE_EDITOR_FROM_TRIBE
 } from "./types";
 import axios from "axios";
 import { endpoints, getHttpConfig } from "../../services/http";
@@ -86,7 +88,6 @@ export const setTeamMembers = (tribe_id, team_id) => dispatch => {
   return axios
     .get(`${endpoints.teams}${team_id}/users`, config)
     .then(response => {
-      console.log(response);
       dispatch({
         type: SET_TEAM_MEMBERS,
         payload: {
@@ -122,11 +123,48 @@ export const addTribe = name => dispatch => {
     });
 };
 
-// export const deleteTribe = tribe => dispatch => {
-//   return axios.delete(`${endpoints.deleteTribe}${tribe.id}`, httpConfig).then(
-//     dispatch({
-//       type: DELETE_TRIBE,
-//       payload: tribe
-//     })
-//   );
-// };
+export const deleteTribe = tribe_id => dispatch => {
+  const config = getHttpConfig();
+  return axios
+    .delete(`${endpoints.deleteTribe}${tribe_id}`, config)
+    .then(() => {
+      dispatch({
+        type: DELETE_TRIBE,
+        payload: tribe_id
+      });
+    })
+    .catch(error => {
+      if (error.response.status === 401) dispatch(openLoginModal());
+    });
+};
+
+export const addEditorToTribe = (tribe_id, user) => dispatch => {
+  const config = getHttpConfig();
+  return axios
+    .put(`${endpoints.getTribe}${tribe_id}/editors/${user.id}`, {}, config)
+    .then(() => {
+      dispatch({
+        type: ADD_EDITOR_TO_TRIBE,
+        payload: { tribe_id, user }
+      });
+    })
+    .catch(error => {
+      if (error.response.status === 401) dispatch(openLoginModal());
+    });
+};
+
+export const deleteEditorFromTribe = (tribe_id, user) => dispatch => {
+  const config = getHttpConfig();
+  return axios
+    .delete(`${endpoints.deleteTribe}${tribe_id}/editors/${user.id}`, config)
+    .then(response => {
+      console.log(response);
+      dispatch({
+        type: DELETE_EDITOR_FROM_TRIBE,
+        payload: { tribe_id, user }
+      });
+    })
+    .catch(error => {
+      if (error.response.status === 401) dispatch(openLoginModal());
+    });
+};

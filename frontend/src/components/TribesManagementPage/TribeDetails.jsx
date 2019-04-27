@@ -48,6 +48,7 @@ const TribeDetails = ({ id, editors, teams, ...props }) => {
       />
       <TribeSettings
         open={openSettings}
+        setOpen={setOpenSettings}
         tribe_id={id}
         close={() => setOpenSettings(false)}
       />
@@ -62,14 +63,16 @@ const TribeDetails = ({ id, editors, teams, ...props }) => {
             ))
           : null}
       </Item>
-      <Item style={{ paddingTop: "1em" }}>
-        Teams ({teamPanels.length}):
-        <Accordion.Accordion
-          className="teams-accordion"
-          panels={teamPanels}
-          exclusive={false}
-        />
-      </Item>
+      {teamPanels.length ? (
+        <Item style={{ paddingTop: "1em" }}>
+          Teams ({teamPanels.length}):
+          <Accordion.Accordion
+            className="teams-accordion"
+            panels={teamPanels}
+            exclusive={false}
+          />
+        </Item>
+      ) : null}
     </React.Fragment>
   );
 };
