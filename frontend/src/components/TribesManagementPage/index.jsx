@@ -12,7 +12,7 @@ import {
 import TribeDetails from "./TribeDetails";
 import AddTribePopup from "./AddTribePopup";
 
-const TribesManagementPage = props => {
+export const TribesManagementPage = props => {
   useLayoutEffect(() => {
     props.setTribes();
   }, []);

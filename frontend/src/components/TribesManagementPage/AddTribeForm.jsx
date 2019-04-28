@@ -4,7 +4,7 @@ import { Formik } from "formik";
 import { Button, Form } from "semantic-ui-react";
 import { addTribe } from "../../store/actions/tribes";
 
-const AddTribeForm = props => {
+export const AddTribeForm = props => {
   const [loading, setLoading] = useState(false);
 
   return (

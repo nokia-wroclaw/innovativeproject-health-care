@@ -6,20 +6,13 @@ const userMenu = [
 ];
 
 const managerMenu = [
-  //...userMenu,
   { name: "Comments", path: "/users_comments" },
   { name: "Edit survey", path: "/edit_survey" }
 ];
 
-const editorMenu = [
-  //...managerMenu,
-  { name: "Tribes management", path: "/tribes_management" }
-];
+const editorMenu = [{ name: "Tribes management", path: "/tribes_management" }];
 
-const adminMenu = [
-  // ...editorMenu,
-  { name: "Admin panel", path: "/admin_panel" }
-];
+const adminMenu = [{ name: "Admin panel", path: "/admin_panel" }];
 
 const getMenu = user => {
   let menu = [];

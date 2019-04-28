@@ -4,7 +4,7 @@ import { Button, Item, Label, List } from "semantic-ui-react";
 import TeamSettings from "./TeamSettings";
 import "../../styles/common.css";
 
-const TeamDetails = ({ team, ...props }) => {
+export const TeamDetails = ({ team, ...props }) => {
   const [isOpenSettings, setIsOpenSettings] = useState(false);
 
   return (

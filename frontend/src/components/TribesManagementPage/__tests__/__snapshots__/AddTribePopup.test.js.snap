@@ -1,9 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`LoginButton should match snapshot 1`] = `
+exports[`AddTribePopup should match snapshot 1`] = `
 ShallowWrapper {
   Symbol(enzyme.__root__): [Circular],
-  Symbol(enzyme.__unrendered__): <LoginButton />,
+  Symbol(enzyme.__unrendered__): <AddTribePopup />,
   Symbol(enzyme.__renderer__): Object {
     "batchedUpdates": [Function],
     "checkPropTypes": [Function],
@@ -18,18 +18,25 @@ ShallowWrapper {
     "key": undefined,
     "nodeType": "class",
     "props": Object {
-      "content": <Connect(LoginForm) />,
+      "content": <Connect(AddTribeForm) />,
       "disabled": false,
       "keepInViewPort": true,
       "on": "click",
-      "position": "bottom right",
+      "position": "bottom center",
       "trigger": <Button
         as="button"
-        color="grey"
-        content="Log in"
+        compact={true}
         floated="right"
-        inverted={true}
-      />,
+        icon={true}
+        labelPosition="left"
+        secondary={true}
+      >
+        <Icon
+          as="i"
+          name="plus"
+        />
+        New tribe
+      </Button>,
     },
     "ref": null,
     "rendered": null,
@@ -41,18 +48,25 @@ ShallowWrapper {
       "key": undefined,
       "nodeType": "class",
       "props": Object {
-        "content": <Connect(LoginForm) />,
+        "content": <Connect(AddTribeForm) />,
         "disabled": false,
         "keepInViewPort": true,
         "on": "click",
-        "position": "bottom right",
+        "position": "bottom center",
         "trigger": <Button
           as="button"
-          color="grey"
-          content="Log in"
+          compact={true}
           floated="right"
-          inverted={true}
-        />,
+          icon={true}
+          labelPosition="left"
+          secondary={true}
+        >
+          <Icon
+            as="i"
+            name="plus"
+          />
+          New tribe
+        </Button>,
       },
       "ref": null,
       "rendered": null,

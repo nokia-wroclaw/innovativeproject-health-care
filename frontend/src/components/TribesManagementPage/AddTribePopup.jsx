@@ -3,7 +3,7 @@ import { Button, Icon, Popup } from "semantic-ui-react";
 import "../../styles/common.css";
 import AddTribeForm from "./AddTribeForm";
 
-const AddTribePopup = () => {
+export const AddTribePopup = () => {
   return (
     <Popup
       trigger={

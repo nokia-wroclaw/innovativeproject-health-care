@@ -1,9 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`LoginButton should match snapshot 1`] = `
+exports[`AddTribeForm should match snapshot 1`] = `
 ShallowWrapper {
   Symbol(enzyme.__root__): [Circular],
-  Symbol(enzyme.__unrendered__): <LoginButton />,
+  Symbol(enzyme.__unrendered__): <AddTribeForm />,
   Symbol(enzyme.__renderer__): Object {
     "batchedUpdates": [Function],
     "checkPropTypes": [Function],
@@ -18,21 +18,19 @@ ShallowWrapper {
     "key": undefined,
     "nodeType": "class",
     "props": Object {
-      "content": <Connect(LoginForm) />,
-      "disabled": false,
-      "keepInViewPort": true,
-      "on": "click",
-      "position": "bottom right",
-      "trigger": <Button
-        as="button"
-        color="grey"
-        content="Log in"
-        floated="right"
-        inverted={true}
-      />,
+      "children": [Function],
+      "enableReinitialize": false,
+      "initialValues": Object {
+        "tribeName": "",
+      },
+      "isInitialValid": false,
+      "onSubmit": [Function],
+      "validate": [Function],
+      "validateOnBlur": true,
+      "validateOnChange": true,
     },
     "ref": null,
-    "rendered": null,
+    "rendered": [Function],
     "type": [Function],
   },
   Symbol(enzyme.__nodes__): Array [
@@ -41,21 +39,19 @@ ShallowWrapper {
       "key": undefined,
       "nodeType": "class",
       "props": Object {
-        "content": <Connect(LoginForm) />,
-        "disabled": false,
-        "keepInViewPort": true,
-        "on": "click",
-        "position": "bottom right",
-        "trigger": <Button
-          as="button"
-          color="grey"
-          content="Log in"
-          floated="right"
-          inverted={true}
-        />,
+        "children": [Function],
+        "enableReinitialize": false,
+        "initialValues": Object {
+          "tribeName": "",
+        },
+        "isInitialValid": false,
+        "onSubmit": [Function],
+        "validate": [Function],
+        "validateOnBlur": true,
+        "validateOnChange": true,
       },
       "ref": null,
-      "rendered": null,
+      "rendered": [Function],
       "type": [Function],
     },
   ],
