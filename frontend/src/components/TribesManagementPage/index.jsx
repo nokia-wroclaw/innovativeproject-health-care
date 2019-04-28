@@ -1,25 +1,25 @@
-import React, { useEffect } from "react";
+import React, { useLayoutEffect } from "react";
 import { connect } from "react-redux";
 import { Accordion, Container, Header, Item } from "semantic-ui-react";
 import TemplatePage from "../common/TemplatePage/";
-import { setTribes } from "./../../store/actions/tribes";
+import {
+  setTribes,
+  setTribeEditors,
+  setTeamsInTribe,
+  setTeamMembers,
+  setTeamManagers
+} from "./../../store/actions/tribes";
 import TribeDetails from "./TribeDetails";
 import AddTribePopup from "./AddTribePopup";
 
 const TribesManagementPage = props => {
-  useEffect(() => {
+  useLayoutEffect(() => {
     props.setTribes();
   }, []);
 
   const tribePanels = [
     ...props.tribes.map(tribe => {
-      const details = (
-        <TribeDetails
-          tribe={tribe}
-          teams={tribe.teams}
-          editors={tribe.editors}
-        />
-      );
+      const details = <TribeDetails tribe={tribe} />;
       return {
         key: tribe.id,
         title: tribe.name,
@@ -53,5 +53,11 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { setTribes }
+  {
+    setTribes,
+    setTribeEditors,
+    setTeamsInTribe,
+    setTeamMembers,
+    setTeamManagers
+  }
 )(TribesManagementPage);

@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { Button, Item, Label, Accordion } from "semantic-ui-react";
-import { setTribeEditors, setTeamsInTribe } from "../../store/actions/tribes";
+import {
+  setTribeEditors,
+  setTeamsInTribe,
+  setTeamMembers,
+  setTeamManagers
+} from "../../store/actions/tribes";
 import TeamDetails from "./TeamDetails";
 import TribeSettings from "./TribeSettings";
 import "./style.css";
@@ -9,22 +14,24 @@ import "./style.css";
 const TribeDetails = ({ tribe, ...props }) => {
   const [isOpenSettings, setIsOpenSettings] = useState(false);
 
-  useEffect(() => {
+  const loadTribeDetails = async () => {
     props.setTribeEditors(tribe);
-    props.setTeamsInTribe(tribe);
+    await props.setTeamsInTribe(tribe);
+    tribe.teams.forEach(async team => {
+      await props.setTeamManagers(team);
+      await props.setTeamMembers(team);
+    });
+  };
+
+  useEffect(() => {
+    loadTribeDetails();
   }, []);
 
   let teamPanels = [];
   try {
     teamPanels = [
       ...tribe.teams.map(team => {
-        const details = (
-          <TeamDetails
-            team={team}
-            managers={team.managers}
-            members={team.members}
-          />
-        );
+        const details = <TeamDetails team={team} />;
         return {
           key: team.id,
           title: team.name,
@@ -75,7 +82,11 @@ const TribeDetails = ({ tribe, ...props }) => {
   );
 };
 
+const mapStateToProps = state => ({
+  tribes: state.tribes
+});
+
 export default connect(
-  null,
-  { setTribeEditors, setTeamsInTribe }
+  mapStateToProps,
+  { setTribeEditors, setTeamsInTribe, setTeamMembers, setTeamManagers }
 )(TribeDetails);

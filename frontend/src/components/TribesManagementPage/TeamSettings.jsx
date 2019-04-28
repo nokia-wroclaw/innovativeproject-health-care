@@ -68,14 +68,14 @@ const TeamSettings = ({ isOpen, team, close, ...props }) => {
         <Container textAlign="left">
           <div className="flex-space-evenly-align-start">
             <EditingCard
-              data={team.managers}
+              data={team.managers ? team.managers : []}
               title="Managers"
               useUsersForm={true}
               onAddBtnClick={handleAddManagerToTeam}
               onItemDelete={handleDeleteManagerFromTeam}
             />
             <EditingCard
-              data={team.members}
+              data={team.members ? team.members : []}
               title="Members"
               useUsersForm={true}
               onAddBtnClick={handleAddMemberToTeam}

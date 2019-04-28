@@ -1,17 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { Button, Item, Label, List } from "semantic-ui-react";
-import { setTeamMembers, setTeamManagers } from "./../../store/actions/tribes";
 import TeamSettings from "./TeamSettings";
 import "../../styles/common.css";
 
 const TeamDetails = ({ team, ...props }) => {
   const [isOpenSettings, setIsOpenSettings] = useState(false);
-
-  useEffect(() => {
-    props.setTeamManagers(team);
-    props.setTeamMembers(team);
-  }, []);
 
   return (
     <React.Fragment>
@@ -42,7 +36,7 @@ const TeamDetails = ({ team, ...props }) => {
           : null}
       </Item>
 
-      <List verticalAlign="middle" size="large">
+      <List verticalAlign="middle">
         <List.Header>
           Members ({team.members ? team.members.length : 0}):
         </List.Header>
@@ -60,7 +54,8 @@ const TeamDetails = ({ team, ...props }) => {
   );
 };
 
-export default connect(
-  null,
-  { setTeamMembers, setTeamManagers }
-)(TeamDetails);
+const mapStateToProps = state => ({
+  tribes: state.tribes
+});
+
+export default connect(mapStateToProps)(TeamDetails);
