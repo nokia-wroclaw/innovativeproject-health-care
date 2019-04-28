@@ -5,3 +5,7 @@ export const confirmDelete = (itemName, customMessage) => {
   const msg = customMessage || defaultMsg;
   return window.confirm(msg);
 };
+
+export const isAsync = fn => {
+  return fn.constructor.name === "AsyncFunction";
+};

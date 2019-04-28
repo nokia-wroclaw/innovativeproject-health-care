@@ -7,7 +7,7 @@ import TribeSettings from "./TribeSettings";
 import "./style.css";
 
 const TribeDetails = ({ id, editors, teams, ...props }) => {
-  const [openSettings, setOpenSettings] = useState(false);
+  const [isOpenSettings, setIsOpenSettings] = useState(false);
 
   useEffect(() => {
     props.setTribeEditors(id);
@@ -44,13 +44,12 @@ const TribeDetails = ({ id, editors, teams, ...props }) => {
         compact
         secondary
         basic
-        onClick={() => setOpenSettings(true)}
+        onClick={() => setIsOpenSettings(true)}
       />
       <TribeSettings
-        open={openSettings}
-        setOpen={setOpenSettings}
+        isOpen={isOpenSettings}
         tribe_id={id}
-        close={() => setOpenSettings(false)}
+        close={() => setIsOpenSettings(false)}
       />
       <Item style={{ paddingTop: "1em" }}>
         Editors ({editors ? editors.length : 0}): <br />

@@ -7,7 +7,7 @@ import {
 import { connect } from "react-redux";
 import EditingCard from "../common/EditingCard/EditingCard";
 
-const EditorsSection = props => {
+export const EditorsSection = props => {
   useEffect(() => {
     props.setEditors();
   }, []);
@@ -16,6 +16,7 @@ const EditorsSection = props => {
     <EditingCard
       data={props.editors}
       title="Editors"
+      useUsersForm={true}
       onAddBtnClick={props.addEditor}
       onItemDelete={props.deleteEditor}
     />

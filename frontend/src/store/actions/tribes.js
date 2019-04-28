@@ -6,8 +6,11 @@ import {
   SET_TEAM_MEMBERS,
   ADD_TRIBE,
   DELETE_TRIBE,
+  UPDATE_TRIBE_NAME,
   ADD_EDITOR_TO_TRIBE,
-  DELETE_EDITOR_FROM_TRIBE
+  DELETE_EDITOR_FROM_TRIBE,
+  ADD_TEAM_TO_TRIBE,
+  DELETE_TEAM
 } from "./types";
 import axios from "axios";
 import { endpoints, getHttpConfig } from "../../services/http";
@@ -138,6 +141,21 @@ export const deleteTribe = tribe_id => dispatch => {
     });
 };
 
+export const updateTribeName = (tribe_id, tribe_name) => dispatch => {
+  const config = getHttpConfig();
+  return axios
+    .put(`${endpoints.putTribe}${tribe_id}`, { name: tribe_name }, config)
+    .then(() => {
+      dispatch({
+        type: UPDATE_TRIBE_NAME,
+        payload: { tribe_id, tribe_name }
+      });
+    })
+    .catch(error => {
+      if (error.response.status === 401) dispatch(openLoginModal());
+    });
+};
+
 export const addEditorToTribe = (tribe_id, user) => dispatch => {
   const config = getHttpConfig();
   return axios
@@ -157,11 +175,40 @@ export const deleteEditorFromTribe = (tribe_id, user) => dispatch => {
   const config = getHttpConfig();
   return axios
     .delete(`${endpoints.deleteTribe}${tribe_id}/editors/${user.id}`, config)
-    .then(response => {
-      console.log(response);
+    .then(() => {
       dispatch({
         type: DELETE_EDITOR_FROM_TRIBE,
         payload: { tribe_id, user }
+      });
+    })
+    .catch(error => {
+      if (error.response.status === 401) dispatch(openLoginModal());
+    });
+};
+
+export const addTeamToTribe = (tribe_id, team_name) => dispatch => {
+  const config = getHttpConfig();
+  return axios
+    .post(`${endpoints.getTribe}${tribe_id}/teams`, { name: team_name }, config)
+    .then(response => {
+      dispatch({
+        type: ADD_TEAM_TO_TRIBE,
+        payload: { tribe_id, team: response.data }
+      });
+    })
+    .catch(error => {
+      if (error.response.status === 401) dispatch(openLoginModal());
+    });
+};
+
+export const deleteTeamFromTribe = (tribe_id, team) => dispatch => {
+  const config = getHttpConfig();
+  return axios
+    .delete(`${endpoints.teams}${team.id}`, config)
+    .then(() => {
+      dispatch({
+        type: DELETE_TEAM,
+        payload: { tribe_id, team }
       });
     })
     .catch(error => {

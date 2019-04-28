@@ -6,6 +6,7 @@ import EditingCardContent from "./EditingCardContent";
 const EditingCard = ({
   data,
   title,
+  useUsersForm,
   onAddBtnClick,
   onItemDelete,
   alertMsg
@@ -14,6 +15,7 @@ const EditingCard = ({
     <Card style={{ margin: "10px" }} className="editing-card">
       <EditingCardHeader
         title={title}
+        useUsersForm={useUsersForm}
         onAddBtnClick={onAddBtnClick}
         className="editing-card-header"
       />

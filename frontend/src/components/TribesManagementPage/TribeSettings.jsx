@@ -1,41 +1,59 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { Modal, Button, Container } from "semantic-ui-react";
+import { Modal, Button, Container, Input } from "semantic-ui-react";
 import {
   deleteTribe,
   addEditorToTribe,
-  deleteEditorFromTribe
+  deleteEditorFromTribe,
+  addTeamToTribe,
+  deleteTeamFromTribe,
+  updateTribeName
 } from "./../../store/actions/tribes";
 import { confirmDelete } from "./../common/functions";
 import EditingCard from "./../common/EditingCard/EditingCard";
 import "../../styles/common.css";
 
-const TribeSettings = ({ open, setOpen, tribe_id, close, ...props }) => {
+const TribeSettings = ({ isOpen, tribe_id, close, ...props }) => {
   const tribe = props.tribes.find(tribe => tribe.id === tribe_id);
-  const [loading, setLoading] = useState(false);
+  const [deleteBtnLoading, setDeleteBtnLoading] = useState(false);
+  const [saveBtnLoading, setSaveBtnLoading] = useState(false);
+  const [newTribeName, setNewTribeName] = useState(tribe.name);
 
   const handleDeleteTribe = () => {
     if (confirmDelete()) {
-      setLoading(true);
-      props.deleteTribe(tribe_id).then(() => {
-        setLoading(false);
-        setOpen(false);
-      });
+      setDeleteBtnLoading(true);
+      props.deleteTribe(tribe.id);
     }
   };
 
-  const handleAddEditorToTribe = user => {
-    props.addEditorToTribe(tribe_id, user);
-  };
+  const handleAddEditorToTribe = user => props.addEditorToTribe(tribe.id, user);
 
-  const handleDeleteEditorFromTribe = user => {
-    props.deleteEditorFromTribe(tribe_id, user);
+  const handleDeleteEditorFromTribe = user =>
+    props.deleteEditorFromTribe(tribe.id, user);
+
+  const handleAddTeamToTribe = team_name =>
+    props.addTeamToTribe(tribe.id, team_name);
+
+  const handleDeleteTeamFromTribe = team =>
+    props.deleteTeamFromTribe(tribe.id, team);
+
+  const handleSaveAndClose = async () => {
+    setSaveBtnLoading(true);
+    if (newTribeName !== tribe.name)
+      await props.updateTribeName(tribe.id, newTribeName);
+    setSaveBtnLoading(false);
+    close();
   };
 
   return (
-    <Modal open={open}>
+    <Modal open={isOpen}>
       <Modal.Header>
-        <input defaultValue={tribe.name} />
+        <Input
+          label={{ icon: "edit" }}
+          labelPosition="right corner"
+          defaultValue={tribe.name}
+          onChange={({ target }) => setNewTribeName(target.value)}
+        />
         <Button
           icon="trash alternate"
           labelPosition="left"
@@ -44,7 +62,7 @@ const TribeSettings = ({ open, setOpen, tribe_id, close, ...props }) => {
           basic
           negative
           onClick={handleDeleteTribe}
-          loading={loading}
+          loading={deleteBtnLoading}
         />
       </Modal.Header>
 
@@ -54,19 +72,20 @@ const TribeSettings = ({ open, setOpen, tribe_id, close, ...props }) => {
             <EditingCard
               data={tribe.editors}
               title="Tribe editors"
+              useUsersForm={true}
               onAddBtnClick={handleAddEditorToTribe}
               onItemDelete={handleDeleteEditorFromTribe}
             />
             <EditingCard
               data={tribe.teams}
               title="Teams"
-              onAddBtnClick={() => {}}
-              onItemDelete={() => {}}
+              onAddBtnClick={handleAddTeamToTribe}
+              onItemDelete={handleDeleteTeamFromTribe}
             />
           </div>
         </Container>
         <Container textAlign="center">
-          <Button onClick={close} primary>
+          <Button onClick={handleSaveAndClose} primary loading={saveBtnLoading}>
             Save and close
           </Button>
         </Container>
@@ -81,5 +100,12 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { deleteTribe, addEditorToTribe, deleteEditorFromTribe }
+  {
+    deleteTribe,
+    addEditorToTribe,
+    deleteEditorFromTribe,
+    addTeamToTribe,
+    deleteTeamFromTribe,
+    updateTribeName
+  }
 )(TribeSettings);

@@ -1,9 +1,15 @@
 import React, { useState } from "react";
 import { Header, Card, Grid, Icon } from "semantic-ui-react";
 import FormWithUsersDataList from "../../common/FormWithUsersDataList/";
+import FormWithSingleInput from "../FormWithSingleInput";
 
-export const EditingCardHeader = ({ title, onAddBtnClick }) => {
+export const EditingCardHeader = ({ title, useUsersForm, onAddBtnClick }) => {
   const [showInput, setShowInput] = useState(false);
+  const form = useUsersForm ? (
+    <FormWithUsersDataList buttonText="Add" handleClick={onAddBtnClick} />
+  ) : (
+    <FormWithSingleInput buttonText="Add" handleClick={onAddBtnClick} />
+  );
   return (
     <React.Fragment>
       <Card.Content>
@@ -23,11 +29,7 @@ export const EditingCardHeader = ({ title, onAddBtnClick }) => {
         </Grid>
       </Card.Content>
 
-      {showInput && (
-        <Card.Content>
-          <FormWithUsersDataList buttonText="Add" handleClick={onAddBtnClick} />
-        </Card.Content>
-      )}
+      {showInput && <Card.Content>{form}</Card.Content>}
     </React.Fragment>
   );
 };

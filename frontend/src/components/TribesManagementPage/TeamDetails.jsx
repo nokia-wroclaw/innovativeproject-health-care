@@ -1,10 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { Button, Item, Label, List } from "semantic-ui-react";
 import { setTeamMembers, setTeamManagers } from "./../../store/actions/tribes";
+import TeamSettings from "./TeamSettings";
 import "../../styles/common.css";
 
 const TeamDetails = ({ id, tribe_id, managers, members, ...props }) => {
+  const [isOpenSettings, setIsOpenSettings] = useState(false);
+
   useEffect(() => {
     props.setTeamManagers(tribe_id, id);
     props.setTeamMembers(tribe_id, id);
@@ -19,6 +22,13 @@ const TeamDetails = ({ id, tribe_id, managers, members, ...props }) => {
         compact
         secondary
         basic
+        onClick={() => setIsOpenSettings(true)}
+      />
+      <TeamSettings
+        isOpen={isOpenSettings}
+        team_id={id}
+        tribe_id={tribe_id}
+        close={() => setIsOpenSettings(false)}
       />
       <Item style={{ paddingTop: "1em" }}>
         Managers ({managers ? managers.length : 0}):

@@ -1,9 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SectionIcon should match snapshot 1`] = `
+exports[`EditorsSection should match snapshot 1`] = `
 ShallowWrapper {
   Symbol(enzyme.__root__): [Circular],
-  Symbol(enzyme.__unrendered__): <SectionIcon />,
+  Symbol(enzyme.__unrendered__): <EditorsSection
+    setEditors={[MockFunction]}
+  />,
   Symbol(enzyme.__renderer__): Object {
     "batchedUpdates": [Function],
     "checkPropTypes": [Function],
@@ -16,41 +18,31 @@ ShallowWrapper {
   Symbol(enzyme.__node__): Object {
     "instance": null,
     "key": undefined,
-    "nodeType": "host",
+    "nodeType": "function",
     "props": Object {
-      "aria-hidden": "true",
-      "className": undefined,
-      "onClick": undefined,
-      "style": Object {
-        "color": undefined,
-        "cursor": "pointer",
-        "fontSize": "1.3em",
-        "marginRight": 8,
-      },
+      "data": undefined,
+      "onAddBtnClick": undefined,
+      "onItemDelete": undefined,
+      "title": "Editors",
     },
     "ref": null,
     "rendered": null,
-    "type": "i",
+    "type": [Function],
   },
   Symbol(enzyme.__nodes__): Array [
     Object {
       "instance": null,
       "key": undefined,
-      "nodeType": "host",
+      "nodeType": "function",
       "props": Object {
-        "aria-hidden": "true",
-        "className": undefined,
-        "onClick": undefined,
-        "style": Object {
-          "color": undefined,
-          "cursor": "pointer",
-          "fontSize": "1.3em",
-          "marginRight": 8,
-        },
+        "data": undefined,
+        "onAddBtnClick": undefined,
+        "onItemDelete": undefined,
+        "title": "Editors",
       },
       "ref": null,
       "rendered": null,
-      "type": "i",
+      "type": [Function],
     },
   ],
   Symbol(enzyme.__options__): Object {

@@ -4,10 +4,13 @@ import {
   SET_TEAMS_IN_TRIBE,
   ADD_TRIBE,
   DELETE_TRIBE,
+  UPDATE_TRIBE_NAME,
   SET_TEAM_MANAGERS,
   SET_TEAM_MEMBERS,
   ADD_EDITOR_TO_TRIBE,
-  DELETE_EDITOR_FROM_TRIBE
+  DELETE_EDITOR_FROM_TRIBE,
+  ADD_TEAM_TO_TRIBE,
+  DELETE_TEAM
 } from "../actions/types";
 
 const initialState = [];
@@ -60,6 +63,12 @@ export default function(state = initialState, action) {
       tribes = [...state];
       return tribes.filter(tribe => tribe.id !== action.payload);
 
+    case UPDATE_TRIBE_NAME:
+      tribes = [...state];
+      targetTribe = tribes.find(tribe => tribe.id === action.payload.tribe_id);
+      targetTribe.name = action.payload.tribe_name;
+      return tribes;
+
     case ADD_EDITOR_TO_TRIBE:
       tribes = [...state];
       targetTribe = tribes.find(tribe => tribe.id === action.payload.tribe_id);
@@ -71,6 +80,20 @@ export default function(state = initialState, action) {
       targetTribe = tribes.find(tribe => tribe.id === action.payload.tribe_id);
       targetTribe.editors = targetTribe.editors.filter(
         user => user.id !== action.payload.user.id
+      );
+      return tribes;
+
+    case ADD_TEAM_TO_TRIBE:
+      tribes = [...state];
+      targetTribe = tribes.find(tribe => tribe.id === action.payload.tribe_id);
+      targetTribe.teams.push(action.payload.team);
+      return tribes;
+
+    case DELETE_TEAM:
+      tribes = [...state];
+      targetTribe = tribes.find(tribe => tribe.id === action.payload.tribe_id);
+      targetTribe.teams = targetTribe.teams.filter(
+        team => team.id !== action.payload.team.id
       );
       return tribes;
 
