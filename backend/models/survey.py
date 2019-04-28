@@ -1,3 +1,4 @@
+from flask import abort
 from backend.app import db
 
 
@@ -20,6 +21,17 @@ class Survey(db.Model):
         self.tribe_id = tribe_id
         self.date = date
         self.draft = draft
+
+    @staticmethod
+    def get_if_exists(survey_id):
+        """Fetches survey with given id if it exists, aborts with
+        404 status otherwise.
+        """
+
+        survey = Survey.query.filter_by(id=survey_id).one_or_none()
+        if survey is None:
+            abort(404, 'Requested survey does not exist.')
+        return survey
 
     def serialize_questions(self):
         questions = []

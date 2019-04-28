@@ -1,5 +1,5 @@
 from datetime import datetime
-from flask import Response, abort, jsonify, request
+from flask import abort, jsonify, request
 from flask_restful import Resource
 from flask_jwt_extended import current_user
 from sqlalchemy import exc
@@ -73,8 +73,43 @@ class TribeSurveysRes(Resource):
         response = jsonify(draft.serialize())
         if created_f is True:
             response.status_code = 201
-            response.headers['Location'] = '/tribes/%d/surveys/%d'\
-                                           % (tribe_id, draft.id)
+            response.headers['Location'] = '/surveys/%d' % draft.id
         else:
             response.status_code = 200
+        return response
+
+
+class SurveyRes(Resource):
+    """Single survey identified by id."""
+
+    @roles_allowed(['admin', 'editor', 'manager', 'user'])
+    def get(self, survey_id):
+        """Returns survey with specified id."""
+
+        survey = Survey.get_if_exists(survey_id)
+
+        # Check if any of the current user's roles allows him to access
+        # this survey
+        access = False
+        if current_user.is_user():
+            tribe_ids = [t.team.tribe_id for t in current_user.teams
+                         if t.manager is False]
+            if survey.tribe_id in tribe_ids:
+                access = True
+        if current_user.is_manager() and not access:
+            tribe_ids = [t.team.tribe_id for t in current_user.teams
+                         if t.manager is True]
+            if survey.tribe_id in tribe_ids:
+                access = True
+        if current_user.is_editor() and not access:
+            if survey.tribe_id in current_user.editing_ids():
+                access = True
+        if current_user.is_admin() and not access:
+            access = True
+
+        if not access:
+            abort(403)
+
+        response = jsonify(survey.serialize())
+        response.status_code = 200
         return response
