@@ -36,11 +36,11 @@ class FormWithUsersDataList extends Component {
     const inputValue = input.value;
     await this.setState({ inputValue });
 
-    if (inputValue.length === lettersCountForFetchingUsers) {
+    if (inputValue.trim().length === lettersCountForFetchingUsers) {
       getUsersByName(inputValue)
         .then(({ data }) => this.setState({ dataList: data }))
-        .catch(() => {
-          this.props.openLoginModal();
+        .catch(error => {
+          if (error.response.status === 401) this.props.openLoginModal();
         });
     }
     this.validateInput();
