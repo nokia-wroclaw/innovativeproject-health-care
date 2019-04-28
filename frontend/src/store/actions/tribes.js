@@ -31,15 +31,15 @@ export const setTribes = () => dispatch => {
     });
 };
 
-export const setTribeEditors = tribe_id => dispatch => {
+export const setTribeEditors = tribe => dispatch => {
   const config = getHttpConfig();
   return axios
-    .get(`${endpoints.getTribe}${tribe_id}/editors`, config)
+    .get(`${endpoints.getTribe}${tribe.id}/editors`, config)
     .then(response => {
       dispatch({
         type: SET_TRIBE_EDITORS,
         payload: {
-          tribe_id,
+          tribe,
           editors: response.data
         }
       });
@@ -49,15 +49,15 @@ export const setTribeEditors = tribe_id => dispatch => {
     });
 };
 
-export const setTeamsInTribe = tribe_id => dispatch => {
+export const setTeamsInTribe = tribe => dispatch => {
   const config = getHttpConfig();
   return axios
-    .get(`${endpoints.getTribe}${tribe_id}/teams`, config)
+    .get(`${endpoints.getTribe}${tribe.id}/teams`, config)
     .then(response => {
       dispatch({
         type: SET_TEAMS_IN_TRIBE,
         payload: {
-          tribe_id,
+          tribe,
           teams: response.data
         }
       });
@@ -67,40 +67,40 @@ export const setTeamsInTribe = tribe_id => dispatch => {
     });
 };
 
-export const setTeamManagers = (tribe_id, team_id) => dispatch => {
+export const setTeamManagers = team => dispatch => {
   const config = getHttpConfig();
   return axios
-    .get(`${endpoints.teams}${team_id}/managers`, config)
+    .get(`${endpoints.teams}${team.id}/managers`, config)
     .then(response => {
       dispatch({
         type: SET_TEAM_MANAGERS,
         payload: {
-          tribe_id,
-          team_id,
+          team,
           managers: response.data
         }
       });
     })
     .catch(error => {
+      console.log(error);
       if (error.response.status === 401) dispatch(openLoginModal());
     });
 };
 
-export const setTeamMembers = (tribe_id, team_id) => dispatch => {
+export const setTeamMembers = team => dispatch => {
   const config = getHttpConfig();
   return axios
-    .get(`${endpoints.teams}${team_id}/users`, config)
+    .get(`${endpoints.teams}${team.id}/users`, config)
     .then(response => {
       dispatch({
         type: SET_TEAM_MEMBERS,
         payload: {
-          tribe_id,
-          team_id,
+          team,
           members: response.data
         }
       });
     })
     .catch(error => {
+      console.log(error);
       if (error.response.status === 401) dispatch(openLoginModal());
     });
 };
@@ -126,14 +126,14 @@ export const addTribe = name => dispatch => {
     });
 };
 
-export const deleteTribe = tribe_id => dispatch => {
+export const deleteTribe = tribe => dispatch => {
   const config = getHttpConfig();
   return axios
-    .delete(`${endpoints.deleteTribe}${tribe_id}`, config)
+    .delete(`${endpoints.deleteTribe}${tribe.id}`, config)
     .then(() => {
       dispatch({
         type: DELETE_TRIBE,
-        payload: tribe_id
+        payload: tribe.id
       });
     })
     .catch(error => {
@@ -141,14 +141,14 @@ export const deleteTribe = tribe_id => dispatch => {
     });
 };
 
-export const updateTribeName = (tribe_id, tribe_name) => dispatch => {
+export const updateTribeName = (tribe, name) => dispatch => {
   const config = getHttpConfig();
   return axios
-    .put(`${endpoints.putTribe}${tribe_id}`, { name: tribe_name }, config)
+    .put(`${endpoints.putTribe}${tribe.id}`, { name }, config)
     .then(() => {
       dispatch({
         type: UPDATE_TRIBE_NAME,
-        payload: { tribe_id, tribe_name }
+        payload: { tribe, name }
       });
     })
     .catch(error => {
@@ -156,14 +156,14 @@ export const updateTribeName = (tribe_id, tribe_name) => dispatch => {
     });
 };
 
-export const addEditorToTribe = (tribe_id, user) => dispatch => {
+export const addEditorToTribe = (tribe, user) => dispatch => {
   const config = getHttpConfig();
   return axios
-    .put(`${endpoints.getTribe}${tribe_id}/editors/${user.id}`, {}, config)
+    .put(`${endpoints.getTribe}${tribe.id}/editors/${user.id}`, {}, config)
     .then(() => {
       dispatch({
         type: ADD_EDITOR_TO_TRIBE,
-        payload: { tribe_id, user }
+        payload: { tribe, user }
       });
     })
     .catch(error => {
@@ -171,14 +171,14 @@ export const addEditorToTribe = (tribe_id, user) => dispatch => {
     });
 };
 
-export const deleteEditorFromTribe = (tribe_id, user) => dispatch => {
+export const deleteEditorFromTribe = (tribe, user) => dispatch => {
   const config = getHttpConfig();
   return axios
-    .delete(`${endpoints.deleteTribe}${tribe_id}/editors/${user.id}`, config)
+    .delete(`${endpoints.deleteTribe}${tribe.id}/editors/${user.id}`, config)
     .then(() => {
       dispatch({
         type: DELETE_EDITOR_FROM_TRIBE,
-        payload: { tribe_id, user }
+        payload: { tribe, user }
       });
     })
     .catch(error => {
@@ -186,14 +186,14 @@ export const deleteEditorFromTribe = (tribe_id, user) => dispatch => {
     });
 };
 
-export const addTeamToTribe = (tribe_id, team_name) => dispatch => {
+export const addTeamToTribe = (tribe, team_name) => dispatch => {
   const config = getHttpConfig();
   return axios
-    .post(`${endpoints.getTribe}${tribe_id}/teams`, { name: team_name }, config)
+    .post(`${endpoints.getTribe}${tribe.id}/teams`, { name: team_name }, config)
     .then(response => {
       dispatch({
         type: ADD_TEAM_TO_TRIBE,
-        payload: { tribe_id, team: response.data }
+        payload: { tribe, team: response.data }
       });
     })
     .catch(error => {
@@ -201,14 +201,14 @@ export const addTeamToTribe = (tribe_id, team_name) => dispatch => {
     });
 };
 
-export const deleteTeamFromTribe = (tribe_id, team) => dispatch => {
+export const deleteTeamFromTribe = team => dispatch => {
   const config = getHttpConfig();
   return axios
     .delete(`${endpoints.teams}${team.id}`, config)
     .then(() => {
       dispatch({
         type: DELETE_TEAM,
-        payload: { tribe_id, team }
+        payload: { team }
       });
     })
     .catch(error => {

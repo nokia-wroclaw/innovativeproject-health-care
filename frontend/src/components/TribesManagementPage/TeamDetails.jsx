@@ -5,12 +5,12 @@ import { setTeamMembers, setTeamManagers } from "./../../store/actions/tribes";
 import TeamSettings from "./TeamSettings";
 import "../../styles/common.css";
 
-const TeamDetails = ({ id, tribe_id, managers, members, ...props }) => {
+const TeamDetails = ({ team, ...props }) => {
   const [isOpenSettings, setIsOpenSettings] = useState(false);
 
   useEffect(() => {
-    props.setTeamManagers(tribe_id, id);
-    props.setTeamMembers(tribe_id, id);
+    props.setTeamManagers(team);
+    props.setTeamMembers(team);
   }, []);
 
   return (
@@ -26,15 +26,14 @@ const TeamDetails = ({ id, tribe_id, managers, members, ...props }) => {
       />
       <TeamSettings
         isOpen={isOpenSettings}
-        team_id={id}
-        tribe_id={tribe_id}
+        team={team}
         close={() => setIsOpenSettings(false)}
       />
       <Item style={{ paddingTop: "1em" }}>
-        Managers ({managers ? managers.length : 0}):
+        Managers ({team.managers ? team.managers.length : 0}):
         <br />
-        {managers
-          ? managers.map(manager => (
+        {team.managers
+          ? team.managers.map(manager => (
               <Label color="blue" key={manager.id}>
                 {manager.name}
                 <Label.Detail>({manager.login})</Label.Detail>
@@ -44,10 +43,12 @@ const TeamDetails = ({ id, tribe_id, managers, members, ...props }) => {
       </Item>
 
       <List verticalAlign="middle" size="large">
-        <List.Header>Members ({members ? members.length : 0}):</List.Header>
+        <List.Header>
+          Members ({team.members ? team.members.length : 0}):
+        </List.Header>
 
-        {members
-          ? members.map(member => (
+        {team.members
+          ? team.members.map(member => (
               <List.Item key={member.id}>
                 <List.Icon name="user circle" />
                 {member.name} ({member.login})

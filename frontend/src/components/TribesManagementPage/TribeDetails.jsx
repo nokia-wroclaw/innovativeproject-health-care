@@ -6,22 +6,21 @@ import TeamDetails from "./TeamDetails";
 import TribeSettings from "./TribeSettings";
 import "./style.css";
 
-const TribeDetails = ({ id, editors, teams, ...props }) => {
+const TribeDetails = ({ tribe, ...props }) => {
   const [isOpenSettings, setIsOpenSettings] = useState(false);
 
   useEffect(() => {
-    props.setTribeEditors(id);
-    props.setTeamsInTribe(id);
+    props.setTribeEditors(tribe);
+    props.setTeamsInTribe(tribe);
   }, []);
 
   let teamPanels = [];
   try {
     teamPanels = [
-      ...teams.map(team => {
+      ...tribe.teams.map(team => {
         const details = (
           <TeamDetails
-            id={team.id}
-            tribe_id={id}
+            team={team}
             managers={team.managers}
             members={team.members}
           />
@@ -48,13 +47,13 @@ const TribeDetails = ({ id, editors, teams, ...props }) => {
       />
       <TribeSettings
         isOpen={isOpenSettings}
-        tribe_id={id}
+        tribe={tribe}
         close={() => setIsOpenSettings(false)}
       />
       <Item style={{ paddingTop: "1em" }}>
-        Editors ({editors ? editors.length : 0}): <br />
-        {editors
-          ? editors.map(editor => (
+        Editors ({tribe.editors ? tribe.editors.length : 0}): <br />
+        {tribe.editors
+          ? tribe.editors.map(editor => (
               <Label color="violet" key={editor.id}>
                 {editor.name}
                 <Label.Detail>({editor.login})</Label.Detail>

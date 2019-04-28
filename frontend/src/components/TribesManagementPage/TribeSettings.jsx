@@ -13,8 +13,7 @@ import { confirmDelete } from "./../common/functions";
 import EditingCard from "./../common/EditingCard/EditingCard";
 import "../../styles/common.css";
 
-const TribeSettings = ({ isOpen, tribe_id, close, ...props }) => {
-  const tribe = props.tribes.find(tribe => tribe.id === tribe_id);
+const TribeSettings = ({ isOpen, tribe, close, ...props }) => {
   const [deleteBtnLoading, setDeleteBtnLoading] = useState(false);
   const [saveBtnLoading, setSaveBtnLoading] = useState(false);
   const [newTribeName, setNewTribeName] = useState(tribe.name);
@@ -22,25 +21,24 @@ const TribeSettings = ({ isOpen, tribe_id, close, ...props }) => {
   const handleDeleteTribe = () => {
     if (confirmDelete()) {
       setDeleteBtnLoading(true);
-      props.deleteTribe(tribe.id);
+      props.deleteTribe(tribe);
     }
   };
 
-  const handleAddEditorToTribe = user => props.addEditorToTribe(tribe.id, user);
+  const handleAddEditorToTribe = user => props.addEditorToTribe(tribe, user);
 
   const handleDeleteEditorFromTribe = user =>
-    props.deleteEditorFromTribe(tribe.id, user);
+    props.deleteEditorFromTribe(tribe, user);
 
-  const handleAddTeamToTribe = team_name =>
-    props.addTeamToTribe(tribe.id, team_name);
+  const handleAddTeamToTribe = teamName =>
+    props.addTeamToTribe(tribe, teamName);
 
-  const handleDeleteTeamFromTribe = team =>
-    props.deleteTeamFromTribe(tribe.id, team);
+  const handleDeleteTeamFromTribe = team => props.deleteTeamFromTribe(team);
 
   const handleSaveAndClose = async () => {
     setSaveBtnLoading(true);
     if (newTribeName !== tribe.name)
-      await props.updateTribeName(tribe.id, newTribeName);
+      await props.updateTribeName(tribe, newTribeName);
     setSaveBtnLoading(false);
     close();
   };

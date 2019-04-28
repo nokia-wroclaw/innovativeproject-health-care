@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Accordion, Container, Header, Item } from "semantic-ui-react";
 import TemplatePage from "../common/TemplatePage/";
-import { setTribes, addTribe } from "./../../store/actions/tribes";
+import { setTribes } from "./../../store/actions/tribes";
 import TribeDetails from "./TribeDetails";
 import AddTribePopup from "./AddTribePopup";
 
@@ -15,9 +15,9 @@ const TribesManagementPage = props => {
     ...props.tribes.map(tribe => {
       const details = (
         <TribeDetails
-          id={tribe.id}
-          editors={tribe.editors}
+          tribe={tribe}
           teams={tribe.teams}
+          editors={tribe.editors}
         />
       );
       return {
@@ -53,5 +53,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { setTribes, addTribe }
+  { setTribes }
 )(TribesManagementPage);

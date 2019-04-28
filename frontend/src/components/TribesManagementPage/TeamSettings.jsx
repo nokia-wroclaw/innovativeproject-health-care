@@ -2,48 +2,44 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import { Modal, Button, Container, Input } from "semantic-ui-react";
 import {
-  deleteTeam
-  //   addManagerToTeam,
-  //   deleteManagerFromTeam,
-  //   addMemberToTeam,
-  //   deleteMemberFromTeam,
-  //   updateTeamName
-} from "./../../store/actions/tribes";
+  deleteTeam,
+  addManagerToTeam,
+  deleteManagerFromTeam,
+  addMemberToTeam,
+  deleteMemberFromTeam,
+  updateTeamName
+} from "./../../store/actions/teams";
 import { confirmDelete } from "./../common/functions";
 import EditingCard from "./../common/EditingCard/EditingCard";
 import "../../styles/common.css";
 
-const TeamSettings = ({ isOpen, tribe_id, team_id, close, ...props }) => {
-  const targetTribe = props.tribes.find(tribe => tribe.id === tribe_id);
-  const team = targetTribe.teams.find(team => team.id === team_id);
-
+const TeamSettings = ({ isOpen, team, close, ...props }) => {
   const [deleteBtnLoading, setDeleteBtnLoading] = useState(false);
   const [saveBtnLoading, setSaveBtnLoading] = useState(false);
   const [newTeamName, setNewTeamName] = useState(team.name);
 
-  const handleDeleteTribe = () => {
+  const handleDeleteTeam = () => {
     if (confirmDelete()) {
       setDeleteBtnLoading(true);
-      props.deleteTeam(team.id);
+      props.deleteTeam(team);
     }
   };
 
-  //   const handleAddEditorToTribe = user => props.addManagerToTeam(team.id, user);
+  const handleAddManagerToTeam = user => props.addManagerToTeam(team, user);
 
-  //   const handleDeleteEditorFromTribe = user =>
-  //     props.deleteManagerFromTeam(team.id, user);
+  const handleDeleteManagerFromTeam = user =>
+    props.deleteManagerFromTeam(team, user);
 
-  //   const handleAddTeamToTribe = team_name =>
-  //     props.addMemberToTeam(team.id, team_name);
+  const handleAddMemberToTeam = user => props.addMemberToTeam(team, user);
 
-  //   const handleDeleteTeamFromTribe = team =>
-  //     props.deleteMemberFromTeam(team.id, team);
+  const handleDeleteMemberFromTeam = user =>
+    props.deleteMemberFromTeam(team, user);
 
   const handleSaveAndClose = async () => {
-    //   setSaveBtnLoading(true);
-    //   if (newTeamName !== team.name)
-    //     await props.updateTeamName(team.id, newTeamName);
-    //   setSaveBtnLoading(false);
+    setSaveBtnLoading(true);
+    if (newTeamName !== team.name)
+      await props.updateTeamName(team, newTeamName);
+    setSaveBtnLoading(false);
     close();
   };
 
@@ -60,10 +56,10 @@ const TeamSettings = ({ isOpen, tribe_id, team_id, close, ...props }) => {
           icon="trash alternate"
           labelPosition="left"
           floated="right"
-          content="Detele Tribe"
+          content="Detele Team"
           basic
           negative
-          //   onClick={handleDeleteTribe}
+          onClick={handleDeleteTeam}
           loading={deleteBtnLoading}
         />
       </Modal.Header>
@@ -75,15 +71,15 @@ const TeamSettings = ({ isOpen, tribe_id, team_id, close, ...props }) => {
               data={team.managers}
               title="Managers"
               useUsersForm={true}
-              //   onAddBtnClick={handleAddEditorToTribe}
-              //   onItemDelete={handleDeleteEditorFromTribe}
+              onAddBtnClick={handleAddManagerToTeam}
+              onItemDelete={handleDeleteManagerFromTeam}
             />
             <EditingCard
               data={team.members}
               title="Members"
               useUsersForm={true}
-              //   onAddBtnClick={handleAddTeamToTribe}
-              //   onItemDelete={handleDeleteTeamFromTribe}
+              onAddBtnClick={handleAddMemberToTeam}
+              onItemDelete={handleDeleteMemberFromTeam}
             />
           </div>
         </Container>
@@ -104,11 +100,11 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   {
-    deleteTeam
-    // addManagerToTeam,
-    // deleteManagerFromTeam,
-    // addMemberToTeam,
-    // deleteMemberFromTeam,
-    // updateTeamName
+    deleteTeam,
+    addManagerToTeam,
+    deleteManagerFromTeam,
+    addMemberToTeam,
+    deleteMemberFromTeam,
+    updateTeamName
   }
 )(TeamSettings);
