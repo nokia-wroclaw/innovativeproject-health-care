@@ -14,7 +14,7 @@ class User(db.Model):
 
     actions = db.relationship('Action', back_populates='user', lazy='select')
     teams = db.relationship('TeamUserLink', back_populates='user',
-                            lazy='joined')
+                            lazy='joined', cascade='all, delete, delete-orphan')
     editing = db.relationship('Tribe', back_populates='editors',
                               secondary='editors', lazy='select')
 

@@ -13,7 +13,7 @@ class Team(db.Model):
     tribe = db.relationship('Tribe', back_populates='teams', lazy='joined')
     actions = db.relationship('Action', back_populates='team', lazy='select')
     users = db.relationship('TeamUserLink', back_populates='team',
-                            lazy='select')
+                            lazy='select', cascade='all, delete, delete-orphan')
 
     def __init__(self, tribe_id, name):
         self.tribe_id = tribe_id

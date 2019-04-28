@@ -36,9 +36,12 @@ class TribesRes(Resource):
 
     @roles_allowed(['admin', 'editor'])
     def get(self):
-        """Lists all exisiting tribes."""
+        """Returns all tribes to which user sending request has rights."""
 
         tribes = Tribe.query.all()
+
+        if current_user.is_admin() is False:
+            tribes = [t for t in tribes if current_user.id in t.editors_ids()]
 
         response = jsonify([t.serialize() for t in tribes])
         response.status_code = 200
@@ -102,7 +105,7 @@ class TribeRes(Resource):
 class TribeEditorsRes(Resource):
     """All editors of given tribe collection."""
 
-    @roles_allowed(['admin'])
+    @roles_allowed(['admin', 'editor'])
     def get(self, tribe_id):
         """Returns all editors of tribe with specified id."""
 
