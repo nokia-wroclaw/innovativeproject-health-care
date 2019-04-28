@@ -36,7 +36,8 @@ class TribesRes(Resource):
 
     @roles_allowed(['admin', 'editor'])
     def get(self):
-        """Lists all exisiting tribes."""
+        """Lists all existing
+         tribes."""
 
         tribes = Tribe.query.all()
 
@@ -67,7 +68,7 @@ class TribeRes(Resource):
         except exc.SQLAlchemyError:
             abort(400)
 
-        response = Response()
+        response = jsonify(tribe.serialize())
         response.status_code = 200
         return response
 
@@ -95,7 +96,7 @@ class TribeRes(Resource):
             abort(400)
 
         response = Response()
-        response.status_code = 200
+        response.status_code = 204
         return response
 
 
@@ -133,7 +134,7 @@ class TribeEditorRes(Resource):
 
         if user in tribe.editors:
             response = Response()
-            response.status_code = 200
+            response.status_code = 204
             return response
 
         tribe.editors.append(user)
@@ -163,5 +164,5 @@ class TribeEditorRes(Resource):
         db.session.commit()
 
         response = Response()
-        response.status_code = 200
+        response.status_code = 204
         return response

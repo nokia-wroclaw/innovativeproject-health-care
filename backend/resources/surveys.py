@@ -29,7 +29,10 @@ class TribeSurveysRes(Resource):
             .one_or_none()
 
         # Create new draft if there is no existing one
+        created_f = False
         if draft is None:
+            # Set 'created' flag
+            created_f = True
             draft = Survey(tribe_id, datetime.now(), True)
             db.session.add(draft)
 
@@ -68,5 +71,10 @@ class TribeSurveysRes(Resource):
             abort(400)
 
         response = jsonify(draft.serialize())
-        response.status_code = 200
+        if created_f is True:
+            response.status_code = 201
+            response.headers['Location'] = '/tribes/%d/surveys/%d'\
+                                           % (tribe_id, draft.id)
+        else:
+            response.status_code = 200
         return response
