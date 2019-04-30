@@ -19,7 +19,7 @@ import EditSurveyPage from "./components/EditSurveyPage";
 class App extends Component {
   componentDidMount() {
     try {
-      const jwt = localStorage.getItem("jwt");
+      const jwt = localStorage.getItem("token");
       const { user } = jwtDecode(jwt);
       this.props.setUser(user);
     } catch {}

@@ -14,7 +14,7 @@ import {
 } from "./types";
 import axios from "axios";
 import { endpoints, getHttpConfig } from "../../services/http";
-import { openLoginModal } from "./general";
+import { handleFetchingError } from "./general";
 
 export const setTribes = () => dispatch => {
   const config = getHttpConfig();
@@ -27,7 +27,7 @@ export const setTribes = () => dispatch => {
       });
     })
     .catch(error => {
-      if (error.response.status === 401) dispatch(openLoginModal());
+      dispatch(handleFetchingError(error));
     });
 };
 
@@ -45,7 +45,7 @@ export const setTribeEditors = tribe => dispatch => {
       });
     })
     .catch(error => {
-      if (error.response.status === 401) dispatch(openLoginModal());
+      dispatch(handleFetchingError(error));
     });
 };
 
@@ -63,7 +63,7 @@ export const setTeamsInTribe = tribe => dispatch => {
       });
     })
     .catch(error => {
-      if (error.response.status === 401) dispatch(openLoginModal());
+      dispatch(handleFetchingError(error));
     });
 };
 
@@ -82,7 +82,7 @@ export const setTeamManagers = team => dispatch => {
     })
     .catch(error => {
       console.log(error);
-      if (error.response.status === 401) dispatch(openLoginModal());
+      dispatch(handleFetchingError(error));
     });
 };
 
@@ -101,7 +101,7 @@ export const setTeamMembers = team => dispatch => {
     })
     .catch(error => {
       console.log(error);
-      if (error.response.status === 401) dispatch(openLoginModal());
+      dispatch(handleFetchingError(error));
     });
 };
 
@@ -122,7 +122,7 @@ export const addTribe = name => dispatch => {
       });
     })
     .catch(error => {
-      if (error.response.status === 401) dispatch(openLoginModal());
+      dispatch(handleFetchingError(error));
     });
 };
 
@@ -137,7 +137,7 @@ export const deleteTribe = tribe => dispatch => {
       });
     })
     .catch(error => {
-      if (error.response.status === 401) dispatch(openLoginModal());
+      dispatch(handleFetchingError(error));
     });
 };
 
@@ -152,7 +152,7 @@ export const updateTribeName = (tribe, name) => dispatch => {
       });
     })
     .catch(error => {
-      if (error.response.status === 401) dispatch(openLoginModal());
+      dispatch(handleFetchingError(error));
     });
 };
 
@@ -167,7 +167,7 @@ export const addEditorToTribe = (tribe, user) => dispatch => {
       });
     })
     .catch(error => {
-      if (error.response.status === 401) dispatch(openLoginModal());
+      dispatch(handleFetchingError(error));
     });
 };
 
@@ -182,7 +182,7 @@ export const deleteEditorFromTribe = (tribe, user) => dispatch => {
       });
     })
     .catch(error => {
-      if (error.response.status === 401) dispatch(openLoginModal());
+      dispatch(handleFetchingError(error));
     });
 };
 
@@ -197,7 +197,7 @@ export const addTeamToTribe = (tribe, team_name) => dispatch => {
       });
     })
     .catch(error => {
-      if (error.response.status === 401) dispatch(openLoginModal());
+      dispatch(handleFetchingError(error));
     });
 };
 
@@ -212,6 +212,6 @@ export const deleteTeamFromTribe = team => dispatch => {
       });
     })
     .catch(error => {
-      if (error.response.status === 401) dispatch(openLoginModal());
+      dispatch(handleFetchingError(error));
     });
 };

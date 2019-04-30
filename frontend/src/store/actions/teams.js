@@ -10,7 +10,7 @@ import {
 } from "./types";
 import axios from "axios";
 import { endpoints, getHttpConfig } from "../../services/http";
-import { openLoginModal } from "./general";
+import { handleFetchingError } from "./general";
 
 export const updateTeamName = (team, name) => dispatch => {
   const config = getHttpConfig();
@@ -27,7 +27,7 @@ export const updateTeamName = (team, name) => dispatch => {
       });
     })
     .catch(error => {
-      if (error.response.status === 401) dispatch(openLoginModal());
+      dispatch(handleFetchingError(error));
     });
 };
 
@@ -42,7 +42,7 @@ export const deleteTeam = team => dispatch => {
       });
     })
     .catch(error => {
-      if (error.response.status === 401) dispatch(openLoginModal());
+      dispatch(handleFetchingError(error));
     });
 };
 
@@ -57,7 +57,7 @@ export const addManagerToTeam = (team, user) => dispatch => {
       });
     })
     .catch(error => {
-      if (error.response.status === 401) dispatch(openLoginModal());
+      dispatch(handleFetchingError(error));
     });
 };
 
@@ -72,7 +72,7 @@ export const deleteManagerFromTeam = (team, user) => dispatch => {
       });
     })
     .catch(error => {
-      if (error.response.status === 401) dispatch(openLoginModal());
+      dispatch(handleFetchingError(error));
     });
 };
 
@@ -87,7 +87,7 @@ export const addMemberToTeam = (team, user) => dispatch => {
       });
     })
     .catch(error => {
-      if (error.response.status === 401) dispatch(openLoginModal());
+      dispatch(handleFetchingError(error));
     });
 };
 
@@ -102,6 +102,6 @@ export const deleteMemberFromTeam = (team, user) => dispatch => {
       });
     })
     .catch(error => {
-      if (error.response.status === 401) dispatch(openLoginModal());
+      dispatch(handleFetchingError(error));
     });
 };

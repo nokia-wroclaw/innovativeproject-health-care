@@ -18,7 +18,7 @@ export const login = (username, password) => dispatch => {
 
   return axios.post(endpoints.login, {}, config).then(response => {
     const jwt = response.data.access_token;
-    localStorage.setItem("jwt", jwt);
+    localStorage.setItem("token", jwt);
     const { user } = jwtDecode(jwt);
     dispatch(setUser(user));
     dispatch(closeLoginModal());
@@ -26,7 +26,7 @@ export const login = (username, password) => dispatch => {
 };
 
 export const logout = () => {
-  localStorage.removeItem("jwt");
+  localStorage.removeItem("token");
   return {
     type: LOGOUT
   };

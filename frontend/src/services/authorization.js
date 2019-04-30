@@ -57,7 +57,7 @@ const isUser = user => {
   }
 };
 
-export const getJwt = () => localStorage.getItem("jwt");
+export const getJwt = () => localStorage.getItem("token");
 
 export default {
   userMenu,
