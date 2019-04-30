@@ -68,14 +68,14 @@ const TribeSettings = ({ isOpen, tribe, close, ...props }) => {
         <Container textAlign="left">
           <div className="flex-space-evenly-align-start">
             <EditingCard
-              data={tribe.editors}
+              data={tribe.editors ? tribe.editors : []}
               title="Tribe editors"
               useUsersForm={true}
               onAddBtnClick={handleAddEditorToTribe}
               onItemDelete={handleDeleteEditorFromTribe}
             />
             <EditingCard
-              data={tribe.teams}
+              data={tribe.teams ? tribe.teams : []}
               title="Teams"
               onAddBtnClick={handleAddTeamToTribe}
               onItemDelete={handleDeleteTeamFromTribe}
