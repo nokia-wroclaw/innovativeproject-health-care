@@ -2,7 +2,12 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Input, Button, Form } from "semantic-ui-react";
 import { getUsersByName } from "../../../services/inputHints";
-import { openLoginModal } from "./../../../store/actions/general";
+import { handleFetchingError } from "./../../../store/actions/general";
+import {
+  replaceNotLettersWithSpace,
+  replaceSpaceWithUnderscore,
+  removeSpaceAtBegening
+} from "./../functions";
 
 const lettersCountForFetchingUsers = 4;
 
@@ -33,14 +38,18 @@ class FormWithUsersDataList extends Component {
   };
 
   handleInputChange = async ({ target: input }) => {
-    const inputValue = input.value;
+    let inputValue = input.value;
     await this.setState({ inputValue });
 
-    if (inputValue.trim().length === lettersCountForFetchingUsers) {
+    inputValue = replaceNotLettersWithSpace(inputValue);
+    inputValue = removeSpaceAtBegening(inputValue);
+    inputValue = replaceSpaceWithUnderscore(inputValue);
+
+    if (inputValue.length === lettersCountForFetchingUsers) {
       getUsersByName(inputValue)
         .then(({ data }) => this.setState({ dataList: data }))
         .catch(error => {
-          if (error.response.status === 401) this.props.openLoginModal();
+          this.props.handleFetchingError(error);
         });
     }
     this.validateInput();
@@ -93,5 +102,5 @@ class FormWithUsersDataList extends Component {
 
 export default connect(
   null,
-  { openLoginModal }
+  { handleFetchingError }
 )(FormWithUsersDataList);
