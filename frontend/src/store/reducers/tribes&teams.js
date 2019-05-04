@@ -18,12 +18,6 @@ import {
   DELETE_MEMBER_FROM_TEAM
 } from "../actions/types";
 
-const initialState = [];
-
-let tribes = [],
-  targetTribe = null,
-  targetTeam = null;
-
 export const findTribe = (tribes, targetTribe) => {
   try {
     return tribes.find(tribe => tribe.id === targetTribe.id);
@@ -53,6 +47,12 @@ export const includesObjectWithId = (array, obj) => {
 export const uniquePush = (array, obj) => {
   if (!includesObjectWithId(array, obj)) array.push(obj);
 };
+
+const initialState = [];
+
+let tribes = [],
+  targetTribe = null,
+  targetTeam = null;
 
 export default function(state = initialState, action) {
   switch (action.type) {

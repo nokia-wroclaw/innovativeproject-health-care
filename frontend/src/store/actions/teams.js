@@ -89,7 +89,7 @@ export const addManagerToTeam = (team, manager) => dispatch => {
     .then(() => {
       dispatch({
         type: ADD_MANAGER_TO_TEAM,
-        payload: { team, manager }
+        payload: { team, user: manager }
       });
     })
     .catch(error => {
@@ -104,7 +104,7 @@ export const deleteManagerFromTeam = (team, manager) => dispatch => {
     .then(() => {
       dispatch({
         type: DELETE_MANAGER_FROM_TEAM,
-        payload: { team, manager }
+        payload: { team, user: manager }
       });
     })
     .catch(error => {
