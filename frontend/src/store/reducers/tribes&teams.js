@@ -24,22 +24,34 @@ let tribes = [],
   targetTribe = null,
   targetTeam = null;
 
-const findTribe = (tribes, targetTribe) =>
-  tribes.find(tribe => tribe.id === targetTribe.id);
-
-const findTeam = (tribes, targetTeam) => {
-  const tribe = tribes.find(tribe => tribe.id === targetTeam.tribe_id);
-  if (!tribe) return null;
-  return tribe.teams.find(team => team.id === targetTeam.id);
+export const findTribe = (tribes, targetTribe) => {
+  try {
+    return tribes.find(tribe => tribe.id === targetTribe.id);
+  } catch {
+    return null;
+  }
 };
 
-const includesObjectWithId = (array, obj) => {
+export const findTeam = (tribes, targetTeam) => {
+  try {
+    const tribe = tribes.find(tribe => tribe.id === targetTeam.tribe_id);
+    return tribe.teams.find(team => team.id === targetTeam.id);
+  } catch {
+    return null;
+  }
+};
+
+export const includesObjectWithId = (array, obj) => {
   try {
     if (array.find(element => element.id === obj.id)) return true;
     else return false;
   } catch {
     return false;
   }
+};
+
+export const uniquePush = (array, obj) => {
+  if (!includesObjectWithId(array, obj)) array.push(obj);
 };
 
 export default function(state = initialState, action) {
@@ -73,8 +85,7 @@ export default function(state = initialState, action) {
 
     case ADD_TRIBE:
       tribes = [...state];
-      if (!includesObjectWithId(tribes, action.payload))
-        tribes.push(action.payload);
+      uniquePush(tribes, action.payload);
       return tribes;
 
     case DELETE_TRIBE:
@@ -92,8 +103,7 @@ export default function(state = initialState, action) {
       targetTribe = findTribe(tribes, action.payload.tribe);
       if (targetTribe) {
         if (!targetTribe.editors) targetTribe.editors = [];
-        if (!includesObjectWithId(targetTribe.editors, action.payload.editor))
-          targetTribe.editors.push(action.payload.editor);
+        uniquePush(targetTribe.editors, action.payload.editor);
       }
       return tribes;
 
@@ -111,8 +121,7 @@ export default function(state = initialState, action) {
       targetTribe = findTribe(tribes, action.payload.tribe);
       if (targetTribe) {
         if (!targetTribe.teams) targetTribe.teams = [];
-        if (!includesObjectWithId(targetTribe.teams, action.payload.team))
-          targetTribe.teams.push(action.payload.team);
+        uniquePush(targetTribe.teams, action.payload.team);
       }
       return tribes;
 
@@ -138,8 +147,7 @@ export default function(state = initialState, action) {
       targetTeam = findTeam(tribes, action.payload.team);
       if (targetTeam) {
         if (!targetTeam.managers) targetTeam.managers = [];
-        if (!includesObjectWithId(targetTeam.managers, action.payload.user))
-          targetTeam.managers.push(action.payload.user);
+        uniquePush(targetTeam.managers, action.payload.user);
       }
       return tribes;
 
@@ -157,8 +165,7 @@ export default function(state = initialState, action) {
       targetTeam = findTeam(tribes, action.payload.team);
       if (targetTeam) {
         if (!targetTeam.members) targetTeam.members = [];
-        if (!includesObjectWithId(targetTeam.members, action.payload.user))
-          targetTeam.members.push(action.payload.user);
+        uniquePush(targetTeam.members, action.payload.user);
       }
       return tribes;
 
