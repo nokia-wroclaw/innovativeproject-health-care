@@ -2,13 +2,7 @@ import React, { useLayoutEffect } from "react";
 import { connect } from "react-redux";
 import { Accordion, Container, Header, Item } from "semantic-ui-react";
 import TemplatePage from "../common/TemplatePage/";
-import {
-  setTribes,
-  setTribeEditors,
-  setTeamsInTribe,
-  setTeamMembers,
-  setTeamManagers
-} from "./../../store/actions/tribes";
+import { setTribes } from "./../../store/actions/tribes";
 import TribeDetails from "./TribeDetails";
 import AddTribePopup from "./AddTribePopup";
 
@@ -53,11 +47,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  {
-    setTribes,
-    setTribeEditors,
-    setTeamsInTribe,
-    setTeamMembers,
-    setTeamManagers
-  }
+  { setTribes }
 )(TribesManagementPage);

@@ -1,6 +1,6 @@
 import {
-  // SET_TEAM_MANAGERS,
-  // SET_TEAM_MEMBERS,
+  SET_TEAM_MANAGERS,
+  SET_TEAM_MEMBERS,
   DELETE_TEAM,
   UPDATE_TEAM_NAME,
   ADD_MANAGER_TO_TEAM,
@@ -12,18 +12,54 @@ import axios from "axios";
 import { endpoints, getHttpConfig } from "../../services/http";
 import { handleFetchingError } from "./general";
 
-export const updateTeamName = (team, name) => dispatch => {
+export const setTeamManagers = team => dispatch => {
+  const config = getHttpConfig();
+  return axios
+    .get(`${endpoints.teams}${team.id}/managers`, config)
+    .then(response => {
+      dispatch({
+        type: SET_TEAM_MANAGERS,
+        payload: {
+          team,
+          managers: response.data
+        }
+      });
+    })
+    .catch(error => {
+      dispatch(handleFetchingError(error));
+    });
+};
+
+export const setTeamMembers = team => dispatch => {
+  const config = getHttpConfig();
+  return axios
+    .get(`${endpoints.teams}${team.id}/users`, config)
+    .then(response => {
+      dispatch({
+        type: SET_TEAM_MEMBERS,
+        payload: {
+          team,
+          members: response.data
+        }
+      });
+    })
+    .catch(error => {
+      dispatch(handleFetchingError(error));
+    });
+};
+
+export const updateTeamName = (team, newName) => dispatch => {
   const config = getHttpConfig();
   return axios
     .put(
       `${endpoints.teams}${team.id}`,
-      { tribe_id: team.tribe_id, name },
+      { tribe_id: team.tribe_id, name: newName },
       config
     )
     .then(() => {
       dispatch({
         type: UPDATE_TEAM_NAME,
-        payload: { team, name }
+        payload: { team, name: newName }
       });
     })
     .catch(error => {
@@ -46,14 +82,14 @@ export const deleteTeam = team => dispatch => {
     });
 };
 
-export const addManagerToTeam = (team, user) => dispatch => {
+export const addManagerToTeam = (team, manager) => dispatch => {
   const config = getHttpConfig();
   return axios
-    .put(`${endpoints.teams}${team.id}/managers/${user.id}`, {}, config)
+    .put(`${endpoints.teams}${team.id}/managers/${manager.id}`, {}, config)
     .then(() => {
       dispatch({
         type: ADD_MANAGER_TO_TEAM,
-        payload: { team, user }
+        payload: { team, manager }
       });
     })
     .catch(error => {
@@ -61,14 +97,14 @@ export const addManagerToTeam = (team, user) => dispatch => {
     });
 };
 
-export const deleteManagerFromTeam = (team, user) => dispatch => {
+export const deleteManagerFromTeam = (team, manager) => dispatch => {
   const config = getHttpConfig();
   return axios
-    .delete(`${endpoints.teams}${team.id}/managers/${user.id}`, config)
+    .delete(`${endpoints.teams}${team.id}/managers/${manager.id}`, config)
     .then(() => {
       dispatch({
         type: DELETE_MANAGER_FROM_TEAM,
-        payload: { team, user }
+        payload: { team, manager }
       });
     })
     .catch(error => {

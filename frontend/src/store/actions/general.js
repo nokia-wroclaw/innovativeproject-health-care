@@ -9,16 +9,18 @@ export const closeLoginModal = () => ({
 });
 
 export const handleFetchingError = error => dispatch => {
-  switch (error.response.status) {
-    case 401:
-      dispatch(openLoginModal());
-      break;
+  try {
+    switch (error.response.status) {
+      case 401:
+        return dispatch(openLoginModal());
 
-    case 422:
-      dispatch(openLoginModal());
-      break;
+      case 422:
+        return dispatch(openLoginModal());
 
-    default:
-      return;
+      default:
+        return;
+    }
+  } catch {
+    //something went wrong...
   }
 };

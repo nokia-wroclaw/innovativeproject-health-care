@@ -2,15 +2,12 @@ import {
   SET_TRIBES,
   SET_TRIBE_EDITORS,
   SET_TEAMS_IN_TRIBE,
-  SET_TEAM_MANAGERS,
-  SET_TEAM_MEMBERS,
   ADD_TRIBE,
   DELETE_TRIBE,
   UPDATE_TRIBE_NAME,
   ADD_EDITOR_TO_TRIBE,
   DELETE_EDITOR_FROM_TRIBE,
-  ADD_TEAM_TO_TRIBE,
-  DELETE_TEAM
+  ADD_TEAM_TO_TRIBE
 } from "./types";
 import axios from "axios";
 import { endpoints, getHttpConfig } from "../../services/http";
@@ -67,44 +64,6 @@ export const setTeamsInTribe = tribe => dispatch => {
     });
 };
 
-export const setTeamManagers = team => dispatch => {
-  const config = getHttpConfig();
-  return axios
-    .get(`${endpoints.teams}${team.id}/managers`, config)
-    .then(response => {
-      dispatch({
-        type: SET_TEAM_MANAGERS,
-        payload: {
-          team,
-          managers: response.data
-        }
-      });
-    })
-    .catch(error => {
-      console.log(error);
-      dispatch(handleFetchingError(error));
-    });
-};
-
-export const setTeamMembers = team => dispatch => {
-  const config = getHttpConfig();
-  return axios
-    .get(`${endpoints.teams}${team.id}/users`, config)
-    .then(response => {
-      dispatch({
-        type: SET_TEAM_MEMBERS,
-        payload: {
-          team,
-          members: response.data
-        }
-      });
-    })
-    .catch(error => {
-      console.log(error);
-      dispatch(handleFetchingError(error));
-    });
-};
-
 export const addTribe = name => dispatch => {
   const config = getHttpConfig();
   return axios
@@ -133,7 +92,7 @@ export const deleteTribe = tribe => dispatch => {
     .then(() => {
       dispatch({
         type: DELETE_TRIBE,
-        payload: tribe.id
+        payload: tribe
       });
     })
     .catch(error => {
@@ -141,14 +100,14 @@ export const deleteTribe = tribe => dispatch => {
     });
 };
 
-export const updateTribeName = (tribe, name) => dispatch => {
+export const updateTribeName = (tribe, newName) => dispatch => {
   const config = getHttpConfig();
   return axios
-    .put(`${endpoints.putTribe}${tribe.id}`, { name }, config)
+    .put(`${endpoints.putTribe}${tribe.id}`, { name: newName }, config)
     .then(() => {
       dispatch({
         type: UPDATE_TRIBE_NAME,
-        payload: { tribe, name }
+        payload: { tribe, name: newName }
       });
     })
     .catch(error => {
@@ -156,14 +115,14 @@ export const updateTribeName = (tribe, name) => dispatch => {
     });
 };
 
-export const addEditorToTribe = (tribe, user) => dispatch => {
+export const addEditorToTribe = (tribe, editor) => dispatch => {
   const config = getHttpConfig();
   return axios
-    .put(`${endpoints.getTribe}${tribe.id}/editors/${user.id}`, {}, config)
+    .put(`${endpoints.getTribe}${tribe.id}/editors/${editor.id}`, {}, config)
     .then(() => {
       dispatch({
         type: ADD_EDITOR_TO_TRIBE,
-        payload: { tribe, user }
+        payload: { tribe, editor }
       });
     })
     .catch(error => {
@@ -171,14 +130,14 @@ export const addEditorToTribe = (tribe, user) => dispatch => {
     });
 };
 
-export const deleteEditorFromTribe = (tribe, user) => dispatch => {
+export const deleteEditorFromTribe = (tribe, editor) => dispatch => {
   const config = getHttpConfig();
   return axios
-    .delete(`${endpoints.deleteTribe}${tribe.id}/editors/${user.id}`, config)
+    .delete(`${endpoints.deleteTribe}${tribe.id}/editors/${editor.id}`, config)
     .then(() => {
       dispatch({
         type: DELETE_EDITOR_FROM_TRIBE,
-        payload: { tribe, user }
+        payload: { tribe, editor }
       });
     })
     .catch(error => {
@@ -194,21 +153,6 @@ export const addTeamToTribe = (tribe, team_name) => dispatch => {
       dispatch({
         type: ADD_TEAM_TO_TRIBE,
         payload: { tribe, team: response.data }
-      });
-    })
-    .catch(error => {
-      dispatch(handleFetchingError(error));
-    });
-};
-
-export const deleteTeamFromTribe = team => dispatch => {
-  const config = getHttpConfig();
-  return axios
-    .delete(`${endpoints.teams}${team.id}`, config)
-    .then(() => {
-      dispatch({
-        type: DELETE_TEAM,
-        payload: { team }
       });
     })
     .catch(error => {

@@ -3,6 +3,8 @@ import axios from "axios";
 import jwtDecode from "jwt-decode";
 import { endpoints } from "../../services/http";
 import { closeLoginModal } from "./general";
+import history from "../../history";
+import authorization from "../../services/authorization";
 
 export const setUser = user => ({
   type: SET_USER,
@@ -22,6 +24,9 @@ export const login = (username, password) => dispatch => {
     const { user } = jwtDecode(jwt);
     dispatch(setUser(user));
     dispatch(closeLoginModal());
+    const firstManuOption = authorization.getMenu(user)[0];
+    history.push(firstManuOption.path);
+    dispatch(setMenuOption(firstManuOption.name));
   });
 };
 

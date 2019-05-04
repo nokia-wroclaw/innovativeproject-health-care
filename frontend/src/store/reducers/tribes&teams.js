@@ -29,7 +29,17 @@ const findTribe = (tribes, targetTribe) =>
 
 const findTeam = (tribes, targetTeam) => {
   const tribe = tribes.find(tribe => tribe.id === targetTeam.tribe_id);
+  if (!tribe) return null;
   return tribe.teams.find(team => team.id === targetTeam.id);
+};
+
+const includesObjectWithId = (array, obj) => {
+  try {
+    if (array.find(element => element.id === obj.id)) return true;
+    else return false;
+  } catch {
+    return false;
+  }
 };
 
 export default function(state = initialState, action) {
@@ -40,60 +50,70 @@ export default function(state = initialState, action) {
     case SET_TRIBE_EDITORS:
       tribes = [...state];
       targetTribe = findTribe(tribes, action.payload.tribe);
-      targetTribe.editors = action.payload.editors;
+      if (targetTribe) targetTribe.editors = action.payload.editors;
       return tribes;
 
     case SET_TEAMS_IN_TRIBE:
       tribes = [...state];
       targetTribe = findTribe(tribes, action.payload.tribe);
-      targetTribe.teams = action.payload.teams;
+      if (targetTribe) targetTribe.teams = action.payload.teams;
       return tribes;
 
     case SET_TEAM_MANAGERS:
       tribes = [...state];
       targetTeam = findTeam(tribes, action.payload.team);
-      targetTeam.managers = action.payload.managers;
+      if (targetTeam) targetTeam.managers = action.payload.managers;
       return tribes;
 
     case SET_TEAM_MEMBERS:
       tribes = [...state];
       targetTeam = findTeam(tribes, action.payload.team);
-      targetTeam.members = action.payload.members;
+      if (targetTeam) targetTeam.members = action.payload.members;
       return tribes;
 
     case ADD_TRIBE:
       tribes = [...state];
-      tribes.push(action.payload);
+      if (!includesObjectWithId(tribes, action.payload))
+        tribes.push(action.payload);
       return tribes;
 
     case DELETE_TRIBE:
       tribes = [...state];
-      return tribes.filter(tribe => tribe.id !== action.payload);
+      return tribes.filter(tribe => tribe.id !== action.payload.id);
 
     case UPDATE_TRIBE_NAME:
       tribes = [...state];
       targetTribe = findTribe(tribes, action.payload.tribe);
-      targetTribe.name = action.payload.name;
+      if (targetTribe) targetTribe.name = action.payload.name;
       return tribes;
 
     case ADD_EDITOR_TO_TRIBE:
       tribes = [...state];
       targetTribe = findTribe(tribes, action.payload.tribe);
-      targetTribe.editors.push(action.payload.user);
+      if (targetTribe) {
+        if (!targetTribe.editors) targetTribe.editors = [];
+        if (!includesObjectWithId(targetTribe.editors, action.payload.editor))
+          targetTribe.editors.push(action.payload.editor);
+      }
       return tribes;
 
     case DELETE_EDITOR_FROM_TRIBE:
       tribes = [...state];
       targetTribe = findTribe(tribes, action.payload.tribe);
-      targetTribe.editors = targetTribe.editors.filter(
-        user => user.id !== action.payload.user.id
-      );
+      if (targetTribe && targetTribe.editors)
+        targetTribe.editors = targetTribe.editors.filter(
+          editor => editor.id !== action.payload.editor.id
+        );
       return tribes;
 
     case ADD_TEAM_TO_TRIBE:
       tribes = [...state];
       targetTribe = findTribe(tribes, action.payload.tribe);
-      targetTribe.teams.push(action.payload.team);
+      if (targetTribe) {
+        if (!targetTribe.teams) targetTribe.teams = [];
+        if (!includesObjectWithId(targetTribe.teams, action.payload.team))
+          targetTribe.teams.push(action.payload.team);
+      }
       return tribes;
 
     case DELETE_TEAM:
@@ -101,45 +121,54 @@ export default function(state = initialState, action) {
       targetTribe = tribes.find(
         tribe => tribe.id === action.payload.team.tribe_id
       );
-      targetTribe.teams = targetTribe.teams.filter(
-        team => team.id !== action.payload.team.id
-      );
+      if (targetTribe)
+        targetTribe.teams = targetTribe.teams.filter(
+          team => team.id !== action.payload.team.id
+        );
       return tribes;
 
     case UPDATE_TEAM_NAME:
       tribes = [...state];
       targetTeam = findTeam(tribes, action.payload.team);
-      targetTeam.name = action.payload.name;
+      if (targetTeam) targetTeam.name = action.payload.name;
       return tribes;
 
     case ADD_MANAGER_TO_TEAM:
       tribes = [...state];
       targetTeam = findTeam(tribes, action.payload.team);
-      if (!targetTeam.managers) targetTeam.managers = [];
-      targetTeam.managers.push(action.payload.user);
+      if (targetTeam) {
+        if (!targetTeam.managers) targetTeam.managers = [];
+        if (!includesObjectWithId(targetTeam.managers, action.payload.user))
+          targetTeam.managers.push(action.payload.user);
+      }
       return tribes;
 
     case DELETE_MANAGER_FROM_TEAM:
       tribes = [...state];
       targetTeam = findTeam(tribes, action.payload.team);
-      targetTeam.managers = targetTeam.managers.filter(
-        user => user.id !== action.payload.user.id
-      );
+      if (targetTeam)
+        targetTeam.managers = targetTeam.managers.filter(
+          user => user.id !== action.payload.user.id
+        );
       return tribes;
 
     case ADD_MEMBER_TO_TEAM:
       tribes = [...state];
       targetTeam = findTeam(tribes, action.payload.team);
-      if (!targetTeam.members) targetTeam.members = [];
-      targetTeam.members.push(action.payload.user);
+      if (targetTeam) {
+        if (!targetTeam.members) targetTeam.members = [];
+        if (!includesObjectWithId(targetTeam.members, action.payload.user))
+          targetTeam.members.push(action.payload.user);
+      }
       return tribes;
 
     case DELETE_MEMBER_FROM_TEAM:
       tribes = [...state];
       targetTeam = findTeam(tribes, action.payload.team);
-      targetTeam.members = targetTeam.members.filter(
-        user => user.id !== action.payload.user.id
-      );
+      if (targetTeam)
+        targetTeam.members = targetTeam.members.filter(
+          user => user.id !== action.payload.user.id
+        );
       return tribes;
 
     default:

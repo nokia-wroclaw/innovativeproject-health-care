@@ -7,13 +7,9 @@ export default function(state = initialState, action) {
   switch (action.type) {
     case SET_USER:
       const menu = authorization.getMenu(action.payload);
-      // const activeOption = menu[0].name;
-
       return {
-        ...state,
         userData: action.payload,
         menu
-        // activeOption
       };
     case OPTION_SELECTED:
       return {

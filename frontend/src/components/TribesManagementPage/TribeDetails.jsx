@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { Button, Item, Label, Accordion } from "semantic-ui-react";
-import {
-  setTribeEditors,
-  setTeamsInTribe,
-  setTeamMembers,
-  setTeamManagers
-} from "../../store/actions/tribes";
+import { setTribeEditors, setTeamsInTribe } from "../../store/actions/tribes";
 import TeamDetails from "./TeamDetails";
 import TribeSettings from "./TribeSettings";
 import "./style.css";
+import { setTeamMembers, setTeamManagers } from "./../../store/actions/teams";
 
 const TribeDetails = ({ tribe, ...props }) => {
   const [isOpenSettings, setIsOpenSettings] = useState(false);

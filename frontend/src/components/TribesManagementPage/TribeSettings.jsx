@@ -6,9 +6,9 @@ import {
   addEditorToTribe,
   deleteEditorFromTribe,
   addTeamToTribe,
-  deleteTeamFromTribe,
   updateTribeName
 } from "./../../store/actions/tribes";
+import { deleteTeam } from "../../store/actions/teams";
 import { confirmDelete } from "./../common/functions";
 import EditingCard from "./../common/EditingCard/EditingCard";
 import "../../styles/common.css";
@@ -33,7 +33,7 @@ const TribeSettings = ({ isOpen, tribe, close, ...props }) => {
   const handleAddTeamToTribe = teamName =>
     props.addTeamToTribe(tribe, teamName);
 
-  const handleDeleteTeamFromTribe = team => props.deleteTeamFromTribe(team);
+  const handleDeleteTeamFromTribe = team => props.deleteTeam(team);
 
   const handleSaveAndClose = async () => {
     setSaveBtnLoading(true);
@@ -103,7 +103,7 @@ export default connect(
     addEditorToTribe,
     deleteEditorFromTribe,
     addTeamToTribe,
-    deleteTeamFromTribe,
+    deleteTeam,
     updateTribeName
   }
 )(TribeSettings);

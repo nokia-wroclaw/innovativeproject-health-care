@@ -17,13 +17,13 @@ export const setEditors = () => dispatch => {
     });
 };
 
-export const addEditor = editor => dispatch => {
+export const addEditor = user => dispatch => {
   return axios
-    .put(`${endpoints.putEditor}${editor.id}`, {}, getHttpConfig())
+    .put(`${endpoints.putEditor}${user.id}`, {}, getHttpConfig())
     .then(
       dispatch({
         type: ADD_EDITOR,
-        payload: editor
+        payload: user
       })
     )
     .catch(error => {
