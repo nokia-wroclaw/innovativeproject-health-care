@@ -1,6 +1,6 @@
 import { getJwt } from "./authorization";
 
-const baseURL = "http://localhost:5000";
+const baseURL = process.env.REACT_APP_API_BASE_URL;
 
 export const endpoints = {
   login: `${baseURL}/auth`,
