@@ -125,7 +125,7 @@ describe("async actions", () => {
     const expectedActions = [
       {
         type: types.ADD_MANAGER_TO_TEAM,
-        payload: { team, manager }
+        payload: { team, user: manager }
       }
     ];
 
@@ -149,7 +149,7 @@ describe("async actions", () => {
     const expectedActions = [
       {
         type: types.DELETE_MANAGER_FROM_TEAM,
-        payload: { team, manager }
+        payload: { team, user: manager }
       }
     ];
 
