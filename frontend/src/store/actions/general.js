@@ -9,6 +9,7 @@ export const closeLoginModal = () => ({
 });
 
 export const handleFetchingError = error => dispatch => {
+  console.log("ERROR: ", error);
   try {
     switch (error.response.status) {
       case 401:
@@ -21,6 +22,6 @@ export const handleFetchingError = error => dispatch => {
         return;
     }
   } catch {
-    //something went wrong...
+    //something went wrong, eg. no internet connection
   }
 };

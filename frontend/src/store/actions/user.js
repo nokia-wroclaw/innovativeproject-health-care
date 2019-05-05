@@ -24,9 +24,11 @@ export const login = (username, password) => dispatch => {
     const { user } = jwtDecode(jwt);
     dispatch(setUser(user));
     dispatch(closeLoginModal());
-    const firstManuOption = authorization.getMenu(user)[0];
-    history.push(firstManuOption.path);
-    dispatch(setMenuOption(firstManuOption.name));
+    if (history.location.pathname === "/") {
+      const firstManuOption = authorization.getMenu(user)[0];
+      history.push(firstManuOption.path);
+      dispatch(setMenuOption(firstManuOption.name));
+    }
   });
 };
 

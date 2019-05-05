@@ -56,7 +56,7 @@ const TribeSettings = ({ isOpen, tribe, close, ...props }) => {
           icon="trash alternate"
           labelPosition="left"
           floated="right"
-          content="Detele Tribe"
+          content="Delete Tribe"
           basic
           negative
           onClick={handleDeleteTribe}

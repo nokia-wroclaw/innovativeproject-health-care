@@ -56,7 +56,7 @@ const TeamSettings = ({ isOpen, team, close, ...props }) => {
           icon="trash alternate"
           labelPosition="left"
           floated="right"
-          content="Detele Team"
+          content="Delete Team"
           basic
           negative
           onClick={handleDeleteTeam}

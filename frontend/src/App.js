@@ -13,7 +13,7 @@ import ActionItemsPage from "./components/ActionItemsPage";
 import CommentsPage from "./components/CommentsPage";
 import EditSurveyPage from "./components/EditSurveyPage";
 import ProtectedRoute from "./components/common/ProtectedRoute/index";
-import PageNotFound from "./components/common/PageNotFound/index";
+import PageNotFound from "./components/PageNotFound/index";
 
 const App = ({ user, ...props }) => {
   useEffect(() => {
@@ -64,7 +64,6 @@ const App = ({ user, ...props }) => {
             component={EditSurveyPage}
             isAuthenticated={isEditor(user)}
           />
-
           <Route path="/pageNotFound" component={PageNotFound} />
           <Route path="/" component={HomePage} />
         </Switch>
