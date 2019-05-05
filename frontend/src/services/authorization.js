@@ -1,3 +1,5 @@
+import _ from "lodash";
+
 const userMenu = [
   { name: "Results for your tribe", path: "/tribe_overview" },
   { name: "Statistics", path: "/statistics" },
@@ -6,15 +8,21 @@ const userMenu = [
 ];
 
 const managerMenu = [
+  { name: "Results for your tribe", path: "/tribe_overview" },
+  { name: "Statistics", path: "/statistics" },
   { name: "Comments", path: "/users_comments" },
   { name: "Edit survey", path: "/edit_survey" }
 ];
 
-const editorMenu = [{ name: "Tribes management", path: "/tribes_management" }];
+const editorMenu = [
+  { name: "Tribes management", path: "/tribes_management" },
+  { name: "Results for your tribe", path: "/tribe_overview" },
+  { name: "Statistics", path: "/statistics" }
+];
 
 const adminMenu = [{ name: "Admin panel", path: "/admin_panel" }];
 
-const getMenu = user => {
+export const getMenu = user => {
   let menu = [];
   try {
     if (user.roles.includes("user")) menu = [...menu, ...userMenu];
@@ -22,10 +30,10 @@ const getMenu = user => {
     if (user.roles.includes("editor")) menu = [...menu, ...editorMenu];
     if (user.roles.includes("admin")) menu = [...menu, ...adminMenu];
   } catch {}
-  return menu;
+  return _.uniqBy(menu, "path");
 };
 
-const isAdmin = user => {
+export const isAdmin = user => {
   try {
     return user.roles.includes("admin");
   } catch {
@@ -33,7 +41,7 @@ const isAdmin = user => {
   }
 };
 
-const isEditor = user => {
+export const isEditor = user => {
   try {
     return user.roles.includes("editor");
   } catch {
@@ -41,7 +49,7 @@ const isEditor = user => {
   }
 };
 
-const isManager = user => {
+export const isManager = user => {
   try {
     return user.roles.includes("manager");
   } catch {
@@ -49,7 +57,7 @@ const isManager = user => {
   }
 };
 
-const isUser = user => {
+export const isUser = user => {
   try {
     return user.roles.includes("user");
   } catch {

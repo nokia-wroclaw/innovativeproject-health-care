@@ -45,8 +45,9 @@ export const setUserFromLocalStorage = () => dispatch => {
     const config = getHttpConfig();
     return axios
       .get(`${endpoints.getUserData}${user.id}`, config)
+      .then(({ data }) => dispatch(setUser(data)))
       .catch(error => dispatch(handleFetchingError(error)));
-  } else dispatch(handleFetchingError(401));
+  }
 };
 
 export const setMenuOption = optionName => ({
