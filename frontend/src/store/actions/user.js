@@ -1,8 +1,8 @@
 import { SET_USER, LOGOUT, OPTION_SELECTED } from "./types";
 import axios from "axios";
 import jwtDecode from "jwt-decode";
-import { endpoints } from "../../services/http";
-import { closeLoginModal } from "./general";
+import { endpoints, getHttpConfig } from "../../services/http";
+import { closeLoginModal, handleFetchingError } from "./general";
 import history from "../../history";
 import authorization from "../../services/authorization";
 
@@ -35,6 +35,18 @@ export const logout = () => {
   return {
     type: LOGOUT
   };
+};
+
+export const setUserFromLocalStorage = () => dispatch => {
+  const jwt = localStorage.getItem("token");
+  if (jwt) {
+    const { user } = jwtDecode(jwt);
+    dispatch(setUser(user));
+    const config = getHttpConfig();
+    return axios
+      .get(`${endpoints.getUserData}${user.id}`, config)
+      .catch(error => dispatch(handleFetchingError(error)));
+  } else dispatch(handleFetchingError(401));
 };
 
 export const setMenuOption = optionName => ({

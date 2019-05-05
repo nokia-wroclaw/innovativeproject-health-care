@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import { Switch, Route } from "react-router-dom";
 import { connect } from "react-redux";
-import jwtDecode from "jwt-decode";
 
-import { setUser } from "./store/actions/user";
+import { setUserFromLocalStorage } from "./store/actions/user";
 // import authorization from "./services/authorization";
 import HomePage from "./components/HomePage";
 import SurveyPage from "./components/SurveyPage";
@@ -18,11 +17,7 @@ import EditSurveyPage from "./components/EditSurveyPage";
 
 class App extends Component {
   componentDidMount() {
-    try {
-      const jwt = localStorage.getItem("token");
-      const { user } = jwtDecode(jwt);
-      this.props.setUser(user);
-    } catch {}
+    this.props.setUserFromLocalStorage();
   }
 
   render() {
@@ -51,5 +46,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { setUser }
+  { setUserFromLocalStorage }
 )(App);

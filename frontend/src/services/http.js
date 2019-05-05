@@ -4,6 +4,7 @@ const baseURL = process.env.REACT_APP_API_BASE_URL;
 
 export const endpoints = {
   login: `${baseURL}/auth`,
+  getUserData: `${baseURL}/users/`, //${id}
   getUsersByName: `${baseURL}/users?q=`, //${phrase}
   //--- Editors ---
   getEditors: `${baseURL}/editors`,
