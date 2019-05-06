@@ -45,6 +45,7 @@ api.add_resource(teams.TeamUsersRes, '/teams/<team_id>/users')
 api.add_resource(teams.TeamUserRes, '/teams/<team_id>/users/<user_id>')
 api.add_resource(surveys.TribeSurveysRes, '/tribes/<tribe_id>/surveys')
 api.add_resource(surveys.SurveyRes, '/surveys/<survey_id>')
+api.add_resource(surveys.SurveyAnswersRes, '/surveys/<survey_id>/answers')
 
 
 if __name__ == '__main__':
