@@ -48,11 +48,17 @@ class TribeSurveysRes(Resource):
 
         # Process questions
         for q in questions:
-            if 'id' in q and 'order' in q:
-                # If question has id try to find it in db
+            if 'id' in q and 'question' in q and 'order' in q:
+                # If both id and content are given update the existing question
+                question = Question.get_if_exists(q['id'])
+                question.question = q['question']
+                db.session.add(question)
+                db.session.flush()
+            elif 'id' in q and 'order' in q:
+                # If question has only id try to find it in db
                 question = Question.get_if_exists(q['id'])
             elif 'question' in q and 'order' in q:
-                # If question does have its content then create it
+                # If question has only its content then create it
                 question = Question(q['question'])
                 db.session.add(question)
                 db.session.flush()
@@ -84,36 +90,38 @@ class TribeSurveysRes(Resource):
             response.status_code = 200
         return response
 
+    @roles_allowed(['editor', 'manager', 'user'])
+    def get(self, tribe_id):
+        """Returns ids of three possible types of surveys a tribe can have:
+        active, next and draft."""
+
+        tribe = Tribe.get_if_exists(tribe_id)
+        active_survey = tribe.active_survey()
+        next_survey = tribe.next_survey()
+        draft_survey = tribe.draft_survey()
+
+        # If user has rights to access the active survey he also has rights
+        # to this endpoint
+        if not Survey.validate_access(active_survey.id, current_user):
+            abort(403)
+
+        return {
+            "active": active_survey.id if active_survey else None,
+            "next": next_survey.id if next_survey else None,
+            "draft": draft_survey.id if draft_survey else None,
+        }
+
 
 class SurveyRes(Resource):
     """Single survey identified by id."""
 
-    @roles_allowed(['admin', 'editor', 'manager', 'user'])
+    @roles_allowed(['editor', 'manager', 'user'])
     def get(self, survey_id):
         """Returns survey with specified id."""
 
         survey = Survey.get_if_exists(survey_id)
 
-        # Check if any of the current user's roles allows him to access
-        # this survey
-        access = False
-        if current_user.is_user():
-            tribe_ids = [t.team.tribe_id for t in current_user.teams
-                         if t.manager is False]
-            if survey.tribe_id in tribe_ids:
-                access = True
-        if current_user.is_manager() and not access:
-            tribe_ids = [t.team.tribe_id for t in current_user.teams
-                         if t.manager is True]
-            if survey.tribe_id in tribe_ids:
-                access = True
-        if current_user.is_editor() and not access:
-            if survey.tribe_id in current_user.editing_ids():
-                access = True
-        if current_user.is_admin() and not access:
-            access = True
-
-        if not access:
+        if not Survey.validate_access(survey_id, current_user):
             abort(403)
 
         response = jsonify(survey.serialize())
