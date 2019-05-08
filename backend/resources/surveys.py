@@ -7,7 +7,7 @@ from sqlalchemy import exc
 from backend.common.permissions import roles_allowed
 from backend.app import db
 from backend.models import Tribe, Survey, Question, SurveyQuestionLink, Answer, \
-    Period
+    Period, Team
 
 
 class TribeSurveysRes(Resource):
@@ -173,73 +173,77 @@ class SurveyRes(Resource):
 
 
 class SurveyAnswersRes(Resource):
-    """Survey answer"""
+    """Collection of the answers to the specific survey."""
 
     @roles_allowed(['user'])
     def post(self, survey_id):
-        """Save survey answers"""
+        """Submits new answer to the survey with specific id."""
 
-        survey = Survey.query.filter_by(id=survey_id, draft=False).one_or_none()
+        survey = Survey.query.filter_by(id=survey_id).one_or_none()
 
-        # There is nor survey or it is not published yet
-        if survey is None:
+        # If survey if given id does not exist or is not published
+        if (survey is None or survey.draft is True or
+                survey.date > date.today()):
             abort(404, 'Requested survey does not exist.')
 
-        # User have to be in team which is in tribe which has that survey to send answers
-        access = False
-        if current_user.is_user():
-            tribe_ids = [t.team.tribe_id for t in current_user.teams
-                         if t.manager if False]
-            if survey.tribe_id in tribe_ids:
-                access = True
+        # Check if all required data are sent
+        json = request.get_json()
+        if 'team_id' not in json or 'answers' not in json:
+            abort(400, 'Invalid answer data')
 
-        if access is False:
+        answers = json['answers']
+        team = Team.get_if_exists(json['team_id'])
+
+        # Check if user is a member of the declared team and
+        # if the team is in the same tribe as the survey
+        if (team.id not in current_user.team_ids() or
+                team.tribe_id != survey.tribe_id):
             abort(403)
 
-        # Answers data
-        answers = request.get_json()
+        # Check if there is no answers for this team in this period
+        if team.answered():
+            abort(400, 'Only one answer per team is allowed.')
+
+        # Validate the answers
+        for a in answers:
+            if 'question_id' not in a or 'answer' not in a:
+                db.session.rollback()
+                abort(400, 'Invalid answer data')
+
+            if (0 <= int(a['answer']) <= 2) is False:
+                db.session.rollback()
+                abort(400, 'Invalid answer data')
+
+            if (int(a['answer']) != 2
+                    and ('comment' not in a or len(a['comment']) == 0)):
+                db.session.rollback()
+                abort(400, 'Invalid answer data')
+
         # Answers ids
         answers_ids = [a['question_id'] for a in answers]
-        # Questions data
-        questions = survey.serialize_questions()
         # Questions ids
-        questions_ids = [q['id'] for q in questions]
+        questions_ids = [q.question.id for q in survey.questions]
 
-        # Check if there are questions for all answers
-        # and if there are answers for all questions
-        # and if all necessary comments was put
-        for a in answers:
-                # Answers for all questions
-                if a['question_id'] not in questions_ids:
-                    abort(400, 'Invalid answer data.')
-                # Comment section
-                if 'comment' not in a:
-                    abort(400, 'Invalid answer data.')
-                # Necessary comments
-                if int(a['answer']) < 2 and len(a['comment'] == 0):
-                    abort(400, 'Invalid answer data.')
+        # Check if answer contains exactly the same questions set as survey
+        if set(answers_ids) != set(questions_ids):
+            abort(400, 'Invalid answer data.')
 
-        # Questions for all answers
-        for q in questions_ids:
-            if q not in answers_ids:
-                abort(400, 'Invalid answer data.')
-
-        # All fine
         # Answer objects list
-        answer_ojb = []
-        now = datetime.now()
+        answer_obj = []
+        today = date.today()
+        # For all answers
         for a in answers:
-            answer = Answer(a['question_id'], now, a['answer'], a['comment'])
+            answer = Answer(a['question_id'], team.id, today, a['answer'])
+            if 'comment' in a and len(a['comment']) != 0:
+                answer.comment = a['comment']
             db.session.add(answer)
-            answer_ojb.append(answer)
-        db.session.commit()
+            answer_obj.append(answer)
 
-        answer_json = []
-        for a in answer_ojb:
-            answer_json.append(a.serialize())
+        try:
+            db.session.commit()
+        except exc.SQLAlchemyError:
+            abort(400)
 
-        response = jsonify(answer_json)
-        response.headers['Location'] = '/surveys/%d/answers' % survey_id
-        response.status_code = 201
-
+        response = jsonify([a.serialize() for a in answer_obj])
+        response.status_code = 200
         return response
