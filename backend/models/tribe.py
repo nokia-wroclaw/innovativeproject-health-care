@@ -1,9 +1,11 @@
+from datetime import date
+from dateutil.relativedelta import relativedelta
 from flask import abort
 from backend.app import db
+from backend.models import Survey, Period
 
 
 class Tribe(db.Model):
-
     __tablename__ = 'tribes'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -26,6 +28,50 @@ class Tribe(db.Model):
 
     def editors_ids(self):
         return [e.id for e in self.editors]
+
+    def draft_survey(self):
+        return Survey.query.filter_by(tribe_id=self.id, draft=True)\
+            .one_or_none()
+
+    def active_survey(self):
+        return Survey.query.filter(Survey.tribe_id == self.id,
+                                   Survey.draft == False,
+                                   Survey.date <= date.today())\
+            .order_by(Survey.date.desc()).first()
+
+    def next_survey(self):
+        return Survey.query.filter(Survey.tribe_id == self.id,
+                                   Survey.draft == False,
+                                   Survey.date > date.today())\
+            .order_by(Survey.date.desc()).first()
+
+    def current_period(self):
+        return Period.query.filter(
+            db.and_(Period.tribe_id == self.id,
+                    Period.date_start <= date.today()))\
+            .order_by(Period.date_start.desc()).first()
+
+    def latest_period(self):
+        return Period.query.filter_by(tribe_id=self.id)\
+            .order_by(Period.date_start.desc()).first()
+
+    def update_periods(self):
+        active_survey = self.active_survey()
+        if active_survey is None:
+            return
+        period_len = active_survey.period_len
+
+        while True:
+            latest = self.latest_period()
+            before = date.today() + relativedelta(months=-period_len)
+
+            if latest.date_start > before:
+                break
+
+            new_date = latest.date_start + relativedelta(months=+period_len)
+            new = Period(self.id, new_date)
+            db.session.add(new)
+            db.session.commit()
 
     @staticmethod
     def get_if_exists(tribe_id):

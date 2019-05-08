@@ -8,7 +8,8 @@ class Survey(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     tribe_id = db.Column(db.Integer, db.ForeignKey('tribes.id'))
-    date = db.Column(db.Date)
+    date = db.Column(db.Date, nullable=True)
+    period_len = db.Column(db.Integer, default=1)
     draft = db.Column(db.Boolean)
 
     tribe = db.relationship('Tribe', back_populates='surveys', lazy='joined')
@@ -17,9 +18,8 @@ class Survey(db.Model):
                                 lazy='joined',
                                 cascade='all, delete, delete-orphan')
 
-    def __init__(self, tribe_id, date, draft):
+    def __init__(self, tribe_id, draft):
         self.tribe_id = tribe_id
-        self.date = date
         self.draft = draft
 
     @staticmethod
@@ -47,6 +47,7 @@ class Survey(db.Model):
             'tribe_id': self.tribe_id,
             'date': self.date,
             'draft': self.draft,
+            'period_len': self.period_len,
             'questions': self.serialize_questions()
         }
         return data
