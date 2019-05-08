@@ -37,7 +37,7 @@ class EditorRes(Resource):
         # If user exists in database and already is an editor
         if (user.in_db() and user.is_editor()) is True:
             response = Response()
-            response.status_code = 200
+            response.status_code = 204
             return response
 
         # Set user as editor
@@ -81,5 +81,5 @@ class EditorRes(Resource):
         user.revalidate()
 
         response = Response()
-        response.status_code = 200
+        response.status_code = 204
         return response

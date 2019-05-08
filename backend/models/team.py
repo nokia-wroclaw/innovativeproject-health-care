@@ -1,5 +1,6 @@
 from flask import abort
 from backend.app import db
+from backend.models import Answer
 
 
 class Team(db.Model):
@@ -18,6 +19,18 @@ class Team(db.Model):
     def __init__(self, tribe_id, name):
         self.tribe_id = tribe_id
         self.name = name
+
+    def answered(self):
+        self.tribe.update_periods()
+        period = self.tribe.current_period()
+        if period is None:
+            return False
+
+        answered = db.session.query(db.exists().where(db.and_(
+            Answer.team_id == self.id,
+            Answer.date >= period.date_start))).scalar()
+
+        return answered
 
     def serialize(self):
         data = {
