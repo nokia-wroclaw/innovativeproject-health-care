@@ -71,7 +71,7 @@ class Survey(db.Model):
         data = {
             'id': self.id,
             'tribe_id': self.tribe_id,
-            'date': self.date,
+            'date': self.date.isoformat() if self.date else None,
             'draft': self.draft,
             'period_len': self.period_len,
             'questions': self.serialize_questions()

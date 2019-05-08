@@ -16,6 +16,6 @@ class Period(db.Model):
     def serialize(self):
         data = {
             'tribe_id': self.tribe_id,
-            'date_start': self.date_start,
+            'date_start': self.date_start.isoformat(),
         }
         return data

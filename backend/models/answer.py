@@ -26,7 +26,7 @@ class Answer(db.Model):
             'id': self.id,
             'question_id': self.question_id,
             'team_id': self.team_id,
-            'date': self.date,
+            'date': self.date.isoformat(),
             'answer': self.answer,
             'comment': self.comment,
         }
