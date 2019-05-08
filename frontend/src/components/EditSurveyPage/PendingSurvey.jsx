@@ -1,10 +1,15 @@
 import React from 'react';
 import { Segment, Button, Input, Container } from 'semantic-ui-react';
 import DraftQuestion from './DraftQuestion';
+import { Header } from 'semantic-ui-react';
 
-const DraftSurvey = () => {
+const PendingSurvey = () => {
   return (
     <React.Fragment>
+      <Header as='h5'>
+        This version of survey will become active on 1.06.2019. Until then you
+        can still edit it.
+      </Header>
       <Segment.Group>
         <DraftQuestion />
         <DraftQuestion />
@@ -22,14 +27,10 @@ const DraftSurvey = () => {
         </Segment>
       </Segment.Group>
       <Container textAlign='center'>
-        <Button.Group>
-          <Button>Save as draft</Button>
-          <Button.Or />
-          <Button primary>Save as active survey</Button>
-        </Button.Group>
+        <Button primary>Save</Button>
       </Container>
     </React.Fragment>
   );
 };
 
-export default DraftSurvey;
+export default PendingSurvey;
