@@ -2,10 +2,23 @@ version: '3'
 
 services:
 
+    db:
+        restart: always
+        image: postgres:latest
+        environment:
+            - POSTGRES_USER=healthcheck
+            - POSTGRES_PASSWORD=healthcheck
+            - POSTGRES_DB=healthcheck
+
     backend:
         restart: always
         image: backend
         build: ./backend
+        volumes:
+            - ${PWD}/config.py:/srv/www/backend/config.py
+        depends_on:
+            - db
+        command: ['./wait-for-it.sh', 'db:5432', '--', 'uwsgi', '--ini', 'uwsgi.ini']
 
     frontend:
         restart: always
