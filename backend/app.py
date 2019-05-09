@@ -25,6 +25,9 @@ from backend.common import jwt_ext  # noqa: E402, F401
 # Needs to be imported after creating the db object
 from backend.resources import (users, editors, tribes, teams, surveys)  # noqa: E402
 
+# Create db schema if it doesn't exist
+db.create_all()
+
 if os.environ.get('FLASK_ENV') == 'development':
     CORS(app)
 
