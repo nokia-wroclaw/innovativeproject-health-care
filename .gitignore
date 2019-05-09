@@ -5,7 +5,7 @@
 .idea
 
 # Config file
-*/config.py
+**/config.py
 
 ### Flask ###
 instance/*
