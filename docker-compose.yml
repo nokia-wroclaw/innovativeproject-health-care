@@ -12,7 +12,7 @@ services:
 
     backend:
         restart: always
-        image: backend
+        image: sajran/healthcheck-backend:latest
         build: ./backend
         volumes:
             - ${PWD}/config.py:/srv/www/backend/config.py
@@ -22,7 +22,7 @@ services:
 
     frontend:
         restart: always
-        image: frontend
+        image: sajran/healthcheck-frontend:latest
         build:
             context: .
             dockerfile: ./frontend/Dockerfile
