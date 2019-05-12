@@ -1,11 +1,25 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { Tab, Container, Dropdown } from 'semantic-ui-react';
+import { setTribes } from './../../store/actions/tribes';
+import { setSurveys } from './../../store/actions/surveys';
 import TemplatePage from '../common/TemplatePage/';
-import { Tab, Container, Select } from 'semantic-ui-react';
 import ActiveSurvey from './ActiveSurvey';
 import DraftSurvey from './DraftSurvey';
 import PendingSurvey from './PendingSurvey';
 
-const EditSurveyPage = () => {
+const EditSurveyPage = props => {
+  const [currentTribeId, setCurrentTribeId] = useState(undefined);
+
+  useEffect(() => {
+    if (!props.tribes.length) props.setTribes();
+  }, []);
+
+  const handleTribeSelect = (e, { value }) => {
+    setCurrentTribeId(value);
+    props.setSurveys(value);
+  };
+
   const panes = [
     {
       menuItem: 'Active survey',
@@ -19,7 +33,7 @@ const EditSurveyPage = () => {
       menuItem: 'Pending survey',
       render: () => (
         <Tab.Pane>
-          <PendingSurvey />
+          <PendingSurvey tribeId={currentTribeId} />
         </Tab.Pane>
       )
     },
@@ -27,7 +41,7 @@ const EditSurveyPage = () => {
       menuItem: 'Draft',
       render: () => (
         <Tab.Pane>
-          <DraftSurvey />
+          <DraftSurvey tribeId={currentTribeId} />
         </Tab.Pane>
       )
     }
@@ -36,19 +50,30 @@ const EditSurveyPage = () => {
     <TemplatePage>
       <Container>
         <br />
-        <Select
+        <Dropdown
           placeholder='Select tribe'
-          options={[
-            { key: 1, text: 'tribe 1', value: '1' },
-            { key: 2, text: 'tribe 2', value: '2' }
-          ]}
+          options={props.tribes.map(tribe => ({
+            key: tribe.id,
+            text: tribe.name,
+            value: tribe.id
+          }))}
+          selection
+          onChange={handleTribeSelect}
+          value={currentTribeId}
         />
         <br />
         <br />
-        <Tab panes={panes} />
+        {currentTribeId ? <Tab panes={panes} /> : <p>Please, select tribe</p>}
       </Container>
     </TemplatePage>
   );
 };
 
-export default EditSurveyPage;
+const mapStateToProps = state => ({
+  tribes: state.tribes
+});
+
+export default connect(
+  mapStateToProps,
+  { setTribes, setSurveys }
+)(EditSurveyPage);

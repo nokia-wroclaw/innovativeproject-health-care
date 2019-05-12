@@ -1,5 +1,10 @@
-import { SET_USER, LOGOUT, OPTION_SELECTED } from "../actions/types";
-import authorization from "../../services/authorization";
+import {
+  SET_USER,
+  LOGOUT,
+  OPTION_SELECTED,
+  ADD_EDITOR
+} from '../actions/types';
+import authorization from '../../services/authorization';
 
 const initialState = {};
 
@@ -19,6 +24,15 @@ export default function(state = initialState, action) {
     case LOGOUT:
       return {
         ...initialState
+      };
+
+    case ADD_EDITOR:
+      const { userData } = state;
+      if (action.payload.id === state.userData.id)
+        userData.roles.push('editor');
+      return {
+        ...state,
+        userData
       };
 
     default:

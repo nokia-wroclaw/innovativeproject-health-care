@@ -1,7 +1,7 @@
-import { SET_EDITORS, ADD_EDITOR, DELETE_EDITOR } from "./types";
-import axios from "axios";
-import { endpoints, getHttpConfig } from "../../services/http";
-import { handleFetchingError } from "./general";
+import { SET_EDITORS, ADD_EDITOR, DELETE_EDITOR } from './types';
+import axios from 'axios';
+import { endpoints, getHttpConfig } from '../../services/http';
+import { handleFetchingError } from './general';
 
 export const setEditors = () => dispatch => {
   return axios

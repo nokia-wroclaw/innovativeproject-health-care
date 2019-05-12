@@ -1,35 +1,35 @@
-import { QUESTION_ANSWERED } from "../actions/types";
+import { QUESTION_ANSWERED } from '../actions/types';
 
 const initialState = {
   activeQuestions: [
     {
-      title: "Support",
+      title: 'Support',
       answer: undefined,
-      comment: "",
+      comment: '',
       id: 0
     },
     {
-      title: "Fun",
+      title: 'Fun',
       answer: undefined,
-      comment: "",
+      comment: '',
       id: 1
     },
     {
-      title: "Teamwork",
+      title: 'Teamwork',
       answer: undefined,
-      comment: "",
+      comment: '',
       id: 2
     },
     {
-      title: "Prawns or Players",
+      title: 'Prawns or Players',
       answer: undefined,
-      comment: "",
+      comment: '',
       id: 3
     },
     {
-      title: "Health of codebase",
+      title: 'Health of codebase',
       answer: undefined,
-      comment: "",
+      comment: '',
       id: 4
     }
   ]

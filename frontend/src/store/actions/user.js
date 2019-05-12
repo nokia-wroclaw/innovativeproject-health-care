@@ -21,7 +21,6 @@ export const login = (username, password) => dispatch => {
   return axios
     .post(endpoints.login, {}, config)
     .then(response => {
-      console.log(response);
       const jwt = response.data.access_token;
       localStorage.setItem('token', jwt);
       const { user } = jwtDecode(jwt);
@@ -33,7 +32,7 @@ export const login = (username, password) => dispatch => {
         dispatch(setMenuOption(firstManuOption.name));
       }
     })
-    .catch(err => console.log(err));
+    .catch(error => console.log(error));
 };
 
 export const logout = () => {

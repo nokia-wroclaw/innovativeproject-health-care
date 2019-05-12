@@ -1,26 +1,23 @@
 import React from 'react';
 import { Segment, Header } from 'semantic-ui-react';
+import { connect } from 'react-redux';
 
-const ActiveSurvey = () => {
+const ActiveSurvey = ({ survey }) => {
   return (
     <Segment.Group>
-      <Segment>
-        <Header as='h4'>Question 1</Header>
-      </Segment>
-      <Segment>
-        <Header as='h4'>Question 2</Header>
-      </Segment>
-      <Segment>
-        <Header as='h4'>Question 3</Header>
-      </Segment>
-      <Segment>
-        <Header as='h4'>Question 4</Header>
-      </Segment>
-      <Segment>
-        <Header as='h4'>Question 5</Header>
-      </Segment>
+      {survey.questions
+        ? survey.questions.map(item => (
+            <Segment>
+              <Header as='h4'>{item.question}</Header>
+            </Segment>
+          ))
+        : null}
     </Segment.Group>
   );
 };
 
-export default ActiveSurvey;
+const mapStateToProps = state => ({
+  survey: state.surveys.active
+});
+
+export default connect(mapStateToProps)(ActiveSurvey);

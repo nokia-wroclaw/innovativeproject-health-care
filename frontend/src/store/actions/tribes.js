@@ -8,10 +8,10 @@ import {
   ADD_EDITOR_TO_TRIBE,
   DELETE_EDITOR_FROM_TRIBE,
   ADD_TEAM_TO_TRIBE
-} from "./types";
-import axios from "axios";
-import { endpoints, getHttpConfig } from "../../services/http";
-import { handleFetchingError } from "./general";
+} from './types';
+import axios from 'axios';
+import { endpoints, getHttpConfig } from '../../services/http';
+import { handleFetchingError } from './general';
 
 export const setTribes = () => dispatch => {
   const config = getHttpConfig();

@@ -1,8 +1,8 @@
-import React from "react";
-import { connect } from "react-redux";
-import { Popup } from "semantic-ui-react";
-import { setAnswer } from "../../store/actions";
-import "./checkbox.css";
+import React from 'react';
+import { connect } from 'react-redux';
+import { Popup } from 'semantic-ui-react';
+import { setAnswer } from '../../store/actions/currentSurvey';
+import './checkbox.css';
 
 const ColoredCheckbox = ({
   color,
@@ -16,12 +16,12 @@ const ColoredCheckbox = ({
     <Popup
       trigger={
         <div
-          className="checkbox-container "
+          className='checkbox-container '
           onClick={() => setAnswer(questionId, value)}
         >
           <input
-            type="checkbox"
-            className="checkbox"
+            type='checkbox'
+            className='checkbox'
             checked={value === answer}
             onChange={() => {}}
           />
@@ -29,7 +29,7 @@ const ColoredCheckbox = ({
         </div>
       }
       content={hintText}
-      position="bottom center"
+      position='bottom center'
     />
   );
 };

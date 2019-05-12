@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import QuestionSegment from "./QuestionSegment";
-import { Container, Button, Form } from "semantic-ui-react";
-import Faces from "./Faces";
-import "../../styles/common.css";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import QuestionSegment from './QuestionSegment';
+import { Container, Button, Form } from 'semantic-ui-react';
+import Faces from './Faces';
+import '../../styles/common.css';
 
 class Survey extends Component {
   validate = () => {
@@ -25,8 +25,8 @@ class Survey extends Component {
           {questions.map((question, i) => (
             <QuestionSegment question={question} key={i} />
           ))}
-          <Form.Field className="flex-center">
-            <Button type="submit" primary disabled={!this.validate()}>
+          <Form.Field className='flex-center'>
+            <Button type='submit' primary disabled={!this.validate()}>
               Submit
             </Button>
           </Form.Field>
@@ -37,7 +37,7 @@ class Survey extends Component {
 }
 
 const mapStateToProps = state => ({
-  questions: state.survey.activeQuestions
+  questions: state.currentSurvey.activeQuestions
 });
 
 export default connect(mapStateToProps)(Survey);

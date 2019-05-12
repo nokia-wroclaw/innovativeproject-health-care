@@ -1,19 +1,21 @@
 import React from 'react';
-import { Segment, Button, Input, Container } from 'semantic-ui-react';
+import { connect } from 'react-redux';
+import { Segment, Button, Input, Container, Header } from 'semantic-ui-react';
 import DraftQuestion from './DraftQuestion';
-import { Header } from 'semantic-ui-react';
 
-const PendingSurvey = () => {
+const PendingSurvey = ({ tribeId, survey, ...props }) => {
   return (
     <React.Fragment>
       <Header as='h5'>
-        This version of survey will become active on 1.06.2019. Until then you
-        can still edit it.
+        This version of survey will become active on {survey.date}. Until then
+        you can still edit it.
       </Header>
       <Segment.Group>
-        <DraftQuestion />
-        <DraftQuestion />
-        <DraftQuestion />
+        {survey.questions
+          ? survey.questions.map((question, i) => (
+              <DraftQuestion question={question} key={i} />
+            ))
+          : null}
         <Segment>
           <Input
             type='text'
@@ -33,4 +35,8 @@ const PendingSurvey = () => {
   );
 };
 
-export default PendingSurvey;
+const mapStateToProps = state => ({
+  survey: state.surveys.next
+});
+
+export default connect(mapStateToProps)(PendingSurvey);

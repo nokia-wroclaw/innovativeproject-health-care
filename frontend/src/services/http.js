@@ -1,4 +1,4 @@
-import { getJwt } from "./authorization";
+import { getJwt } from './authorization';
 
 const baseURL = process.env.REACT_APP_API_BASE_URL;
 
@@ -17,7 +17,9 @@ export const endpoints = {
   deleteTribe: `${baseURL}/tribes/`, //${id}
   getTribe: `${baseURL}/tribes/`, //${id}
   //--- Teams ---
-  teams: `${baseURL}/teams/`
+  teams: `${baseURL}/teams/`,
+  //--- Surveys ---
+  getSurvey: `${baseURL}/surveys/` //${id}
 };
 
 export const getHttpConfig = () => {

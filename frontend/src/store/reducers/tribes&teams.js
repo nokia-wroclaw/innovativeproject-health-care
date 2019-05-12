@@ -16,7 +16,7 @@ import {
   DELETE_MANAGER_FROM_TEAM,
   ADD_MEMBER_TO_TEAM,
   DELETE_MEMBER_FROM_TEAM
-} from "../actions/types";
+} from '../actions/types';
 
 export const findTribe = (tribes, targetTribe) => {
   try {
