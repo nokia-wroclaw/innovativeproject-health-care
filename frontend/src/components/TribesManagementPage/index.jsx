@@ -1,10 +1,10 @@
-import React, { useLayoutEffect } from "react";
-import { connect } from "react-redux";
-import { Accordion, Container, Header, Item } from "semantic-ui-react";
-import TemplatePage from "../common/TemplatePage/";
-import { setTribes } from "./../../store/actions/tribes";
-import TribeDetails from "./TribeDetails";
-import AddTribePopup from "./AddTribePopup";
+import React, { useLayoutEffect } from 'react';
+import { connect } from 'react-redux';
+import { Accordion, Container, Header, Item } from 'semantic-ui-react';
+import { setTribes } from './../../store/actions/tribes';
+import TemplatePage from '../common/TemplatePage/';
+import TribeDetails from './TribeDetails';
+import AddTribePopup from './AddTribePopup';
 
 export const TribesManagementPage = props => {
   useLayoutEffect(() => {
@@ -25,12 +25,12 @@ export const TribesManagementPage = props => {
   return (
     <TemplatePage>
       <Container>
-        <Item style={{ margin: "1em 0" }}>
+        <Item style={{ margin: '1em 0' }}>
           <AddTribePopup />
-          <Header as="h3">Your tribes</Header>
+          <Header as='h3'>Your tribes</Header>
         </Item>
         <Accordion
-          className="tribes-accordion"
+          className='tribes-accordion'
           fluid
           styled
           panels={tribePanels}
