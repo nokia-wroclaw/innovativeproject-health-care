@@ -83,7 +83,7 @@ class TeamRes(Resource):
         except exc.SQLAlchemyError:
             abort(400)
 
-        response = Response()
+        response = jsonify(team.serialize())
         response.status_code = 200
         return response
 
@@ -109,7 +109,7 @@ class TeamRes(Resource):
         except exc.SQLAlchemyError:
             abort(400)
 
-        response = Response()
+        response = jsonify(team.serialize())
         response.status_code = 200
         return response
 
@@ -127,7 +127,7 @@ class TeamRes(Resource):
             abort(400)
 
         response = Response()
-        response.status_code = 200
+        response.status_code = 204
         return response
 
 
@@ -162,7 +162,7 @@ class TeamManagerRes(Resource):
 
         if int(team_id) in user.managing_ids():
             response = Response()
-            response.status_code = 200
+            response.status_code = 204
             return response
 
         manager_link = TeamUserLink(team_id=team_id,
@@ -205,7 +205,7 @@ class TeamManagerRes(Resource):
         user.revalidate()
 
         response = Response()
-        response.status_code = 200
+        response.status_code = 204
         return response
 
 
@@ -240,7 +240,7 @@ class TeamUserRes(Resource):
 
         if int(team_id) in user.team_ids():
             response = Response()
-            response.status_code = 200
+            response.status_code = 204
             return response
 
         user_link = TeamUserLink(team_id=team_id,
@@ -283,5 +283,5 @@ class TeamUserRes(Resource):
         user.revalidate()
 
         response = Response()
-        response.status_code = 200
+        response.status_code = 204
         return response
