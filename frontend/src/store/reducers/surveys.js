@@ -8,7 +8,8 @@ import {
   DELETE_QUESTION_FROM_DRAFT_SURVEY,
   DELETE_QUESTION_FROM_NEXT_SURVEY,
   UPDATE_QUESTION_IN_DRAFT_SURVEY,
-  UPDATE_QUESTION_IN_NEXT_SURVEY
+  UPDATE_QUESTION_IN_NEXT_SURVEY,
+  UPDATE_DRAFT_SURVEY
 } from '../actions/types';
 
 const initialState = {
@@ -85,6 +86,12 @@ export default function(state = initialState, action) {
       return {
         ...state,
         draft
+      };
+
+    case UPDATE_DRAFT_SURVEY:
+      return {
+        ...state,
+        draft: action.payload
       };
     default:
       return state;

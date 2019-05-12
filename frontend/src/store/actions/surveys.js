@@ -8,7 +8,8 @@ import {
   DELETE_QUESTION_FROM_DRAFT_SURVEY,
   DELETE_QUESTION_FROM_NEXT_SURVEY,
   UPDATE_QUESTION_IN_DRAFT_SURVEY,
-  UPDATE_QUESTION_IN_NEXT_SURVEY
+  UPDATE_QUESTION_IN_NEXT_SURVEY,
+  UPDATE_DRAFT_SURVEY
 } from './types';
 import axios from 'axios';
 import { endpoints, getHttpConfig } from '../../services/http';
@@ -105,18 +106,24 @@ export const updateQuestionInNextSurvey = question => ({
   payload: question
 });
 
+export const updateDraftSurvey = draft_survey => ({
+  type: UPDATE_DRAFT_SURVEY,
+  payload: draft_survey
+});
+
 export const saveDraftSurvey = (tribe_id, survey) => dispatch => {
   const config = getHttpConfig();
   return axios
     .post(
       `${endpoints.putTribe}${tribe_id}/surveys`,
       {
-        survey
+        ...survey
       },
       config
     )
     .then(response => {
       console.log(response);
+      dispatch(updateDraftSurvey(response.data));
     })
     .catch(error => {
       dispatch(handleFetchingError(error));
