@@ -100,9 +100,7 @@ class TribeSurveysRes(Resource):
         next_survey = tribe.next_survey()
         draft_survey = tribe.draft_survey()
 
-        # If user has rights to access the active survey he also has rights
-        # to this endpoint
-        if not Survey.validate_access(active_survey.id, current_user):
+        if not Survey.validate_access(tribe_id, current_user):
             abort(403)
 
         return {
@@ -121,7 +119,7 @@ class SurveyRes(Resource):
 
         survey = Survey.get_if_exists(survey_id)
 
-        if not Survey.validate_access(survey_id, current_user):
+        if not Survey.validate_access(survey.tribe_id, current_user):
             abort(403)
 
         response = jsonify(survey.serialize())

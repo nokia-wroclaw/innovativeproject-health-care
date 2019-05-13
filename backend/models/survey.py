@@ -34,27 +34,24 @@ class Survey(db.Model):
         return survey
 
     @staticmethod
-    def validate_access(survey_id, user):
+    def validate_access(tribe_id, user):
         """Checks if any of the given user's roles allows him to access
-        survey with given id."""
+        survey belonging to the tribe with given id."""
 
-        survey = Survey.query.filter_by(id=survey_id).one_or_none()
-        if survey is None:
-            return False
-
+        tribe_id = int(tribe_id)
         access = False
         if user.is_user():
             tribe_ids = [t.team.tribe_id for t in user.teams
                          if t.manager is False]
-            if survey.tribe_id in tribe_ids:
+            if tribe_id in tribe_ids:
                 access = True
         if user.is_manager() and not access:
             tribe_ids = [t.team.tribe_id for t in user.teams
                          if t.manager is True]
-            if survey.tribe_id in tribe_ids:
+            if tribe_id in tribe_ids:
                 access = True
         if user.is_editor() and not access:
-            if survey.tribe_id in user.editing_ids():
+            if tribe_id in user.editing_ids():
                 access = True
 
         return access
