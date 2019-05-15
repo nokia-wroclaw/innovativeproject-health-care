@@ -1,36 +1,25 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Segment, Button, Input, Container, Header } from 'semantic-ui-react';
-import DraftQuestion from './DraftQuestion';
+import { Segment, Header } from 'semantic-ui-react';
+import Question from './Question';
 
-const PendingSurvey = ({ tribeId, survey, ...props }) => {
+const PendingSurvey = ({ survey }) => {
   return (
     <React.Fragment>
       <Header as='h5'>
         This version of survey will become active on {survey.date}. Until then
-        you can still edit it.
+        you can still overwrite it by publishing a draft.
       </Header>
       <Segment.Group>
         {survey.questions
-          ? survey.questions.map((question, i) => (
-              <DraftQuestion question={question} key={i} />
+          ? survey.questions.map(question => (
+              <Question
+                value={`${question.order}. ${question.value}`}
+                key={question.id}
+              />
             ))
           : null}
-        <Segment>
-          <Input
-            type='text'
-            placeholder='New question...'
-            action={{ color: 'green', icon: 'add' }}
-            fluid
-            icon='edit'
-            iconPosition='left'
-            onChange={() => {}}
-          />
-        </Segment>
       </Segment.Group>
-      <Container textAlign='center'>
-        <Button primary>Save</Button>
-      </Container>
     </React.Fragment>
   );
 };

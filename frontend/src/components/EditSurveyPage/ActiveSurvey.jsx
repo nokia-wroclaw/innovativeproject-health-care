@@ -1,15 +1,17 @@
 import React from 'react';
-import { Segment, Header } from 'semantic-ui-react';
+import { Segment } from 'semantic-ui-react';
 import { connect } from 'react-redux';
+import Question from './Question';
 
 const ActiveSurvey = ({ survey }) => {
   return (
     <Segment.Group>
       {survey.questions
-        ? survey.questions.map(item => (
-            <Segment>
-              <Header as='h4'>{item.question}</Header>
-            </Segment>
+        ? survey.questions.map(question => (
+            <Question
+              value={`${question.order}. ${question.value}`}
+              key={question.id}
+            />
           ))
         : null}
     </Segment.Group>

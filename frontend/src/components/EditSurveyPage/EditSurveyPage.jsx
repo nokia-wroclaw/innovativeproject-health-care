@@ -33,7 +33,7 @@ const EditSurveyPage = props => {
       menuItem: 'Pending survey',
       render: () => (
         <Tab.Pane>
-          <PendingSurvey tribeId={currentTribeId} />
+          <PendingSurvey />
         </Tab.Pane>
       )
     },

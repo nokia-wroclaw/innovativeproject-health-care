@@ -1,22 +1,7 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { Segment, Button, Input, Grid } from 'semantic-ui-react';
-import {
-  deleteQuestionFromDraftSurvey,
-  updateQuestionInDraftSurvey
-} from '../../store/actions/surveys';
 
-const DraftQuestion = ({ question, ...props }) => {
-  const handleDeleteQuestion = () => {
-    props.deleteQuestionFromDraftSurvey(question);
-  };
-
-  const handleQuestionChange = (e, { value }) => {
-    const newQuestion = { ...question };
-    newQuestion.question = value;
-    props.updateQuestionInDraftSurvey(newQuestion);
-  };
-
+const DraftQuestion = ({ value, onDelete, onChange }) => {
   return (
     <Segment>
       <Grid stackable>
@@ -25,8 +10,8 @@ const DraftQuestion = ({ question, ...props }) => {
             fluid
             icon='edit'
             iconPosition='left'
-            defaultValue={question.question}
-            onChange={handleQuestionChange}
+            value={value}
+            onChange={onChange}
           />
         </Grid.Column>
         <Grid.Column width={4}>
@@ -35,7 +20,7 @@ const DraftQuestion = ({ question, ...props }) => {
             icon='trash alternate'
             floated='right'
             negative
-            onClick={handleDeleteQuestion}
+            onClick={onDelete}
           />
         </Grid.Column>
       </Grid>
@@ -43,7 +28,4 @@ const DraftQuestion = ({ question, ...props }) => {
   );
 };
 
-export default connect(
-  null,
-  { deleteQuestionFromDraftSurvey, updateQuestionInDraftSurvey }
-)(DraftQuestion);
+export default DraftQuestion;
