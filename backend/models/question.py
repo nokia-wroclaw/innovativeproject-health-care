@@ -31,6 +31,6 @@ class Question(db.Model):
     def serialize(self):
         data = {
             'id': self.id,
-            'question': self.question,
+            'value': self.question,
         }
         return data
