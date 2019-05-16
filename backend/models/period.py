@@ -5,9 +5,9 @@ class Period(db.Model):
 
     __tablename__ = 'periods'
 
-    tribe_id = db.Column(db.Integer, db.ForeignKey('tribes.id'),
-                         primary_key=True)
-    date_start = db.Column(db.Date, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
+    tribe_id = db.Column(db.Integer, db.ForeignKey('tribes.id'))
+    date_start = db.Column(db.Date)
 
     def __init__(self, tribe_id, date_start):
         self.tribe_id = tribe_id
@@ -15,6 +15,7 @@ class Period(db.Model):
 
     def serialize(self):
         data = {
+            'id': self.id,
             'tribe_id': self.tribe_id,
             'date_start': self.date_start.isoformat(),
         }
