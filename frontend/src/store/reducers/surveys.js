@@ -6,6 +6,7 @@ import {
   ADD_QUESTION_TO_DRAFT_SURVEY,
   DELETE_QUESTION_FROM_DRAFT_SURVEY,
   UPDATE_QUESTION_IN_DRAFT_SURVEY,
+  SET_DRAFT_SURVEY_PERIOD,
   ACTIVE_SURVEY_IS_LOADING,
   NEXT_SURVEY_IS_LOADING,
   DRAFT_SURVEY_IS_LOADING
@@ -119,6 +120,12 @@ export default function(state = initialState, action) {
       return {
         ...state,
         draft: action.payload
+      };
+
+    case SET_DRAFT_SURVEY_PERIOD:
+      return {
+        ...state,
+        draft: { ...state.draft, period_len: action.payload }
       };
 
     default:

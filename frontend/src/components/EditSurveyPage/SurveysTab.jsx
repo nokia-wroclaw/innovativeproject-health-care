@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Tab } from 'semantic-ui-react';
 import ActiveSurvey from './ActiveSurvey';
-import DraftSurvey from './DraftSurvey';
+import DraftSurvey from './DraftSurvey/';
 import PendingSurvey from './PendingSurvey';
 import Loader from './../common/Loader/';
 

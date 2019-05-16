@@ -8,7 +8,8 @@ import {
   UPDATE_QUESTION_IN_DRAFT_SURVEY,
   ACTIVE_SURVEY_IS_LOADING,
   NEXT_SURVEY_IS_LOADING,
-  DRAFT_SURVEY_IS_LOADING
+  DRAFT_SURVEY_IS_LOADING,
+  SET_DRAFT_SURVEY_PERIOD
 } from './types';
 import axios from 'axios';
 import { endpoints, getHttpConfig } from '../../services/http';
@@ -122,6 +123,11 @@ export const updateQuestionInDraftSurvey = question => ({
 export const updateDraftSurvey = draft_survey => ({
   type: SET_DRAFT_SURVEY,
   payload: draft_survey
+});
+
+export const setDraftSurveyPeriod = draft_period => ({
+  type: SET_DRAFT_SURVEY_PERIOD,
+  payload: draft_period
 });
 
 export const saveDraftSurvey = (tribe_id, survey) => dispatch => {
