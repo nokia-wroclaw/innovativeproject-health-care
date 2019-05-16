@@ -1,4 +1,4 @@
-from flask import jsonify, Response, abort
+from flask import jsonify, Response, abort, request
 from flask_restful import Resource
 from sqlalchemy import exc
 from backend.common.permissions import roles_allowed
@@ -13,7 +13,25 @@ class EditorsRes(Resource):
     def get(self):
         """Get all editors."""
 
-        editors = User.query.filter_by(editor=True).all()
+        args = request.args
+        if 'q' in args:
+            # If there is a search phrase defined
+            phrase = args['q']
+            if len(phrase) <= 3:
+                abort(400, 'Search phrase too short, minimum length is 4 '
+                           'characters.')
+
+            # Add a wildcard at the end of the phrase
+            phrase += '%'
+            editors = User.query.filter(User.editor == True,
+                                        db.or_(
+                                            User.full_name.ilike(phrase),
+                                            User.login.ilike(phrase),
+                                            User.mail.ilike(phrase)
+                                        ))
+        else:
+            # If there is no search phrase
+            editors = User.query.filter_by(editor=True).all()
 
         response = jsonify([e.serialize() for e in editors])
         response.status_code = 200
