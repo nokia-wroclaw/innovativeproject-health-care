@@ -1,21 +1,17 @@
 import React from 'react';
-import { Segment } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import Question from './Question';
+import QuestionList from './QuestionList';
 
 const ActiveSurvey = ({ survey }) => {
-  return (
-    <Segment.Group>
-      {survey.questions
-        ? survey.questions.map(question => (
-            <Question
-              value={`${question.order}. ${question.value}`}
-              key={question.id}
-            />
-          ))
-        : null}
-    </Segment.Group>
+  const content = survey.id ? (
+    <QuestionList survey={survey} />
+  ) : (
+    <p>
+      There is no active survey for this tribe. Please create one by publishing
+      a draft.
+    </p>
   );
+  return content;
 };
 
 const mapStateToProps = state => ({

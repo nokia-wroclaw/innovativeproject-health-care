@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Tab, Container, Dropdown } from 'semantic-ui-react';
+import { Container, Dropdown } from 'semantic-ui-react';
 import { setTribes } from './../../store/actions/tribes';
 import { setSurveys } from './../../store/actions/surveys';
 import TemplatePage from '../common/TemplatePage/';
-import ActiveSurvey from './ActiveSurvey';
-import DraftSurvey from './DraftSurvey';
-import PendingSurvey from './PendingSurvey';
+import SurveysTab from './SurveysTab';
 
 const EditSurveyPage = props => {
   const [currentTribeId, setCurrentTribeId] = useState(undefined);
@@ -20,32 +18,6 @@ const EditSurveyPage = props => {
     props.setSurveys(value);
   };
 
-  const panes = [
-    {
-      menuItem: 'Active survey',
-      render: () => (
-        <Tab.Pane>
-          <ActiveSurvey />
-        </Tab.Pane>
-      )
-    },
-    {
-      menuItem: 'Pending survey',
-      render: () => (
-        <Tab.Pane>
-          <PendingSurvey />
-        </Tab.Pane>
-      )
-    },
-    {
-      menuItem: 'Draft',
-      render: () => (
-        <Tab.Pane>
-          <DraftSurvey tribeId={currentTribeId} />
-        </Tab.Pane>
-      )
-    }
-  ];
   return (
     <TemplatePage>
       <Container>
@@ -63,7 +35,11 @@ const EditSurveyPage = props => {
         />
         <br />
         <br />
-        {currentTribeId ? <Tab panes={panes} /> : <p>Please, select tribe</p>}
+        {currentTribeId ? (
+          <SurveysTab tribeId={currentTribeId} />
+        ) : (
+          <p>Please, select tribe</p>
+        )}
       </Container>
     </TemplatePage>
   );

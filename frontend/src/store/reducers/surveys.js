@@ -2,40 +2,50 @@ import {
   SET_ACTIVE_SURVEY,
   SET_NEXT_SURVEY,
   SET_DRAFT_SURVEY,
-  RESET_ACTIVE_SURVEY,
-  RESET_NEXT_SURVEY,
-  RESET_DRAFT_SURVEY,
+  RESET_SURVEYS,
   ADD_QUESTION_TO_DRAFT_SURVEY,
   DELETE_QUESTION_FROM_DRAFT_SURVEY,
-  UPDATE_QUESTION_IN_DRAFT_SURVEY
+  UPDATE_QUESTION_IN_DRAFT_SURVEY,
+  ACTIVE_SURVEY_IS_LOADING,
+  NEXT_SURVEY_IS_LOADING,
+  DRAFT_SURVEY_IS_LOADING
 } from '../actions/types';
 
 const initialState = {
-  active: { questions: [] },
-  next: { questions: [], date: '' },
+  active: { isLoading: true },
+  next: { isLoading: true },
   draft: {
+    isLoading: true,
     questions: [],
     period_len: 1
   }
 };
 
-let draft, next;
+let draft;
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    case RESET_ACTIVE_SURVEY:
+    case ACTIVE_SURVEY_IS_LOADING:
       return {
         ...state,
-        active: initialState.active
+        active: { ...state.active, isLoading: action.payload }
       };
-    case RESET_NEXT_SURVEY:
+    case NEXT_SURVEY_IS_LOADING:
       return {
         ...state,
-        next: initialState.next
+        next: { ...state.next, isLoading: action.payload }
       };
-    case RESET_DRAFT_SURVEY:
+    case DRAFT_SURVEY_IS_LOADING:
       return {
         ...state,
+        draft: { ...state.draft, isLoading: action.payload }
+      };
+
+    case RESET_SURVEYS:
+      return {
+        ...state,
+        active: initialState.active,
+        next: initialState.next,
         draft: initialState.draft
       };
 

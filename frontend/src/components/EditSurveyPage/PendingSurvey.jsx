@@ -1,27 +1,20 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Segment, Header } from 'semantic-ui-react';
-import Question from './Question';
+import QuestionList from './QuestionList';
 
 const PendingSurvey = ({ survey }) => {
-  return (
+  const content = survey.id ? (
     <React.Fragment>
-      <Header as='h5'>
+      <p>
         This version of survey will become active on {survey.date}. Until then
         you can still overwrite it by publishing a draft.
-      </Header>
-      <Segment.Group>
-        {survey.questions
-          ? survey.questions.map(question => (
-              <Question
-                value={`${question.order}. ${question.value}`}
-                key={question.id}
-              />
-            ))
-          : null}
-      </Segment.Group>
+      </p>
+      <QuestionList survey={survey} />
     </React.Fragment>
+  ) : (
+    <p>There is no pending surevey for this tribe.</p>
   );
+  return content;
 };
 
 const mapStateToProps = state => ({
