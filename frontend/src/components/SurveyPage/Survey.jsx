@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import QuestionSegment from './QuestionSegment';
-import { Container, Button, Form } from 'semantic-ui-react';
+import { Button, Form } from 'semantic-ui-react';
 import Faces from './Faces';
 import '../../styles/common.css';
 
@@ -15,7 +15,7 @@ class Survey extends Component {
   render() {
     const { questions } = this.props;
     return (
-      <Container style={{ marginTop: 20 }}>
+      <React.Fragment>
         <Faces />
         <Form
           onSubmit={() => {
@@ -31,7 +31,7 @@ class Survey extends Component {
             </Button>
           </Form.Field>
         </Form>
-      </Container>
+      </React.Fragment>
     );
   }
 }
