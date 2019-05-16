@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "array-move": "^2.1.0",
     "axios": "^0.18.0",
     "font-awesome": "^4.7.0",
     "formik": "^1.5.3",
@@ -14,6 +15,7 @@
     "react-redux": "^6.0.1",
     "react-router-dom": "^5.0.0",
     "react-scripts": "2.1.5",
+    "react-sortable-hoc": "^1.9.1",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
     "semantic-ui-css": "^2.4.1",

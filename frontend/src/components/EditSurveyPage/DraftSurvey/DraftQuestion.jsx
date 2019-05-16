@@ -1,7 +1,27 @@
 import React from 'react';
 import { Segment, Button, Input, Grid } from 'semantic-ui-react';
+import { connect } from 'react-redux';
+import { sortableHandle } from 'react-sortable-hoc';
+import {
+  deleteQuestionFromDraftSurvey,
+  updateQuestionInDraftSurvey
+} from '../../../store/actions/surveys';
 
-const DraftQuestion = ({ value, onDelete, onChange }) => {
+const DragHandle = sortableHandle(() => (
+  <Button icon='arrows alternate vertical' floated='right' />
+));
+
+const DraftQuestion = ({ question, ...props }) => {
+  const handleDeleteQuestion = () => {
+    props.deleteQuestionFromDraftSurvey(question);
+  };
+
+  const handleQuestionChange = (e, { value }) => {
+    const newQuestion = { ...question };
+    newQuestion.value = value;
+    props.updateQuestionInDraftSurvey(newQuestion);
+  };
+
   return (
     <Segment>
       <Grid stackable>
@@ -10,17 +30,17 @@ const DraftQuestion = ({ value, onDelete, onChange }) => {
             fluid
             icon='edit'
             iconPosition='left'
-            value={value}
-            onChange={onChange}
+            value={question.value}
+            onChange={handleQuestionChange}
           />
         </Grid.Column>
         <Grid.Column width={4}>
-          <Button icon='arrows alternate vertical' floated='right' />
+          <DragHandle />
           <Button
             icon='trash alternate'
             floated='right'
             negative
-            onClick={onDelete}
+            onClick={handleDeleteQuestion}
           />
         </Grid.Column>
       </Grid>
@@ -28,4 +48,14 @@ const DraftQuestion = ({ value, onDelete, onChange }) => {
   );
 };
 
-export default DraftQuestion;
+const mapStateToProps = state => ({
+  survey: state.surveys.draft
+});
+
+export default connect(
+  mapStateToProps,
+  {
+    deleteQuestionFromDraftSurvey,
+    updateQuestionInDraftSurvey
+  }
+)(DraftQuestion);
