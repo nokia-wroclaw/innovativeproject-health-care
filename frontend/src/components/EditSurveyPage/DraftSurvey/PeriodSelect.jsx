@@ -4,27 +4,27 @@ import { Dropdown, Container } from 'semantic-ui-react';
 const PeriodSelect = ({ value, onChange }) => {
   const options = [
     {
-      text: 'a mounth',
+      text: 'a month',
       value: 1
     },
     {
-      text: 'in 2 mounths',
+      text: 'in 2 months',
       value: 2
     },
     {
-      text: 'in 3 mounths',
+      text: 'in 3 months',
       value: 3
     },
     {
-      text: 'in 4 mounths',
+      text: 'in 4 months',
       value: 4
     },
     {
-      text: 'in 5 mounths',
+      text: 'in 5 months',
       value: 5
     },
     {
-      text: 'in 6 mounths',
+      text: 'in 6 months',
       value: 6
     }
   ];
