@@ -1,22 +1,22 @@
-import React from "react";
-import { Button, Popup } from "semantic-ui-react";
-import LoginForm from "../common/LoginForm";
-import colors from "../../styles/colors";
+import React from 'react';
+import { Button, Popup } from 'semantic-ui-react';
+import LoginForm from '../common/LoginForm';
+import colors from '../../styles/colors';
 
 const LoginButton = props => {
   return (
     <Popup
       trigger={
         <Button
-          content="Log in"
+          content='Log in'
           inverted
           color={colors.headerLoginButton}
-          floated="right"
+          floated='right'
         />
       }
       content={<LoginForm />}
-      on="click"
-      position="bottom right"
+      on='click'
+      position='bottom right'
     />
   );
 };

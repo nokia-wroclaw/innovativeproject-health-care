@@ -1,13 +1,13 @@
-import React from "react";
-import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import { Menu as SemanticMenu, Sticky, Dropdown } from "semantic-ui-react";
-import { setMenuOption } from "../../store/actions/user";
-import colors from "../../styles/colors";
+import React from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { Menu as SemanticMenu, Sticky, Dropdown } from 'semantic-ui-react';
+import { setMenuOption } from '../../store/actions/user';
+import colors from '../../styles/colors';
 
 const Menu = ({ menu, active, setMenuOption }) => {
   return (
-    <Sticky style={{ boxShadow: "0 2px 8px rgba(0, 0, 0, 0.2)" }}>
+    <Sticky style={{ boxShadow: '0 2px 8px rgba(0, 0, 0, 0.2)' }}>
       <SemanticMenu
         inverted
         pointing
@@ -27,7 +27,7 @@ const Menu = ({ menu, active, setMenuOption }) => {
         ))}
 
         {menu.length > 4 ? (
-          <Dropdown item text="More">
+          <Dropdown item text='More'>
             <Dropdown.Menu>
               {menu.slice(4).map(option => (
                 <Dropdown.Item
