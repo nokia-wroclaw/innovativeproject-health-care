@@ -1,15 +1,2 @@
-import React, { Component } from "react";
-import Survey from "./Survey";
-import TemplatePage from "../common/TemplatePage/";
-
-class SurveyPage extends Component {
-  render() {
-    return (
-      <TemplatePage>
-        <Survey />
-      </TemplatePage>
-    );
-  }
-}
-
+import SurveyPage from './SurveyPage';
 export default SurveyPage;

@@ -1,10 +1,10 @@
-import React from "react";
-import { connect } from "react-redux";
-import { Header } from "semantic-ui-react";
+import React from 'react';
+import { connect } from 'react-redux';
+import { Header } from 'semantic-ui-react';
 
 const UserDisplayName = ({ user }) => {
   return (
-    <Header size="medium" inverted>
+    <Header size='medium' inverted>
       {user.name}
     </Header>
   );

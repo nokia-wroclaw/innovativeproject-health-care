@@ -1,10 +1,10 @@
 from datetime import timedelta
 from flask import abort, request, jsonify
 from flask_restful import Resource
-from flask_jwt_extended import create_access_token
+from flask_jwt_extended import create_access_token, current_user
 from backend.common.permissions import roles_allowed
 from backend.common.ldapconn import LdapConn
-from backend.models import User
+from backend.models import User, Tribe, Team
 
 
 class AuthRes(Resource):
@@ -82,5 +82,73 @@ class UserRes(Resource):
         user = User.get_if_exists(user_id)
 
         response = jsonify(user.serialize(verbose=True))
+        response.status_code = 200
+        return response
+
+
+class UserTeamsRes(Resource):
+    """Collection of all teams user is assigned to, both as a manager
+    and a member."""
+
+    @roles_allowed(['manager', 'user'])
+    def get(self, user_id):
+        """Returns info of all the teams user is either managing or is
+        member of.
+        Filtering is done by `role` parameter. Possible values: manger,
+        member."""
+
+        # Users can fetch only their own teams
+        if current_user.id != int(user_id):
+            abort(403)
+
+        user = User.get_if_exists(user_id)
+
+        if 'role' not in request.args:
+            abort(400)
+
+        role = request.args['role']
+        if role not in ['manager', 'member']:
+            abort(400)
+        req_role = True if role == 'manager' else False
+
+        team_links = [l for l in user.teams if l.manager is req_role]
+
+        response = jsonify([l.team.serialize() for l in team_links])
+        response.status_code = 200
+        return response
+
+
+class UserTribesRes(Resource):
+    """Collection of all tribes user is assigned to, both as member of the
+    teams in this tribe and as an editor."""
+
+    @roles_allowed(['editor', 'user'])
+    def get(self, user_id):
+        """Returns info of all the tribes user is either editing or is
+        member of.
+        Filtering is done by `role` parameter. Possible values: editor,
+        member.
+        """
+
+        # Users can fetch only their own teams
+        if current_user.id != int(user_id):
+            abort(403)
+
+        user = User.get_if_exists(user_id)
+
+        if 'role' not in request.args:
+            abort(400)
+        req_role = request.args['role']
+
+        if req_role == 'editor':
+            tribes = user.editing
+        elif req_role == 'member':
+            tribes = Tribe.query.join(Tribe.teams).join(Team.users) \
+                .filter_by(manager=False).all()
+        else:
+            abort(403)
+            return
+
+        response = jsonify([t.serialize() for t in tribes])
         response.status_code = 200
         return response
