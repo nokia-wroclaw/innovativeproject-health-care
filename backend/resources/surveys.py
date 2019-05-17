@@ -92,22 +92,40 @@ class TribeSurveysRes(Resource):
 
     @roles_allowed(['editor', 'manager', 'user'])
     def get(self, tribe_id):
-        """Returns ids of three possible types of surveys a tribe can have:
-        active, next and draft."""
+        """If called without arguments returns all three types of surveys
+        a tribe can have: active, next, draft.
+        Can be also called with `type` argument to return only one of these
+        surveys."""
 
         tribe = Tribe.get_if_exists(tribe_id)
-        active_survey = tribe.active_survey()
-        next_survey = tribe.next_survey()
-        draft_survey = tribe.draft_survey()
 
         if not Survey.validate_access(tribe_id, current_user):
             abort(403)
 
-        return {
-            "active": active_survey.id if active_survey else None,
-            "next": next_survey.id if next_survey else None,
-            "draft": draft_survey.id if draft_survey else None,
-        }
+        req_type = request.args['type'] if 'type' in request.args else None
+        if req_type and req_type not in ['active', 'next', 'draft']:
+            abort(400)
+
+        surveys = {}
+
+        # If no type is specified return all surveys, otherwise
+        # just the requested one
+        if not req_type or req_type == 'active':
+            survey = tribe.active_survey()
+            if survey is not None:
+                surveys['active'] = survey.serialize()
+        if not req_type or req_type == 'next':
+            survey = tribe.next_survey()
+            if survey is not None:
+                surveys['next'] = survey.serialize()
+        if not req_type or req_type == 'draft':
+            survey = tribe.draft_survey()
+            if survey is not None:
+                surveys['draft'] = survey.serialize()
+
+        response = jsonify(surveys)
+        response.status_code = 200
+        return response
 
 
 class SurveyRes(Resource):
