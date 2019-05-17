@@ -178,7 +178,7 @@ class SurveyRes(Resource):
             # If there is an active survey but there is no next one
             period = survey.tribe.current_period()
             next_period_date = period.date_start + \
-                relativedelta(months=+active.period_len)
+                               relativedelta(months=+active.period_len)
             next_period = Period(survey.tribe_id, next_period_date)
             survey.date = next_period_date
             survey.draft = False
@@ -189,7 +189,19 @@ class SurveyRes(Resource):
             survey.draft = False
             db.session.delete(next)
 
+        # Create new draft by copying the published draft
+        new_draft = Survey(survey.tribe_id, True)
+        new_draft.period_len = survey.period_len
+        db.session.add(new_draft)
+        db.session.flush()
+        for q in survey.questions:
+            new_link = SurveyQuestionLink(survey_id=new_draft.id,
+                                          question_id=q.question_id,
+                                          order=q.order)
+            new_draft.questions.append(new_link)
+
         db.session.add(survey)
+        db.session.add(new_draft)
         db.session.commit()
         response = jsonify(survey.serialize())
         response.status_code = 200
@@ -286,7 +298,7 @@ class TribePeriodsRes(Resource):
             abort(403)
 
         periods = Period.query.filter(Period.tribe_id == tribe_id,
-                                      Period.date_start <= date.today())\
+                                      Period.date_start <= date.today()) \
             .order_by(Period.date_start.desc()).all()
 
         response = jsonify([p.serialize() for p in periods])
