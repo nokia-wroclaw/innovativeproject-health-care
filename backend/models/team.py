@@ -1,10 +1,9 @@
 from flask import abort
 from backend.app import db
-from backend.models import Answer
+from backend.models import Answer, Survey
 
 
 class Team(db.Model):
-
     __tablename__ = 'teams'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -32,6 +31,35 @@ class Team(db.Model):
 
         return answered
 
+    def answers(self, period):
+        """Returns this team's answers to a survey from the given period.
+        Answers have additional `order` attribute defining order
+        of its question."""
+
+        if self.tribe_id is not period.tribe_id:
+            return None
+
+        survey = Survey.from_period(period)
+        date_start = period.date_start
+        date_end = period.date_end()
+
+        if survey is None:
+            return None
+
+        answers = []
+        for l in survey.questions:
+            question = l.question
+            answer = Answer.query.filter(
+                Answer.question_id == question.id,
+                Answer.team_id == self.id,
+                Answer.date >= date_start,
+                Answer.date < date_end
+            ).one()
+            answer.order = l.order
+            answers.append(answer)
+
+        return answers
+
     def serialize(self):
         data = {
             'id': self.id,
@@ -50,4 +78,3 @@ class Team(db.Model):
         if tribe is None:
             abort(404, 'Could not find team with given id.')
         return tribe
-

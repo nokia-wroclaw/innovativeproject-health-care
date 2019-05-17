@@ -3,7 +3,6 @@ from backend.app import db
 
 
 class Survey(db.Model):
-
     __tablename__ = 'surveys'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -21,6 +20,20 @@ class Survey(db.Model):
     def __init__(self, tribe_id, draft):
         self.tribe_id = tribe_id
         self.draft = draft
+
+    @staticmethod
+    def from_period(period):
+        """Returns survey that was active during given period."""
+
+        date_start = period.date_start
+        date_end = period.date_end()
+
+        survey = Survey.query.filter(Survey.tribe_id == period.tribe_id,
+                                     Survey.draft == False,
+                                     Survey.date >= date_start,
+                                     Survey.date < date_end).one_or_none()
+
+        return survey
 
     @staticmethod
     def get_if_exists(survey_id):

@@ -52,6 +52,7 @@ api.add_resource(surveys.TribeSurveysRes, '/tribes/<tribe_id>/surveys')
 api.add_resource(surveys.SurveyRes, '/surveys/<survey_id>')
 api.add_resource(surveys.SurveyAnswersRes, '/surveys/<survey_id>/answers')
 api.add_resource(surveys.TribePeriodsRes, '/tribes/<tribe_id>/periods')
+api.add_resource(results.ResultsRes, '/results')
 
 
 if __name__ == '__main__':
