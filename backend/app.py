@@ -23,7 +23,7 @@ db = SQLAlchemy(app)
 # Need to be imported after creating the jwt object
 from backend.common import jwt_ext  # noqa: E402, F401
 # Needs to be imported after creating the db object
-from backend.resources import (users, editors, tribes, teams, surveys, periods)  # noqa: E402
+from backend.resources import (users, editors, tribes, teams, surveys, results)  # noqa: E402
 
 # Create db schema if it doesn't exist
 db.create_all()
@@ -49,7 +49,7 @@ api.add_resource(teams.TeamUserRes, '/teams/<team_id>/users/<user_id>')
 api.add_resource(surveys.TribeSurveysRes, '/tribes/<tribe_id>/surveys')
 api.add_resource(surveys.SurveyRes, '/surveys/<survey_id>')
 api.add_resource(surveys.SurveyAnswersRes, '/surveys/<survey_id>/answers')
-api.add_resource(periods.TribePeriodsRes, '/tribes/<tribe_id>/periods')
+api.add_resource(surveys.TribePeriodsRes, '/tribes/<tribe_id>/periods')
 
 
 if __name__ == '__main__':
