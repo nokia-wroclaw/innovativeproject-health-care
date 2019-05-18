@@ -31,6 +31,14 @@ class Period(db.Model):
 
         return date_end
 
+    def previous(self):
+        previous_period = Period.query.filter(
+                Period.tribe_id == self.tribe_id,
+                Period.date_start < self.date_start
+            ).order_by(Period.date_start.desc()).first()
+
+        return previous_period
+
     @staticmethod
     def get_if_exists(period_id):
         """Fetches period with given id if it exists, aborts with

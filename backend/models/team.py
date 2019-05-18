@@ -75,6 +75,34 @@ class Team(db.Model):
 
         return answers
 
+    def get_average(self, period):
+        """Returns average of answers submitted during specified period
+        by this team."""
+
+        if self.tribe_id is not period.tribe_id:
+            return None
+
+        survey = Survey.from_period(period)
+        date_start = period.date_start
+        date_end = period.date_end()
+
+        if survey is None or date_start > date.today():
+            return None
+
+        # Fetch all answers from this team in given period
+        answers = Answer.query.filter(
+            Answer.team_id == self.id,
+            Answer.date >= date_start,
+            Answer.date < date_end
+        ).all()
+
+        # Calculate the average
+        total = sum(a.answer for a in answers)
+        num = len(answers)
+        avg = (total / num) if num != 0 else None
+
+        return avg
+
     def serialize(self):
         data = {
             'id': self.id,

@@ -130,6 +130,32 @@ class Tribe(db.Model):
 
         return answers
 
+    def get_averages(self, period):
+        """Returns list of answer averages for each team in this tribe in
+        the given period."""
+
+        if period == self.current_period():
+            # If current period is requested use current list of teams
+            teams = self.teams
+        else:
+            # Otherwise create list of teams basing on the answers
+            teams = Team.query.join(Team.answers).filter(
+                Team.tribe_id == self.id,
+                Answer.date >= period.date_start,
+                Answer.date < period.date_end()
+            ).distinct(Team.id).all()
+
+        averages = []
+        for t in teams:
+            averages.append(t.get_average(period))
+
+        results = {
+            'teams': [t.serialize() for t in teams],
+            'averages': averages
+        }
+
+        return results
+
     @staticmethod
     def get_if_exists(tribe_id):
         """Fetches tribe with given id if it exists, aborts with

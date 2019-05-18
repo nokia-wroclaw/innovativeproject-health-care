@@ -49,22 +49,14 @@ class Survey(db.Model):
         survey belonging to the tribe with given id."""
 
         tribe_id = int(tribe_id)
-        access = False
-        if user.is_user():
-            tribe_ids = [t.team.tribe_id for t in user.teams
-                         if t.manager is False]
-            if tribe_id in tribe_ids:
-                access = True
-        if user.is_manager() and not access:
-            tribe_ids = [t.team.tribe_id for t in user.teams
-                         if t.manager is True]
-            if tribe_id in tribe_ids:
-                access = True
-        if user.is_editor() and not access:
-            if tribe_id in user.editing_ids():
-                access = True
 
-        return access
+        if tribe_id in [t.team.tribe_id for t in user.teams]:
+            return True
+
+        if tribe_id in user.editing_ids():
+            return True
+
+        return False
 
     def serialize_questions(self):
         questions = []
