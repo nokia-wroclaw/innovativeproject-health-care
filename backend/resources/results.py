@@ -22,44 +22,45 @@ class ResultsRes(Resource):
             if 'teamid' not in args:
                 abort(400)
             period = args['period'] if 'period' in args else None
-            return self.team_results(args['teamid'], period)
+            return team_results(args['teamid'], period)
         elif req_type == 'tribeMatrix':
             # TODO: Implement tribe matrix results
             pass
         else:
             abort(400)
 
-    def team_results(self, team_id, period_id=None):
-        team = Team.get_if_exists(team_id)
 
-        if not Survey.validate_access(team.tribe_id, current_user):
-            abort(403)
+def team_results(team_id, period_id=None):
+    team = Team.get_if_exists(team_id)
 
-        if period_id is not None:
-            period = Period.get_if_exists(period_id)
-        else:
-            period = team.tribe.current_period()
+    if not Survey.validate_access(team.tribe_id, current_user):
+        abort(403)
 
-        if period is None:
-            abort(404)
+    if period_id is not None:
+        period = Period.get_if_exists(period_id)
+    else:
+        period = team.tribe.current_period()
 
-        answers = team.answers(period)
+    if period is None:
+        abort(404)
 
-        if answers is None:
-            response = jsonify([])
-            response.status_code = 200
-            return response
+    answers = team.answers(period)
 
-        results = []
-        for a in answers:
-            result = {
-                'order': a.order,
-                'question': a.question.question,
-                'answer': a.answer,
-                'comment': a.comment
-            }
-            results.append(result)
-
-        response = jsonify(results)
+    if answers is None:
+        response = jsonify([])
         response.status_code = 200
         return response
+
+    results = []
+    for a in answers:
+        result = {
+            'order': a.order,
+            'question': a.question.question,
+            'answer': a.answer,
+            'comment': a.comment
+        }
+        results.append(result)
+
+    response = jsonify(results)
+    response.status_code = 200
+    return response
