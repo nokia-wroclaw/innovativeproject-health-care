@@ -47,7 +47,7 @@ class Team(db.Model):
         date_end = period.date_end()
 
         if date_start > date.today():
-            abort(404)
+            return None
 
         if survey is None:
             return []
@@ -60,7 +60,10 @@ class Team(db.Model):
                 Answer.team_id == self.id,
                 Answer.date >= date_start,
                 Answer.date < date_end
-            ).one()
+            ).one_or_none()
+            if answer is None:
+                continue
+
             result = {
                 'order': l.order,
                 'question': question.question,

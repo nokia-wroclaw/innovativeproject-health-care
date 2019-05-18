@@ -85,13 +85,18 @@ class Tribe(db.Model):
         date_end = period.date_end()
 
         if date_start > date.today():
-            abort(404)
+            return None
 
-        teams = Team.query.join(Team.answers).filter(
-                Team.tribe_id == self.id,
-                Answer.date >= date_start,
-                Answer.date < date_end
-            ).distinct(Team.id).all()
+        if period == self.current_period():
+            # If current period is requested use current list of teams
+            teams = self.teams
+        else:
+            # Otherwise create list of teams basing on the answers
+            teams = Team.query.join(Team.answers).filter(
+                    Team.tribe_id == self.id,
+                    Answer.date >= date_start,
+                    Answer.date < date_end
+                ).distinct(Team.id).all()
 
         survey = Survey.from_period(period)
         questions = survey.questions
@@ -101,8 +106,7 @@ class Tribe(db.Model):
         questions_map = {q.question.id: i for (i, q) in enumerate(questions)}
 
         # Prepare matrix with rows for teams and columns for questions
-        matrix = [[None] * len(survey.questions) for t in
-                  range(len(self.teams))]
+        matrix = [[None] * len(survey.questions) for t in self.teams]
 
         # Place answers in the matrix basing on teams and questions ids
         for t in self.teams:

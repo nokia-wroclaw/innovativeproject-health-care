@@ -20,6 +20,7 @@ class ResultsRes(Resource):
         args = request.args
         req_type = args['type']
         period = args['period'] if 'period' in args else None
+        periods_num = args['period_num'] if 'period_num' in args else None
 
         if req_type == 'team':
             if 'teamid' not in args:
@@ -77,10 +78,12 @@ def tribematrix_results(tribe_id, period_id):
         ).order_by(Period.date_start.desc()).first()
 
     new_results = tribe.get_answers(period)
-    if previous_period is not None:
-        old_results = tribe.get_answers(previous_period)
-    else:
-        old_results = None
+
+    if new_results is None:
+        abort(404)
+
+    old_results = tribe.get_answers(previous_period)\
+        if previous_period is not None else None
 
     trends = trend_matrix(new_results, old_results)
     new_results['trends'] = trends
