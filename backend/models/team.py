@@ -9,6 +9,7 @@ class Team(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     tribe_id = db.Column(db.Integer, db.ForeignKey('tribes.id'))
     name = db.Column(db.String(64))
+    deleted = db.Column(db.Boolean, default=False)
 
     tribe = db.relationship('Tribe', back_populates='teams', lazy='joined')
     actions = db.relationship('Action', back_populates='team', lazy='select')
@@ -74,7 +75,8 @@ class Team(db.Model):
         404 status otherwise.
         """
 
-        tribe = Team.query.filter_by(id=team_id).first()
+        tribe = Team.query.filter_by(id=team_id,
+                                     deleted=False).first()
         if tribe is None:
             abort(404, 'Could not find team with given id.')
         return tribe

@@ -11,9 +11,12 @@ class Tribe(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64))
 
-    teams = db.relationship('Team', back_populates='tribe', lazy='select')
-    periods = db.relationship('Period', lazy='select')
-    surveys = db.relationship('Survey', back_populates='tribe', lazy='select')
+    teams = db.relationship('Team', back_populates='tribe', lazy='select',
+                            cascade='all, delete, delete-orphan')
+    periods = db.relationship('Period', lazy='select',
+                              cascade='all, delete, delete-orphan')
+    surveys = db.relationship('Survey', back_populates='tribe', lazy='select',
+                              cascade='all, delete, delete-orphan')
     editors = db.relationship('User', back_populates='editing',
                               secondary='editors', lazy='joined')
 

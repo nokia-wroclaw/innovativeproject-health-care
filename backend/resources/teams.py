@@ -42,7 +42,8 @@ class TeamsRes(Resource):
 
         Tribe.get_if_exists(tribe_id)
 
-        teams = Team.query.filter_by(tribe_id=tribe_id).all()
+        teams = Team.query.filter_by(tribe_id=tribe_id,
+                                     deleted=False).all()
 
         response = jsonify([t.serialize() for t in teams])
         response.status_code = 200
@@ -119,9 +120,11 @@ class TeamRes(Resource):
 
         team = Team.get_if_exists(team_id)
         Tribe.validate_access(team.tribe_id, current_user)
+        team.users.clear()
+        team.deleted = True
 
         try:
-            db.session.delete(team)
+            db.session.add(team)
             db.session.commit()
         except exc.SQLAlchemyError:
             abort(400)
