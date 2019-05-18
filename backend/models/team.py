@@ -1,3 +1,4 @@
+from datetime import date
 from flask import abort
 from backend.app import db
 from backend.models import Answer, Survey
@@ -15,6 +16,7 @@ class Team(db.Model):
     actions = db.relationship('Action', back_populates='team', lazy='select')
     users = db.relationship('TeamUserLink', back_populates='team',
                             lazy='select', cascade='all, delete, delete-orphan')
+    answers = db.relationship('Answer', back_populates='team', lazy='select')
 
     def __init__(self, tribe_id, name):
         self.tribe_id = tribe_id
@@ -32,10 +34,10 @@ class Team(db.Model):
 
         return answered
 
-    def answers(self, period):
+    def get_answers(self, period):
         """Returns this team's answers to a survey from the given period.
-        Answers have additional `order` attribute defining order
-        of its question."""
+        Answers are in form of a dict containing key attributes from both
+        question and answers."""
 
         if self.tribe_id is not period.tribe_id:
             return None
@@ -44,8 +46,11 @@ class Team(db.Model):
         date_start = period.date_start
         date_end = period.date_end()
 
+        if date_start > date.today():
+            abort(404)
+
         if survey is None:
-            return None
+            return []
 
         answers = []
         for l in survey.questions:
@@ -56,8 +61,14 @@ class Team(db.Model):
                 Answer.date >= date_start,
                 Answer.date < date_end
             ).one()
-            answer.order = l.order
-            answers.append(answer)
+            result = {
+                'order': l.order,
+                'question': question.question,
+                'question_id': question.id,
+                'answer': answer.answer,
+                'comment': answer.comment
+            }
+            answers.append(result)
 
         return answers
 

@@ -25,13 +25,10 @@ class Survey(db.Model):
     def from_period(period):
         """Returns survey that was active during given period."""
 
-        date_start = period.date_start
-        date_end = period.date_end()
-
         survey = Survey.query.filter(Survey.tribe_id == period.tribe_id,
                                      Survey.draft == False,
-                                     Survey.date >= date_start,
-                                     Survey.date < date_end).one_or_none()
+                                     Survey.date <= period.date_start)\
+            .order_by(Survey.date.desc()).first()
 
         return survey
 

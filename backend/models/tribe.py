@@ -2,7 +2,7 @@ from datetime import date
 from dateutil.relativedelta import relativedelta
 from flask import abort
 from backend.app import db
-from backend.models import Survey, Period
+from backend.models import Survey, Period, Team, Answer
 
 
 class Tribe(db.Model):
@@ -75,6 +75,56 @@ class Tribe(db.Model):
             new = Period(self.id, new_date)
             db.session.add(new)
             db.session.commit()
+
+    def get_answers(self, period):
+        """Returns matrix of answers along with teams and questions labels
+        for a given period."""
+
+        # Teams for this tribe could have been different in requested period
+        date_start = period.date_start
+        date_end = period.date_end()
+
+        if date_start > date.today():
+            abort(404)
+
+        teams = Team.query.join(Team.answers).filter(
+                Team.tribe_id == self.id,
+                Answer.date >= date_start,
+                Answer.date < date_end
+            ).distinct(Team.id).all()
+
+        survey = Survey.from_period(period)
+        questions = survey.questions
+
+        # Map team's ids to rows numbers and question's ids to column numbers
+        teams_map = {t.id: i for (i, t) in enumerate(teams)}
+        questions_map = {q.question.id: i for (i, q) in enumerate(questions)}
+
+        # Prepare matrix with rows for teams and columns for questions
+        matrix = [[None] * len(survey.questions) for t in
+                  range(len(self.teams))]
+
+        # Place answers in the matrix basing on teams and questions ids
+        for t in self.teams:
+            row = teams_map[t.id]
+            for a in t.get_answers(period):
+                column = questions_map[int(a['question_id'])]
+                matrix[row][column] = a['answer']
+
+        # Append order to the serialized questions
+        questions_ret = []
+        for q in questions:
+            question = q.question.serialize()
+            question['order'] = q.order
+            questions_ret.append(question)
+
+        answers = {
+            'teams': [t.serialize() for t in teams],
+            'questions': questions_ret,
+            'matrix': matrix
+        }
+
+        return answers
 
     @staticmethod
     def get_if_exists(tribe_id):

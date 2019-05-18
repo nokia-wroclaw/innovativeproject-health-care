@@ -23,7 +23,7 @@ class Period(db.Model):
         # Find next period to determine end of the given period
         n_period = Period.query.filter(Period.tribe_id == self.tribe_id,
                                        Period.date_start > self.date_start) \
-            .order_by(Period.date_start.desc()).one_or_none()
+            .order_by(Period.date_start.asc()).first()
 
         # End of the given period is either start of the next period
         # or today if there is no next period
