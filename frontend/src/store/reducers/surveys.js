@@ -7,39 +7,62 @@ import {
   DELETE_QUESTION_FROM_DRAFT_SURVEY,
   UPDATE_QUESTION_IN_DRAFT_SURVEY,
   SET_DRAFT_SURVEY_PERIOD,
-  ACTIVE_SURVEY_IS_LOADING,
-  NEXT_SURVEY_IS_LOADING,
-  DRAFT_SURVEY_IS_LOADING
+  SET_SURVEYS_ARE_LOADING
 } from '../actions/types';
 
 const initialState = {
-  active: { isLoading: true },
-  next: { isLoading: true },
+  areLoading: true,
+  active: {},
+  next: {},
   draft: {
-    isLoading: true,
     questions: [],
     period_len: 1
   }
 };
 
-let draft;
+let draft, survey;
+
+const sortQuestions = questions => {
+  if (!Array.isArray(questions)) return;
+  return questions.sort((q1, q2) => q1.order - q2.order);
+};
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    case ACTIVE_SURVEY_IS_LOADING:
+    case SET_SURVEYS_ARE_LOADING:
       return {
         ...state,
-        active: { ...state.active, isLoading: action.payload }
+        areLoading: action.payload
       };
-    case NEXT_SURVEY_IS_LOADING:
+
+    case SET_ACTIVE_SURVEY:
+      survey = action.payload;
+      survey.questions = sortQuestions(survey.questions);
       return {
         ...state,
-        next: { ...state.next, isLoading: action.payload }
+        active: survey
       };
-    case DRAFT_SURVEY_IS_LOADING:
+
+    case SET_NEXT_SURVEY:
+      survey = action.payload;
+      survey.questions = sortQuestions(survey.questions);
       return {
         ...state,
-        draft: { ...state.draft, isLoading: action.payload }
+        next: survey
+      };
+
+    case SET_DRAFT_SURVEY:
+      survey = action.payload;
+      survey.questions = sortQuestions(survey.questions);
+      return {
+        ...state,
+        draft: survey
+      };
+
+    case SET_DRAFT_SURVEY_PERIOD:
+      return {
+        ...state,
+        draft: { ...state.draft, period_len: action.payload }
       };
 
     case RESET_SURVEYS:
@@ -102,30 +125,6 @@ export default function(state = initialState, action) {
       return {
         ...state,
         draft
-      };
-
-    case SET_ACTIVE_SURVEY:
-      return {
-        ...state,
-        active: action.payload
-      };
-
-    case SET_NEXT_SURVEY:
-      return {
-        ...state,
-        next: action.payload
-      };
-
-    case SET_DRAFT_SURVEY:
-      return {
-        ...state,
-        draft: action.payload
-      };
-
-    case SET_DRAFT_SURVEY_PERIOD:
-      return {
-        ...state,
-        draft: { ...state.draft, period_len: action.payload }
       };
 
     default:

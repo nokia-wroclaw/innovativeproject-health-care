@@ -6,9 +6,7 @@ import {
   ADD_QUESTION_TO_DRAFT_SURVEY,
   DELETE_QUESTION_FROM_DRAFT_SURVEY,
   UPDATE_QUESTION_IN_DRAFT_SURVEY,
-  ACTIVE_SURVEY_IS_LOADING,
-  NEXT_SURVEY_IS_LOADING,
-  DRAFT_SURVEY_IS_LOADING,
+  SET_SURVEYS_ARE_LOADING,
   SET_DRAFT_SURVEY_PERIOD
 } from './types';
 import axios from 'axios';
@@ -17,20 +15,17 @@ import { handleFetchingError } from './general';
 
 export const setSurveys = tribe_id => dispatch => {
   const config = getHttpConfig();
+  dispatch(setSurveysAreLoading(true));
   dispatch(resetSurveys());
   return axios
     .get(`${endpoints.getTribe}${tribe_id}/surveys`, config)
     .then(response => {
       const { active, next, draft } = response.data;
-      active
-        ? dispatch(setActiveSurvey(active))
-        : dispatch(setAcitveSurveyIsLoading(false));
-      next
-        ? dispatch(setNextSurvey(next))
-        : dispatch(setNextSurveyIsLoading(false));
-      draft
-        ? dispatch(setDraftSurvey(draft))
-        : dispatch(setDraftSurveyIsLoading(false));
+      if (active) dispatch(setActiveSurvey(active));
+      if (next) dispatch(setNextSurvey(next));
+      if (draft) dispatch(setDraftSurvey(draft));
+
+      dispatch(setSurveysAreLoading(false));
     })
     .catch(error => {
       dispatch(handleFetchingError(error));
@@ -39,71 +34,25 @@ export const setSurveys = tribe_id => dispatch => {
 
 export const resetSurveys = () => ({ type: RESET_SURVEYS });
 
-export const setAcitveSurveyIsLoading = isLoading => ({
-  type: ACTIVE_SURVEY_IS_LOADING,
-  payload: isLoading
+export const setSurveysAreLoading = areLoading => ({
+  type: SET_SURVEYS_ARE_LOADING,
+  payload: areLoading
 });
 
-export const setNextSurveyIsLoading = isLoading => ({
-  type: NEXT_SURVEY_IS_LOADING,
-  payload: isLoading
+export const setActiveSurvey = active_survey => ({
+  type: SET_ACTIVE_SURVEY,
+  payload: active_survey
 });
 
-export const setDraftSurveyIsLoading = isLoading => ({
-  type: DRAFT_SURVEY_IS_LOADING,
-  payload: isLoading
+export const setNextSurvey = next_survey => ({
+  type: SET_NEXT_SURVEY,
+  payload: next_survey
 });
 
-export const setActiveSurvey = survey_id => dispatch => {
-  const config = getHttpConfig();
-  dispatch(setAcitveSurveyIsLoading(true));
-  return axios
-    .get(`${endpoints.getSurvey}${survey_id}`, config)
-    .then(response => {
-      dispatch({
-        type: SET_ACTIVE_SURVEY,
-        payload: response.data
-      });
-    })
-    .then(() => dispatch(setAcitveSurveyIsLoading(false)))
-    .catch(error => {
-      dispatch(handleFetchingError(error));
-    });
-};
-
-export const setNextSurvey = survey_id => dispatch => {
-  const config = getHttpConfig();
-  dispatch(setNextSurveyIsLoading(true));
-  return axios
-    .get(`${endpoints.getSurvey}${survey_id}`, config)
-    .then(response => {
-      dispatch({
-        type: SET_NEXT_SURVEY,
-        payload: response.data
-      });
-    })
-    .then(() => dispatch(setNextSurveyIsLoading(false)))
-    .catch(error => {
-      dispatch(handleFetchingError(error));
-    });
-};
-
-export const setDraftSurvey = survey_id => dispatch => {
-  const config = getHttpConfig();
-  dispatch(setDraftSurveyIsLoading(true));
-  return axios
-    .get(`${endpoints.getSurvey}${survey_id}`, config)
-    .then(response => {
-      dispatch({
-        type: SET_DRAFT_SURVEY,
-        payload: response.data
-      });
-    })
-    .then(() => dispatch(setDraftSurveyIsLoading(false)))
-    .catch(error => {
-      dispatch(handleFetchingError(error));
-    });
-};
+export const setDraftSurvey = draft_survey => ({
+  type: SET_DRAFT_SURVEY,
+  payload: draft_survey
+});
 
 export const addQuestionToDraftSurvey = question_text => ({
   type: ADD_QUESTION_TO_DRAFT_SURVEY,

@@ -12,7 +12,7 @@ const SurveysTab = ({ tribeId, surveys }) => {
       menuItem: 'Active survey',
       render: () => (
         <Tab.Pane>
-          {surveys.active.isLoading ? <Loader /> : <ActiveSurvey />}
+          {surveys.areLoading ? <Loader /> : <ActiveSurvey />}
         </Tab.Pane>
       )
     },
@@ -20,7 +20,7 @@ const SurveysTab = ({ tribeId, surveys }) => {
       menuItem: 'Pending survey',
       render: () => (
         <Tab.Pane>
-          {surveys.next.isLoading ? <Loader /> : <PendingSurvey />}
+          {surveys.areLoading ? <Loader /> : <PendingSurvey />}
         </Tab.Pane>
       )
     },
@@ -28,11 +28,7 @@ const SurveysTab = ({ tribeId, surveys }) => {
       menuItem: 'Draft',
       render: () => (
         <Tab.Pane>
-          {surveys.draft.isLoading ? (
-            <Loader />
-          ) : (
-            <DraftSurvey tribeId={tribeId} />
-          )}
+          {surveys.areLoading ? <Loader /> : <DraftSurvey tribeId={tribeId} />}
         </Tab.Pane>
       )
     }

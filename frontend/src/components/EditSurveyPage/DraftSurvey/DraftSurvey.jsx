@@ -2,9 +2,6 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Button, Container } from 'semantic-ui-react';
 import {
-  addQuestionToDraftSurvey,
-  deleteQuestionFromDraftSurvey,
-  updateQuestionInDraftSurvey,
   setDraftSurveyPeriod,
   saveDraftSurvey,
   saveAndPublishDraftSurvey
@@ -58,9 +55,6 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   {
-    addQuestionToDraftSurvey,
-    deleteQuestionFromDraftSurvey,
-    updateQuestionInDraftSurvey,
     setDraftSurveyPeriod,
     saveDraftSurvey,
     saveAndPublishDraftSurvey
