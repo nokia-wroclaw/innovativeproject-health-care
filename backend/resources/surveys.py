@@ -92,22 +92,40 @@ class TribeSurveysRes(Resource):
 
     @roles_allowed(['editor', 'manager', 'user'])
     def get(self, tribe_id):
-        """Returns ids of three possible types of surveys a tribe can have:
-        active, next and draft."""
+        """If called without arguments returns all three types of surveys
+        a tribe can have: active, next, draft.
+        Can be also called with `type` argument to return only one of these
+        surveys."""
 
         tribe = Tribe.get_if_exists(tribe_id)
-        active_survey = tribe.active_survey()
-        next_survey = tribe.next_survey()
-        draft_survey = tribe.draft_survey()
 
         if not Survey.validate_access(tribe_id, current_user):
             abort(403)
 
-        return {
-            "active": active_survey.id if active_survey else None,
-            "next": next_survey.id if next_survey else None,
-            "draft": draft_survey.id if draft_survey else None,
-        }
+        req_type = request.args['type'] if 'type' in request.args else None
+        if req_type and req_type not in ['active', 'next', 'draft']:
+            abort(400)
+
+        surveys = {}
+
+        # If no type is specified return all surveys, otherwise
+        # just the requested one
+        if not req_type or req_type == 'active':
+            survey = tribe.active_survey()
+            if survey is not None:
+                surveys['active'] = survey.serialize()
+        if not req_type or req_type == 'next':
+            survey = tribe.next_survey()
+            if survey is not None:
+                surveys['next'] = survey.serialize()
+        if not req_type or req_type == 'draft':
+            survey = tribe.draft_survey()
+            if survey is not None:
+                surveys['draft'] = survey.serialize()
+
+        response = jsonify(surveys)
+        response.status_code = 200
+        return response
 
 
 class SurveyRes(Resource):
@@ -160,7 +178,7 @@ class SurveyRes(Resource):
             # If there is an active survey but there is no next one
             period = survey.tribe.current_period()
             next_period_date = period.date_start + \
-                relativedelta(months=+active.period_len)
+                               relativedelta(months=+active.period_len)
             next_period = Period(survey.tribe_id, next_period_date)
             survey.date = next_period_date
             survey.draft = False
@@ -171,7 +189,19 @@ class SurveyRes(Resource):
             survey.draft = False
             db.session.delete(next)
 
+        # Create new draft by copying the published draft
+        new_draft = Survey(survey.tribe_id, True)
+        new_draft.period_len = survey.period_len
+        db.session.add(new_draft)
+        db.session.flush()
+        for q in survey.questions:
+            new_link = SurveyQuestionLink(survey_id=new_draft.id,
+                                          question_id=q.question_id,
+                                          order=q.order)
+            new_draft.questions.append(new_link)
+
         db.session.add(survey)
+        db.session.add(new_draft)
         db.session.commit()
         response = jsonify(survey.serialize())
         response.status_code = 200
@@ -251,5 +281,26 @@ class SurveyAnswersRes(Resource):
             abort(400)
 
         response = jsonify([a.serialize() for a in answer_obj])
+        response.status_code = 200
+        return response
+
+
+class TribePeriodsRes(Resource):
+    """Collection of periods of tribe with specified id."""
+
+    @roles_allowed(['manager', 'user'])
+    def get(self, tribe_id):
+        """Returns list of past and current periods for the specified tribe."""
+
+        Tribe.get_if_exists(tribe_id)
+
+        if not Survey.validate_access(tribe_id, current_user):
+            abort(403)
+
+        periods = Period.query.filter(Period.tribe_id == tribe_id,
+                                      Period.date_start <= date.today()) \
+            .order_by(Period.date_start.desc()).all()
+
+        response = jsonify([p.serialize() for p in periods])
         response.status_code = 200
         return response

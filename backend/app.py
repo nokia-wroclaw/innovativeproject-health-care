@@ -23,7 +23,7 @@ db = SQLAlchemy(app)
 # Need to be imported after creating the jwt object
 from backend.common import jwt_ext  # noqa: E402, F401
 # Needs to be imported after creating the db object
-from backend.resources import (users, editors, tribes, teams, surveys)  # noqa: E402
+from backend.resources import (users, editors, tribes, teams, surveys, results)  # noqa: E402
 
 # Create db schema if it doesn't exist
 db.create_all()
@@ -34,6 +34,8 @@ if os.environ.get('FLASK_ENV') == 'development':
 api.add_resource(users.AuthRes, '/auth')
 api.add_resource(users.UsersRes, '/users')
 api.add_resource(users.UserRes, '/users/<user_id>')
+api.add_resource(users.UserTeamsRes, '/users/<user_id>/teams')
+api.add_resource(users.UserTribesRes, '/users/<user_id>/tribes')
 api.add_resource(editors.EditorsRes, '/editors')
 api.add_resource(editors.EditorRes, '/editors/<user_id>')
 api.add_resource(tribes.TribesRes, '/tribes')
@@ -49,6 +51,8 @@ api.add_resource(teams.TeamUserRes, '/teams/<team_id>/users/<user_id>')
 api.add_resource(surveys.TribeSurveysRes, '/tribes/<tribe_id>/surveys')
 api.add_resource(surveys.SurveyRes, '/surveys/<survey_id>')
 api.add_resource(surveys.SurveyAnswersRes, '/surveys/<survey_id>/answers')
+api.add_resource(surveys.TribePeriodsRes, '/tribes/<tribe_id>/periods')
+api.add_resource(results.ResultsRes, '/results')
 
 
 if __name__ == '__main__':

@@ -20,6 +20,8 @@ class Answer(db.Model):
         self.team_id = team_id
         self.date = date
         self.answer = answer
+        # Order will be used only when answer is treated as a result
+        self.order = None
 
     def serialize(self):
         data = {

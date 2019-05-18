@@ -3,7 +3,6 @@ from backend.app import db
 
 
 class Survey(db.Model):
-
     __tablename__ = 'surveys'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -23,6 +22,17 @@ class Survey(db.Model):
         self.draft = draft
 
     @staticmethod
+    def from_period(period):
+        """Returns survey that was active during given period."""
+
+        survey = Survey.query.filter(Survey.tribe_id == period.tribe_id,
+                                     Survey.draft == False,
+                                     Survey.date <= period.date_start)\
+            .order_by(Survey.date.desc()).first()
+
+        return survey
+
+    @staticmethod
     def get_if_exists(survey_id):
         """Fetches survey with given id if it exists, aborts with
         404 status otherwise.
@@ -39,22 +49,14 @@ class Survey(db.Model):
         survey belonging to the tribe with given id."""
 
         tribe_id = int(tribe_id)
-        access = False
-        if user.is_user():
-            tribe_ids = [t.team.tribe_id for t in user.teams
-                         if t.manager is False]
-            if tribe_id in tribe_ids:
-                access = True
-        if user.is_manager() and not access:
-            tribe_ids = [t.team.tribe_id for t in user.teams
-                         if t.manager is True]
-            if tribe_id in tribe_ids:
-                access = True
-        if user.is_editor() and not access:
-            if tribe_id in user.editing_ids():
-                access = True
 
-        return access
+        if tribe_id in [t.team.tribe_id for t in user.teams]:
+            return True
+
+        if tribe_id in user.editing_ids():
+            return True
+
+        return False
 
     def serialize_questions(self):
         questions = []
