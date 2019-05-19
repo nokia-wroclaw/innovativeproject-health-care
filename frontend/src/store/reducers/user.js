@@ -3,7 +3,8 @@ import {
   LOGOUT,
   OPTION_SELECTED,
   ADD_EDITOR,
-  SET_USER_TEAMS_DETAILS
+  SET_USER_TEAMS_DETAILS,
+  SET_USER_MANAGING_DETAILS
 } from '../actions/types';
 import authorization from '../../services/authorization';
 
@@ -40,6 +41,14 @@ export default function(state = initialState, action) {
     case SET_USER_TEAMS_DETAILS:
       userData = { ...state.userData };
       userData.teams = action.payload;
+      return {
+        ...state,
+        userData
+      };
+
+    case SET_USER_MANAGING_DETAILS:
+      userData = { ...state.userData };
+      userData.managing = action.payload;
       return {
         ...state,
         userData
