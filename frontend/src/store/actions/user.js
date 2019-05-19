@@ -2,7 +2,8 @@ import {
   SET_USER,
   LOGOUT,
   OPTION_SELECTED,
-  SET_USER_TEAMS_DETAILS
+  SET_USER_TEAMS_DETAILS,
+  SET_USER_MANAGING_DETAILS
 } from './types';
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
@@ -72,6 +73,21 @@ export const setUserTeamsDetails = user => dispatch => {
     .then(response => {
       dispatch({
         type: SET_USER_TEAMS_DETAILS,
+        payload: response.data
+      });
+    })
+    .catch(error => {
+      dispatch(handleFetchingError(error));
+    });
+};
+
+export const setUserManagingDetails = user => dispatch => {
+  const config = getHttpConfig();
+  return axios
+    .get(`${endpoints.getUserData}${user.id}/teams?role=manager`, config)
+    .then(response => {
+      dispatch({
+        type: SET_USER_MANAGING_DETAILS,
         payload: response.data
       });
     })

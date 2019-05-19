@@ -21,7 +21,9 @@ export const endpoints = {
   //--- Teams ---
   teams: `${baseURL}/teams/`,
   //--- Surveys ---
-  getSurvey: `${baseURL}/surveys/` //${id}
+  getSurvey: `${baseURL}/surveys/`, //${id}
+  //--- Results ---
+  getResults: `${baseURL}/results`
 };
 
 export const getHttpConfig = () => {
