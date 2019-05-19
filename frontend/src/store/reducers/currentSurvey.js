@@ -1,5 +1,6 @@
 import {
   SET_CURRENT_SURVEY,
+  SET_CURRENT_SURVEY_TEAM_ID,
   SET_CURRENT_SURVEY_IS_LOADING,
   SET_QUESTION_ANSWER,
   SET_QUESTION_COMMENT
@@ -17,7 +18,16 @@ export default function(state = initialState, action) {
           (q1, q2) => q1.order - q2.order
         );
       }
-      return survey;
+      return {
+        ...state,
+        ...survey
+      };
+
+    case SET_CURRENT_SURVEY_TEAM_ID:
+      return {
+        ...state,
+        team_id: action.payload
+      };
 
     case SET_CURRENT_SURVEY_IS_LOADING:
       return {

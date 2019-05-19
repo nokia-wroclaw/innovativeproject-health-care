@@ -1,21 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Dropdown, Container } from 'semantic-ui-react';
 import { setUserTeamsDetails } from '../../store/actions/user';
-import { setCurrentSurvey } from '../../store/actions/currentSurvey';
+import {
+  setCurrentSurvey,
+  setCurrentSurveyTeamId
+} from '../../store/actions/currentSurvey';
 import Survey from './Survey';
 import TemplatePage from '../common/TemplatePage/';
 import Loader from './../common/Loader/';
 
-const SurveyPage = ({ user, teams, loading, ...props }) => {
-  const [currentTeamId, setCurrentTeamId] = useState(undefined);
-
+const SurveyPage = ({ user, teams, loading, currentTeamId, ...props }) => {
   useEffect(() => {
     props.setUserTeamsDetails(user);
   }, []);
 
   const handleTeamSelect = (e, { value }) => {
-    setCurrentTeamId(value);
+    props.setCurrentSurveyTeamId(value);
     const { tribe_id } = teams.find(team => team.id === value);
     props.setCurrentSurvey(tribe_id);
   };
@@ -35,7 +36,7 @@ const SurveyPage = ({ user, teams, loading, ...props }) => {
           onChange={handleTeamSelect}
           value={currentTeamId}
         />
-        {loading ? <Loader /> : <Survey teamId={currentTeamId} />}
+        {loading ? <Loader /> : <Survey />}
       </Container>
     </TemplatePage>
   );
@@ -44,10 +45,11 @@ const SurveyPage = ({ user, teams, loading, ...props }) => {
 const mapStateToProps = state => ({
   user: state.user.userData,
   teams: state.user.userData.teams,
-  loading: state.currentSurvey.isLoading
+  loading: state.currentSurvey.isLoading,
+  currentTeamId: state.currentSurvey.team_id
 });
 
 export default connect(
   mapStateToProps,
-  { setUserTeamsDetails, setCurrentSurvey }
+  { setUserTeamsDetails, setCurrentSurvey, setCurrentSurveyTeamId }
 )(SurveyPage);

@@ -6,11 +6,22 @@ import Faces from './Faces';
 import { sendFilledSurvey } from '../../store/actions/currentSurvey';
 import '../../styles/common.css';
 
-const Survey = ({ teamId, questions, survey, ...props }) => {
+const Survey = ({ questions, survey, ...props }) => {
   const validate = () => {
-    return questions.every(
-      question => question.answer >= 0 && question.answer <= 2
+    const allQuestionsAnswered = questions.every(
+      question =>
+        question.answer === 0 || question.answer === 1 || question.answer === 2
     );
+
+    const allRequiredCommentsProvided = questions.every(
+      question =>
+        !(
+          (question.answer === 0 || question.answer === 1) &&
+          (!question.comment || question.comment.trim() === '')
+        )
+    );
+
+    return allQuestionsAnswered && allRequiredCommentsProvided;
   };
 
   const content = questions ? (
@@ -18,7 +29,7 @@ const Survey = ({ teamId, questions, survey, ...props }) => {
       <Faces />
       <Form
         onSubmit={() => {
-          props.sendFilledSurvey(teamId, survey);
+          props.sendFilledSurvey(survey);
         }}
       >
         {questions.map(question => (

@@ -1,6 +1,7 @@
 import {
   SET_CURRENT_SURVEY,
   SET_CURRENT_SURVEY_IS_LOADING,
+  SET_CURRENT_SURVEY_TEAM_ID,
   SET_QUESTION_ANSWER,
   SET_QUESTION_COMMENT
 } from './types';
@@ -26,6 +27,11 @@ export const setCurrentSurvey = tribe_id => dispatch => {
     });
 };
 
+export const setCurrentSurveyTeamId = team_id => ({
+  type: SET_CURRENT_SURVEY_TEAM_ID,
+  payload: team_id
+});
+
 export const setCurrentSurveyIsLoading = isLoading => ({
   type: SET_CURRENT_SURVEY_IS_LOADING,
   payload: isLoading
@@ -41,13 +47,14 @@ export const setComment = (questionId, comment) => ({
   payload: { questionId, comment }
 });
 
-export const sendFilledSurvey = (team_id, survey) => dispatch => {
+export const sendFilledSurvey = survey => dispatch => {
   const config = getHttpConfig();
   const answers = survey.questions.map(question => ({
     question_id: question.id,
     answer: question.answer,
     comment: question.comment || ''
   }));
+  const { team_id } = survey;
 
   const body = {
     team_id,
