@@ -1,5 +1,6 @@
 import {
   SET_CURRENT_SURVEY,
+  SET_CURRENT_SURVEY_IS_LOADING,
   SET_QUESTION_ANSWER,
   SET_QUESTION_COMMENT
 } from './types';
@@ -8,6 +9,7 @@ import { endpoints, getHttpConfig } from '../../services/http';
 import { handleFetchingError } from './general';
 
 export const setCurrentSurvey = tribe_id => dispatch => {
+  dispatch(setCurrentSurveyIsLoading(true));
   const config = getHttpConfig();
   return axios
     .get(`${endpoints.getTribe}${tribe_id}/surveys?type=active`, config)
@@ -17,11 +19,17 @@ export const setCurrentSurvey = tribe_id => dispatch => {
         type: SET_CURRENT_SURVEY,
         payload: survey
       });
+      dispatch(setCurrentSurveyIsLoading(false));
     })
     .catch(error => {
       dispatch(handleFetchingError(error));
     });
 };
+
+export const setCurrentSurveyIsLoading = isLoading => ({
+  type: SET_CURRENT_SURVEY_IS_LOADING,
+  payload: isLoading
+});
 
 export const setAnswer = (questionId, answer) => ({
   type: SET_QUESTION_ANSWER,

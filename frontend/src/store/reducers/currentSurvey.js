@@ -1,5 +1,6 @@
 import {
   SET_CURRENT_SURVEY,
+  SET_CURRENT_SURVEY_IS_LOADING,
   SET_QUESTION_ANSWER,
   SET_QUESTION_COMMENT
 } from '../actions/types';
@@ -17,6 +18,12 @@ export default function(state = initialState, action) {
         );
       }
       return survey;
+
+    case SET_CURRENT_SURVEY_IS_LOADING:
+      return {
+        ...state,
+        isLoading: action.payload
+      };
 
     case SET_QUESTION_ANSWER:
       questions = [...state.questions];

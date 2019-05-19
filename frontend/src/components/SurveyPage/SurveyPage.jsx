@@ -5,8 +5,9 @@ import { setUserTeamsDetails } from '../../store/actions/user';
 import { setCurrentSurvey } from '../../store/actions/currentSurvey';
 import Survey from './Survey';
 import TemplatePage from '../common/TemplatePage/';
+import Loader from './../common/Loader/';
 
-const SurveyPage = ({ user, teams, ...props }) => {
+const SurveyPage = ({ user, teams, loading, ...props }) => {
   const [currentTeamId, setCurrentTeamId] = useState(undefined);
 
   useEffect(() => {
@@ -34,7 +35,7 @@ const SurveyPage = ({ user, teams, ...props }) => {
           onChange={handleTeamSelect}
           value={currentTeamId}
         />
-        <Survey teamId={currentTeamId} />
+        {loading ? <Loader /> : <Survey teamId={currentTeamId} />}
       </Container>
     </TemplatePage>
   );
@@ -42,7 +43,8 @@ const SurveyPage = ({ user, teams, ...props }) => {
 
 const mapStateToProps = state => ({
   user: state.user.userData,
-  teams: state.user.userData.teams
+  teams: state.user.userData.teams,
+  loading: state.currentSurvey.isLoading
 });
 
 export default connect(
