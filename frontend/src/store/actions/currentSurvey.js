@@ -12,9 +12,10 @@ export const setCurrentSurvey = tribe_id => dispatch => {
   return axios
     .get(`${endpoints.getTribe}${tribe_id}/surveys?type=active`, config)
     .then(response => {
+      const survey = response.data.active || {};
       dispatch({
         type: SET_CURRENT_SURVEY,
-        payload: response.data.active
+        payload: survey
       });
     })
     .catch(error => {
@@ -37,18 +38,16 @@ export const sendFilledSurvey = (team_id, survey) => dispatch => {
   const answers = survey.questions.map(question => ({
     question_id: question.id,
     answer: question.answer,
-    comment: question.comment
+    comment: question.comment || ''
   }));
 
+  const body = {
+    team_id,
+    answers
+  };
+
   return axios
-    .post(
-      `${endpoints.getSurvey}${survey.id}/answers`,
-      {
-        team_id,
-        answers
-      },
-      config
-    )
+    .post(`${endpoints.getSurvey}${survey.id}/answers`, body, config)
     .then(response => {
       console.log(response);
     })

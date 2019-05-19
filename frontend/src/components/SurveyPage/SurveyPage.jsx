@@ -6,7 +6,7 @@ import { setCurrentSurvey } from '../../store/actions/currentSurvey';
 import Survey from './Survey';
 import TemplatePage from '../common/TemplatePage/';
 
-const SurveyPage = ({ user, ...props }) => {
+const SurveyPage = ({ user, teams, ...props }) => {
   const [currentTeamId, setCurrentTeamId] = useState(undefined);
 
   useEffect(() => {
@@ -15,7 +15,8 @@ const SurveyPage = ({ user, ...props }) => {
 
   const handleTeamSelect = (e, { value }) => {
     setCurrentTeamId(value);
-    props.setCurrentSurvey(value);
+    const { tribe_id } = teams.find(team => team.id === value);
+    props.setCurrentSurvey(tribe_id);
   };
 
   return (
@@ -24,7 +25,7 @@ const SurveyPage = ({ user, ...props }) => {
         <br />
         <Dropdown
           placeholder='Select team'
-          options={props.teams.map((team, i) => ({
+          options={teams.map((team, i) => ({
             key: i,
             text: team.name,
             value: team.id

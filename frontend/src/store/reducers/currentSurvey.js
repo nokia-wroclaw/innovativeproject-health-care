@@ -11,7 +11,11 @@ export default function(state = initialState, action) {
   switch (action.type) {
     case SET_CURRENT_SURVEY:
       let survey = action.payload;
-      survey.questions = survey.questions.sort((q1, q2) => q1.order - q2.order);
+      if (survey.questions) {
+        survey.questions = survey.questions.sort(
+          (q1, q2) => q1.order - q2.order
+        );
+      }
       return survey;
 
     case SET_QUESTION_ANSWER:
