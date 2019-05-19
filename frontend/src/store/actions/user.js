@@ -1,4 +1,9 @@
-import { SET_USER, LOGOUT, OPTION_SELECTED } from './types';
+import {
+  SET_USER,
+  LOGOUT,
+  OPTION_SELECTED,
+  SET_USER_TEAMS_DETAILS
+} from './types';
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 import { endpoints, getHttpConfig } from '../../services/http';
@@ -59,3 +64,18 @@ export const setMenuOption = optionName => ({
   type: OPTION_SELECTED,
   payload: optionName
 });
+
+export const setUserTeamsDetails = user => dispatch => {
+  const config = getHttpConfig();
+  return axios
+    .get(`${endpoints.getUserData}${user.id}/teams?role=member`, config)
+    .then(response => {
+      dispatch({
+        type: SET_USER_TEAMS_DETAILS,
+        payload: response.data
+      });
+    })
+    .catch(error => {
+      dispatch(handleFetchingError(error));
+    });
+};

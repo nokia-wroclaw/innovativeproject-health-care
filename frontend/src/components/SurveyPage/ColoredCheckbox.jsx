@@ -4,25 +4,18 @@ import { Popup } from 'semantic-ui-react';
 import { setAnswer } from '../../store/actions/currentSurvey';
 import './checkbox.css';
 
-const ColoredCheckbox = ({
-  color,
-  value,
-  questionId,
-  answer,
-  hintText,
-  setAnswer
-}) => {
+const ColoredCheckbox = ({ color, value, question, hintText, ...props }) => {
   return (
     <Popup
       trigger={
         <div
           className='checkbox-container '
-          onClick={() => setAnswer(questionId, value)}
+          onClick={() => props.setAnswer(question.id, value)}
         >
           <input
             type='checkbox'
             className='checkbox'
-            checked={value === answer}
+            checked={value === question.answer}
             onChange={() => {}}
           />
           <span className={`checkmark ${color}-outline`} />
@@ -34,7 +27,11 @@ const ColoredCheckbox = ({
   );
 };
 
+const mapStateToProps = state => ({
+  survey: state.currentSurvey
+});
+
 export default connect(
-  null,
+  mapStateToProps,
   { setAnswer }
 )(ColoredCheckbox);

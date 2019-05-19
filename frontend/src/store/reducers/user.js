@@ -2,11 +2,13 @@ import {
   SET_USER,
   LOGOUT,
   OPTION_SELECTED,
-  ADD_EDITOR
+  ADD_EDITOR,
+  SET_USER_TEAMS_DETAILS
 } from '../actions/types';
 import authorization from '../../services/authorization';
 
 const initialState = {};
+let userData;
 
 export default function(state = initialState, action) {
   switch (action.type) {
@@ -27,9 +29,17 @@ export default function(state = initialState, action) {
       };
 
     case ADD_EDITOR:
-      const { userData } = state;
+      userData = { ...state.userData };
       if (action.payload.id === state.userData.id)
         userData.roles.push('editor');
+      return {
+        ...state,
+        userData
+      };
+
+    case SET_USER_TEAMS_DETAILS:
+      userData = { ...state.userData };
+      userData.teams = action.payload;
       return {
         ...state,
         userData

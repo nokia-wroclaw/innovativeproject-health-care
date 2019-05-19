@@ -1,13 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Dropdown, Container } from 'semantic-ui-react';
+import { setUserTeamsDetails } from '../../store/actions/user';
+import { setCurrentSurvey } from '../../store/actions/currentSurvey';
 import Survey from './Survey';
 import TemplatePage from '../common/TemplatePage/';
 
-const SurveyPage = props => {
+const SurveyPage = ({ user, ...props }) => {
   const [currentTeamId, setCurrentTeamId] = useState(undefined);
+
+  useEffect(() => {
+    props.setUserTeamsDetails(user);
+  }, []);
+
   const handleTeamSelect = (e, { value }) => {
     setCurrentTeamId(value);
+    props.setCurrentSurvey(value);
   };
 
   return (
@@ -16,8 +24,8 @@ const SurveyPage = props => {
         <br />
         <Dropdown
           placeholder='Select team'
-          options={props.teams.map(team => ({
-            key: team.id,
+          options={props.teams.map((team, i) => ({
+            key: i,
             text: team.name,
             value: team.id
           }))}
@@ -25,14 +33,18 @@ const SurveyPage = props => {
           onChange={handleTeamSelect}
           value={currentTeamId}
         />
-        <Survey />
+        <Survey teamId={currentTeamId} />
       </Container>
     </TemplatePage>
   );
 };
 
 const mapStateToProps = state => ({
+  user: state.user.userData,
   teams: state.user.userData.teams
 });
 
-export default connect(mapStateToProps)(SurveyPage);
+export default connect(
+  mapStateToProps,
+  { setUserTeamsDetails, setCurrentSurvey }
+)(SurveyPage);

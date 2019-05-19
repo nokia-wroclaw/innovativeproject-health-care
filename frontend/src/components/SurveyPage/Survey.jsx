@@ -1,43 +1,49 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import QuestionSegment from './QuestionSegment';
 import { Button, Form } from 'semantic-ui-react';
 import Faces from './Faces';
+import { sendFilledSurvey } from '../../store/actions/currentSurvey';
 import '../../styles/common.css';
 
-class Survey extends Component {
-  validate = () => {
-    return this.props.questions.every(
+const Survey = ({ teamId, questions, survey, ...props }) => {
+  const validate = () => {
+    return questions.every(
       question => question.answer >= 0 && question.answer <= 2
     );
   };
 
-  render() {
-    const { questions } = this.props;
-    return (
-      <React.Fragment>
-        <Faces />
-        <Form
-          onSubmit={() => {
-            /* call backend - send the survey */
-          }}
-        >
-          {questions.map((question, i) => (
-            <QuestionSegment question={question} key={i} />
-          ))}
-          <Form.Field className='flex-center'>
-            <Button type='submit' primary disabled={!this.validate()}>
-              Submit
-            </Button>
-          </Form.Field>
-        </Form>
-      </React.Fragment>
-    );
-  }
-}
+  const content = questions ? (
+    <React.Fragment>
+      <Faces />
+      <Form
+        onSubmit={() => {
+          props.sendFilledSurvey(teamId, survey);
+        }}
+      >
+        {questions.map(question => (
+          <QuestionSegment question={question} key={question.id} />
+        ))}
+        <Form.Field className='flex-center'>
+          <Button type='submit' primary disabled={!validate()}>
+            Submit
+          </Button>
+        </Form.Field>
+      </Form>
+    </React.Fragment>
+  ) : (
+    <p>Please, select team</p>
+  );
+
+  return content;
+};
 
 const mapStateToProps = state => ({
-  questions: state.currentSurvey.activeQuestions
+  survey: state.currentSurvey,
+  questions: state.currentSurvey.questions
 });
 
-export default connect(mapStateToProps)(Survey);
+export default connect(
+  mapStateToProps,
+  { sendFilledSurvey }
+)(Survey);
