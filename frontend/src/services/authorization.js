@@ -1,7 +1,7 @@
 import _ from 'lodash';
 
 const userMenu = [
-  { name: 'Results for your tribe', path: '/tribe_overview' },
+  { name: 'Results', path: '/tribe_overview' },
   { name: 'Statistics', path: '/statistics' },
   { name: 'Fill survey', path: '/fill_survey' },
   { name: 'Action items', path: '/action_items' }
@@ -16,11 +16,14 @@ const managerMenu = [
 const editorMenu = [
   { name: 'Edit survey', path: '/edit_survey' },
   { name: 'Tribes management', path: '/tribes_management' },
-  { name: 'Results for your tribe', path: '/tribe_overview' },
+  { name: 'Results', path: '/tribe_overview' },
   { name: 'Statistics', path: '/statistics' }
 ];
 
-const adminMenu = [{ name: 'Admin panel', path: '/admin_panel' }];
+const adminMenu = [
+  { name: 'Admin panel', path: '/admin_panel' },
+  { name: 'Tribes management', path: '/tribes_management' }
+];
 
 export const getMenu = user => {
   let menu = [];

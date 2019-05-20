@@ -32,7 +32,7 @@ const App = ({ user, ...props }) => {
           <ProtectedRoute
             path="/tribes_management"
             component={TribesManagementPage}
-            isAuthenticated={isEditor(user)}
+            isAuthenticated={isEditor(user) || isAdmin(user)}
           />
           <ProtectedRoute
             path="/tribe_overview"
