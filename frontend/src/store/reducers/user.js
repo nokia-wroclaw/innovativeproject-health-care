@@ -4,7 +4,9 @@ import {
   OPTION_SELECTED,
   ADD_EDITOR,
   SET_USER_TEAMS_DETAILS,
-  SET_USER_MANAGING_DETAILS
+  SET_USER_MANAGING_DETAILS,
+  SET_USER_TRIBES_DETAILS,
+  SET_USER_EDITING_DETAILS
 } from '../actions/types';
 import authorization from '../../services/authorization';
 
@@ -49,6 +51,22 @@ export default function(state = initialState, action) {
     case SET_USER_MANAGING_DETAILS:
       userData = { ...state.userData };
       userData.managing = action.payload;
+      return {
+        ...state,
+        userData
+      };
+
+    case SET_USER_TRIBES_DETAILS:
+      userData = { ...state.userData };
+      userData.tribes = action.payload;
+      return {
+        ...state,
+        userData
+      };
+
+    case SET_USER_EDITING_DETAILS:
+      userData = { ...state.userData };
+      userData.editing = action.payload;
       return {
         ...state,
         userData

@@ -3,7 +3,9 @@ import {
   LOGOUT,
   OPTION_SELECTED,
   SET_USER_TEAMS_DETAILS,
-  SET_USER_MANAGING_DETAILS
+  SET_USER_MANAGING_DETAILS,
+  SET_USER_TRIBES_DETAILS,
+  SET_USER_EDITING_DETAILS
 } from './types';
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
@@ -88,6 +90,36 @@ export const setUserManagingDetails = user => dispatch => {
     .then(response => {
       dispatch({
         type: SET_USER_MANAGING_DETAILS,
+        payload: response.data
+      });
+    })
+    .catch(error => {
+      dispatch(handleFetchingError(error));
+    });
+};
+
+export const setUserTribesDetails = user => dispatch => {
+  const config = getHttpConfig();
+  return axios
+    .get(`${endpoints.getUserData}${user.id}/tribes?role=member`, config)
+    .then(response => {
+      dispatch({
+        type: SET_USER_TRIBES_DETAILS,
+        payload: response.data
+      });
+    })
+    .catch(error => {
+      dispatch(handleFetchingError(error));
+    });
+};
+
+export const setUserEditingDetails = user => dispatch => {
+  const config = getHttpConfig();
+  return axios
+    .get(`${endpoints.getUserData}${user.id}/tribes?role=editor`, config)
+    .then(response => {
+      dispatch({
+        type: SET_USER_EDITING_DETAILS,
         payload: response.data
       });
     })
