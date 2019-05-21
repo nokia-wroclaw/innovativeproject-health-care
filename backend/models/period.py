@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, timedelta
 from flask import abort
 from backend.app import db
 
@@ -27,7 +27,8 @@ class Period(db.Model):
 
         # End of the given period is either start of the next period
         # or today if there is no next period
-        date_end = n_period.date_start if n_period is not None else date.today()
+        date_end = (n_period.date_start if n_period is not None
+                    else date.today() + timedelta(days=1))
 
         return date_end
 
