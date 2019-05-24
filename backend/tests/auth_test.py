@@ -30,8 +30,8 @@ class AuthTest(unittest.TestCase):
             ('', 401)
         ]
 
-    @patch('backend.resources.auth.User.in_db', autospec=True)
-    @patch('backend.resources.auth.LdapConn', autospec=True)
+    @patch('backend.resources.users.User.in_db', autospec=True)
+    @patch('backend.resources.users.LdapConn', autospec=True)
     def test_login(self, mock_ldap, mock_in_db):
         ldap = mock_ldap()
         ldap.authenticate.side_effect = ldap_authenticate
