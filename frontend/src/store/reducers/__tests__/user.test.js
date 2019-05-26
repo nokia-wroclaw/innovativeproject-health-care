@@ -1,6 +1,6 @@
 import reducer from "../user";
 import * as types from "../../actions/types";
-import authorization from "../../../services/authorization";
+import * as authorization from "../../../services/authorization";
 
 describe("user reducer", () => {
   it("should return initial state", () => {

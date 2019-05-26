@@ -3,7 +3,7 @@ import thunk from "redux-thunk";
 import moxios from "moxios";
 import * as actions from "./../user";
 import { SET_USER, LOGOUT, OPTION_SELECTED, CLOSE_LOGIN_MODAL } from "../types";
-import authorization from "../../../services/authorization";
+import * as authorization from "../../../services/authorization";
 
 const middlewares = [thunk];
 const mockStore = confiureMockStore(middlewares);

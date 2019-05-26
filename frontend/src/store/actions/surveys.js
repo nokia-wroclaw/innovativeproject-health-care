@@ -8,17 +8,15 @@ import {
   UPDATE_QUESTION_IN_DRAFT_SURVEY,
   SET_SURVEYS_ARE_LOADING,
   SET_DRAFT_SURVEY_PERIOD
-} from './types';
-import axios from 'axios';
-import { endpoints, getHttpConfig } from '../../services/http';
-import { handleFetchingError } from './general';
+} from "./types";
+import { endpoints, http } from "../../services/http";
+import { handleFetchingError } from "./general";
 
 export const setSurveys = tribe_id => dispatch => {
-  const config = getHttpConfig();
   dispatch(setSurveysAreLoading(true));
   dispatch(resetSurveys());
-  return axios
-    .get(`${endpoints.getTribe}${tribe_id}/surveys`, config)
+  return http
+    .get(`${endpoints.getTribe}${tribe_id}/surveys`)
     .then(response => {
       const { active, next, draft } = response.data;
       if (active) dispatch(setActiveSurvey(active));
@@ -80,15 +78,10 @@ export const setDraftSurveyPeriod = draft_period => ({
 });
 
 export const saveDraftSurvey = (tribe_id, survey) => dispatch => {
-  const config = getHttpConfig();
-  return axios
-    .post(
-      `${endpoints.putTribe}${tribe_id}/surveys`,
-      {
-        ...survey
-      },
-      config
-    )
+  return http
+    .post(`${endpoints.putTribe}${tribe_id}/surveys`, {
+      ...survey
+    })
     .then(response => {
       dispatch(updateDraftSurvey(response.data));
     })
@@ -98,15 +91,10 @@ export const saveDraftSurvey = (tribe_id, survey) => dispatch => {
 };
 
 export const publishDraftSurvey = survey => dispatch => {
-  const config = getHttpConfig();
-  return axios
-    .patch(
-      `${endpoints.getSurvey}${survey.id}`,
-      {
-        draft: false
-      },
-      config
-    )
+  return http
+    .patch(`${endpoints.getSurvey}${survey.id}`, {
+      draft: false
+    })
     .then(response => {
       dispatch(setSurveys(response.data.tribe_id));
     })
@@ -116,15 +104,10 @@ export const publishDraftSurvey = survey => dispatch => {
 };
 
 export const saveAndPublishDraftSurvey = (tribe_id, survey) => dispatch => {
-  const config = getHttpConfig();
-  return axios
-    .post(
-      `${endpoints.putTribe}${tribe_id}/surveys`,
-      {
-        ...survey
-      },
-      config
-    )
+  return http
+    .post(`${endpoints.putTribe}${tribe_id}/surveys`, {
+      ...survey
+    })
     .then(response => {
       dispatch(updateDraftSurvey(response.data));
       dispatch(publishDraftSurvey(response.data));

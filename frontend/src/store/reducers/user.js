@@ -7,8 +7,8 @@ import {
   SET_USER_MANAGING_DETAILS,
   SET_USER_TRIBES_DETAILS,
   SET_USER_EDITING_DETAILS
-} from '../actions/types';
-import authorization from '../../services/authorization';
+} from "../actions/types";
+import * as authorization from "../../services/authorization";
 
 const initialState = {};
 let userData;
@@ -34,7 +34,7 @@ export default function(state = initialState, action) {
     case ADD_EDITOR:
       userData = { ...state.userData };
       if (action.payload.id === state.userData.id)
-        userData.roles.push('editor');
+        userData.roles.push("editor");
       return {
         ...state,
         userData

@@ -6,13 +6,12 @@ import {
   SET_USER_MANAGING_DETAILS,
   SET_USER_TRIBES_DETAILS,
   SET_USER_EDITING_DETAILS
-} from './types';
-import axios from 'axios';
-import jwtDecode from 'jwt-decode';
-import { endpoints, getHttpConfig } from '../../services/http';
-import { closeLoginModal, handleFetchingError } from './general';
-import history from '../../history';
-import authorization from '../../services/authorization';
+} from "./types";
+import jwtDecode from "jwt-decode";
+import { endpoints, http } from "../../services/http";
+import { closeLoginModal, handleFetchingError } from "./general";
+import history from "../../history";
+import * as authorization from "../../services/authorization";
 
 export const setUser = user => ({
   type: SET_USER,
@@ -20,21 +19,12 @@ export const setUser = user => ({
 });
 
 export const login = (username, password) => dispatch => {
-  const config = {
-    headers: {
-      Authorization: 'Basic ' + btoa(`${username}:${password}`)
-    }
-  };
-
-  return axios
-    .post(endpoints.login, {}, config)
-    .then(response => {
-      const jwt = response.data.access_token;
-      localStorage.setItem('token', jwt);
-      const { user } = jwtDecode(jwt);
+  return authorization
+    .login(username, password)
+    .then(user => {
       dispatch(setUser(user));
       dispatch(closeLoginModal());
-      if (history.location.pathname === '/') {
+      if (history.location.pathname === "/") {
         const firstManuOption = authorization.getMenu(user)[0];
         history.push(firstManuOption.path);
         dispatch(setMenuOption(firstManuOption.name));
@@ -44,20 +34,20 @@ export const login = (username, password) => dispatch => {
 };
 
 export const logout = () => {
-  localStorage.removeItem('token');
+  authorization.logout();
   return {
     type: LOGOUT
   };
 };
 
 export const setUserFromLocalStorage = () => dispatch => {
-  const jwt = localStorage.getItem('token');
+  const jwt = localStorage.getItem("token");
   if (jwt) {
     const { user } = jwtDecode(jwt);
     dispatch(setUser(user));
-    const config = getHttpConfig();
-    return axios
-      .get(`${endpoints.getUserData}${user.id}`, config)
+
+    return http
+      .get(`${endpoints.getUserData}${user.id}`)
       .then(({ data }) => dispatch(setUser(data)))
       .catch(error => dispatch(handleFetchingError(error)));
   }
@@ -69,9 +59,8 @@ export const setMenuOption = optionName => ({
 });
 
 export const setUserTeamsDetails = user => dispatch => {
-  const config = getHttpConfig();
-  return axios
-    .get(`${endpoints.getUserData}${user.id}/teams?role=member`, config)
+  return http
+    .get(`${endpoints.getUserData}${user.id}/teams?role=member`)
     .then(response => {
       dispatch({
         type: SET_USER_TEAMS_DETAILS,
@@ -84,9 +73,8 @@ export const setUserTeamsDetails = user => dispatch => {
 };
 
 export const setUserManagingDetails = user => dispatch => {
-  const config = getHttpConfig();
-  return axios
-    .get(`${endpoints.getUserData}${user.id}/teams?role=manager`, config)
+  return http
+    .get(`${endpoints.getUserData}${user.id}/teams?role=manager`)
     .then(response => {
       dispatch({
         type: SET_USER_MANAGING_DETAILS,
@@ -99,9 +87,8 @@ export const setUserManagingDetails = user => dispatch => {
 };
 
 export const setUserTribesDetails = user => dispatch => {
-  const config = getHttpConfig();
-  return axios
-    .get(`${endpoints.getUserData}${user.id}/tribes?role=member`, config)
+  return http
+    .get(`${endpoints.getUserData}${user.id}/tribes?role=member`)
     .then(response => {
       dispatch({
         type: SET_USER_TRIBES_DETAILS,
@@ -114,9 +101,8 @@ export const setUserTribesDetails = user => dispatch => {
 };
 
 export const setUserEditingDetails = user => dispatch => {
-  const config = getHttpConfig();
-  return axios
-    .get(`${endpoints.getUserData}${user.id}/tribes?role=editor`, config)
+  return http
+    .get(`${endpoints.getUserData}${user.id}/tribes?role=editor`)
     .then(response => {
       dispatch({
         type: SET_USER_EDITING_DETAILS,

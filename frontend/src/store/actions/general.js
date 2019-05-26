@@ -1,4 +1,4 @@
-import { OPEN_LOGIN_MODAL, CLOSE_LOGIN_MODAL } from './types';
+import { OPEN_LOGIN_MODAL, CLOSE_LOGIN_MODAL } from "./types";
 
 export const openLoginModal = () => ({
   type: OPEN_LOGIN_MODAL
@@ -9,7 +9,6 @@ export const closeLoginModal = () => ({
 });
 
 export const handleFetchingError = error => dispatch => {
-  console.error(error);
   try {
     switch (error.response.status) {
       case 401:

@@ -8,15 +8,13 @@ import {
   ADD_EDITOR_TO_TRIBE,
   DELETE_EDITOR_FROM_TRIBE,
   ADD_TEAM_TO_TRIBE
-} from './types';
-import axios from 'axios';
-import { endpoints, getHttpConfig } from '../../services/http';
-import { handleFetchingError } from './general';
+} from "./types";
+import { endpoints, http } from "../../services/http";
+import { handleFetchingError } from "./general";
 
 export const setTribes = () => dispatch => {
-  const config = getHttpConfig();
-  return axios
-    .get(endpoints.getTribes, config)
+  return http
+    .get(endpoints.getTribes)
     .then(response => {
       dispatch({
         type: SET_TRIBES,
@@ -29,9 +27,8 @@ export const setTribes = () => dispatch => {
 };
 
 export const setTribeEditors = tribe => dispatch => {
-  const config = getHttpConfig();
-  return axios
-    .get(`${endpoints.getTribe}${tribe.id}/editors`, config)
+  return http
+    .get(`${endpoints.getTribe}${tribe.id}/editors`)
     .then(response => {
       dispatch({
         type: SET_TRIBE_EDITORS,
@@ -47,9 +44,8 @@ export const setTribeEditors = tribe => dispatch => {
 };
 
 export const setTeamsInTribe = tribe => dispatch => {
-  const config = getHttpConfig();
-  return axios
-    .get(`${endpoints.getTribe}${tribe.id}/teams`, config)
+  return http
+    .get(`${endpoints.getTribe}${tribe.id}/teams`)
     .then(response => {
       dispatch({
         type: SET_TEAMS_IN_TRIBE,
@@ -65,15 +61,10 @@ export const setTeamsInTribe = tribe => dispatch => {
 };
 
 export const addTribe = name => dispatch => {
-  const config = getHttpConfig();
-  return axios
-    .post(
-      `${endpoints.postTribe}`,
-      {
-        name
-      },
-      config
-    )
+  return http
+    .post(`${endpoints.postTribe}`, {
+      name
+    })
     .then(response => {
       dispatch({
         type: ADD_TRIBE,
@@ -86,9 +77,8 @@ export const addTribe = name => dispatch => {
 };
 
 export const deleteTribe = tribe => dispatch => {
-  const config = getHttpConfig();
-  return axios
-    .delete(`${endpoints.deleteTribe}${tribe.id}`, config)
+  return http
+    .delete(`${endpoints.deleteTribe}${tribe.id}`)
     .then(() => {
       dispatch({
         type: DELETE_TRIBE,
@@ -101,9 +91,8 @@ export const deleteTribe = tribe => dispatch => {
 };
 
 export const updateTribeName = (tribe, newName) => dispatch => {
-  const config = getHttpConfig();
-  return axios
-    .put(`${endpoints.putTribe}${tribe.id}`, { name: newName }, config)
+  return http
+    .put(`${endpoints.putTribe}${tribe.id}`, { name: newName })
     .then(() => {
       dispatch({
         type: UPDATE_TRIBE_NAME,
@@ -116,9 +105,8 @@ export const updateTribeName = (tribe, newName) => dispatch => {
 };
 
 export const addEditorToTribe = (tribe, editor) => dispatch => {
-  const config = getHttpConfig();
-  return axios
-    .put(`${endpoints.getTribe}${tribe.id}/editors/${editor.id}`, {}, config)
+  return http
+    .put(`${endpoints.getTribe}${tribe.id}/editors/${editor.id}`, {})
     .then(() => {
       dispatch({
         type: ADD_EDITOR_TO_TRIBE,
@@ -131,9 +119,8 @@ export const addEditorToTribe = (tribe, editor) => dispatch => {
 };
 
 export const deleteEditorFromTribe = (tribe, editor) => dispatch => {
-  const config = getHttpConfig();
-  return axios
-    .delete(`${endpoints.deleteTribe}${tribe.id}/editors/${editor.id}`, config)
+  return http
+    .delete(`${endpoints.deleteTribe}${tribe.id}/editors/${editor.id}`)
     .then(() => {
       dispatch({
         type: DELETE_EDITOR_FROM_TRIBE,
@@ -146,9 +133,8 @@ export const deleteEditorFromTribe = (tribe, editor) => dispatch => {
 };
 
 export const addTeamToTribe = (tribe, team_name) => dispatch => {
-  const config = getHttpConfig();
-  return axios
-    .post(`${endpoints.getTribe}${tribe.id}/teams`, { name: team_name }, config)
+  return http
+    .post(`${endpoints.getTribe}${tribe.id}/teams`, { name: team_name })
     .then(response => {
       dispatch({
         type: ADD_TEAM_TO_TRIBE,

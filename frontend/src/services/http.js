@@ -1,8 +1,10 @@
-import { getJwt } from './authorization';
+import axios from "axios";
+import { getToken } from "./authorization";
 
-const baseURL = (process.env.NODE_ENV !== 'production') ?
-    process.env.REACT_APP_API_BASE_URL :
-    `${window.location.protocol}//${window.location.host}/api`;
+const baseURL =
+  process.env.NODE_ENV !== "production"
+    ? process.env.REACT_APP_API_BASE_URL
+    : `${window.location.protocol}//${window.location.host}/api`;
 
 export const endpoints = {
   login: `${baseURL}/auth`,
@@ -27,10 +29,22 @@ export const endpoints = {
 };
 
 export const getHttpConfig = () => {
-  const jwt = getJwt();
+  const jwt = getToken();
   return {
     headers: {
       Authorization: `Bearer ${jwt}`
     }
   };
 };
+
+let instance = axios.create({
+  baseURL
+});
+
+instance.interceptors.request.use(config => {
+  const token = getToken();
+  config.headers.authorization = `Bearer ${token}`;
+  return config;
+});
+
+export const http = instance;

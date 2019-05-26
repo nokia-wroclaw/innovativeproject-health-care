@@ -41,16 +41,19 @@ ShallowWrapper {
             <Connect(ColoredCheckbox)
               color="green"
               hintText="It's OK"
+              question={Object {}}
               value={2}
             />
             <Connect(ColoredCheckbox)
               color="yellow"
               hintText="It's not bad but could be better"
+              question={Object {}}
               value={1}
             />
             <Connect(ColoredCheckbox)
               color="red"
               hintText="It's really bad"
+              question={Object {}}
               value={0}
             />
           </div>
@@ -97,16 +100,19 @@ ShallowWrapper {
             <Connect(ColoredCheckbox)
               color="green"
               hintText="It's OK"
+              question={Object {}}
               value={2}
             />
             <Connect(ColoredCheckbox)
               color="yellow"
               hintText="It's not bad but could be better"
+              question={Object {}}
               value={1}
             />
             <Connect(ColoredCheckbox)
               color="red"
               hintText="It's really bad"
+              question={Object {}}
               value={0}
             />
           </div>,
@@ -124,16 +130,19 @@ ShallowWrapper {
               <Connect(ColoredCheckbox)
                 color="green"
                 hintText="It's OK"
+                question={Object {}}
                 value={2}
               />,
               <Connect(ColoredCheckbox)
                 color="yellow"
                 hintText="It's not bad but could be better"
+                question={Object {}}
                 value={1}
               />,
               <Connect(ColoredCheckbox)
                 color="red"
                 hintText="It's really bad"
+                question={Object {}}
                 value={0}
               />,
             ],
@@ -146,10 +155,9 @@ ShallowWrapper {
               "key": undefined,
               "nodeType": "class",
               "props": Object {
-                "answer": undefined,
                 "color": "green",
                 "hintText": "It's OK",
-                "questionId": undefined,
+                "question": Object {},
                 "value": 2,
               },
               "ref": null,
@@ -161,10 +169,9 @@ ShallowWrapper {
               "key": undefined,
               "nodeType": "class",
               "props": Object {
-                "answer": undefined,
                 "color": "yellow",
                 "hintText": "It's not bad but could be better",
-                "questionId": undefined,
+                "question": Object {},
                 "value": 1,
               },
               "ref": null,
@@ -176,10 +183,9 @@ ShallowWrapper {
               "key": undefined,
               "nodeType": "class",
               "props": Object {
-                "answer": undefined,
                 "color": "red",
                 "hintText": "It's really bad",
-                "questionId": undefined,
+                "question": Object {},
                 "value": 0,
               },
               "ref": null,
@@ -221,16 +227,19 @@ ShallowWrapper {
               <Connect(ColoredCheckbox)
                 color="green"
                 hintText="It's OK"
+                question={Object {}}
                 value={2}
               />
               <Connect(ColoredCheckbox)
                 color="yellow"
                 hintText="It's not bad but could be better"
+                question={Object {}}
                 value={1}
               />
               <Connect(ColoredCheckbox)
                 color="red"
                 hintText="It's really bad"
+                question={Object {}}
                 value={0}
               />
             </div>
@@ -277,16 +286,19 @@ ShallowWrapper {
               <Connect(ColoredCheckbox)
                 color="green"
                 hintText="It's OK"
+                question={Object {}}
                 value={2}
               />
               <Connect(ColoredCheckbox)
                 color="yellow"
                 hintText="It's not bad but could be better"
+                question={Object {}}
                 value={1}
               />
               <Connect(ColoredCheckbox)
                 color="red"
                 hintText="It's really bad"
+                question={Object {}}
                 value={0}
               />
             </div>,
@@ -304,16 +316,19 @@ ShallowWrapper {
                 <Connect(ColoredCheckbox)
                   color="green"
                   hintText="It's OK"
+                  question={Object {}}
                   value={2}
                 />,
                 <Connect(ColoredCheckbox)
                   color="yellow"
                   hintText="It's not bad but could be better"
+                  question={Object {}}
                   value={1}
                 />,
                 <Connect(ColoredCheckbox)
                   color="red"
                   hintText="It's really bad"
+                  question={Object {}}
                   value={0}
                 />,
               ],
@@ -326,10 +341,9 @@ ShallowWrapper {
                 "key": undefined,
                 "nodeType": "class",
                 "props": Object {
-                  "answer": undefined,
                   "color": "green",
                   "hintText": "It's OK",
-                  "questionId": undefined,
+                  "question": Object {},
                   "value": 2,
                 },
                 "ref": null,
@@ -341,10 +355,9 @@ ShallowWrapper {
                 "key": undefined,
                 "nodeType": "class",
                 "props": Object {
-                  "answer": undefined,
                   "color": "yellow",
                   "hintText": "It's not bad but could be better",
-                  "questionId": undefined,
+                  "question": Object {},
                   "value": 1,
                 },
                 "ref": null,
@@ -356,10 +369,9 @@ ShallowWrapper {
                 "key": undefined,
                 "nodeType": "class",
                 "props": Object {
-                  "answer": undefined,
                   "color": "red",
                   "hintText": "It's really bad",
-                  "questionId": undefined,
+                  "question": Object {},
                   "value": 0,
                 },
                 "ref": null,

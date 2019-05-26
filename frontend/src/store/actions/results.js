@@ -1,12 +1,10 @@
-import axios from 'axios';
-import { endpoints, getHttpConfig } from '../../services/http';
-import { handleFetchingError } from './general';
-import {SET_TEAM_ANSWERS, SET_TRIBE_HISTORY, SET_TRIBE_MATRIX} from "./types";
+import { endpoints, http } from "../../services/http";
+import { handleFetchingError } from "./general";
+import { SET_TEAM_ANSWERS, SET_TRIBE_HISTORY, SET_TRIBE_MATRIX } from "./types";
 
 export const setTeamAnswers = team_id => dispatch => {
-  const config = getHttpConfig();
-  return axios
-    .get(`${endpoints.getResults}?type=team&teamid=${team_id}`, config)
+  return http
+    .get(`${endpoints.getResults}?type=team&teamid=${team_id}`)
     .then(response => {
       dispatch({
         type: SET_TEAM_ANSWERS,
@@ -18,11 +16,14 @@ export const setTeamAnswers = team_id => dispatch => {
     });
 };
 
-export const setTribeMatrix = (tribe_id, period_id=null) => dispatch => {
-  const config = getHttpConfig();
-  let period_query = (period_id ? `&period=${period_id}` : '');
-  return axios
-    .get(`${endpoints.getResults}?type=tribematrix&tribeid=${tribe_id}${period_query}`, config)
+export const setTribeMatrix = (tribe_id, period_id = null) => dispatch => {
+  let period_query = period_id ? `&period=${period_id}` : "";
+  return http
+    .get(
+      `${
+        endpoints.getResults
+      }?type=tribematrix&tribeid=${tribe_id}${period_query}`
+    )
     .then(response => {
       dispatch({
         type: SET_TRIBE_MATRIX,
@@ -34,11 +35,10 @@ export const setTribeMatrix = (tribe_id, period_id=null) => dispatch => {
     });
 };
 
-export const setTribeHistory = (tribe_id, periods_num=null) => dispatch => {
-  const config = getHttpConfig();
-  let periods_query = (periods_num ? `&periods=${periods_num}` : '');
-  return axios
-    .get(`${endpoints.getResults}?type=team&teamid=${tribe_id}${periods_num}`, config)
+export const setTribeHistory = (tribe_id, periods_num = null) => dispatch => {
+  let periods_query = periods_num ? `&periods=${periods_num}` : "";
+  return http
+    .get(`${endpoints.getResults}?type=team&teamid=${tribe_id}${periods_num}`)
     .then(response => {
       dispatch({
         type: SET_TRIBE_HISTORY,

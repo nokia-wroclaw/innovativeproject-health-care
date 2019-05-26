@@ -3,7 +3,7 @@
 exports[`QuestionSegment should match snapshot 1`] = `
 ShallowWrapper {
   Symbol(enzyme.__root__): [Circular],
-  Symbol(enzyme.__unrendered__): <QuestionSegment
+  Symbol(enzyme.__unrendered__): <Connect(QuestionSegment)
     question={Object {}}
   />,
   Symbol(enzyme.__renderer__): Object {
@@ -20,120 +20,28 @@ ShallowWrapper {
     "key": undefined,
     "nodeType": "function",
     "props": Object {
-      "children": <SegmentGroup
-        style={
-          Object {
-            "marginBottom": 10,
-          }
-        }
-      >
-        <Segment>
-          <Question
-            question={Object {}}
-          />
-        </Segment>
-        <Segment
-          attached={true}
-        >
-          <TextArea
-            as="textarea"
-            className=""
-            placeholder="Tell us more"
-            required=""
-            rows={3}
-          />
-        </Segment>
-      </SegmentGroup>,
+      "children": [Function],
     },
     "ref": null,
-    "rendered": Object {
-      "instance": null,
-      "key": undefined,
-      "nodeType": "function",
-      "props": Object {
-        "children": Array [
-          <Segment>
-            <Question
-              question={Object {}}
-            />
-          </Segment>,
-          <Segment
-            attached={true}
-          >
-            <TextArea
-              as="textarea"
-              className=""
-              placeholder="Tell us more"
-              required=""
-              rows={3}
-            />
-          </Segment>,
-        ],
-        "style": Object {
-          "marginBottom": 10,
+    "rendered": [Function],
+    "type": Object {
+      "$$typeof": Symbol(react.context),
+      "_calculateChangedBits": null,
+      "_context": Object {
+        "$$typeof": Symbol(react.context),
+        "Consumer": [Circular],
+        "Provider": Object {
+          "$$typeof": Symbol(react.provider),
+          "_context": [Circular],
         },
+        "_calculateChangedBits": null,
+        "_currentRenderer": null,
+        "_currentRenderer2": null,
+        "_currentValue": null,
+        "_currentValue2": null,
+        "_threadCount": 0,
       },
-      "ref": null,
-      "rendered": Array [
-        Object {
-          "instance": null,
-          "key": undefined,
-          "nodeType": "function",
-          "props": Object {
-            "children": <Question
-              question={Object {}}
-            />,
-          },
-          "ref": null,
-          "rendered": Object {
-            "instance": null,
-            "key": undefined,
-            "nodeType": "function",
-            "props": Object {
-              "question": Object {},
-            },
-            "ref": null,
-            "rendered": null,
-            "type": [Function],
-          },
-          "type": [Function],
-        },
-        Object {
-          "instance": null,
-          "key": undefined,
-          "nodeType": "function",
-          "props": Object {
-            "attached": true,
-            "children": <TextArea
-              as="textarea"
-              className=""
-              placeholder="Tell us more"
-              required=""
-              rows={3}
-            />,
-          },
-          "ref": null,
-          "rendered": Object {
-            "instance": null,
-            "key": undefined,
-            "nodeType": "class",
-            "props": Object {
-              "as": "textarea",
-              "className": "",
-              "placeholder": "Tell us more",
-              "required": "",
-              "rows": 3,
-            },
-            "ref": null,
-            "rendered": null,
-            "type": [Function],
-          },
-          "type": [Function],
-        },
-      ],
-      "type": [Function],
     },
-    "type": Symbol(react.fragment),
   },
   Symbol(enzyme.__nodes__): Array [
     Object {
@@ -141,120 +49,28 @@ ShallowWrapper {
       "key": undefined,
       "nodeType": "function",
       "props": Object {
-        "children": <SegmentGroup
-          style={
-            Object {
-              "marginBottom": 10,
-            }
-          }
-        >
-          <Segment>
-            <Question
-              question={Object {}}
-            />
-          </Segment>
-          <Segment
-            attached={true}
-          >
-            <TextArea
-              as="textarea"
-              className=""
-              placeholder="Tell us more"
-              required=""
-              rows={3}
-            />
-          </Segment>
-        </SegmentGroup>,
+        "children": [Function],
       },
       "ref": null,
-      "rendered": Object {
-        "instance": null,
-        "key": undefined,
-        "nodeType": "function",
-        "props": Object {
-          "children": Array [
-            <Segment>
-              <Question
-                question={Object {}}
-              />
-            </Segment>,
-            <Segment
-              attached={true}
-            >
-              <TextArea
-                as="textarea"
-                className=""
-                placeholder="Tell us more"
-                required=""
-                rows={3}
-              />
-            </Segment>,
-          ],
-          "style": Object {
-            "marginBottom": 10,
+      "rendered": [Function],
+      "type": Object {
+        "$$typeof": Symbol(react.context),
+        "_calculateChangedBits": null,
+        "_context": Object {
+          "$$typeof": Symbol(react.context),
+          "Consumer": [Circular],
+          "Provider": Object {
+            "$$typeof": Symbol(react.provider),
+            "_context": [Circular],
           },
+          "_calculateChangedBits": null,
+          "_currentRenderer": null,
+          "_currentRenderer2": null,
+          "_currentValue": null,
+          "_currentValue2": null,
+          "_threadCount": 0,
         },
-        "ref": null,
-        "rendered": Array [
-          Object {
-            "instance": null,
-            "key": undefined,
-            "nodeType": "function",
-            "props": Object {
-              "children": <Question
-                question={Object {}}
-              />,
-            },
-            "ref": null,
-            "rendered": Object {
-              "instance": null,
-              "key": undefined,
-              "nodeType": "function",
-              "props": Object {
-                "question": Object {},
-              },
-              "ref": null,
-              "rendered": null,
-              "type": [Function],
-            },
-            "type": [Function],
-          },
-          Object {
-            "instance": null,
-            "key": undefined,
-            "nodeType": "function",
-            "props": Object {
-              "attached": true,
-              "children": <TextArea
-                as="textarea"
-                className=""
-                placeholder="Tell us more"
-                required=""
-                rows={3}
-              />,
-            },
-            "ref": null,
-            "rendered": Object {
-              "instance": null,
-              "key": undefined,
-              "nodeType": "class",
-              "props": Object {
-                "as": "textarea",
-                "className": "",
-                "placeholder": "Tell us more",
-                "required": "",
-                "rows": 3,
-              },
-              "ref": null,
-              "rendered": null,
-              "type": [Function],
-            },
-            "type": [Function],
-          },
-        ],
-        "type": [Function],
       },
-      "type": Symbol(react.fragment),
     },
   ],
   Symbol(enzyme.__options__): Object {
@@ -281,5 +97,6 @@ ShallowWrapper {
       },
     },
   },
+  Symbol(enzyme.__childContext__): null,
 }
 `;

@@ -1,11 +1,10 @@
-import { SET_EDITORS, ADD_EDITOR, DELETE_EDITOR } from './types';
-import axios from 'axios';
-import { endpoints, getHttpConfig } from '../../services/http';
-import { handleFetchingError } from './general';
+import { SET_EDITORS, ADD_EDITOR, DELETE_EDITOR } from "./types";
+import { endpoints, http } from "../../services/http";
+import { handleFetchingError } from "./general";
 
 export const setEditors = () => dispatch => {
-  return axios
-    .get(endpoints.getEditors, getHttpConfig())
+  return http
+    .get(endpoints.getEditors)
     .then(response => {
       dispatch({
         type: SET_EDITORS,
@@ -18,8 +17,8 @@ export const setEditors = () => dispatch => {
 };
 
 export const addEditor = user => dispatch => {
-  return axios
-    .put(`${endpoints.putEditor}${user.id}`, {}, getHttpConfig())
+  return http
+    .put(`${endpoints.putEditor}${user.id}`)
     .then(
       dispatch({
         type: ADD_EDITOR,
@@ -32,8 +31,8 @@ export const addEditor = user => dispatch => {
 };
 
 export const deleteEditor = editor => dispatch => {
-  return axios
-    .delete(`${endpoints.deleteEditor}${editor.id}`, getHttpConfig())
+  return http
+    .delete(`${endpoints.deleteEditor}${editor.id}`)
     .then(
       dispatch({
         type: DELETE_EDITOR,

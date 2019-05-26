@@ -1,6 +1,7 @@
 import confiureMockStore from "redux-mock-store";
 import thunk from "redux-thunk";
 import moxios from "moxios";
+import axiosInstance from "../../../services/http";
 import * as actions from "./../editors";
 import { SET_EDITORS, ADD_EDITOR, DELETE_EDITOR } from "../types";
 
@@ -9,10 +10,10 @@ const mockStore = confiureMockStore(middlewares);
 
 describe("async actions", () => {
   beforeEach(() => {
-    moxios.install();
+    moxios.install(axiosInstance);
   });
   afterEach(() => {
-    moxios.uninstall();
+    moxios.uninstall(axiosInstance);
   });
 
   it("sholud create SET_EDITORS when fetching editors has been done", () => {

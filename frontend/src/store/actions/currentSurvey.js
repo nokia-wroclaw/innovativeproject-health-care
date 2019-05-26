@@ -4,16 +4,14 @@ import {
   SET_CURRENT_SURVEY_TEAM_ID,
   SET_QUESTION_ANSWER,
   SET_QUESTION_COMMENT
-} from './types';
-import axios from 'axios';
-import { endpoints, getHttpConfig } from '../../services/http';
-import { handleFetchingError } from './general';
+} from "./types";
+import { endpoints, http } from "../../services/http";
+import { handleFetchingError } from "./general";
 
 export const setCurrentSurvey = tribe_id => dispatch => {
   dispatch(setCurrentSurveyIsLoading(true));
-  const config = getHttpConfig();
-  return axios
-    .get(`${endpoints.getTribe}${tribe_id}/surveys?type=active`, config)
+  return http
+    .get(`${endpoints.getTribe}${tribe_id}/surveys?type=active`)
     .then(response => {
       const survey = response.data.active || {};
       dispatch({
@@ -48,11 +46,10 @@ export const setComment = (questionId, comment) => ({
 });
 
 export const sendFilledSurvey = survey => dispatch => {
-  const config = getHttpConfig();
   const answers = survey.questions.map(question => ({
     question_id: question.id,
     answer: question.answer,
-    comment: question.comment || ''
+    comment: question.comment || ""
   }));
   const { team_id } = survey;
 
@@ -61,8 +58,8 @@ export const sendFilledSurvey = survey => dispatch => {
     answers
   };
 
-  return axios
-    .post(`${endpoints.getSurvey}${survey.id}/answers`, body, config)
+  return http
+    .post(`${endpoints.getSurvey}${survey.id}/answers`, body)
     .then(response => {
       console.log(response);
     })
