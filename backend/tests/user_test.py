@@ -48,9 +48,10 @@ class UserTest(unittest.TestCase):
                 user.get_if_exists.return_value = u
                 resp = self.app.post('/auth',
                                      headers={'Authorization': 'Basic '})
-                # TODO get token from response
-                token = json.load(resp.get_data(as_text=True))
 
+                token = resp.get_json()
+
+                # TODO KeyError: 'access_token'
                 resp = self.app.get('/users/1', headers={'Authorization': 'Bearer ' + token['access_token']})
                 self.assertEqual(resp.status_code, status)
 
