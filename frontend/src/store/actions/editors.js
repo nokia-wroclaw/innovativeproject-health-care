@@ -4,7 +4,7 @@ import { handleFetchingError } from "./general";
 
 export const setEditors = () => dispatch => {
   return http
-    .get(endpoints.getEditors)
+    .get(endpoints.editors)
     .then(response => {
       dispatch({
         type: SET_EDITORS,
@@ -18,7 +18,7 @@ export const setEditors = () => dispatch => {
 
 export const addEditor = user => dispatch => {
   return http
-    .put(`${endpoints.putEditor}${user.id}`)
+    .put(`${endpoints.editors}/${user.id}`)
     .then(
       dispatch({
         type: ADD_EDITOR,
@@ -32,7 +32,7 @@ export const addEditor = user => dispatch => {
 
 export const deleteEditor = editor => dispatch => {
   return http
-    .delete(`${endpoints.deleteEditor}${editor.id}`)
+    .delete(`${endpoints.editors}/${editor.id}`)
     .then(
       dispatch({
         type: DELETE_EDITOR,

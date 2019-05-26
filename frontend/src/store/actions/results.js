@@ -4,7 +4,7 @@ import { SET_TEAM_ANSWERS, SET_TRIBE_HISTORY, SET_TRIBE_MATRIX } from "./types";
 
 export const setTeamAnswers = team_id => dispatch => {
   return http
-    .get(`${endpoints.getResults}?type=team&teamid=${team_id}`)
+    .get(`${endpoints.results}?type=team&teamid=${team_id}`)
     .then(response => {
       dispatch({
         type: SET_TEAM_ANSWERS,
@@ -20,9 +20,7 @@ export const setTribeMatrix = (tribe_id, period_id = null) => dispatch => {
   let period_query = period_id ? `&period=${period_id}` : "";
   return http
     .get(
-      `${
-        endpoints.getResults
-      }?type=tribematrix&tribeid=${tribe_id}${period_query}`
+      `${endpoints.results}?type=tribematrix&tribeid=${tribe_id}${period_query}`
     )
     .then(response => {
       dispatch({
@@ -38,7 +36,7 @@ export const setTribeMatrix = (tribe_id, period_id = null) => dispatch => {
 export const setTribeHistory = (tribe_id, periods_num = null) => dispatch => {
   let periods_query = periods_num ? `&periods=${periods_num}` : "";
   return http
-    .get(`${endpoints.getResults}?type=team&teamid=${tribe_id}${periods_num}`)
+    .get(`${endpoints.results}?type=team&teamid=${tribe_id}${periods_num}`)
     .then(response => {
       dispatch({
         type: SET_TRIBE_HISTORY,

@@ -16,7 +16,7 @@ export const setSurveys = tribe_id => dispatch => {
   dispatch(setSurveysAreLoading(true));
   dispatch(resetSurveys());
   return http
-    .get(`${endpoints.getTribe}${tribe_id}/surveys`)
+    .get(`${endpoints.tribes}/${tribe_id}/surveys`)
     .then(response => {
       const { active, next, draft } = response.data;
       if (active) dispatch(setActiveSurvey(active));
@@ -79,7 +79,7 @@ export const setDraftSurveyPeriod = draft_period => ({
 
 export const saveDraftSurvey = (tribe_id, survey) => dispatch => {
   return http
-    .post(`${endpoints.putTribe}${tribe_id}/surveys`, {
+    .post(`${endpoints.tribes}/${tribe_id}/surveys`, {
       ...survey
     })
     .then(response => {
@@ -92,7 +92,7 @@ export const saveDraftSurvey = (tribe_id, survey) => dispatch => {
 
 export const publishDraftSurvey = survey => dispatch => {
   return http
-    .patch(`${endpoints.getSurvey}${survey.id}`, {
+    .patch(`${endpoints.surveys}/${survey.id}`, {
       draft: false
     })
     .then(response => {
@@ -105,7 +105,7 @@ export const publishDraftSurvey = survey => dispatch => {
 
 export const saveAndPublishDraftSurvey = (tribe_id, survey) => dispatch => {
   return http
-    .post(`${endpoints.putTribe}${tribe_id}/surveys`, {
+    .post(`${endpoints.tribes}/${tribe_id}/surveys`, {
       ...survey
     })
     .then(response => {

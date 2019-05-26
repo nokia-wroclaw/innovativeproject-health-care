@@ -13,7 +13,7 @@ import { handleFetchingError } from "./general";
 
 export const setTeamManagers = team => dispatch => {
   return http
-    .get(`${endpoints.teams}${team.id}/managers`)
+    .get(`${endpoints.teams}/${team.id}/managers`)
     .then(response => {
       dispatch({
         type: SET_TEAM_MANAGERS,
@@ -30,7 +30,7 @@ export const setTeamManagers = team => dispatch => {
 
 export const setTeamMembers = team => dispatch => {
   return http
-    .get(`${endpoints.teams}${team.id}/users`)
+    .get(`${endpoints.teams}/${team.id}/users`)
     .then(response => {
       dispatch({
         type: SET_TEAM_MEMBERS,
@@ -47,7 +47,7 @@ export const setTeamMembers = team => dispatch => {
 
 export const updateTeamName = (team, newName) => dispatch => {
   return http
-    .put(`${endpoints.teams}${team.id}`, {
+    .put(`${endpoints.teams}/${team.id}`, {
       tribe_id: team.tribe_id,
       name: newName
     })
@@ -64,7 +64,7 @@ export const updateTeamName = (team, newName) => dispatch => {
 
 export const deleteTeam = team => dispatch => {
   return http
-    .delete(`${endpoints.teams}${team.id}`)
+    .delete(`${endpoints.teams}/${team.id}`)
     .then(() => {
       dispatch({
         type: DELETE_TEAM,
@@ -78,7 +78,7 @@ export const deleteTeam = team => dispatch => {
 
 export const addManagerToTeam = (team, manager) => dispatch => {
   return http
-    .put(`${endpoints.teams}${team.id}/managers/${manager.id}`, {})
+    .put(`${endpoints.teams}/${team.id}/managers/${manager.id}`, {})
     .then(() => {
       dispatch({
         type: ADD_MANAGER_TO_TEAM,
@@ -92,7 +92,7 @@ export const addManagerToTeam = (team, manager) => dispatch => {
 
 export const deleteManagerFromTeam = (team, manager) => dispatch => {
   return http
-    .delete(`${endpoints.teams}${team.id}/managers/${manager.id}`)
+    .delete(`${endpoints.teams}/${team.id}/managers/${manager.id}`)
     .then(() => {
       dispatch({
         type: DELETE_MANAGER_FROM_TEAM,
@@ -106,7 +106,7 @@ export const deleteManagerFromTeam = (team, manager) => dispatch => {
 
 export const addMemberToTeam = (team, user) => dispatch => {
   return http
-    .put(`${endpoints.teams}${team.id}/users/${user.id}`, {})
+    .put(`${endpoints.teams}/${team.id}/users/${user.id}`, {})
     .then(() => {
       dispatch({
         type: ADD_MEMBER_TO_TEAM,
@@ -120,7 +120,7 @@ export const addMemberToTeam = (team, user) => dispatch => {
 
 export const deleteMemberFromTeam = (team, user) => dispatch => {
   return http
-    .delete(`${endpoints.teams}${team.id}/users/${user.id}`)
+    .delete(`${endpoints.teams}/${team.id}/users/${user.id}`)
     .then(() => {
       dispatch({
         type: DELETE_MEMBER_FROM_TEAM,

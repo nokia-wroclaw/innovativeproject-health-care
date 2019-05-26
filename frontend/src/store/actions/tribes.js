@@ -14,7 +14,7 @@ import { handleFetchingError } from "./general";
 
 export const setTribes = () => dispatch => {
   return http
-    .get(endpoints.getTribes)
+    .get(endpoints.tribes)
     .then(response => {
       dispatch({
         type: SET_TRIBES,
@@ -28,7 +28,7 @@ export const setTribes = () => dispatch => {
 
 export const setTribeEditors = tribe => dispatch => {
   return http
-    .get(`${endpoints.getTribe}${tribe.id}/editors`)
+    .get(`${endpoints.tribes}/${tribe.id}/editors`)
     .then(response => {
       dispatch({
         type: SET_TRIBE_EDITORS,
@@ -45,7 +45,7 @@ export const setTribeEditors = tribe => dispatch => {
 
 export const setTeamsInTribe = tribe => dispatch => {
   return http
-    .get(`${endpoints.getTribe}${tribe.id}/teams`)
+    .get(`${endpoints.tribes}/${tribe.id}/teams`)
     .then(response => {
       dispatch({
         type: SET_TEAMS_IN_TRIBE,
@@ -62,7 +62,7 @@ export const setTeamsInTribe = tribe => dispatch => {
 
 export const addTribe = name => dispatch => {
   return http
-    .post(`${endpoints.postTribe}`, {
+    .post(`${endpoints.tribes}`, {
       name
     })
     .then(response => {
@@ -78,7 +78,7 @@ export const addTribe = name => dispatch => {
 
 export const deleteTribe = tribe => dispatch => {
   return http
-    .delete(`${endpoints.deleteTribe}${tribe.id}`)
+    .delete(`${endpoints.tribes}/${tribe.id}`)
     .then(() => {
       dispatch({
         type: DELETE_TRIBE,
@@ -92,7 +92,7 @@ export const deleteTribe = tribe => dispatch => {
 
 export const updateTribeName = (tribe, newName) => dispatch => {
   return http
-    .put(`${endpoints.putTribe}${tribe.id}`, { name: newName })
+    .put(`${endpoints.tribes}/${tribe.id}`, { name: newName })
     .then(() => {
       dispatch({
         type: UPDATE_TRIBE_NAME,
@@ -106,7 +106,7 @@ export const updateTribeName = (tribe, newName) => dispatch => {
 
 export const addEditorToTribe = (tribe, editor) => dispatch => {
   return http
-    .put(`${endpoints.getTribe}${tribe.id}/editors/${editor.id}`, {})
+    .put(`${endpoints.tribes}/${tribe.id}/editors/${editor.id}`, {})
     .then(() => {
       dispatch({
         type: ADD_EDITOR_TO_TRIBE,
@@ -120,7 +120,7 @@ export const addEditorToTribe = (tribe, editor) => dispatch => {
 
 export const deleteEditorFromTribe = (tribe, editor) => dispatch => {
   return http
-    .delete(`${endpoints.deleteTribe}${tribe.id}/editors/${editor.id}`)
+    .delete(`${endpoints.tribes}/${tribe.id}/editors/${editor.id}`)
     .then(() => {
       dispatch({
         type: DELETE_EDITOR_FROM_TRIBE,
@@ -134,7 +134,7 @@ export const deleteEditorFromTribe = (tribe, editor) => dispatch => {
 
 export const addTeamToTribe = (tribe, team_name) => dispatch => {
   return http
-    .post(`${endpoints.getTribe}${tribe.id}/teams`, { name: team_name })
+    .post(`${endpoints.tribes}/${tribe.id}/teams`, { name: team_name })
     .then(response => {
       dispatch({
         type: ADD_TEAM_TO_TRIBE,

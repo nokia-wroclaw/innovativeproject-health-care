@@ -11,7 +11,7 @@ import { handleFetchingError } from "./general";
 export const setCurrentSurvey = tribe_id => dispatch => {
   dispatch(setCurrentSurveyIsLoading(true));
   return http
-    .get(`${endpoints.getTribe}${tribe_id}/surveys?type=active`)
+    .get(`${endpoints.tribes}/${tribe_id}/surveys?type=active`)
     .then(response => {
       const survey = response.data.active || {};
       dispatch({
@@ -59,7 +59,7 @@ export const sendFilledSurvey = survey => dispatch => {
   };
 
   return http
-    .post(`${endpoints.getSurvey}${survey.id}/answers`, body)
+    .post(`${endpoints.surveys}/${survey.id}/answers`, body)
     .then(response => {
       console.log(response);
     })

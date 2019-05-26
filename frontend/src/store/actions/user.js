@@ -47,7 +47,7 @@ export const setUserFromLocalStorage = () => dispatch => {
     dispatch(setUser(user));
 
     return http
-      .get(`${endpoints.getUserData}${user.id}`)
+      .get(`${endpoints.users}/${user.id}`)
       .then(({ data }) => dispatch(setUser(data)))
       .catch(error => dispatch(handleFetchingError(error)));
   }
@@ -60,7 +60,7 @@ export const setMenuOption = optionName => ({
 
 export const setUserTeamsDetails = user => dispatch => {
   return http
-    .get(`${endpoints.getUserData}${user.id}/teams?role=member`)
+    .get(`${endpoints.users}/${user.id}/teams?role=member`)
     .then(response => {
       dispatch({
         type: SET_USER_TEAMS_DETAILS,
@@ -74,7 +74,7 @@ export const setUserTeamsDetails = user => dispatch => {
 
 export const setUserManagingDetails = user => dispatch => {
   return http
-    .get(`${endpoints.getUserData}${user.id}/teams?role=manager`)
+    .get(`${endpoints.users}/${user.id}/teams?role=manager`)
     .then(response => {
       dispatch({
         type: SET_USER_MANAGING_DETAILS,
@@ -88,7 +88,7 @@ export const setUserManagingDetails = user => dispatch => {
 
 export const setUserTribesDetails = user => dispatch => {
   return http
-    .get(`${endpoints.getUserData}${user.id}/tribes?role=member`)
+    .get(`${endpoints.users}/${user.id}/tribes?role=member`)
     .then(response => {
       dispatch({
         type: SET_USER_TRIBES_DETAILS,
@@ -102,7 +102,7 @@ export const setUserTribesDetails = user => dispatch => {
 
 export const setUserEditingDetails = user => dispatch => {
   return http
-    .get(`${endpoints.getUserData}${user.id}/tribes?role=editor`)
+    .get(`${endpoints.users}/${user.id}/tribes?role=editor`)
     .then(response => {
       dispatch({
         type: SET_USER_EDITING_DETAILS,
