@@ -1,6 +1,12 @@
 import { endpoints, http } from "../../services/http";
 import { handleFetchingError } from "./general";
-import { SET_TEAM_ANSWERS, SET_TRIBE_HISTORY, SET_TRIBE_MATRIX } from "./types";
+import {
+  SET_TEAM_ANSWERS,
+  SET_TRIBE_HISTORY,
+  SET_TRIBE_MATRIX,
+  RESET_TRIBE_MATRIX,
+  SET_TRIBE_PERIODS
+} from "./types";
 
 export const setTeamAnswers = team_id => dispatch => {
   return http
@@ -18,6 +24,7 @@ export const setTeamAnswers = team_id => dispatch => {
 
 export const setTribeMatrix = (tribe_id, period_id = null) => dispatch => {
   let period_query = period_id ? `&period=${period_id}` : "";
+  dispatch({ type: RESET_TRIBE_MATRIX });
   return http
     .get(
       `${endpoints.results}?type=tribematrix&tribeid=${tribe_id}${period_query}`
@@ -36,10 +43,24 @@ export const setTribeMatrix = (tribe_id, period_id = null) => dispatch => {
 export const setTribeHistory = (tribe_id, periods_num = null) => dispatch => {
   let periods_query = periods_num ? `&periods=${periods_num}` : "";
   return http
-    .get(`${endpoints.results}?type=team&teamid=${tribe_id}${periods_num}`)
+    .get(`${endpoints.results}?type=team&teamid=${tribe_id}${periods_query}`)
     .then(response => {
       dispatch({
         type: SET_TRIBE_HISTORY,
+        payload: response.data
+      });
+    })
+    .catch(error => {
+      dispatch(handleFetchingError(error));
+    });
+};
+
+export const setTribePeriods = tribe_id => dispatch => {
+  return http
+    .get(`${endpoints.tribes}/${tribe_id}/periods`)
+    .then(response => {
+      dispatch({
+        type: SET_TRIBE_PERIODS,
         payload: response.data
       });
     })

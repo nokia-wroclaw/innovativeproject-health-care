@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { Container, Dropdown } from 'semantic-ui-react';
-import { setSurveys } from './../../store/actions/surveys';
-import TemplatePage from '../common/TemplatePage/';
-import SurveysTab from './SurveysTab';
+import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import { Container, Dropdown } from "semantic-ui-react";
+import { setSurveys } from "./../../store/actions/surveys";
+import TemplatePage from "../common/TemplatePage/";
+import SurveysTab from "./SurveysTab";
 import { setUserEditingDetails } from "../../store/actions/user";
 
-const EditSurveyPage = ({user, ...props}) => {
+const EditSurveyPage = ({ user, ...props }) => {
   const [currentTribeId, setCurrentTribeId] = useState(undefined);
 
   useEffect(() => {
-      props.setUserEditingDetails(user);
+    props.setUserEditingDetails(user);
   }, []);
 
   const handleTribeSelect = (e, { value }) => {
@@ -23,7 +23,7 @@ const EditSurveyPage = ({user, ...props}) => {
       <Container>
         <br />
         <Dropdown
-          placeholder='Select tribe'
+          placeholder="Select tribe"
           options={props.editing.map((tribe, i) => ({
             key: i,
             text: tribe.name,
