@@ -7,7 +7,7 @@ const baseURL =
     : `${window.location.protocol}//${window.location.host}/api`;
 
 export const endpoints = {
-  login: "/auth",
+  login: `${baseURL}/auth`,
   users: "/users",
   editors: "/editors",
   tribes: "/tribes",
