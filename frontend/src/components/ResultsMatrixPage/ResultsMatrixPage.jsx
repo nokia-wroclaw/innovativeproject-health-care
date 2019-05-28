@@ -31,7 +31,9 @@ const ResultsMatrixPage = ({ user, tribes, periods, ...props }) => {
     props.setTribePeriods(value);
   };
   const handlePeriodSelect = (e, { value }) => {
+    setIsLoading(true);
     setCurrentPeriodId(value);
+    props.setTribeMatrix(currentTribeId, value).then(() => setIsLoading(false));
   };
 
   const getCurrentTribeName = () => {
@@ -41,7 +43,6 @@ const ResultsMatrixPage = ({ user, tribes, periods, ...props }) => {
       return null;
     }
   };
-  console.log(tribes);
   return (
     <TemplatePage>
       <Container>
