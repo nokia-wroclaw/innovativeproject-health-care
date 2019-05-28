@@ -1,20 +1,26 @@
 import React from 'react';
 import {Card, Label} from 'semantic-ui-react';
 import {connect} from 'react-redux';
-import {setTeamAnswers} from "../../store/actions/results";
 
-const ansToColor = (answer) => {
-  switch (answer) {
+const RED = "red";
+const YELLOW = "yellow";
+const GREEN = "green";
+const GREY = "grey";
+
+const valueToColor = value => {
+  switch (value) {
     case 0:
-      return 'red';
+      return RED;
     case 1:
-      return 'yellow';
+      return YELLOW;
     case 2:
-      return 'green';
+      return GREEN;
+    default:
+      return GREY;
   }
 };
 
-const Comments = ({teamId, answers, ...props }) => {
+const Comments = ({answers}) => {
 
   let items = [];
   if (answers.length > 0) {
@@ -31,7 +37,7 @@ const Comments = ({teamId, answers, ...props }) => {
               {item.question}
             </Card.Header>
             <Card.Meta>
-              <Label color={ansToColor(item.answer)} size={'small'}>
+              <Label color={valueToColor(item.answer)} size={'small'}>
                 Answer: {item.answer}
               </Label>
             </Card.Meta>
@@ -53,5 +59,4 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { setTeamAnswers }
 )(Comments);

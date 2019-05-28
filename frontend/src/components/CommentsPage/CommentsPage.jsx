@@ -36,7 +36,7 @@ const CommentsPage = ({ user, ...props }) => {
         <br />
         <br />
         {currentTeamId ? (
-          <Comments teamId={currentTeamId} />
+          <Comments />
         ) : (
           <p>Please, select team</p>
         )}
