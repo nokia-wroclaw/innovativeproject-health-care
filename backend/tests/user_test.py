@@ -25,41 +25,36 @@ class UserTest(unittest.TestCase):
             'mail': 'test@example.com',
             'rdn': 'user',
         }
-        self.user = {
+        self.json_user = {
             'id': '1',
             'login': 'login',
             'mail': 'mail',
             'name': 'name',
         }
 
-    @patch('backend.resources.users.User.get_if_exists')
     @patch('backend.resources.users.User.from_id')
     @patch('backend.resources.users.User.from_ldap')
     @patch('backend.resources.users.User.roles')
     @patch('backend.resources.users.User.serialize')
-    @patch('backend.resources.users.User.in_db')
+    @patch('backend.resources.users.User.in_db', autospec=True)
     @patch('backend.resources.users.LdapConn', autospec=True)
-    def test_get_user(self, mock_ldap, mock_user_in_db, mock_user_serialize, mock_user_roles, mock_user_from_ldap,
-                      mock_user_from_id, mock_user_get_if_exist):
+    def test_get_user(self, mock_ldap, mock_in_db, mock_serialize, mock_roles, mock_from_ldap,
+                      mock_from_id):
+
         ldap = mock_ldap()
-        user_in_db = mock_user_in_db()
-        user_serialize = mock_user_serialize()
-        user_roles = mock_user_roles()
-        user_from_ldap = mock_user_from_ldap()
-        user_fromid = mock_user_from_id()
-        user_exist = mock_user_get_if_exist()
         ldap.authenticate.return_value = True
         ldap.search.return_value = [self.ldap_search_ret]
-        user_in_db.return_value = True
-        user_serialize.return_value = self.user
+        mock_in_db.return_value = True
+
+        mock_serialize.return_value = self.json_user
 
         for role, u, status in self.user_roles:
             with self.subTest():
-                user_roles.return_value = role
-                user_from_ldap.return_value = u
-                user_fromid.return_value = u
-                user_exist.return_value = u
-                cred = b64encode(bytes('user:password', 'utf-8')).decode('utf-8')
+                mock_roles.return_value = role
+                mock_from_ldap.return_value = u
+                mock_from_id.return_value = u
+
+                cred = b64encode(bytes('login:password', 'utf-8')).decode('utf-8')
                 resp = self.app.post('/auth',
                                      headers={'Authorization': 'Basic ' + cred})
                 self.assertEqual(resp.status_code, status)
