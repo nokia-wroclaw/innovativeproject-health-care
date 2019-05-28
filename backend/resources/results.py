@@ -99,8 +99,7 @@ def tribematrix_results(tribe_id, period_id):
 def tribehistory_results(tribe_id, periods):
     tribe = Tribe.get_if_exists(tribe_id)
 
-    # Restrict access to managers
-    if tribe_id not in [t.team.tribe_id for t in current_user.teams]:
+    if not Survey.validate_access(tribe_id, current_user):
         abort(403)
 
     periods_list = []
