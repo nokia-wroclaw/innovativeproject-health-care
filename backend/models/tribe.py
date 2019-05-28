@@ -106,10 +106,10 @@ class Tribe(db.Model):
         questions_map = {q.question.id: i for (i, q) in enumerate(questions)}
 
         # Prepare matrix with rows for teams and columns for questions
-        matrix = [[None] * len(survey.questions) for t in self.teams]
+        matrix = [[None] * len(survey.questions) for t in teams]
 
         # Place answers in the matrix basing on teams and questions ids
-        for t in self.teams:
+        for t in teams:
             row = teams_map[t.id]
             for a in t.get_answers(period):
                 column = questions_map[int(a['question_id'])]
