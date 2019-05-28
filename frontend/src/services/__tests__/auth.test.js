@@ -1,4 +1,4 @@
-import * as auth from "../authorization";
+import * as auth from "../auth";
 
 const user1 = {
   roles: ["user"]

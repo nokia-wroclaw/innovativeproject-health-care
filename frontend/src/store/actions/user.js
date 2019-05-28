@@ -7,11 +7,9 @@ import {
   SET_USER_TRIBES_DETAILS,
   SET_USER_EDITING_DETAILS
 } from "./types";
-import jwtDecode from "jwt-decode";
 import { endpoints, http } from "../../services/http";
 import { closeLoginModal, handleFetchingError } from "./general";
-import history from "../../history";
-import * as authorization from "../../services/authorization";
+import * as auth from "../../services/auth";
 
 export const setUser = user => ({
   type: SET_USER,
@@ -19,31 +17,25 @@ export const setUser = user => ({
 });
 
 export const login = (username, password) => dispatch => {
-  return authorization
+  return auth
     .login(username, password)
     .then(user => {
       dispatch(setUser(user));
       dispatch(closeLoginModal());
-      if (history.location.pathname === "/") {
-        const firstManuOption = authorization.getMenu(user)[0];
-        history.push(firstManuOption.path);
-        dispatch(setMenuOption(firstManuOption.name));
-      }
     })
-    .catch(error => console.log(error));
+    .catch(error => console.error(error));
 };
 
 export const logout = () => {
-  authorization.logout();
+  auth.logout();
   return {
     type: LOGOUT
   };
 };
 
 export const setUserFromSessionStorage = () => dispatch => {
-  const jwt = authorization.getToken();
-  if (jwt) {
-    const { user } = jwtDecode(jwt);
+  const user = auth.getUserData();
+  if (user) {
     dispatch(setUser(user));
     dispatch(updateUserData(user));
   }

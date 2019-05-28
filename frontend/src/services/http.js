@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getToken } from "./authorization";
+import { getToken } from "./auth";
 
 const baseURL =
   process.env.NODE_ENV !== "production"

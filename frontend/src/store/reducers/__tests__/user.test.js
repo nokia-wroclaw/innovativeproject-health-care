@@ -1,6 +1,6 @@
 import reducer from "../user";
 import * as types from "../../actions/types";
-import * as authorization from "../../../services/authorization";
+import * as auth from "../../../services/auth";
 
 describe("user reducer", () => {
   it("should return initial state", () => {
@@ -13,7 +13,7 @@ describe("user reducer", () => {
       name: "John Smith",
       roles: ["user"]
     };
-    const menu = authorization.getMenu(user);
+    const menu = auth.getMenu(user);
     expect(
       reducer(
         {},

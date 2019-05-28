@@ -8,7 +8,7 @@ import {
   SET_USER_TRIBES_DETAILS,
   SET_USER_EDITING_DETAILS
 } from "../actions/types";
-import * as authorization from "../../services/authorization";
+import * as auth from "../../services/auth";
 
 const initialState = {};
 let userData;
@@ -16,7 +16,7 @@ let userData;
 export default function(state = initialState, action) {
   switch (action.type) {
     case SET_USER:
-      const menu = authorization.getMenu(action.payload);
+      const menu = auth.getMenu(action.payload);
       return {
         userData: action.payload,
         menu

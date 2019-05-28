@@ -7,6 +7,16 @@ const setToken = token => sessionStorage.setItem("token", token);
 const removeToken = () => sessionStorage.removeItem("token");
 export const getToken = () => sessionStorage.getItem("token");
 
+export const getUserData = () => {
+  try {
+    const jwt = getToken();
+    const decoded = jwtDecode(jwt);
+    return decoded.user;
+  } catch {
+    return null;
+  }
+};
+
 export const login = async (username, password) => {
   const config = {
     headers: {

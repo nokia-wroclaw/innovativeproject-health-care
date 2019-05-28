@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
 import { connect } from "react-redux";
 import { setUserFromSessionStorage } from "./store/actions/user";
-import { isUser, isManager, isEditor, isAdmin } from "./services/authorization";
+import { isUser, isManager, isEditor, isAdmin } from "./services/auth";
 import HomePage from "./components/HomePage";
 import SurveyPage from "./components/SurveyPage";
 import TribesManagementPage from "./components/TribesManagementPage";

@@ -3,7 +3,6 @@ import thunk from "redux-thunk";
 import moxios from "moxios";
 import * as actions from "./../user";
 import { SET_USER, LOGOUT, OPTION_SELECTED, CLOSE_LOGIN_MODAL } from "../types";
-import * as authorization from "../../../services/authorization";
 
 const middlewares = [thunk];
 const mockStore = confiureMockStore(middlewares);
@@ -16,9 +15,8 @@ describe("async actions", () => {
     moxios.uninstall();
   });
 
-  it("login sholud create SET_USER, CLOSE_LOGIN_MODAL and OPTION_SELECTED when loging in has been done", () => {
+  it("login sholud create SET_USER and CLOSE_LOGIN_MODAL when loging in has been done", () => {
     const user = { id: 1234, name: "John Smith", roles: ["user"] };
-    const optionName = authorization.getMenu(user)[0].name;
     const jwt =
       "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjp7ImlkIjoxMjM0LCJuYW1lIjoiSm9obiBTbWl0aCIsInJvbGVzIjpbInVzZXIiXX19.7cVQobl2mowgk0zbOkQplsynTFMMmqWxhy3GUzBGpKk";
     moxios.wait(() => {
@@ -35,10 +33,6 @@ describe("async actions", () => {
       },
       {
         type: CLOSE_LOGIN_MODAL
-      },
-      {
-        type: OPTION_SELECTED,
-        payload: optionName
       }
     ];
 
