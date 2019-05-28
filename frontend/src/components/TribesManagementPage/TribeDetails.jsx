@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { Button, Item, Label, Accordion, Loader } from 'semantic-ui-react';
-import { setTribeEditors, setTeamsInTribe } from '../../store/actions/tribes';
-import TeamDetails from './TeamDetails';
-import TribeSettings from './TribeSettings';
-import './style.css';
+import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import { Button, Item, Label, Accordion } from "semantic-ui-react";
+import { setTribeEditors, setTeamsInTribe } from "../../store/actions/tribes";
+import Loader from "../common/Loader";
+import TeamDetails from "./TeamDetails";
+import TribeSettings from "./TribeSettings";
+import "./style.css";
 
 const TribeDetails = ({ tribe, ...props }) => {
   const [isOpenSettings, setIsOpenSettings] = useState(false);
@@ -36,13 +37,13 @@ const TribeDetails = ({ tribe, ...props }) => {
   return (
     <React.Fragment>
       {isLoading ? (
-        <Loader active inline='centered' />
+        <Loader />
       ) : (
         <React.Fragment>
           <Button
-            content='Tribe settings'
-            icon='cogs'
-            labelPosition='left'
+            content="Tribe settings"
+            icon="cogs"
+            labelPosition="left"
             compact
             secondary
             basic
@@ -53,11 +54,11 @@ const TribeDetails = ({ tribe, ...props }) => {
             tribe={tribe}
             close={() => setIsOpenSettings(false)}
           />
-          <Item style={{ paddingTop: '1em' }}>
+          <Item style={{ paddingTop: "1em" }}>
             Editors ({tribe.editors ? tribe.editors.length : 0}): <br />
             {tribe.editors
               ? tribe.editors.map(editor => (
-                  <Label color='violet' key={editor.id}>
+                  <Label color="violet" key={editor.id}>
                     {editor.name}
                     <Label.Detail>({editor.login})</Label.Detail>
                   </Label>
@@ -65,10 +66,10 @@ const TribeDetails = ({ tribe, ...props }) => {
               : null}
           </Item>
           {teamPanels.length ? (
-            <Item style={{ paddingTop: '1em' }}>
+            <Item style={{ paddingTop: "1em" }}>
               Teams ({teamPanels.length}):
               <Accordion.Accordion
-                className='teams-accordion'
+                className="teams-accordion"
                 panels={teamPanels}
                 exclusive={false}
               />

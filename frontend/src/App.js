@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useLayoutEffect } from "react";
 import { Switch, Route } from "react-router-dom";
 import { connect } from "react-redux";
 import { setUserFromLocalStorage } from "./store/actions/user";
@@ -16,7 +16,7 @@ import ProtectedRoute from "./components/common/ProtectedRoute/index";
 import PageNotFound from "./components/PageNotFound/index";
 
 const App = ({ user, ...props }) => {
-  useEffect(() => {
+  useLayoutEffect(() => {
     props.setUserFromLocalStorage();
   }, []);
 

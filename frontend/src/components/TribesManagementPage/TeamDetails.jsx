@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { Button, Item, Label, List, Loader } from 'semantic-ui-react';
-import { setTeamMembers, setTeamManagers } from './../../store/actions/teams';
-import TeamSettings from './TeamSettings';
-import '../../styles/common.css';
+import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import { Button, Item, Label, List } from "semantic-ui-react";
+import { setTeamMembers, setTeamManagers } from "./../../store/actions/teams";
+import Loader from "../common/Loader";
+import TeamSettings from "./TeamSettings";
+import "../../styles/common.css";
 
 export const TeamDetails = ({ team, ...props }) => {
   const [isOpenSettings, setIsOpenSettings] = useState(false);
@@ -21,13 +22,13 @@ export const TeamDetails = ({ team, ...props }) => {
   return (
     <React.Fragment>
       {isLoading ? (
-        <Loader active inline='centered' />
+        <Loader />
       ) : (
         <React.Fragment>
           <Button
-            content='Team settings'
-            icon='cog'
-            labelPosition='left'
+            content="Team settings"
+            icon="cog"
+            labelPosition="left"
             compact
             secondary
             basic
@@ -38,12 +39,12 @@ export const TeamDetails = ({ team, ...props }) => {
             team={team}
             close={() => setIsOpenSettings(false)}
           />
-          <Item style={{ paddingTop: '1em' }}>
+          <Item style={{ paddingTop: "1em" }}>
             Managers ({team.managers ? team.managers.length : 0}):
             <br />
             {team.managers
               ? team.managers.map(manager => (
-                  <Label color='blue' key={manager.id}>
+                  <Label color="blue" key={manager.id}>
                     {manager.name}
                     <Label.Detail>({manager.login})</Label.Detail>
                   </Label>
@@ -51,7 +52,7 @@ export const TeamDetails = ({ team, ...props }) => {
               : null}
           </Item>
 
-          <List verticalAlign='middle'>
+          <List verticalAlign="middle">
             <List.Header>
               Members ({team.members ? team.members.length : 0}):
             </List.Header>
@@ -59,7 +60,7 @@ export const TeamDetails = ({ team, ...props }) => {
             {team.members
               ? team.members.map(member => (
                   <List.Item key={member.id}>
-                    <List.Icon name='user circle' />
+                    <List.Icon name="user circle" />
                     {member.name} ({member.login})
                   </List.Item>
                 ))

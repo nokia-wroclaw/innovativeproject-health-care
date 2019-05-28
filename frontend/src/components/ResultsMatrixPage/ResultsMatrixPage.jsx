@@ -41,7 +41,7 @@ const ResultsMatrixPage = ({ user, tribes, periods, ...props }) => {
       return null;
     }
   };
-
+  console.log(tribes);
   return (
     <TemplatePage>
       <Container>
@@ -71,11 +71,14 @@ const ResultsMatrixPage = ({ user, tribes, periods, ...props }) => {
         />
 
         {isLoading || !currentTribeId ? null : (
-          <Statistic label={getCurrentTribeName()} />
+          <React.Fragment>
+            <Statistic label={getCurrentTribeName()} />
+            <br />
+            <br />
+            <Matrix />
+          </React.Fragment>
         )}
-        <br />
-        <br />
-        {isLoading ? <Loader active inline="centered" /> : <Matrix />}
+        {isLoading ? <Loader active inline="centered" /> : null}
       </Container>
     </TemplatePage>
   );
@@ -88,9 +91,13 @@ const mapStateToProps = state => {
       id: team.tribe_id,
       name: team.name
     })) || [];
+  console.log("managing: ", managing);
   const membering = user.tribes || [];
+  console.log("membering: ", membering);
   const editing = user.editing || [];
+  console.log("editing: ", editing);
   const tribes = [...membering, ...editing, ...managing];
+  console.log("not uniqe: ", tribes);
   return {
     user,
     tribes: _.uniqBy(tribes, "id"),
