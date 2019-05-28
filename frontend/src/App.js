@@ -1,7 +1,7 @@
-import React, { useLayoutEffect } from "react";
+import React, { useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
 import { connect } from "react-redux";
-import { setUserFromLocalStorage } from "./store/actions/user";
+import { setUserFromSessionStorage } from "./store/actions/user";
 import { isUser, isManager, isEditor, isAdmin } from "./services/authorization";
 import HomePage from "./components/HomePage";
 import SurveyPage from "./components/SurveyPage";
@@ -16,8 +16,8 @@ import ProtectedRoute from "./components/common/ProtectedRoute/index";
 import PageNotFound from "./components/PageNotFound/index";
 
 const App = ({ user, ...props }) => {
-  useLayoutEffect(() => {
-    props.setUserFromLocalStorage();
+  useEffect(() => {
+    props.setUserFromSessionStorage();
   }, []);
 
   return (
@@ -83,5 +83,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { setUserFromLocalStorage }
+  { setUserFromSessionStorage }
 )(App);

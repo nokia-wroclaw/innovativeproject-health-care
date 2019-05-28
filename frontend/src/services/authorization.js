@@ -3,9 +3,9 @@ import axios from "axios";
 import { endpoints } from "./http";
 import jwtDecode from "jwt-decode";
 
-const setToken = token => localStorage.setItem("token", token);
-const removeToken = () => localStorage.removeItem("token");
-export const getToken = () => localStorage.getItem("token");
+const setToken = token => sessionStorage.setItem("token", token);
+const removeToken = () => sessionStorage.removeItem("token");
+export const getToken = () => sessionStorage.getItem("token");
 
 export const login = async (username, password) => {
   const config = {

@@ -40,17 +40,20 @@ export const logout = () => {
   };
 };
 
-export const setUserFromLocalStorage = () => dispatch => {
-  const jwt = localStorage.getItem("token");
+export const setUserFromSessionStorage = () => dispatch => {
+  const jwt = authorization.getToken();
   if (jwt) {
     const { user } = jwtDecode(jwt);
     dispatch(setUser(user));
-
-    return http
-      .get(`${endpoints.users}/${user.id}`)
-      .then(({ data }) => dispatch(setUser(data)))
-      .catch(error => dispatch(handleFetchingError(error)));
+    dispatch(updateUserData(user));
   }
+};
+
+export const updateUserData = user => dispatch => {
+  return http
+    .get(`${endpoints.users}/${user.id}`)
+    .then(({ data }) => dispatch(setUser(data)))
+    .catch(error => dispatch(handleFetchingError(error)));
 };
 
 export const setMenuOption = optionName => ({
