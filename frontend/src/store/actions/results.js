@@ -40,10 +40,9 @@ export const setTribeMatrix = (tribe_id, period_id = null) => dispatch => {
     });
 };
 
-export const setTribeHistory = (tribe_id, periods_num = null) => dispatch => {
-  let periods_query = periods_num ? `&periods=${periods_num}` : "";
+export const setTribeHistory = (tribe_id, periods_num) => dispatch => {
   return http
-    .get(`${endpoints.results}?type=team&teamid=${tribe_id}${periods_query}`)
+    .get(`${endpoints.results}?type=tribehistory&tribeid=${tribe_id}&periods=${periods_num}`)
     .then(response => {
       dispatch({
         type: SET_TRIBE_HISTORY,
