@@ -5,17 +5,20 @@ import {setUserManagingDetails} from "../../store/actions/user";
 import { setTeamAnswers } from './../../store/actions/results';
 import Comments from './Comments';
 import TemplatePage from '../common/TemplatePage/';
+import Loader from "../common/Loader";
 
 const CommentsPage = ({ user, ...props }) => {
   const [currentTeamId, setCurrentTeamId] = useState(undefined);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     props.setUserManagingDetails(user);
   }, []);
 
   const handleTeamSelect = (e, { value }) => {
+    setIsLoading(true);
     setCurrentTeamId(value);
-    props.setTeamAnswers(value);
+    props.setTeamAnswers(value).then(() => setIsLoading(false));
   };
 
   return (
@@ -35,11 +38,12 @@ const CommentsPage = ({ user, ...props }) => {
         />
         <br />
         <br />
-        {currentTeamId ? (
+        {!isLoading && currentTeamId ? (
           <Comments />
         ) : (
           <p>Please, select team</p>
         )}
+        {isLoading ? <Loader active inline="centered" /> : null}
       </Container>
     </TemplatePage>
   );
