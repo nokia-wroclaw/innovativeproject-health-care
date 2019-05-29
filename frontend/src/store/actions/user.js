@@ -83,7 +83,7 @@ export const setUserManagingDetails = user => dispatch => {
 
 export const setUserTribesDetails = user => dispatch => {
   return http
-    .get(`${endpoints.users}/${user.id}/tribes?role=member`)
+    .get(`${endpoints.users}/${user.id}/tribes`)
     .then(response => {
       dispatch({
         type: SET_USER_TRIBES_DETAILS,

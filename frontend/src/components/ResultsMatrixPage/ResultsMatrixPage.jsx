@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from "react";
-import _ from "lodash";
 import { connect } from "react-redux";
 import { Container, Dropdown } from "semantic-ui-react";
-import {
-  setUserManagingDetails,
-  setUserTribesDetails,
-  setUserEditingDetails
-} from "../../store/actions/user";
+import { setUserTribesDetails } from "../../store/actions/user";
 import { setTribeMatrix, setTribePeriods } from "../../store/actions/results";
 import Loader from "../common/Loader";
 import TemplatePage from "../common/TemplatePage/";
@@ -20,8 +15,6 @@ const ResultsMatrixPage = ({ user, tribes, periods, ...props }) => {
 
   useEffect(() => {
     props.setUserTribesDetails(user);
-    props.setUserManagingDetails(user);
-    props.setUserEditingDetails(user);
   }, []);
 
   const handleTribeSelect = (e, { value }) => {
@@ -85,29 +78,16 @@ const ResultsMatrixPage = ({ user, tribes, periods, ...props }) => {
   );
 };
 
-const mapStateToProps = state => {
-  const user = state.user.userData;
-  const managing =
-    user.managing.map(team => ({
-      id: team.tribe_id,
-      name: team.name
-    })) || [];
-  const membering = user.tribes || [];
-  const editing = user.editing || [];
-  const tribes = [...membering, ...editing, ...managing];
-  return {
-    user,
-    tribes: _.uniqBy(tribes, "id"),
-    periods: state.results.tribePeriods
-  };
-};
+const mapStateToProps = state => ({
+  user: state.user.userData,
+  tribes: state.user.userData.tribes || [],
+  periods: state.results.tribePeriods
+});
 
 export default connect(
   mapStateToProps,
   {
-    setUserManagingDetails,
     setUserTribesDetails,
-    setUserEditingDetails,
     setTribeMatrix,
     setTribePeriods
   }
