@@ -25,6 +25,8 @@ const getIcon = (value, trend) => {
   switch (trend) {
     case -1:
       return <Icon name="arrow circle down" color={color} size="large" />;
+    case 0:
+      return <Icon name="arrow circle right" color={color} size="large" />;
     case 1:
       return <Icon name="arrow circle up" color={color} size="large" />;
     default:
