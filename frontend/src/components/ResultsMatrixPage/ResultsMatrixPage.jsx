@@ -17,16 +17,24 @@ const ResultsMatrixPage = ({ user, tribes, periods, ...props }) => {
     props.setUserTribesDetails(user);
   }, []);
 
-  const handleTribeSelect = (e, { value }) => {
+  useEffect(() => {
+    if (tribes[0]) handleTribeSelect(null, { value: tribes[0].id });
+  }, [user.tribes]);
+
+  const fetchMatrix = (tribeId, periodId = null) => {
     setIsLoading(true);
+    props.setTribeMatrix(tribeId, periodId).then(() => setIsLoading(false));
+  };
+
+  const handleTribeSelect = (e, { value }) => {
     setCurrentTribeId(value);
-    props.setTribeMatrix(value).then(() => setIsLoading(false));
+    fetchMatrix(value);
     props.setTribePeriods(value);
   };
+
   const handlePeriodSelect = (e, { value }) => {
-    setIsLoading(true);
     setCurrentPeriodId(value);
-    props.setTribeMatrix(currentTribeId, value).then(() => setIsLoading(false));
+    fetchMatrix(currentTribeId, value);
   };
 
   const getCurrentTribeName = () => {
@@ -81,7 +89,7 @@ const ResultsMatrixPage = ({ user, tribes, periods, ...props }) => {
 const mapStateToProps = state => ({
   user: state.user.userData,
   tribes: state.user.userData.tribes || [],
-  periods: state.results.tribePeriods
+  periods: state.results.tribePeriods || []
 });
 
 export default connect(
