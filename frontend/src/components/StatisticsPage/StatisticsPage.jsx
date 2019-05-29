@@ -1,19 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from "react-redux"
-import TemplatePage from '../common/TemplatePage/';
+import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import TemplatePage from "../common/TemplatePage/";
 import { Container, Dropdown } from "semantic-ui-react";
 import { setTribeHistory } from "../../store/actions/results";
 import { setUserTribesDetails } from "../../store/actions/user";
 import Charts from "./Charts";
 import Loader from "../common/Loader";
 
-const StatisticsPage = ({ user, tribes, ...props}) => {
+const StatisticsPage = ({ user, tribes, ...props }) => {
   const [currentTribeId, setCurrentTribeId] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     props.setUserTribesDetails(user);
   }, []);
+
+  useEffect(() => {
+    if (tribes[0]) handleTribeSelect(null, { value: tribes[0].id });
+  }, [user.tribes]);
 
   const handleTribeSelect = (e, { value }) => {
     setIsLoading(true);
@@ -26,7 +30,7 @@ const StatisticsPage = ({ user, tribes, ...props}) => {
       <Container>
         <br />
         <Dropdown
-          placeholder='Select tribe'
+          placeholder="Select tribe"
           options={tribes.map((tribe, i) => ({
             key: i,
             text: tribe.name,
@@ -47,12 +51,11 @@ const StatisticsPage = ({ user, tribes, ...props}) => {
       </Container>
     </TemplatePage>
   );
-
 };
 
 const mapStateToProps = state => ({
   user: state.user.userData,
-  tribes: state.user.userData.tribes || [],
+  tribes: state.user.userData.tribes || []
 });
 
 export default connect(
@@ -62,4 +65,3 @@ export default connect(
     setTribeHistory
   }
 )(StatisticsPage);
-
