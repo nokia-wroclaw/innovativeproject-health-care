@@ -1,15 +1,15 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Button, Form } from 'semantic-ui-react';
-import Joi from 'joi';
-import colors from '../../../styles/colors';
-import { login } from '../../../store/actions/user';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Button, Form } from "semantic-ui-react";
+import Joi from "joi";
+import colors from "../../../styles/colors";
+import { login } from "../../../store/actions/user";
 
 class LoginForm extends Component {
   state = {
     account: {
-      username: '',
-      password: ''
+      username: "",
+      password: ""
     },
     errors: {},
     loading: false
@@ -36,13 +36,12 @@ class LoginForm extends Component {
     account[input.name] = input.value;
 
     const errors = { ...this.state.errors };
-    if (errors[input.name]) errors[input.name] = '';
+    if (errors[input.name]) errors[input.name] = "";
 
     this.setState({ account, errors });
   };
 
   handleSubmit = async e => {
-    e.preventDefault();
     this.setState({ loading: true });
     const errors = this.validate();
     this.setState({ errors: errors || {} });
@@ -65,26 +64,26 @@ class LoginForm extends Component {
     return (
       <Form onSubmit={this.handleSubmit}>
         <Form.Input
-          name='username'
+          name="username"
           value={account.username}
-          placeholder='name or e-mail'
+          placeholder="name or e-mail"
           onChange={this.handleChange}
           error={Boolean(errors.username)}
         />
         <Form.Input
-          name='password'
+          name="password"
           value={account.password}
-          placeholder='password'
+          placeholder="password"
           onChange={this.handleChange}
-          type='password'
+          type="password"
           error={Boolean(errors.password)}
         />
         {errors.loginFailed && (
-          <p style={{ color: 'red' }}>Invalid username or password</p>
+          <p style={{ color: "red" }}>Invalid username or password</p>
         )}
-        <Form.Field style={{ display: 'flex', justifyContent: 'center' }}>
+        <Form.Field style={{ display: "flex", justifyContent: "center" }}>
           <Button
-            type='submit'
+            type="submit"
             color={colors.formLoginButton}
             loading={loading}
           >
