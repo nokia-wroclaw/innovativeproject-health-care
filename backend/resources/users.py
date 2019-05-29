@@ -124,8 +124,8 @@ class UserTribesRes(Resource):
 
     @roles_allowed(['editor', 'user'])
     def get(self, user_id):
-        """Returns info of all the tribes user is either editing or is
-        member of.
+        """Returns info of all the tribes in which user is editor, manager
+        or member.
         Filtering is done by `role` parameter. Possible values: editor,
         member.
         """
@@ -136,13 +136,13 @@ class UserTribesRes(Resource):
 
         user = User.get_if_exists(user_id)
 
+        tribes = set()
         if 'role' not in request.args:
-            abort(400)
-        req_role = request.args['role']
-
-        if req_role == 'editor':
+            tribes.update(user.editing)
+            tribes.update([l.team.tribe for l in user.teams])
+        elif request.args['role'] == 'editor':
             tribes = user.editing
-        elif req_role == 'member':
+        elif request.args['role'] == 'member':
             tribes = Tribe.query.join(Tribe.teams).join(Team.users) \
                 .filter_by(manager=False).all()
         else:
