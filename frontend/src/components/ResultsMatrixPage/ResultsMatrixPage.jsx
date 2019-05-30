@@ -89,7 +89,7 @@ const ResultsMatrixPage = ({ user, tribes, periods, ...props }) => {
 
 const mapStateToProps = state => ({
   user: state.user.userData,
-  tribes: _.sortBy(state.user.userData.tribes, "id") || [],
+  tribes: state.user.userData.tribes || [],
   periods: state.results.tribePeriods || []
 });
 
