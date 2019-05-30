@@ -5,9 +5,11 @@ import { setSurveys } from "./../../store/actions/surveys";
 import TemplatePage from "../common/TemplatePage/";
 import SurveysTab from "./SurveysTab";
 import { setUserEditingDetails } from "../../store/actions/user";
+import Loader from "../common/Loader";
 
 const EditSurveyPage = ({ user, editing, ...props }) => {
   const [currentTribeId, setCurrentTribeId] = useState(undefined);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (editing[0]) handleTribeSelect(null, { value: editing[0].id });
@@ -19,8 +21,9 @@ const EditSurveyPage = ({ user, editing, ...props }) => {
 
   const handleTribeSelect = (e, { value }) => {
     if (value === currentTribeId) return;
+    setIsLoading(true);
     setCurrentTribeId(value);
-    props.setSurveys(value);
+    props.setSurveys(value).then(() => setIsLoading(false));
   };
 
   return (
@@ -40,10 +43,10 @@ const EditSurveyPage = ({ user, editing, ...props }) => {
         />
         <br />
         <br />
-        {currentTribeId ? (
+        {!isLoading && currentTribeId ? (
           <SurveysTab tribeId={currentTribeId} />
         ) : (
-          <p>Please, select tribe</p>
+          <Loader active inline="centered" />
         )}
       </Container>
     </TemplatePage>

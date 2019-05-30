@@ -45,10 +45,9 @@ const CommentsPage = ({ user, managing, ...props }) => {
         <br />
         {!isLoading && currentTeamId ? (
           <Comments />
-        ) : (
-          <p>Please, select team</p>
+          ) : (
+          <Loader active inline="centered" />
         )}
-        {isLoading ? <Loader active inline="centered" /> : null}
       </Container>
     </TemplatePage>
   );
