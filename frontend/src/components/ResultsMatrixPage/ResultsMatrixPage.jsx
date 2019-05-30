@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { Container, Dropdown } from "semantic-ui-react";
-import _ from "lodash";
 import { setUserTribesDetails } from "../../store/actions/user";
 import { setTribeMatrix, setTribePeriods } from "../../store/actions/results";
 import Loader from "../common/Loader";

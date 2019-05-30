@@ -7,7 +7,7 @@ import Comments from './Comments';
 import TemplatePage from '../common/TemplatePage/';
 import Loader from "../common/Loader";
 
-const CommentsPage = ({ user, managing, answers, ...props }) => {
+const CommentsPage = ({ user, managing, ...props }) => {
   const [currentTeamId, setCurrentTeamId] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -55,8 +55,7 @@ const CommentsPage = ({ user, managing, answers, ...props }) => {
 
 const mapStateToProps = state => ({
   user: state.user.userData,
-  managing: state.user.userData.managing,
-  answers: state.results.team
+  managing: state.user.userData.managing
 });
 
 export default connect(
