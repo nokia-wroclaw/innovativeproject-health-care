@@ -15,7 +15,8 @@ class Survey(db.Model):
     questions = db.relationship('SurveyQuestionLink',
                                 back_populates='survey',
                                 lazy='joined',
-                                cascade='all, delete, delete-orphan')
+                                cascade='all, delete, delete-orphan',
+                                order_by='SurveyQuestionLink.order')
 
     def __init__(self, tribe_id, draft):
         self.tribe_id = tribe_id
@@ -25,10 +26,16 @@ class Survey(db.Model):
     def from_period(period):
         """Returns survey that was active during given period."""
 
-        survey = Survey.query.filter(Survey.tribe_id == period.tribe_id,
-                                     Survey.draft == False,
-                                     Survey.date <= period.date_start)\
-            .order_by(Survey.date.desc()).first()
+        survey = (
+            Survey.query
+            .filter(
+                Survey.tribe_id == period.tribe_id,
+                Survey.draft == False,
+                Survey.date <= period.date_start
+            )
+            .order_by(Survey.date.desc())
+            .first()
+        )
 
         return survey
 

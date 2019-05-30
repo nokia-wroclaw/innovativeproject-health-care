@@ -16,7 +16,8 @@ class User(db.Model):
     teams = db.relationship('TeamUserLink', back_populates='user',
                             lazy='joined', cascade='all, delete, delete-orphan')
     editing = db.relationship('Tribe', back_populates='editors',
-                              secondary='editors', lazy='select')
+                              secondary='editors', lazy='select',
+                              order_by='Tribe.name')
 
     def __init__(self, id, login, mail, full_name, editor):
         self.id = id

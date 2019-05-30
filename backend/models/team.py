@@ -28,9 +28,16 @@ class Team(db.Model):
         if period is None:
             return False
 
-        answered = db.session.query(db.exists().where(db.and_(
-            Answer.team_id == self.id,
-            Answer.date >= period.date_start))).scalar()
+        answered = (
+            db.session.query(
+                db.exists()
+                .where(
+                    Answer.team_id == self.id,
+                    Answer.date >= period.date_start
+                )
+            )
+            .scalar()
+        )
 
         return answered
 
@@ -55,12 +62,16 @@ class Team(db.Model):
         answers = []
         for l in survey.questions:
             question = l.question
-            answer = Answer.query.filter(
-                Answer.question_id == question.id,
-                Answer.team_id == self.id,
-                Answer.date >= date_start,
-                Answer.date < date_end
-            ).one_or_none()
+            answer = (
+                Answer.query
+                .filter(
+                    Answer.question_id == question.id,
+                    Answer.team_id == self.id,
+                    Answer.date >= date_start,
+                    Answer.date < date_end
+                )
+                .one_or_none()
+            )
             if answer is None:
                 continue
 
@@ -90,11 +101,15 @@ class Team(db.Model):
             return None
 
         # Fetch all answers from this team in given period
-        answers = Answer.query.filter(
-            Answer.team_id == self.id,
-            Answer.date >= date_start,
-            Answer.date < date_end
-        ).all()
+        answers = (
+            Answer.query
+            .filter(
+                Answer.team_id == self.id,
+                Answer.date >= date_start,
+                Answer.date < date_end
+            )
+            .all()
+        )
 
         # Calculate the average
         total = sum(a.answer for a in answers)
@@ -117,8 +132,7 @@ class Team(db.Model):
         404 status otherwise.
         """
 
-        tribe = Team.query.filter_by(id=team_id,
-                                     deleted=False).first()
+        tribe = Team.query.filter_by(id=team_id, deleted=False).first()
         if tribe is None:
             abort(404, 'Could not find team with given id.')
         return tribe

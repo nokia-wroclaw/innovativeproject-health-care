@@ -23,15 +23,27 @@ class EditorsRes(Resource):
 
             # Add a wildcard at the end of the phrase
             phrase += '%'
-            editors = User.query.filter(User.editor == True,
-                                        db.or_(
-                                            User.full_name.ilike(phrase),
-                                            User.login.ilike(phrase),
-                                            User.mail.ilike(phrase)
-                                        ))
+            editors = (
+                User.query
+                .filter(
+                    User.editor == True,
+                    db.or_(
+                        User.full_name.ilike(phrase),
+                        User.login.ilike(phrase),
+                        User.mail.ilike(phrase)
+                    )
+                )
+                .order_by(User.full_name.asc())
+                .all()
+            )
         else:
             # If there is no search phrase
-            editors = User.query.filter_by(editor=True).all()
+            editors = (
+                User.query
+                .filter_by(editor=True)
+                .order_by(User.full_name.asc())
+                .all()
+            )
 
         response = jsonify([e.serialize() for e in editors])
         response.status_code = 200

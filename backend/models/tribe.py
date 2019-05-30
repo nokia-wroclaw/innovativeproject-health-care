@@ -12,13 +12,16 @@ class Tribe(db.Model):
     name = db.Column(db.String(64))
 
     teams = db.relationship('Team', back_populates='tribe', lazy='select',
-                            cascade='all, delete, delete-orphan')
+                            cascade='all, delete, delete-orphan',
+                            order_by='Team.name')
     periods = db.relationship('Period', lazy='select',
-                              cascade='all, delete, delete-orphan')
+                              cascade='all, delete, delete-orphan',
+                              order_by='Period.date_start')
     surveys = db.relationship('Survey', back_populates='tribe', lazy='select',
                               cascade='all, delete, delete-orphan')
     editors = db.relationship('User', back_populates='editing',
-                              secondary='editors', lazy='joined')
+                              secondary='editors', lazy='joined',
+                              order_by='User.full_name')
 
     def __init__(self, name):
         self.name = name
@@ -33,30 +36,54 @@ class Tribe(db.Model):
         return [e.id for e in self.editors]
 
     def draft_survey(self):
-        return Survey.query.filter_by(tribe_id=self.id, draft=True)\
+        return (
+            Survey.query
+            .filter_by(tribe_id=self.id, draft=True)
             .one_or_none()
+        )
 
     def active_survey(self):
-        return Survey.query.filter(Survey.tribe_id == self.id,
-                                   Survey.draft == False,
-                                   Survey.date <= date.today())\
-            .order_by(Survey.date.desc()).first()
+        return (
+            Survey.query
+            .filter(
+                Survey.tribe_id == self.id,
+                Survey.draft == False,
+                Survey.date <= date.today()
+            )
+            .order_by(Survey.date.desc())
+            .first()
+        )
 
     def next_survey(self):
-        return Survey.query.filter(Survey.tribe_id == self.id,
-                                   Survey.draft == False,
-                                   Survey.date > date.today())\
-            .order_by(Survey.date.desc()).first()
+        return (
+            Survey.query
+            .filter(
+                Survey.tribe_id == self.id,
+                Survey.draft == False,
+                Survey.date > date.today()
+            )
+            .order_by(Survey.date.desc())
+            .first()
+        )
 
     def current_period(self):
-        return Period.query.filter(
-            db.and_(Period.tribe_id == self.id,
-                    Period.date_start <= date.today()))\
-            .order_by(Period.date_start.desc()).first()
+        return (
+            Period.query
+            .filter(
+                Period.tribe_id == self.id,
+                Period.date_start <= date.today()
+            )
+            .order_by(Period.date_start.desc())
+            .first()
+        )
 
     def latest_period(self):
-        return Period.query.filter_by(tribe_id=self.id)\
-            .order_by(Period.date_start.desc()).first()
+        return (
+            Period.query
+            .filter_by(tribe_id=self.id)
+            .order_by(Period.date_start.desc())
+            .first()
+        )
 
     def update_periods(self):
         active_survey = self.active_survey()
@@ -89,14 +116,25 @@ class Tribe(db.Model):
 
         if period == self.current_period():
             # If current period is requested use current list of teams
-            teams = self.teams
+            teams = (
+                Team.query
+                .filter_by(tribe_id=self.id, deleted=False)
+                .order_by(Team.name.asc())
+                .all()
+            )
         else:
             # Otherwise create list of teams basing on the answers
-            teams = Team.query.join(Team.answers).filter(
+            teams = (
+                Team.query
+                .join(Team.answers)
+                .filter(
                     Team.tribe_id == self.id,
                     Answer.date >= date_start,
                     Answer.date < date_end
-                ).distinct(Team.id).all()
+                )
+                .order_by(Team.name.asc())
+                .all()
+            )
 
         survey = Survey.from_period(period)
         questions = survey.questions
@@ -136,14 +174,25 @@ class Tribe(db.Model):
 
         if period == self.current_period():
             # If current period is requested use current list of teams
-            teams = self.teams
+            teams = (
+                Team.query
+                .filter_by(tribe_id=self.id, deleted=False)
+                .order_by(Team.name.asc())
+                .all()
+            )
         else:
             # Otherwise create list of teams basing on the answers
-            teams = Team.query.join(Team.answers).filter(
-                Team.tribe_id == self.id,
-                Answer.date >= period.date_start,
-                Answer.date < period.date_end()
-            ).distinct(Team.id).all()
+            teams = (
+                Team.query
+                .join(Team.answers)
+                .filter(
+                    Team.tribe_id == self.id,
+                    Answer.date >= period.date_start,
+                    Answer.date < period.date_end()
+                )
+                .order_by(Team.name.asc())
+                .all()
+            )
 
         averages = []
         for t in teams:

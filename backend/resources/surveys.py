@@ -28,8 +28,11 @@ class TribeSurveysRes(Resource):
         period_len = json['period_len']
 
         # Fetch current draft survey if there is one
-        draft = Survey.query.filter_by(tribe_id=tribe_id, draft=True) \
+        draft = (
+            Survey.query
+            .filter_by(tribe_id=tribe_id, draft=True)
             .one_or_none()
+        )
 
         # Create new draft if there is no existing one
         created_f = False
@@ -297,9 +300,15 @@ class TribePeriodsRes(Resource):
         if not Survey.validate_access(tribe_id, current_user):
             abort(403)
 
-        periods = Period.query.filter(Period.tribe_id == tribe_id,
-                                      Period.date_start <= date.today()) \
-            .order_by(Period.date_start.desc()).all()
+        periods = (
+            Period.query
+            .filter(
+                Period.tribe_id == tribe_id,
+                Period.date_start <= date.today()
+            )
+            .order_by(Period.date_start.desc())
+            .all()
+        )
 
         response = jsonify([p.serialize() for p in periods])
         response.status_code = 200

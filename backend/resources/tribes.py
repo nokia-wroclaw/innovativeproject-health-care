@@ -38,7 +38,7 @@ class TribesRes(Resource):
     def get(self):
         """Returns all tribes to which user sending request has rights."""
 
-        tribes = Tribe.query.all()
+        tribes = Tribe.query.order_by(Tribe.name).all()
 
         if current_user.is_admin() is False:
             tribes = [t for t in tribes if current_user.id in t.editors_ids()]

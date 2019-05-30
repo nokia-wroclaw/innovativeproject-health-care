@@ -66,6 +66,7 @@ class UsersRes(Resource):
         ldap = LdapConn()
         matches = ldap.search(phrase)
         users = [User.from_ldap(m) for m in matches]
+        users.sort(key=lambda u: u.full_name)
 
         response = jsonify([u.serialize(True) for u in users])
         response.status_code = 200
@@ -112,6 +113,7 @@ class UserTeamsRes(Resource):
         req_role = True if role == 'manager' else False
 
         team_links = [l for l in user.teams if l.manager is req_role]
+        team_links.sort(key=lambda l: l.team.name)
 
         response = jsonify([l.team.serialize() for l in team_links])
         response.status_code = 200
@@ -143,11 +145,20 @@ class UserTribesRes(Resource):
         elif request.args['role'] == 'editor':
             tribes = user.editing
         elif request.args['role'] == 'member':
-            tribes = Tribe.query.join(Tribe.teams).join(Team.users) \
-                .filter_by(manager=False).all()
+            tribes = (
+                Tribe.query
+                .join(Tribe.teams)
+                .join(Team.users)
+                .filter_by(manager=False)
+                .order_by(Tribe.name)
+                .all()
+            )
         else:
             abort(403)
             return
+
+        tribes = list(tribes)
+        tribes.sort(key=lambda t: t.name)
 
         response = jsonify([t.serialize() for t in tribes])
         response.status_code = 200

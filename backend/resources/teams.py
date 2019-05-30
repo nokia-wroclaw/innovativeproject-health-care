@@ -42,8 +42,12 @@ class TeamsRes(Resource):
 
         Tribe.get_if_exists(tribe_id)
 
-        teams = Team.query.filter_by(tribe_id=tribe_id,
-                                     deleted=False).all()
+        teams = (
+            Team.query
+            .filter_by(tribe_id=tribe_id, deleted=False)
+            .order_by(Team.name.asc())
+            .all()
+        )
 
         response = jsonify([t.serialize() for t in teams])
         response.status_code = 200
@@ -144,8 +148,13 @@ class TeamManagersRes(Resource):
         team = Team.get_if_exists(team_id)
         Tribe.validate_access(team.tribe_id, current_user)
 
-        manager_links = TeamUserLink.query.filter_by(team_id=team_id,
-                                                     manager=True).all()
+        manager_links = (
+            TeamUserLink.query
+            .filter_by(team_id=team_id, manager=True)
+            .join(TeamUserLink.user)
+            .order_by(User.full_name.asc())
+            .all()
+        )
 
         response = jsonify([l.user.serialize() for l in manager_links])
         response.status_code = 200
@@ -192,9 +201,11 @@ class TeamManagerRes(Resource):
         user = User.get_if_exists(user_id)
         Tribe.validate_access(team.tribe_id, current_user)
 
-        manager_link = TeamUserLink.query.filter_by(user_id=user_id,
-                                                    team_id=team_id,
-                                                    manager=True).first()
+        manager_link = (
+            TeamUserLink.query
+            .filter_by(user_id=user_id, team_id=team_id, manager=True)
+            .first()
+        )
 
         if manager_link is None:
             abort(404, 'Requested manager does not exist.')
@@ -222,8 +233,13 @@ class TeamUsersRes(Resource):
         team = Team.get_if_exists(team_id)
         Tribe.validate_access(team.tribe_id, current_user)
 
-        user_links = TeamUserLink.query.filter_by(team_id=team_id,
-                                                  manager=False).all()
+        user_links = (
+            TeamUserLink.query
+            .filter_by(team_id=team_id, manager=False)
+            .join(TeamUserLink.user)
+            .order_by(User.full_name)
+            .all()
+        )
 
         response = jsonify([l.user.serialize() for l in user_links])
         response.status_code = 200
@@ -270,9 +286,11 @@ class TeamUserRes(Resource):
         user = User.get_if_exists(user_id)
         Tribe.validate_access(team.tribe_id, current_user)
 
-        user_link = TeamUserLink.query.filter_by(user_id=user_id,
-                                                 team_id=team_id,
-                                                 manager=False).first()
+        user_link = (
+            TeamUserLink.query
+            .filter_by(user_id=user_id, team_id=team_id, manager=False)
+            .first()
+        )
 
         if user_link is None:
             abort(404, 'Requested member does not exist.')
