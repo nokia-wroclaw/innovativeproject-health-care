@@ -41,7 +41,6 @@ const StatisticsPage = ({ user, tribes, ...props }) => {
           value={currentTribeId}
         />
         <br />
-        <br />
         {!isLoading && currentTribeId ? (
           <Charts />
         ) : (
