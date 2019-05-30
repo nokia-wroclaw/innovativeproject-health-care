@@ -5,6 +5,7 @@ from flask_jwt_extended import create_access_token, current_user
 from backend.common.permissions import roles_allowed
 from backend.common.ldapconn import LdapConn
 from backend.models import User, Tribe, Team
+from backend.app import app
 
 
 class AuthRes(Resource):
@@ -41,7 +42,8 @@ class AuthRes(Resource):
         if (user.in_db() or user.is_admin()) is False:
             abort(401)
 
-        token = create_access_token(user, expires_delta=timedelta(hours=1))
+        exp = app.config['JWT_EXP']
+        token = create_access_token(user, expires_delta=timedelta(hours=exp))
 
         response = jsonify({'access_token': token})
         response.status_code = 200

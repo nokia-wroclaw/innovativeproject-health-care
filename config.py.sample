@@ -1,6 +1,12 @@
+# App settings
+# List of admin logins
+APP_ADMINS = ['admin']
+
 # JWT
 # Secret key
 JWT_SECRET_KEY = 'secret-key'
+# Token expiration time in hours
+JWT_EXP = 1
 
 # Postgres connection
 # DB server URL
