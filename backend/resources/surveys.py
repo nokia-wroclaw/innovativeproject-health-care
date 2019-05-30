@@ -154,6 +154,9 @@ class SurveyRes(Resource):
 
         survey = Survey.get_if_exists(survey_id)
 
+        if not Survey.validate_access(survey.tribe_id, current_user):
+            abort(403)
+
         json = request.get_json()
         if 'draft' not in json or json['draft'] is not False:
             abort(400, 'Invalid survey data.')
@@ -208,6 +211,42 @@ class SurveyRes(Resource):
         db.session.commit()
         response = jsonify(survey.serialize())
         response.status_code = 200
+        return response
+
+    @roles_allowed(['editor'])
+    def delete(self, survey_id):
+        """Deletes survey with specified id. Only pending surveys are possible
+        to delete."""
+
+        survey = Survey.get_if_exists(survey_id)
+
+        if not Survey.validate_access(survey.tribe_id, current_user):
+            abort(403)
+
+        # If requested survey is not next survey for the tribe
+        if (survey.draft is True or survey.date is None or
+                survey.date <= date.today()):
+            abort(400)
+
+        # Delete the survey
+        db.session.delete(survey)
+
+        # Get current draft and update its questions to the current newest
+        # survey (the active one)
+        tribe = Tribe.query.filter_by(id=survey.tribe_id).one()
+        active = tribe.active_survey()
+        draft = tribe.draft_survey()
+        draft.questions.clear()
+        for q in active.questions:
+            new_link = SurveyQuestionLink(survey_id=draft.id,
+                                          question_id=q.question_id,
+                                          order=q.order)
+            draft.questions.append(new_link)
+
+        db.session.add(draft)
+        db.session.commit()
+        response = Response()
+        response.status_code = 204
         return response
 
 
