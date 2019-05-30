@@ -6,8 +6,12 @@ import TemplatePage from "../common/TemplatePage/";
 import SurveysTab from "./SurveysTab";
 import { setUserEditingDetails } from "../../store/actions/user";
 
-const EditSurveyPage = ({ user, ...props }) => {
+const EditSurveyPage = ({ user, editing, ...props }) => {
   const [currentTribeId, setCurrentTribeId] = useState(undefined);
+
+  useEffect(() => {
+    if (editing[0]) handleTribeSelect(null, { value: editing[0].id });
+  }, [editing]);
 
   useEffect(() => {
     props.setUserEditingDetails(user);
@@ -24,7 +28,7 @@ const EditSurveyPage = ({ user, ...props }) => {
         <br />
         <Dropdown
           placeholder="Select tribe"
-          options={props.editing.map((tribe, i) => ({
+          options={editing.map((tribe, i) => ({
             key: i,
             text: tribe.name,
             value: tribe.id

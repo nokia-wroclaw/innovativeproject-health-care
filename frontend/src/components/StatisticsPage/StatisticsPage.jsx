@@ -12,12 +12,12 @@ const StatisticsPage = ({ user, tribes, ...props }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    props.setUserTribesDetails(user);
-  }, []);
+    if (tribes[0]) handleTribeSelect(null, { value: tribes[0].id });
+  }, [tribes]);
 
   useEffect(() => {
-    if (tribes[0]) handleTribeSelect(null, { value: tribes[0].id });
-  }, [user.tribes]);
+    props.setUserTribesDetails(user);
+  }, []);
 
   const handleTribeSelect = (e, { value }) => {
     setIsLoading(true);

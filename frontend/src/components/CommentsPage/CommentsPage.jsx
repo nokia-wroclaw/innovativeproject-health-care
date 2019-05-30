@@ -7,9 +7,13 @@ import Comments from './Comments';
 import TemplatePage from '../common/TemplatePage/';
 import Loader from "../common/Loader";
 
-const CommentsPage = ({ user, ...props }) => {
+const CommentsPage = ({ user, managing, answers, ...props }) => {
   const [currentTeamId, setCurrentTeamId] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (managing[0]) handleTeamSelect(null, { value: managing[0].id } )
+  }, [managing]);
 
   useEffect(() => {
     props.setUserManagingDetails(user);
@@ -27,7 +31,7 @@ const CommentsPage = ({ user, ...props }) => {
         <br />
         <Dropdown
           placeholder='Select team'
-          options={props.managing.map((team, i) => ({
+          options={managing.map((team, i) => ({
             key: i,
             text: team.name,
             value: team.id
@@ -51,7 +55,8 @@ const CommentsPage = ({ user, ...props }) => {
 
 const mapStateToProps = state => ({
   user: state.user.userData,
-  managing: state.user.userData.managing
+  managing: state.user.userData.managing,
+  answers: state.results.team
 });
 
 export default connect(

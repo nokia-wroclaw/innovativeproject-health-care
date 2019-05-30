@@ -11,6 +11,11 @@ import TemplatePage from '../common/TemplatePage/';
 import Loader from './../common/Loader/';
 
 const SurveyPage = ({ user, teams, loading, currentTeamId, ...props }) => {
+
+  useEffect(() => {
+    if (teams[0]) handleTeamSelect(null, { value: teams[0].id } )
+  }, [teams]);
+
   useEffect(() => {
     props.setUserTeamsDetails(user);
   }, []);
