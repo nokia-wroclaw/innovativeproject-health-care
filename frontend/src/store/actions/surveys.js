@@ -7,7 +7,7 @@ import {
   DELETE_QUESTION_FROM_DRAFT_SURVEY,
   UPDATE_QUESTION_IN_DRAFT_SURVEY,
   SET_SURVEYS_ARE_LOADING,
-  SET_DRAFT_SURVEY_PERIOD
+  SET_DRAFT_SURVEY_PERIOD, DELETE_SURVEY
 } from "./types";
 import { endpoints, http } from "../../services/http";
 import { handleFetchingError } from "./general";
@@ -111,6 +111,20 @@ export const saveAndPublishDraftSurvey = (tribe_id, survey) => dispatch => {
     .then(response => {
       dispatch(updateDraftSurvey(response.data));
       dispatch(publishDraftSurvey(response.data));
+    })
+    .catch(error => {
+      dispatch(handleFetchingError(error));
+    });
+};
+
+export const deleteSurvey = (survey) => dispatch => {
+  return http
+    .delete(`${endpoints.surveys}/${survey.id}`)
+    .then(() => {
+      dispatch({
+        type: DELETE_SURVEY,
+        payload: { survey }
+      });
     })
     .catch(error => {
       dispatch(handleFetchingError(error));
