@@ -20,6 +20,7 @@ const StatisticsPage = ({ user, tribes, ...props }) => {
   }, []);
 
   const handleTribeSelect = (e, { value }) => {
+    if (value === currentTribeId) return;
     setIsLoading(true);
     setCurrentTribeId(value);
     props.setTribeHistory(value, 6).then(() => setIsLoading(false));

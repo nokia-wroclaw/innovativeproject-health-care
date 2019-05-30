@@ -18,6 +18,7 @@ const EditSurveyPage = ({ user, editing, ...props }) => {
   }, []);
 
   const handleTribeSelect = (e, { value }) => {
+    if (value === currentTribeId) return;
     setCurrentTribeId(value);
     props.setSurveys(value);
   };

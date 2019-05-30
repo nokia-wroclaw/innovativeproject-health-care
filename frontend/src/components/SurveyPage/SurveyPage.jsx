@@ -21,6 +21,7 @@ const SurveyPage = ({ user, teams, loading, currentTeamId, ...props }) => {
   }, []);
 
   const handleTeamSelect = (e, { value }) => {
+    if (value === currentTeamId) return;
     props.setCurrentSurveyTeamId(value);
     const { tribe_id } = teams.find(team => team.id === value);
     props.setCurrentSurvey(tribe_id);

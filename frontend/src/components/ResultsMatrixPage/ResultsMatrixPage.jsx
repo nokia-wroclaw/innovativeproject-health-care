@@ -27,12 +27,14 @@ const ResultsMatrixPage = ({ user, tribes, periods, ...props }) => {
   };
 
   const handleTribeSelect = (e, { value }) => {
+    if (value === currentTribeId) return;
     setCurrentTribeId(value);
     fetchMatrix(value);
     props.setTribePeriods(value);
   };
 
   const handlePeriodSelect = (e, { value }) => {
+    if (value === currentPeriodId) return;
     setCurrentPeriodId(value);
     fetchMatrix(currentTribeId, value);
   };

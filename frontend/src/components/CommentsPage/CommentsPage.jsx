@@ -20,6 +20,7 @@ const CommentsPage = ({ user, managing, ...props }) => {
   }, []);
 
   const handleTeamSelect = (e, { value }) => {
+    if (value === currentTeamId) return;
     setIsLoading(true);
     setCurrentTeamId(value);
     props.setTeamAnswers(value).then(() => setIsLoading(false));
