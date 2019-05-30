@@ -138,7 +138,7 @@ describe("async actions", () => {
     const newName = "tribe 2";
     mockAxios.put.mockImplementationOnce(() => {
       httpCallCount.put++;
-      return Promise.resolve({ data: {} });
+      return Promise.resolve();
     });
 
     const expectedActions = [
@@ -162,7 +162,7 @@ describe("async actions", () => {
     const editor = { id: 2, name: "John Smith" };
     mockAxios.put.mockImplementationOnce(() => {
       httpCallCount.put++;
-      return Promise.resolve({ data: {} });
+      return Promise.resolve();
     });
 
     const expectedActions = [
@@ -185,7 +185,7 @@ describe("async actions", () => {
     const tribe = { id: 1, name: "tribe 1", editors: [editor] };
     mockAxios.delete.mockImplementationOnce(() => {
       httpCallCount.delete++;
-      return Promise.resolve({ data: {} });
+      return Promise.resolve();
     });
 
     const expectedActions = [
