@@ -106,7 +106,7 @@ export const updateTribeName = (tribe, newName) => dispatch => {
 
 export const addEditorToTribe = (tribe, editor) => dispatch => {
   return http
-    .put(`${endpoints.tribes}/${tribe.id}/editors/${editor.id}`, {})
+    .put(`${endpoints.tribes}/${tribe.id}/editors/${editor.id}`)
     .then(() => {
       dispatch({
         type: ADD_EDITOR_TO_TRIBE,

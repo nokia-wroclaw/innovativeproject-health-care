@@ -1,31 +1,16 @@
 import confiureMockStore from "redux-mock-store";
 import thunk from "redux-thunk";
-import moxios from "moxios";
 import * as actions from "./../user";
+import * as auth from "../../../services/auth";
 import { SET_USER, LOGOUT, OPTION_SELECTED, CLOSE_LOGIN_MODAL } from "../types";
 
 const middlewares = [thunk];
 const mockStore = confiureMockStore(middlewares);
 
 describe("async actions", () => {
-  beforeEach(() => {
-    moxios.install();
-  });
-  afterEach(() => {
-    moxios.uninstall();
-  });
-
-  it("login sholud create SET_USER and CLOSE_LOGIN_MODAL when loging in has been done", () => {
+  it("login sholud create SET_USER and CLOSE_LOGIN_MODAL when loging in has been done", async () => {
     const user = { id: 1234, name: "John Smith", roles: ["user"] };
-    const jwt =
-      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjp7ImlkIjoxMjM0LCJuYW1lIjoiSm9obiBTbWl0aCIsInJvbGVzIjpbInVzZXIiXX19.7cVQobl2mowgk0zbOkQplsynTFMMmqWxhy3GUzBGpKk";
-    moxios.wait(() => {
-      const request = moxios.requests.mostRecent();
-      request.respondWith({
-        status: 200,
-        response: { access_token: jwt }
-      });
-    });
+    auth.login = jest.fn((username, password) => Promise.resolve(user));
     const expectedActions = [
       {
         type: SET_USER,
@@ -37,10 +22,10 @@ describe("async actions", () => {
     ];
 
     const store = mockStore({ user: {} });
-
-    return store.dispatch(actions.login("john", "password")).then(() => {
-      expect(store.getActions()).toEqual(expectedActions);
-    });
+    await store.dispatch(actions.login("john", "password"));
+    expect(store.getActions()).toEqual(expectedActions);
+    expect(auth.login).toHaveBeenCalledTimes(1);
+    expect(auth.login).toHaveBeenCalledWith("john", "password");
   });
 });
 

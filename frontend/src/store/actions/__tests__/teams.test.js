@@ -1,29 +1,32 @@
+import mockAxios from "axios";
 import confiureMockStore from "redux-mock-store";
 import thunk from "redux-thunk";
-import moxios from "moxios";
 import * as actions from "./../teams";
 import * as types from "../types";
+import { endpoints } from "./../../../services/http";
 
 const middlewares = [thunk];
 const mockStore = confiureMockStore(middlewares);
 
+const httpCallCount = {
+  get: 0,
+  post: 0,
+  put: 0,
+  delete: 0
+};
+
 describe("async actions", () => {
+  let store;
   beforeEach(() => {
-    moxios.install();
-  });
-  afterEach(() => {
-    moxios.uninstall();
+    store = mockStore();
   });
 
-  it("setTeamManagers should create SET_TEAM_MANAGERS when fetching team's managers has been done", () => {
+  it("setTeamManagers should create SET_TEAM_MANAGERS when fetching team's managers has been done", async () => {
     const team = { id: 1, name: "team 1", managers: [] };
     const managers = [{ id: 2, name: "John Smith" }];
-    moxios.wait(() => {
-      const request = moxios.requests.mostRecent();
-      request.respondWith({
-        status: 200,
-        response: managers
-      });
+    mockAxios.get.mockImplementationOnce(() => {
+      httpCallCount.get++;
+      return Promise.resolve({ data: managers });
     });
 
     const expectedActions = [
@@ -33,22 +36,20 @@ describe("async actions", () => {
       }
     ];
 
-    const store = mockStore({ tribes: [] });
-
-    return store.dispatch(actions.setTeamManagers(team)).then(() => {
-      expect(store.getActions()).toEqual(expectedActions);
-    });
+    await store.dispatch(actions.setTeamManagers(team));
+    expect(store.getActions()).toEqual(expectedActions);
+    expect(mockAxios.get).toHaveBeenCalledTimes(httpCallCount.get);
+    expect(mockAxios.get).toHaveBeenLastCalledWith(
+      `${endpoints.teams}/${team.id}/managers`
+    );
   });
 
-  it("setTeamMembers should create SET_TEAM_MEMBERS when fetching team's memberss has been done", () => {
+  it("setTeamMembers should create SET_TEAM_MEMBERS when fetching team's memberss has been done", async () => {
     const team = { id: 1, name: "team 1", managers: [] };
     const members = [{ id: 2, name: "John Smith" }];
-    moxios.wait(() => {
-      const request = moxios.requests.mostRecent();
-      request.respondWith({
-        status: 200,
-        response: members
-      });
+    mockAxios.get.mockImplementationOnce(() => {
+      httpCallCount.get++;
+      return Promise.resolve({ data: members });
     });
 
     const expectedActions = [
@@ -58,21 +59,20 @@ describe("async actions", () => {
       }
     ];
 
-    const store = mockStore({ tribes: [] });
-
-    return store.dispatch(actions.setTeamMembers(team)).then(() => {
-      expect(store.getActions()).toEqual(expectedActions);
-    });
+    await store.dispatch(actions.setTeamMembers(team));
+    expect(store.getActions()).toEqual(expectedActions);
+    expect(mockAxios.get).toHaveBeenCalledTimes(httpCallCount.get);
+    expect(mockAxios.get).toHaveBeenLastCalledWith(
+      `${endpoints.teams}/${team.id}/users`
+    );
   });
 
-  it("updateTeamName should create UPDATE_TEAM_NAME when updating team's name has been done", () => {
-    const team = { id: 1, name: "team 1" };
+  it("updateTeamName should create UPDATE_TEAM_NAME when updating team's name has been done", async () => {
+    const team = { id: 1, name: "team 1", tribe_id: 1 };
     const newName = "team 2";
-    moxios.wait(() => {
-      const request = moxios.requests.mostRecent();
-      request.respondWith({
-        status: 200
-      });
+    mockAxios.put.mockImplementationOnce(() => {
+      httpCallCount.put++;
+      return Promise.resolve();
     });
 
     const expectedActions = [
@@ -82,20 +82,23 @@ describe("async actions", () => {
       }
     ];
 
-    const store = mockStore({ tribes: [] });
-
-    return store.dispatch(actions.updateTeamName(team, newName)).then(() => {
-      expect(store.getActions()).toEqual(expectedActions);
-    });
+    await store.dispatch(actions.updateTeamName(team, newName));
+    expect(store.getActions()).toEqual(expectedActions);
+    expect(mockAxios.put).toHaveBeenCalledTimes(httpCallCount.put);
+    expect(mockAxios.put).toHaveBeenLastCalledWith(
+      `${endpoints.teams}/${team.id}`,
+      {
+        tribe_id: team.tribe_id,
+        name: newName
+      }
+    );
   });
 
-  it("deleteTeam should create DELETE_TEAM when deleting team has been done", () => {
+  it("deleteTeam should create DELETE_TEAM when deleting team has been done", async () => {
     const team = { id: 1, name: "team 1" };
-    moxios.wait(() => {
-      const request = moxios.requests.mostRecent();
-      request.respondWith({
-        status: 200
-      });
+    mockAxios.delete.mockImplementationOnce(() => {
+      httpCallCount.delete++;
+      return Promise.resolve();
     });
 
     const expectedActions = [
@@ -105,21 +108,20 @@ describe("async actions", () => {
       }
     ];
 
-    const store = mockStore({ tribes: [] });
-
-    return store.dispatch(actions.deleteTeam(team)).then(() => {
-      expect(store.getActions()).toEqual(expectedActions);
-    });
+    await store.dispatch(actions.deleteTeam(team));
+    expect(store.getActions()).toEqual(expectedActions);
+    expect(mockAxios.delete).toHaveBeenCalledTimes(httpCallCount.delete);
+    expect(mockAxios.delete).toHaveBeenLastCalledWith(
+      `${endpoints.teams}/${team.id}`
+    );
   });
 
-  it("addManagerToTeam should create ADD_MANAGER_TO_TEAM when adding manager to team has been done", () => {
+  it("addManagerToTeam should create ADD_MANAGER_TO_TEAM when adding manager to team has been done", async () => {
     const team = { id: 1, name: "team 1", managers: [] };
     const manager = { id: 2, name: "John Smith" };
-    moxios.wait(() => {
-      const request = moxios.requests.mostRecent();
-      request.respondWith({
-        status: 200
-      });
+    mockAxios.put.mockImplementationOnce(() => {
+      httpCallCount.put++;
+      return Promise.resolve();
     });
 
     const expectedActions = [
@@ -129,21 +131,20 @@ describe("async actions", () => {
       }
     ];
 
-    const store = mockStore({ tribes: [] });
-
-    return store.dispatch(actions.addManagerToTeam(team, manager)).then(() => {
-      expect(store.getActions()).toEqual(expectedActions);
-    });
+    await store.dispatch(actions.addManagerToTeam(team, manager));
+    expect(store.getActions()).toEqual(expectedActions);
+    expect(mockAxios.put).toHaveBeenCalledTimes(httpCallCount.put);
+    expect(mockAxios.put).toHaveBeenLastCalledWith(
+      `${endpoints.teams}/${team.id}/managers/${manager.id}`
+    );
   });
 
-  it("deleteManagerFromTeam should create DELETE_MANAGER_FROM_TEAM when deleting manager from team has been done", () => {
+  it("deleteManagerFromTeam should create DELETE_MANAGER_FROM_TEAM when deleting manager from team has been done", async () => {
     const manager = { id: 2, name: "John Smith" };
     const team = { id: 1, name: "team 1", managers: [manager] };
-    moxios.wait(() => {
-      const request = moxios.requests.mostRecent();
-      request.respondWith({
-        status: 200
-      });
+    mockAxios.delete.mockImplementationOnce(() => {
+      httpCallCount.delete++;
+      return Promise.resolve();
     });
 
     const expectedActions = [
@@ -153,23 +154,20 @@ describe("async actions", () => {
       }
     ];
 
-    const store = mockStore({ tribes: [] });
-
-    return store
-      .dispatch(actions.deleteManagerFromTeam(team, manager))
-      .then(() => {
-        expect(store.getActions()).toEqual(expectedActions);
-      });
+    await store.dispatch(actions.deleteManagerFromTeam(team, manager));
+    expect(store.getActions()).toEqual(expectedActions);
+    expect(mockAxios.delete).toHaveBeenCalledTimes(httpCallCount.delete);
+    expect(mockAxios.delete).toHaveBeenLastCalledWith(
+      `${endpoints.teams}/${team.id}/managers/${manager.id}`
+    );
   });
 
-  it("addMemberToTeam should create ADD_MEMBER_TO_TEAM when adding user to team has been done", () => {
+  it("addMemberToTeam should create ADD_MEMBER_TO_TEAM when adding user to team has been done", async () => {
     const team = { id: 1, name: "team 1", users: [] };
     const user = { id: 2, name: "John Smith" };
-    moxios.wait(() => {
-      const request = moxios.requests.mostRecent();
-      request.respondWith({
-        status: 200
-      });
+    mockAxios.put.mockImplementationOnce(() => {
+      httpCallCount.put++;
+      return Promise.resolve();
     });
 
     const expectedActions = [
@@ -179,21 +177,20 @@ describe("async actions", () => {
       }
     ];
 
-    const store = mockStore({ tribes: [] });
-
-    return store.dispatch(actions.addMemberToTeam(team, user)).then(() => {
-      expect(store.getActions()).toEqual(expectedActions);
-    });
+    await store.dispatch(actions.addMemberToTeam(team, user));
+    expect(store.getActions()).toEqual(expectedActions);
+    expect(mockAxios.put).toHaveBeenCalledTimes(httpCallCount.put);
+    expect(mockAxios.put).toHaveBeenLastCalledWith(
+      `${endpoints.teams}/${team.id}/users/${user.id}`
+    );
   });
 
-  it("deleteMemberFromTeam should create DELETE_MEMBER_FROM_TEAM when deleting user from team has been done", () => {
+  it("deleteMemberFromTeam should create DELETE_MEMBER_FROM_TEAM when deleting user from team has been done", async () => {
     const user = { id: 2, name: "John Smith" };
     const team = { id: 1, name: "team 1", users: [user] };
-    moxios.wait(() => {
-      const request = moxios.requests.mostRecent();
-      request.respondWith({
-        status: 200
-      });
+    mockAxios.delete.mockImplementationOnce(() => {
+      httpCallCount.delete++;
+      return Promise.resolve();
     });
 
     const expectedActions = [
@@ -203,10 +200,11 @@ describe("async actions", () => {
       }
     ];
 
-    const store = mockStore({ tribes: [] });
-
-    return store.dispatch(actions.deleteMemberFromTeam(team, user)).then(() => {
-      expect(store.getActions()).toEqual(expectedActions);
-    });
+    await store.dispatch(actions.deleteMemberFromTeam(team, user));
+    expect(store.getActions()).toEqual(expectedActions);
+    expect(mockAxios.delete).toHaveBeenCalledTimes(httpCallCount.delete);
+    expect(mockAxios.delete).toHaveBeenLastCalledWith(
+      `${endpoints.teams}/${team.id}/users/${user.id}`
+    );
   });
 });
