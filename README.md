@@ -1,4 +1,5 @@
 # Squad Health Care App
+[![Build Status](https://travis-ci.org/nokia-wroclaw/innovativeproject-health-care.svg?branch=develop)](https://travis-ci.org/nokia-wroclaw/innovativeproject-health-care)
 
 ## The idea
 Health-check is a clever way of measuring a team’s feelings: once a month, team members are asked to rate their satisfaction with certain areas, such as ‘Delivering value’ or ‘Teamwork’. Squad Health Care allows us to find problems when they are small and define proper solution. Additionally we are engaging all employees to be active in organization improvement topic. It is a massive amount of people who are thinking about “What has to change to create better work environment?”.
