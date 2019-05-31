@@ -1,6 +1,6 @@
-import React from 'react';
-import {Card, Label} from 'semantic-ui-react';
-import {connect} from 'react-redux';
+import React from "react";
+import { Card, Label } from "semantic-ui-react";
+import { connect } from "react-redux";
 
 const RED = "red";
 const YELLOW = "yellow";
@@ -20,30 +20,25 @@ const valueToColor = value => {
   }
 };
 
-const Comments = ({answers}) => {
-
+const Comments = ({ answers }) => {
   let items = [];
   if (answers.length > 0) {
     items = answers.filter(answer => answer.comment != null);
     items.sort((a, b) => (a.order < b.order ? -1 : 1));
   }
 
-  return (items.length > 0) ? (
+  return items.length > 0 ? (
     <Card.Group>
       {items.map((item, i) => (
         <Card key={i}>
           <Card.Content>
-            <Card.Header>
-              {item.question}
-            </Card.Header>
+            <Card.Header>{item.question}</Card.Header>
             <Card.Meta>
-              <Label color={valueToColor(item.answer)} size={'small'}>
+              <Label color={valueToColor(item.answer)} size={"small"}>
                 Answer: {item.answer}
               </Label>
             </Card.Meta>
-            <Card.Description>
-              {item.comment}
-            </Card.Description>
+            <Card.Description>{item.comment}</Card.Description>
           </Card.Content>
         </Card>
       ))}
@@ -57,6 +52,4 @@ const mapStateToProps = state => ({
   answers: state.results.team
 });
 
-export default connect(
-  mapStateToProps,
-)(Comments);
+export default connect(mapStateToProps)(Comments);
