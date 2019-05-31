@@ -1,0 +1,16 @@
+dist: xenial
+language: generic
+
+addons:
+  apt:
+    packages:
+      - python3-pip
+      - python3-setuptools
+
+install:
+  - npm --prefix ./frontend install
+  - pip3 install --user -r backend/requirements.txt
+
+script:
+  - npm --prefix ./frontend test
+  - python3 -m unittest discover -s ./backend/tests
