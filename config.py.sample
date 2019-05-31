@@ -14,9 +14,9 @@ PG_URL = 'localhost'
 # Server port
 PG_PORT = 5432
 # User to login as
-PG_USER = 'user'
+PG_USER = 'healthcheck'
 # Password for this user
-PG_PASS = 'password'
+PG_PASS = 'healthcheck'
 # Database name
 PG_DB = 'healthcheck'
 
