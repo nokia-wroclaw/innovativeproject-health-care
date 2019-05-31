@@ -19,7 +19,7 @@ install:
 
 before_script:
   - cp config.py.sample ./backend/config.py
-  - psql -c "CREATE USER healthcheck WITH PASSWORD 'healthcheck';" -U postgres
+  - psql -c "CREATE USER user WITH PASSWORD 'password';" -U postgres
   - psql -c "CREATE DATABASE healthcheck;" -U postgres
 
 script:
