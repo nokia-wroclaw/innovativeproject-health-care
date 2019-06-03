@@ -32,8 +32,10 @@ class Team(db.Model):
             db.session.query(
                 db.exists()
                 .where(
-                    Answer.team_id == self.id,
-                    Answer.date >= period.date_start
+                    db.and_(
+                        Answer.team_id == self.id,
+                        Answer.date >= period.date_start
+                    )
                 )
             )
             .scalar()
