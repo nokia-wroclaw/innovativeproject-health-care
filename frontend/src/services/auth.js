@@ -31,7 +31,10 @@ export const login = async (username, password) => {
       const { user } = jwtDecode(token);
       return user;
     })
-    .catch(error => console.log(error));
+    .catch(error => {
+      console.error(error);
+      throw error;
+    });
 };
 
 export const logout = () => removeToken();

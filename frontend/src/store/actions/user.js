@@ -23,7 +23,9 @@ export const login = (username, password) => dispatch => {
       dispatch(setUser(user));
       dispatch(closeLoginModal());
     })
-    .catch(error => console.error(error));
+    .catch(error => {
+      throw error;
+    });
 };
 
 export const logout = () => {
