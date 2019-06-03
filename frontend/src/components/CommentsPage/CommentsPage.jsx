@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { Container, Dropdown } from 'semantic-ui-react';
-import {setUserManagingDetails} from "../../store/actions/user";
-import { setTeamAnswers } from './../../store/actions/results';
-import Comments from './Comments';
-import TemplatePage from '../common/TemplatePage/';
+import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import { Container, Dropdown } from "semantic-ui-react";
+import { setUserManagingDetails } from "../../store/actions/user";
+import { setTeamAnswers } from "./../../store/actions/results";
+import Comments from "./Comments";
+import TemplatePage from "../common/TemplatePage/";
 import Loader from "../common/Loader";
 
 const CommentsPage = ({ user, managing, ...props }) => {
@@ -12,7 +12,7 @@ const CommentsPage = ({ user, managing, ...props }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if (managing[0]) handleTeamSelect(null, { value: managing[0].id } )
+    if (managing[0]) handleTeamSelect(null, { value: managing[0].id });
   }, [managing]);
 
   useEffect(() => {
@@ -31,7 +31,7 @@ const CommentsPage = ({ user, managing, ...props }) => {
       <Container>
         <br />
         <Dropdown
-          placeholder='Select team'
+          placeholder="Select team"
           options={managing.map((team, i) => ({
             key: i,
             text: team.name,
@@ -43,11 +43,7 @@ const CommentsPage = ({ user, managing, ...props }) => {
         />
         <br />
         <br />
-        {!isLoading && currentTeamId ? (
-          <Comments />
-          ) : (
-          <Loader active inline="centered" />
-        )}
+        {!isLoading && currentTeamId ? <Comments /> : <Loader />}
       </Container>
     </TemplatePage>
   );
