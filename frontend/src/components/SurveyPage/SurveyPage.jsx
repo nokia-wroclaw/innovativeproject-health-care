@@ -38,7 +38,7 @@ const SurveyPage = ({
   const content = surveyIsActive ? (
     <Survey />
   ) : (
-    <Header as="h5">Survey for this team has already been submitted.</Header>
+    <Header as="h5">Survey for this team has been submitted.</Header>
   );
 
   return (
