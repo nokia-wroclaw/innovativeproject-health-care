@@ -7,8 +7,9 @@ import {
   DELETE_QUESTION_FROM_DRAFT_SURVEY,
   UPDATE_QUESTION_IN_DRAFT_SURVEY,
   SET_DRAFT_SURVEY_PERIOD,
-  SET_SURVEYS_ARE_LOADING, DELETE_SURVEY
-} from '../actions/types';
+  SET_SURVEYS_ARE_LOADING,
+  DELETE_SURVEY
+} from "../actions/types";
 
 const initialState = {
   areLoading: true,
@@ -76,7 +77,7 @@ export default function(state = initialState, action) {
     case DELETE_SURVEY:
       return {
         ...state,
-        next: null
+        next: initialState.next
       };
 
     case ADD_QUESTION_TO_DRAFT_SURVEY:

@@ -1,8 +1,8 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import QuestionList from './QuestionList';
-import { deleteSurvey } from '../../store/actions/surveys';
-import { Button, Container } from "semantic-ui-react";
+import React from "react";
+import { connect } from "react-redux";
+import QuestionList from "./QuestionList";
+import { deleteSurvey } from "../../store/actions/surveys";
+import { Button, Container, Message } from "semantic-ui-react";
 
 const PendingSurvey = ({ survey, ...props }) => {
   const handleDelete = () => {
@@ -11,17 +11,23 @@ const PendingSurvey = ({ survey, ...props }) => {
 
   const content = survey.id ? (
     <React.Fragment>
-      <p>
-        This version of survey will become active on {survey.date}. Until then
-        you can still overwrite it by publishing a draft.
-      </p>
+      <Message>
+        This version of survey will become active on <b>{survey.date}</b>. Until
+        then you can still delete it or overwrite by publishing a draft.
+      </Message>
       <QuestionList survey={survey} />
-      <Container textAlign='center'>
-        <Button onClick={handleDelete}>Delete pending</Button>
+      <Container textAlign="center">
+        <Button
+          icon="trash alternate"
+          labelPosition="left"
+          content="Delete pending survey"
+          negative
+          onClick={handleDelete}
+        />
       </Container>
     </React.Fragment>
   ) : (
-    <p>There is no pending survey for this tribe.</p>
+    <Message info>There is no pending survey for this tribe.</Message>
   );
   return content;
 };
