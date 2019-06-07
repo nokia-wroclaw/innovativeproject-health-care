@@ -45,7 +45,10 @@ class LoginForm extends Component {
     this.setState({ loading: true });
     const errors = this.validate();
     this.setState({ errors: errors || {} });
-    if (errors) return;
+    if (errors) {
+      this.setState({ loading: false });
+      return;
+    }
 
     const { username, password } = this.state.account;
     const { login, reload } = this.props;
