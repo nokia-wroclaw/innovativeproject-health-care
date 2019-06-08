@@ -12,7 +12,33 @@ class TribesRes(Resource):
 
     @roles_allowed(['admin', 'editor'])
     def post(self):
-        """Creates a new tribe with given name."""
+        """Create a new tribe.
+        Creates a new tribe with given name.
+        Roles allowed: admin, editor.
+        ---
+        tags:
+          - tribes
+        security:
+          - bearerAuth: []
+        consumes:
+          - application/json
+        parameters:
+          - in: body
+            name: tribe
+            required: true
+            description: Tribe object.
+            schema:
+              $ref: '#/definitions/Tribe'
+        responses:
+          201:
+            description: Success.
+            headers:
+              Location:
+                description: URI of the created tribe.
+                type: string
+          400:
+            description: No tribe name given.
+        """
 
         json = request.get_json()
         if 'name' not in json:
@@ -36,7 +62,18 @@ class TribesRes(Resource):
 
     @roles_allowed(['admin', 'editor'])
     def get(self):
-        """Returns all tribes to which user sending request has rights."""
+        """Get all tribes.
+        Returns all tribes to which requested user has rights to.
+        Roles allowed: admin, editor.
+        ---
+        tags:
+          - tribes
+        security:
+          - bearerAuth: []
+        responses:
+          200:
+            description: Success.
+        """
 
         tribes = Tribe.query.order_by(Tribe.name).all()
 
@@ -53,7 +90,30 @@ class TribeRes(Resource):
 
     @roles_allowed(['admin', 'editor'])
     def put(self, tribe_id):
-        """Updates tribe with given id."""
+        """Update tribe.
+        Updates tribes with given id.
+        Roles allowed: admin, editor.
+        ---
+        tags:
+          - tribes
+        security:
+          - bearerAuth: []
+        consumes:
+          - application/json
+        parameters:
+          - in: body
+            name: tribe
+            required: true
+            description: Tribe object.
+            schema:
+              $ref: '#/definitions/Tribe'
+        responses:
+          200:
+            description: Success.
+          403:
+            description: Forbidden. Requesting user doesn't have rights to this\
+              tribe.
+        """
 
         Tribe.validate_access(tribe_id, current_user)
         tribe = Tribe.get_if_exists(tribe_id)
@@ -76,7 +136,27 @@ class TribeRes(Resource):
 
     @roles_allowed(['admin', 'editor'])
     def get(self, tribe_id):
-        """Returns data of tribe with given id."""
+        """Get tribe info.
+        Returns full info of a tribe.
+        Roles allowed: admin, editor.
+        ---
+        tags:
+          - tribes
+        security:
+          - bearerAuth: []
+        parameters:
+          - in: path
+            name: tribe_id
+            required: true
+            description: Id of the tribe.
+            schema:
+              type: integer
+        responses:
+          200:
+            description: Success.
+          404:
+            description: Tribe with requested id doesn't exist.
+        """
 
         tribe = Tribe.get_if_exists(tribe_id)
 
@@ -86,7 +166,29 @@ class TribeRes(Resource):
 
     @roles_allowed(['admin', 'editor'])
     def delete(self, tribe_id):
-        """Deletes tribe with given id."""
+        """Delete tribe.
+        Roles allowed: admin, editor.
+        ---
+        tags:
+          - tribes
+        security:
+          - bearerAuth: []
+        parameters:
+          - in: path
+            name: tribe_id
+            required: true
+            description: Id of the tribe.
+            schema:
+              type: integer
+        responses:
+          204:
+            description: Success.
+          403:
+            description: Forbidden. Requesting user doesn't have rights to this\
+              tribe.
+          404:
+            description: Tribe with requested id doesn't exist.
+        """
 
         Tribe.validate_access(tribe_id, current_user)
         tribe = Tribe.get_if_exists(tribe_id)
@@ -103,11 +205,33 @@ class TribeRes(Resource):
 
 
 class TribeEditorsRes(Resource):
-    """All editors of given tribe collection."""
+    """Collection of all editors of a tribe."""
 
     @roles_allowed(['admin', 'editor'])
     def get(self, tribe_id):
-        """Returns all editors of tribe with specified id."""
+        """Get all editors of a tribe.
+        Roles allowed: admin, editor.
+        ---
+        tags:
+          - tribes
+        security:
+          - bearerAuth: []
+        parameters:
+          - in: path
+            name: tribe_id
+            required: true
+            description: Id of the tribe.
+            schema:
+              type: integer
+        responses:
+          200:
+            description: Success. Returns list of editors.
+          403:
+            description: Forbidden. Requesting user doesn't have rights to this\
+              tribe.
+          404:
+            description: Tribe with requested id doesn't exist.
+        """
 
         Tribe.validate_access(tribe_id, current_user)
         tribe = Tribe.get_if_exists(tribe_id)
@@ -124,7 +248,35 @@ class TribeEditorRes(Resource):
 
     @roles_allowed(['admin'])
     def put(self, tribe_id, user_id):
-        """Assigns user as an editor of the tribe."""
+        """Add an editor to the tribe.
+        Roles allowed: admin.
+        ---
+        tags:
+          - tribes
+        security:
+          - bearerAuth: []
+        parameters:
+          - in: path
+            name: tribe_id
+            required: true
+            description: Id of the tribe.
+            schema:
+              type: integer
+          - in: path
+            name: user_id
+            required: true
+            description: Id of the user.
+            schema:
+              type: integer
+        responses:
+          200:
+            description: Success.
+          403:
+            description: Forbidden. Requesting user doesn't have rights to this\
+              tribe.
+          404:
+            description: Tribe with requested id doesn't exist.
+        """
 
         Tribe.validate_access(tribe_id, current_user)
         tribe = Tribe.get_if_exists(tribe_id)
@@ -150,7 +302,35 @@ class TribeEditorRes(Resource):
 
     @roles_allowed(['admin'])
     def delete(self, tribe_id, user_id):
-        """Removes user from editors of the tribe."""
+        """Remove editor from the tribe.
+        Roles allowed: admin.
+        ---
+        tags:
+          - tribes
+        security:
+          - bearerAuth: []
+        parameters:
+          - in: path
+            name: tribe_id
+            required: true
+            description: Id of the tribe.
+            schema:
+              type: integer
+          - in: path
+            name: user_id
+            required: true
+            description: Id of the user.
+            schema:
+              type: integer
+        responses:
+          204:
+            description: Success.
+          403:
+            description: Forbidden. Requesting user doesn't have rights to this\
+              tribe.
+          404:
+            description: Tribe with requested id doesn't exist.
+        """
 
         Tribe.validate_access(tribe_id, current_user)
         tribe = Tribe.get_if_exists(tribe_id)

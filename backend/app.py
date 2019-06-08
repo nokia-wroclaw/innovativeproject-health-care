@@ -4,6 +4,8 @@ from flask_restful import Api
 from flask_jwt_extended import JWTManager
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
+from flasgger import Swagger
+from json import load
 from backend import config
 
 app = Flask(__name__)
@@ -30,6 +32,10 @@ db.create_all()
 
 if os.environ.get('FLASK_ENV') == 'development':
     CORS(app)
+    with open('backend/swagger.json', 'r') as f:
+        app.config['SWAGGER'] = load(f)
+    Swagger(app)
+
 
 api.add_resource(users.AuthRes, '/auth')
 api.add_resource(users.UsersRes, '/users')

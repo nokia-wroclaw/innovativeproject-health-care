@@ -15,8 +15,43 @@ class TribeSurveysRes(Resource):
 
     @roles_allowed(['editor'])
     def post(self, tribe_id):
-        """Handles new survey. The survey can be drafted or published and
-        created or updated."""
+        """Save survey draft.
+        If specified tribe has no survey this endpoint will create it.\
+        If survey for a tribe already exists it will be overwritten.
+        Roles allowed: editor.
+        ---
+        tags:
+          - surveys
+        security:
+          - bearerAuth: []
+        consumes:
+          - application/json
+        parameters:
+          - in: path
+            name: tribe_id
+            required: true
+            description: Id of the tribe.
+            schema:
+              type: integer
+          - in: body
+            name: survey
+            required: true
+            description: Survey object.
+            schema:
+              $ref: '#/definitions/Survey'
+        responses:
+          201:
+            description: Success.
+            headers:
+              Location:
+                description: URI of the created survey.
+                type: string
+          403:
+            description: Forbidden. Requesting user doesn't have rights to\
+              this tribe.
+          400:
+            description: No survey data or invalid data.
+        """
 
         Tribe.validate_access(tribe_id, current_user)
 
@@ -95,10 +130,41 @@ class TribeSurveysRes(Resource):
 
     @roles_allowed(['editor', 'manager', 'user'])
     def get(self, tribe_id):
-        """If called without arguments returns all three types of surveys
-        a tribe can have: active, next, draft.
-        Can be also called with `type` argument to return only one of these
-        surveys."""
+        """Get surveys of a tribe.
+        Returns all three types of surveys a tribe can have: active: pending\
+        and draft. It's possible to fetch ony one of these using 'type'\
+        parameter.
+        Roles allowed: editor, manager, user.
+        ---
+        tags:
+          - surveys
+        security:
+          - bearerAuth: []
+        parameters:
+          - in: path
+            name: tribe_id
+            required: true
+            description: Id of the tribe.
+            schema:
+              type: integer
+          - in: query
+            name: type
+            required: false
+            description: Type of the survey.
+            schema:
+              type: string
+              enum: [active, next, draft]
+        responses:
+          200:
+            description: Success. Returns list of surveys.
+          400:
+            description: Invalid parameter.
+          403:
+            description: Forbidden. Requesting user doesn't have rights to\
+              this tribe.
+          404:
+            description: Tribe with requested id doesn't exist.
+        """
 
         tribe = Tribe.get_if_exists(tribe_id)
 
@@ -136,7 +202,29 @@ class SurveyRes(Resource):
 
     @roles_allowed(['editor', 'manager', 'user'])
     def get(self, survey_id):
-        """Returns survey with specified id."""
+        """Get specific survey.
+        Roles allowed: editor, manager, user.
+        ---
+        tags:
+          - surveys
+        security:
+          - bearerAuth: []
+        parameters:
+          - in: path
+            name: survey_id
+            required: true
+            description: Id of the survey.
+            schema:
+              type: integer
+        responses:
+          200:
+            description: Success. Returns survey object.
+          403:
+            description: Forbidden. Requesting user doesn't have rights to\
+              this tribe.
+          404:
+            description: Survey with requested id doesn't exist.
+        """
 
         survey = Survey.get_if_exists(survey_id)
 
@@ -149,8 +237,39 @@ class SurveyRes(Resource):
 
     @roles_allowed(['editor'])
     def patch(self, survey_id):
-        """Partially updates survey with specified id.
-        Used to publish draft."""
+        """Publish a draft.
+        Roles allowed: editor.
+        ---
+        tags:
+          - surveys
+        security:
+          - bearerAuth: []
+        consumes:
+          - application/json
+        parameters:
+          - in: path
+            name: survey_id
+            required: true
+            description: Id of the survey.
+            schema:
+              type: integer
+          - in: body
+            required: true
+            name: draftPatch
+            description: Draft will be published when 'draft' is set to false.
+            schema:
+              $ref: '#/definitions/DraftPatch'
+        responses:
+          200:
+            description: Success. Returns survey object.
+          403:
+            description: Forbidden. Requesting user doesn't have rights to\
+              this tribe.
+          400:
+            description: No survey data or invalid data.
+          404:
+            description: Survey with requested id doesn't exist.
+        """
 
         survey = Survey.get_if_exists(survey_id)
 
@@ -215,8 +334,33 @@ class SurveyRes(Resource):
 
     @roles_allowed(['editor'])
     def delete(self, survey_id):
-        """Deletes survey with specified id. Only pending surveys are possible
-        to delete."""
+        """Delete survey.
+        Only pending surveys are possible to delete.
+        Roles allowed: editor.
+        ---
+        tags:
+          - surveys
+        security:
+          - bearerAuth: []
+        parameters:
+          - in: path
+            name: survey_id
+            required: true
+            description: Id of the survey.
+            schema:
+              type: integer
+        responses:
+          204:
+            description: Success.
+          400:
+            description: Survey exists but isn't a draft and therefore it\
+              can't be deleted.
+          403:
+            description: Forbidden. Requesting user doesn't have rights to\
+              this survey.
+          404:
+            description: Survey with requested id doesn't exist.
+        """
 
         survey = Survey.get_if_exists(survey_id)
 
@@ -255,7 +399,39 @@ class SurveyAnswersRes(Resource):
 
     @roles_allowed(['user'])
     def post(self, survey_id):
-        """Submits new answer to the survey with specific id."""
+        """Send answer to the survey.
+        Roles allowed: user.
+        ---
+        tags:
+          - surveys
+        security:
+          - bearerAuth: []
+        consumes:
+          - application/json
+        parameters:
+          - in: path
+            name: survey_id
+            required: true
+            description: Id of the survey.
+            schema:
+              type: integer
+          - in: body
+            name: answer
+            required: true
+            description: Survey answer object.
+            schema:
+              $ref: '#/definitions/SurveyAnswer'
+        responses:
+          200:
+            description: Success. Returns answer object.
+          403:
+            description: Forbidden. Requesting user doesn't have rights to\
+              this survey.
+          404:
+            description: Survey with requested id doesn't exists.
+          400:
+            description: No answer data or invalid data.
+        """
 
         survey = Survey.query.filter_by(id=survey_id).one_or_none()
 
@@ -332,7 +508,29 @@ class TribePeriodsRes(Resource):
 
     @roles_allowed(['manager', 'user'])
     def get(self, tribe_id):
-        """Returns list of past and current periods for the specified tribe."""
+        """Get periods of the tribe.
+        Roles allowed: manager, user.
+        ---
+        tags:
+          - surveys
+        security:
+          - bearerAuth: []
+        parameters:
+          - in: path
+            name: tribe_id
+            required: true
+            description: Id of the tribe.
+            schema:
+              type: integer
+        responses:
+          200:
+            description: Success. Returns list of periods.
+          403:
+            description: Forbidden. Requesting user doesn't have rights to\
+              this tribe.
+          404:
+            description: Tribe with requested id doesn't exist.
+        """
 
         Tribe.get_if_exists(tribe_id)
 

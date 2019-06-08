@@ -11,8 +11,56 @@ class ResultsRes(Resource):
 
     @roles_allowed(['editor', 'manager', 'user'])
     def get(self):
-        """Returns results filtered and formatted according to passed
-        query params."""
+        """Get tribe's results.
+        Roles allowed: editor, manager, user.
+        ---
+        tags:
+          - results
+        security:
+          - bearerAuth: []
+        parameters:
+          - in: query
+            name: type
+            required: true
+            description: "Type of the results. Possible values are: team,\
+              tribematrix, tribehistory."
+            schema:
+              type: string
+              enum: [team, tribematrix, tribehistory]
+          - in: query
+            name: teamId
+            description: Id of the team. Required with 'team' type.
+            schema:
+              type: integer
+          - in: query
+            name: tribeId
+            description: Id of the tribe. Required with 'tribematrix' and\
+               'tribehistory' types.
+            schema:
+              type: integer
+          - in: query
+            name: period
+            required: false
+            description: Id of the period. Used with 'team' type.
+            schema:
+              type: integer
+          - in: query
+            name: periods
+            required: false
+            description: Number of periods. Used with 'tribehistory'.
+            schema:
+              type: integer
+        responses:
+          200:
+            description: Success. Returns results.
+          404:
+            description: Tribe with requested id doesn't exist.
+          403:
+            description: Forbidden. Requesting user doesn't have rights to\
+              this tribe.
+          400:
+            description: Invalid parameters.
+        """
 
         if 'type' not in request.args:
             abort(400)

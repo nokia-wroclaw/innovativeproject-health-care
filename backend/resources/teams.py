@@ -12,7 +12,42 @@ class TeamsRes(Resource):
 
     @roles_allowed(['admin', 'editor'])
     def post(self, tribe_id):
-        """Creates new team with given name in specified tribe."""
+        """Create a new team.
+        Creates a new team with given name.
+        Roles allowed: admin, editor.
+        ---
+        tags:
+          - teams
+        security:
+          - bearerAuth: []
+        consumes:
+          - application/json
+        parameters:
+          - in: path
+            name: tribe_id
+            required: true
+            description: Id of the tribe.
+            schema:
+              type: integer
+          - in: body
+            name: team
+            required: true
+            description: Team object.
+            schema:
+              $ref: '#/definitions/Team'
+        responses:
+          201:
+            description: Success.
+            headers:
+              Location:
+                description: URI of the created team.
+                type: string
+          403:
+            description: Forbidden. Requesting user doesn't have rights to\
+              this team.
+          400:
+            description: No tribe name given.
+        """
 
         Tribe.get_if_exists(tribe_id)
         Tribe.validate_access(tribe_id, current_user)
@@ -38,7 +73,26 @@ class TeamsRes(Resource):
 
     @roles_allowed(['admin', 'editor'])
     def get(self, tribe_id):
-        """Lists all existing teams in given tribe."""
+        """Get all teams in a tribe.
+        Roles allowed: admin, editor.
+        ---
+        tags:
+          - teams
+        security:
+          - bearerAuth: []
+        parameters:
+          - in: path
+            name: tribe_id
+            required: true
+            description: Id of the tribe.
+            schema:
+              type: integer
+        responses:
+          200:
+            description: Success. Return list of teams.
+          404:
+            description: Tribe with requested id doesn't exist.
+        """
 
         Tribe.get_if_exists(tribe_id)
 
@@ -59,7 +113,26 @@ class TeamRes(Resource):
 
     @roles_allowed(['admin', 'editor'])
     def get(self, team_id):
-        """Returns data of team with given id."""
+        """Get full info of a team.
+        Roles allowed: admin, editor.
+        ---
+        tags:
+          - teams
+        security:
+          - bearerAuth: []
+        parameters:
+          - in: path
+            name: team_id
+            required: true
+            description: Id of the team.
+            schema:
+              type: integer
+        responses:
+          200:
+            description: Success. Returns team info.
+          404:
+            description: Team with requested id doesn't exist.
+        """
 
         team = Team.get_if_exists(team_id)
 
@@ -69,7 +142,39 @@ class TeamRes(Resource):
 
     @roles_allowed(['admin', 'editor'])
     def put(self, team_id):
-        """Updates team with given id."""
+        """Update team.
+        Roles allowed: admin, editor.
+        ---
+        tags:
+          - teams
+        security:
+          - bearerAuth: []
+        consumes:
+          - application/json
+        parameters:
+          - in: path
+            name: team_id
+            required: true
+            description: Id of the team.
+            schema:
+              type: integer
+          - in: body
+            name: team
+            required: true
+            description: Team object.
+            schema:
+              $ref: '#/definitions/Team'
+        responses:
+          200:
+            description: Success. Returns team info.
+          400:
+            description: No team data given.
+          403:
+            description: Forbidden. Requesting user doesn't have rights to\
+              this team.
+          404:
+            description: Team with requested id doesn't exist.
+        """
 
         team = Team.get_if_exists(team_id)
         Tribe.validate_access(team.tribe_id, current_user)
@@ -94,7 +199,37 @@ class TeamRes(Resource):
 
     @roles_allowed(['admin', 'editor'])
     def patch(self, team_id):
-        """Allows partial updates of team with given id."""
+        """Partially update team.
+        Roles allowed: admin, editor.
+        ---
+        tags:
+          - teams
+        security:
+          - bearerAuth: []
+        consumes:
+          - application/json
+        parameters:
+          - in: path
+            name: team_id
+            required: true
+            description: Id of the team.
+            schema:
+              type: integer
+          - in: body
+            name: team
+            required: true
+            description: Team object. Not all properties are required.
+            schema:
+              $ref: '#/definitions/Team'
+        responses:
+          200:
+            description: Success. Returns team info.
+          403:
+            description: Forbidden. Requesting user doesn't have rights to\
+              this team.
+          404:
+            description: Team with requested id doesn't exist.
+        """
 
         team = Team.get_if_exists(team_id)
         Tribe.validate_access(team.tribe_id, current_user)
@@ -120,7 +255,29 @@ class TeamRes(Resource):
 
     @roles_allowed(['admin', 'editor'])
     def delete(self, team_id):
-        """Deletes team with given id."""
+        """Delete team.
+        Roles allowed: admin, editor.
+        ---
+        tags:
+          - teams
+        security:
+          - bearerAuth: []
+        parameters:
+          - in: path
+            name: team_id
+            required: true
+            description: Id of the team.
+            schema:
+              type: integer
+        responses:
+          204:
+            description: Success.
+          403:
+            description: Forbidden. Requesting user doesn't have rights to\
+              this team.
+          404:
+            description: Team with requested id doesn't exist.
+        """
 
         team = Team.get_if_exists(team_id)
         Tribe.validate_access(team.tribe_id, current_user)
@@ -143,7 +300,29 @@ class TeamManagersRes(Resource):
 
     @roles_allowed(['admin', 'editor'])
     def get(self, team_id):
-        """"Returns list of all managers of the team with specified id."""
+        """Get managers of the team.
+        Roles allowed: admin, editor.
+        ---
+        tags:
+          - teams
+        security:
+          - bearerAuth: []
+        properties:
+          - in: path
+            name: team_id
+            required: true
+            description: Id of the team.
+            schema:
+              - type: integer
+        responses:
+          200:
+            description: Success. Returns list of the managers.
+          403:
+            description: Forbidden. Requesting user doesn't have rights to\
+              this team.
+          404:
+            description: Team with requested id doesn't exist.
+        """
 
         team = Team.get_if_exists(team_id)
         Tribe.validate_access(team.tribe_id, current_user)
@@ -166,7 +345,37 @@ class TeamManagerRes(Resource):
 
     @roles_allowed(['admin', 'editor'])
     def put(self, team_id, user_id):
-        """Adds user with given id to the managers of the team."""
+        """Add manager to the team.
+        Roles allowed: admin, editor.
+        ---
+        tags:
+          - teams
+        security:
+          - bearerAuth: []
+        properties:
+          - in: path
+            name: team_id
+            required: true
+            description: Id of the team.
+            schema:
+              - type: integer
+          - in: path
+            name: user_id
+            required: true
+            description: Id of the user.
+            schema:
+              - type: integer
+        responses:
+          201:
+            description: Success.
+          204:
+            description: User is already a manager in this team.
+          403:
+            description: Forbidden. Requesting user doesn't have rights to\
+              this team.
+          404:
+            description: Team or user with requested id doesn't exist.
+        """
 
         team = Team.get_if_exists(team_id)
         user = User.get_if_exists(user_id)
@@ -195,7 +404,35 @@ class TeamManagerRes(Resource):
 
     @roles_allowed(['admin', 'editor'])
     def delete(self, team_id, user_id):
-        """Removes user with given id from the managers of the team."""
+        """Remove manager from the team.
+        Roles allowed: admin, editor.
+        ---
+        tags:
+          - teams
+        security:
+          - bearerAuth: []
+        properties:
+          - in: path
+            name: team_id
+            required: true
+            description: Id of the team.
+            schema:
+              - type: integer
+          - in: path
+            name: user_id
+            required: true
+            description: Id of the user.
+            schema:
+              - type: integer
+        responses:
+          204:
+            description: Success.
+          403:
+            description: Forbidden. Requesting user doesn't have rights to\
+              this team.
+          404:
+            description: Team or user with requested id doesn't exist.
+        """
 
         team = Team.get_if_exists(team_id)
         user = User.get_if_exists(user_id)
@@ -228,7 +465,29 @@ class TeamUsersRes(Resource):
 
     @roles_allowed(['admin', 'editor'])
     def get(self, team_id):
-        """Returns all members of the team."""
+        """Get members of the team.
+        Roles allowed: admin, editor.
+        ---
+        tags:
+          - teams
+        security:
+          - bearerAuth: []
+        properties:
+          - in: path
+            name: team_id
+            required: true
+            description: Id of the team.
+            schema:
+              - type: integer
+        responses:
+          200:
+            description: Success. Returns list of the members.
+          403:
+            description: Forbidden. Requesting user doesn't have rights to\
+              this team.
+          404:
+            description: Team with requested id doesn't exist.
+        """
 
         team = Team.get_if_exists(team_id)
         Tribe.validate_access(team.tribe_id, current_user)
@@ -251,7 +510,37 @@ class TeamUserRes(Resource):
 
     @roles_allowed(['admin', 'editor'])
     def put(self, team_id, user_id):
-        """Adds user with given id to the team."""
+        """Add member to the team.
+        Roles allowed: admin, editor.
+        ---
+        tags:
+          - teams
+        security:
+          - bearerAuth: []
+        properties:
+          - in: path
+            name: team_id
+            required: true
+            description: Id of the team.
+            schema:
+              - type: integer
+          - in: path
+            name: user_id
+            required: true
+            description: Id of the user.
+            schema:
+              - type: integer
+        responses:
+          201:
+            description: Success.
+          204:
+            description: User is already a member in this team.
+          403:
+            description: Forbidden. Requesting user doesn't have rights to\
+              this team.
+          404:
+            description: Team or user with requested id doesn't exist.
+        """
 
         team = Team.get_if_exists(team_id)
         user = User.get_if_exists(user_id)
@@ -280,7 +569,35 @@ class TeamUserRes(Resource):
 
     @roles_allowed(['admin', 'editor'])
     def delete(self, team_id, user_id):
-        """Deletes user with given id from team."""
+        """Remove member from the team.
+        Roles allowed: admin, editor.
+        ---
+        tags:
+          - teams
+        security:
+          - bearerAuth: []
+        properties:
+          - in: path
+            name: team_id
+            required: true
+            description: Id of the team.
+            schema:
+              - type: integer
+          - in: path
+            name: user_id
+            required: true
+            description: Id of the user.
+            schema:
+              - type: integer
+        responses:
+          204:
+            description: Success.
+          403:
+            description: Forbidden. Requesting user doesn't have rights to\
+              this team.
+          404:
+            description: Team or user with requested id doesn't exist.
+        """
 
         team = Team.get_if_exists(team_id)
         user = User.get_if_exists(user_id)

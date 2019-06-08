@@ -1,0 +1,115 @@
+{
+  "info": {
+    "title": "Squad Health Care API",
+    "version": "0.1"
+  },
+  "securityDefinitions": {
+    "basicAuth": {
+      "type": "basic"
+    },
+    "bearerAuth": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+  "definitions": {
+    "Tribe": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Tribe name."
+        }
+      }
+    },
+    "Team": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Team name."
+        },
+        "tribe_id": {
+          "type": "integer",
+          "description": "Id of the tribe."
+        }
+      }
+    },
+    "Question": {
+      "type": "object",
+      "description": "If only id is given existing question is used. If only value is given new question is created. If both are given existing question is updated.",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "Id of the question."
+        },
+        "order": {
+          "type": "integer",
+          "description": "Order of the question in the survey."
+        },
+        "value": {
+          "type": "string",
+          "description": "The question."
+        }
+      }
+    },
+    "Survey": {
+      "type": "object",
+      "properties": {
+        "questions": {
+          "type": "array",
+          "description": "Questions.",
+          "items": {
+            "$ref": "#/definitions/Question"
+          }
+        },
+        "period_len": {
+          "type": "integer",
+          "description": "Length of the period."
+        }
+      }
+    },
+    "DraftPatch": {
+      "type": "object",
+      "properties": {
+        "draft": {
+          "type": "boolean",
+          "description": "Draft is published when set to false."
+        }
+      }
+    },
+    "Answer": {
+      "type": "object",
+      "properties": {
+        "question_id": {
+          "type": "integer",
+          "description": "Id of the question."
+        },
+        "answer": {
+          "type": "integer",
+          "description": "Answer: 0, 1 or 2."
+        },
+        "comment": {
+          "type": "string",
+          "description": "Comment."
+        }
+      }
+    },
+    "SurveyAnswer": {
+      "type": "object",
+      "properties": {
+        "team_id": {
+          "type": "integer"
+        },
+        "answers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Answer"
+          }
+        }
+      }
+    }
+  }
+}
+

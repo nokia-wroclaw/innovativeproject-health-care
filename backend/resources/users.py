@@ -15,10 +15,19 @@ class AuthRes(Resource):
         self.ldap = LdapConn()
 
     def post(self):
-        """Authenticates user.
-
-        This method authenticates users credentials sent by HTTP Basic Auth.
+        """Authenticate user.
+        This method authenticates user's credentials sent by HTTP Basic Auth.\
         If authentication is successful JWT containing user data is returned.
+        ---
+        tags:
+          - users
+        security:
+          - basicAuth: []
+        responses:
+          401:
+            description: No credentials or credentials invalid.
+          200:
+            description: Correctly logged in. JWT is returned.
         """
 
         credentials = request.authorization
@@ -51,11 +60,31 @@ class AuthRes(Resource):
 
 
 class UsersRes(Resource):
-    """All users available to system."""
+    """Collection of all users available to the application (both in LDAP
+    and in database."""
 
     @roles_allowed(['admin', 'editor', 'manager'])
     def get(self):
-        """ Get available users from db and LDAP. Search phrase required."""
+        """Search all users.
+        Roles allowed: admin, editor, manager.
+        ---
+        tags:
+          - users
+        security:
+          - bearerAuth: []
+        parameters:
+          - in: query
+            name: q
+            schema:
+              type: string
+            required: true
+            description: Search phrase, minimum 4 characters long.
+        responses:
+          200:
+            description: A list of of full users info.
+          400:
+            description: No search phrase given or phrase to short.
+        """
 
         args = request.args
         if not args['q']:
@@ -80,7 +109,26 @@ class UserRes(Resource):
 
     @roles_allowed(['admin', 'editor', 'manager'])
     def get(self, user_id):
-        """Get full info of the user with specified id."""
+        """Get full info of the single user.
+        Roles allowed: admin, editor, manager.
+        ---
+        tags:
+          - users
+        security:
+          - bearerAuth: []
+        parameters:
+          - in: path
+            name: user_id
+            schema:
+              type: integer
+            required: true
+            description: Id of the user.
+        responses:
+          200:
+            description: Full user info.
+          404:
+            description: User with requested id doesn't exist.
+        """
 
         user = User.get_if_exists(user_id)
 
@@ -95,10 +143,40 @@ class UserTeamsRes(Resource):
 
     @roles_allowed(['manager', 'user'])
     def get(self, user_id):
-        """Returns info of all the teams user is either managing or is
-        member of.
-        Filtering is done by `role` parameter. Possible values: manger,
-        member."""
+        """Get user's teams.
+        Returns full info about all teams user is either managing or is\
+        a member of. Results can be filtered by the role in teams.
+        Accessing data of another user is forbidden.
+        Roles allowed: manager, user.
+        ---
+        tags:
+          - users
+        security:
+          - bearerAuth: []
+        parameters:
+          - in: path
+            name: user_id
+            schema:
+              type: integer
+            required: true
+            description: Id of the user.
+          - in: query
+            name: role
+            schema:
+              type: string
+              enum: [manager, member]
+            required: true
+            description: Filtering by user role. Allows to fetch only teams\
+              user is managing or only teams user is a member of.
+        responses:
+          200:
+            description: A list of full teams info.
+          403:
+            description: Forbidden. Probably trying to fetch another\
+              user's data.
+          404:
+            description: User with requested id doesn't exist.
+        """
 
         # Users can fetch only their own teams
         if current_user.id != int(user_id):
@@ -126,12 +204,41 @@ class UserTribesRes(Resource):
     """Collection of all tribes user is assigned to, both as member of the
     teams in this tribe and as an editor."""
 
-    @roles_allowed(['editor', 'user'])
+    @roles_allowed(['editor', 'manager', 'user'])
     def get(self, user_id):
-        """Returns info of all the tribes in which user is editor, manager
-        or member.
-        Filtering is done by `role` parameter. Possible values: editor,
-        member.
+        """Get user's tribes.
+        Get full info about all tribes user in which user is editor, manager\
+        or member. Results can be filtered by the role in tribes.
+        Accessing data of another user is forbidden.
+        Roles allowed: editor, manager, user.
+        ---
+        tags:
+          - users
+        security:
+          - bearerAuth: []
+        parameters:
+          - in: path
+            name: user_id
+            schema:
+              type: integer
+            required: true
+            description: Id of the user.
+          - in: query
+            name: role
+            schema:
+              type: string
+              enum: [editor, manager, member]
+            required: false
+            description: Filtering by user role. Allows to fetch only tribes\
+              in which user acts as editor, manager or member.
+        responses:
+          200:
+            description: A list of full tribes info.
+          403:
+            description: Forbidden. Probably trying to fetch another\
+              user's data.
+          404:
+            description: User with requested id doesn't exist.
         """
 
         # Users can fetch only their own teams

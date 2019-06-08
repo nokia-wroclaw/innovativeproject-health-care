@@ -11,7 +11,27 @@ class EditorsRes(Resource):
 
     @roles_allowed(['admin'])
     def get(self):
-        """Get all editors."""
+        """Get all editors.
+        Returns list of all editors. It's also possible to filter the list\
+        using search phrase.
+        Roles allowed: admin.
+        ---
+        tags:
+          - editors
+        security:
+          - bearerAuth: []
+        parameters:
+          - in: query
+            name: q
+            type: string
+            required: false
+            description: Search phrase, minimum 4 characters long.
+        responses:
+          400:
+            description: To short search phrase.
+          200:
+            description: List of editors.
+        """
 
         args = request.args
         if 'q' in args:
@@ -55,7 +75,29 @@ class EditorRes(Resource):
 
     @roles_allowed(['admin'])
     def put(self, user_id):
-        """Creates editor with given id."""
+        """Create an editor.
+        Adds user to the list of editors. Users from this list can be later\
+        assigned as editors of specific tribes.
+        Roles allowed: admin.
+        ---
+        tags:
+          - editors
+        security:
+          - bearerAuth: []
+        parameters:
+          - in: path
+            name: user_id
+            type: integer
+            required: true
+            description: Id of the user.
+        responses:
+          201:
+            description: Success.
+          204:
+            description: User with given id is already an editor.
+          404:
+            description: User with given id doesn't exist.
+        """
 
         # Get user data from db or ldap
         user = User.from_id(user_id)
@@ -86,7 +128,26 @@ class EditorRes(Resource):
 
     @roles_allowed(['admin'])
     def delete(self, user_id):
-        """Deletes editor with given id."""
+        """Delete an editor.
+        Removes user from list of editors.
+        Roles allowed: admin.
+        ---
+        tags:
+          - editors
+        security:
+          - bearerAuth: []
+        parameters:
+          - in: path
+            name: user_id
+            type: integer
+            required: true
+            description: Id of the user.
+        responses:
+          204:
+            description: Success.
+          404:
+            description: Editor with given id doesn't exist.
+        """
 
         # Get user data from db or ldap
         user = User.from_id(user_id)
