@@ -23,6 +23,11 @@ class Action(db.Model):
         self.status = status
 
     def serialize(self):
+        """Serializes action object.
+
+        :return: Serialized action.
+        :rtype: dict
+        """
         data = {
             'id': self.id,
             'team_id': self.team_id,

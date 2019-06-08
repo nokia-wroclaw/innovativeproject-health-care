@@ -22,7 +22,27 @@ class Team(db.Model):
         self.tribe_id = tribe_id
         self.name = name
 
+    @staticmethod
+    def get_if_exists(team_id):
+        """Fetches team with given id if it exists, aborts with
+        404 status otherwise.
+
+        :param int team_id: Id of the team.
+        :return: Team with specified id.
+        :rtype: Team
+        """
+
+        team = Team.query.filter_by(id=team_id, deleted=False).first()
+        if team is None:
+            abort(404, 'Could not find team with given id.')
+        return team
+
     def answered(self):
+        """Checks if this team submitted answered to the current survey.
+
+        :return: Whether this team has answered.
+        :rtype: bool
+        """
         self.tribe.update_periods()
         period = self.tribe.current_period()
         if period is None:
@@ -46,7 +66,12 @@ class Team(db.Model):
     def get_answers(self, period):
         """Returns this team's answers to a survey from the given period.
         Answers are in form of a dict containing key attributes from both
-        question and answers."""
+        question and answers.
+
+        :param Period period: Period object.
+        :return: List of answers from specified period.
+        :rtype: list
+        """
 
         if self.tribe_id is not period.tribe_id:
             return None
@@ -90,7 +115,12 @@ class Team(db.Model):
 
     def get_average(self, period):
         """Returns average of answers submitted during specified period
-        by this team."""
+        by this team.
+
+        :param Period period: Period object.
+        :return: Average of answers in specified period.
+        :rtype: float
+        """
 
         if self.tribe_id is not period.tribe_id:
             return None
@@ -121,20 +151,15 @@ class Team(db.Model):
         return avg
 
     def serialize(self):
+        """Serializes team object.
+
+        :return: Serialized team.
+        :rtype: dict
+        """
+
         data = {
             'id': self.id,
             'tribe_id': self.tribe_id,
             'name': self.name,
         }
         return data
-
-    @staticmethod
-    def get_if_exists(team_id):
-        """Fetches team with given id if it exists, aborts with
-        404 status otherwise.
-        """
-
-        tribe = Team.query.filter_by(id=team_id, deleted=False).first()
-        if tribe is None:
-            abort(404, 'Could not find team with given id.')
-        return tribe

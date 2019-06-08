@@ -21,6 +21,10 @@ class Question(db.Model):
     def get_if_exists(question_id):
         """Fetches question with given id if it exists, aborts with
         404 status otherwise.
+
+        :param int question_id: Id of the question.
+        :return: Question with specified id.
+        :rtype: Question
         """
 
         question = Question.query.filter_by(id=question_id).one_or_none()
@@ -29,6 +33,12 @@ class Question(db.Model):
         return question
 
     def serialize(self):
+        """Serializes question object.
+
+        :return: Serialized question.
+        :rtype: dict
+        """
+
         data = {
             'id': self.id,
             'value': self.question,

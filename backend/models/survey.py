@@ -24,7 +24,12 @@ class Survey(db.Model):
 
     @staticmethod
     def from_period(period):
-        """Returns survey that was active during given period."""
+        """Returns survey that was active during given period.
+
+        :param Period period: Period object.
+        :return: Survey from specified period.
+        :rtype: Survey
+        """
 
         survey = (
             Survey.query
@@ -43,6 +48,10 @@ class Survey(db.Model):
     def get_if_exists(survey_id):
         """Fetches survey with given id if it exists, aborts with
         404 status otherwise.
+
+        :param int survey_id: Id of the survey.
+        :return: Survey with specified id.
+        :rtype: Survey
         """
 
         survey = Survey.query.filter_by(id=survey_id).one_or_none()
@@ -53,7 +62,13 @@ class Survey(db.Model):
     @staticmethod
     def validate_access(tribe_id, user):
         """Checks if any of the given user's roles allows him to access
-        survey belonging to the tribe with given id."""
+        survey belonging to the tribe with given id.
+
+        :param int tribe_id: Id of the tribe.
+        :param User user: User whose access will be validated.
+        :return: Whether user has access.
+        :rtype: bool
+        """
 
         tribe_id = int(tribe_id)
 
@@ -66,6 +81,13 @@ class Survey(db.Model):
         return False
 
     def serialize_questions(self):
+        """Serializes questions and adds 'order' attribute from
+        SurveyQuestionLink.
+
+        :return: Serialized questions from this survey.
+        :rtype: list
+        """
+
         questions = []
         for l in self.questions:
             question = l.question.serialize()
@@ -74,6 +96,12 @@ class Survey(db.Model):
         return questions
 
     def serialize(self):
+        """Serializes survey object.
+
+        :return: Serialized survey.
+        :rtype: dict
+        """
+
         data = {
             'id': self.id,
             'tribe_id': self.tribe_id,

@@ -18,7 +18,11 @@ class Period(db.Model):
         self.date_start = date_start
 
     def date_end(self):
-        """Returns end date of this period."""
+        """Fetches date when this periods ends.
+
+        :return: End date of this period.
+        :rtype: date
+        """
 
         # Find next period to determine end of the given period
         n_period = (
@@ -32,13 +36,19 @@ class Period(db.Model):
         )
 
         # End of the given period is either start of the next period
-        # or today if there is no next period
+        # or tomorrow if there is no next period
         date_end = (n_period.date_start if n_period is not None
                     else date.today() + timedelta(days=1))
 
         return date_end
 
     def previous(self):
+        """Returns period immediately before this period.
+
+        :return: Period before this.
+        :rtype: Period
+        """
+
         previous_period = (
             Period.query
             .filter(
@@ -55,6 +65,10 @@ class Period(db.Model):
     def get_if_exists(period_id):
         """Fetches period with given id if it exists, aborts with
         404 status otherwise.
+
+        :param int period_id: Id of the period.
+        :return: Period with requested id.
+        :rtype: Period
         """
 
         period = Period.query.filter_by(id=period_id).first()
@@ -63,6 +77,12 @@ class Period(db.Model):
         return period
 
     def serialize(self):
+        """Serializes period object.
+
+        :return: Serialized period.
+        :rtype: dict
+        """
+
         data = {
             'id': self.id,
             'tribe_id': self.tribe_id,

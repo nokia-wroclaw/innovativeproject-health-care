@@ -1,11 +1,18 @@
 def trend_matrix(new, old):
     """Calculates trend matrix for a given two tribe results.
+
     Teams and questions do not have to be the same in both results.
     Resulting matrix will have the same rows and columns as the new result one.
     Teams and questions present in the new result but not in the old one
     will appear `None` values in trend matrix.
     Teams and questions present in the old result but not in the old one
-    will be ignored."""
+    will be ignored.
+
+    :param list new: New results.
+    :param list old: Old results.
+    :return: Matrix of trends.
+    :rtype: list
+    """
 
     n_matrix = new['matrix']
     t_matrix = [[None] * len(n_matrix[0]) for e in n_matrix]

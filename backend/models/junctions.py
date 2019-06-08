@@ -2,6 +2,9 @@ from backend.app import db
 
 
 class TeamUserLink(db.Model):
+    """Object linking teams and users. Link consists of team id, user id and
+    additional manager flag to specify what role user acts as in team.
+    """
 
     __tablename__ = 'team_users'
 
@@ -15,6 +18,10 @@ class TeamUserLink(db.Model):
 
 
 class SurveyQuestionLink(db.Model):
+    """Object linking surveys and questions. Link consists of survey id,
+    question id and order field. This field specifies order in which
+    questions are places within a survey.
+    """
 
     __tablename__ = 'survey_questions'
 

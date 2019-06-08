@@ -27,15 +27,35 @@ class Tribe(db.Model):
         self.name = name
 
     def teams_ids(self):
+        """
+        :return: Ids of teams in this tribe.
+        :rtype: list
+        """
+
         return [t.id for t in self.teams]
 
     def surveys_ids(self):
+        """
+        :return: Ids of surveys of this tribe.
+        :rtype: list
+        """
+
         return [s.id for s in self.surveys]
 
     def editors_ids(self):
+        """
+        :return: Ids of editors of this tribe.
+        :rtype: list
+        """
+
         return [e.id for e in self.editors]
 
     def draft_survey(self):
+        """
+        :return: This tribe's draft survey.
+        :rtype: Survey
+        """
+
         return (
             Survey.query
             .filter_by(tribe_id=self.id, draft=True)
@@ -43,6 +63,11 @@ class Tribe(db.Model):
         )
 
     def active_survey(self):
+        """
+        :return: This tribe's active survey.
+        :rtype: Survey
+        """
+
         return (
             Survey.query
             .filter(
@@ -55,6 +80,11 @@ class Tribe(db.Model):
         )
 
     def next_survey(self):
+        """
+        :return: This tribe's next (pending) survey.
+        :rtype: Survey
+        """
+
         return (
             Survey.query
             .filter(
@@ -67,6 +97,11 @@ class Tribe(db.Model):
         )
 
     def current_period(self):
+        """
+        :return: This tribe's current period.
+        :rtype: Period
+        """
+
         return (
             Period.query
             .filter(
@@ -78,6 +113,11 @@ class Tribe(db.Model):
         )
 
     def latest_period(self):
+        """
+        :return: This tribe's newest period (can be future).
+        :rtype: Period
+        """
+
         return (
             Period.query
             .filter_by(tribe_id=self.id)
@@ -86,6 +126,12 @@ class Tribe(db.Model):
         )
 
     def update_periods(self):
+        """Creates missing period objects for this tribe.
+
+        This is useful when we want to make sure that this tribe has current
+        period object eg. after new month started.
+        """
+
         active_survey = self.active_survey()
         if active_survey is None:
             return
@@ -105,7 +151,12 @@ class Tribe(db.Model):
 
     def get_answers(self, period):
         """Returns matrix of answers along with teams and questions labels
-        for a given period."""
+        for a given period.
+
+        :param Period period: Period object.
+        :return: Answers.
+        :rtype: dict
+        """
 
         # Teams for this tribe could have been different in requested period
         date_start = period.date_start
@@ -170,7 +221,12 @@ class Tribe(db.Model):
 
     def get_averages(self, period):
         """Returns list of answer averages for each team in this tribe in
-        the given period."""
+        the given period.
+
+        :param Period period: Period object.
+        :return: Averages.
+        :rtype: list
+        """
 
         if period == self.current_period():
             # If current period is requested use current list of teams
@@ -209,6 +265,10 @@ class Tribe(db.Model):
     def get_if_exists(tribe_id):
         """Fetches tribe with given id if it exists, aborts with
         404 status otherwise.
+
+        :param int tribe_id: Id of the tribe.
+        :return: Tribe with requested id.
+        :rtype: Tribe
         """
 
         tribe = Tribe.query.filter_by(id=tribe_id).first()
@@ -220,13 +280,23 @@ class Tribe(db.Model):
     def validate_access(tribe_id, user):
         """Checks if given user has rights to edit tribe with given id.
         Aborts with 403 code if not.
+
+        :param int tribe_id: Id of the tribe.
+        :param User user: User of whose access will be validated.
         """
 
         if (user.is_admin() is False and
                 int(tribe_id) not in user.editing_ids()):
-            return abort(403)
+            abort(403)
 
     def serialize(self, verbose=False):
+        """Serializes tribe object.
+
+        :param bool verbose: Whether output should be verbose.
+        :return: Serialized tribe.
+        :rtype: dict
+        """
+
         data = {
             'id': self.id,
             'name': self.name,

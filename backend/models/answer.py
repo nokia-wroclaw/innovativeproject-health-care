@@ -24,6 +24,12 @@ class Answer(db.Model):
         self.order = None
 
     def serialize(self):
+        """Serializes answer object.
+
+        :return: Serialized answer.
+        :rtype: dict
+        """
+
         data = {
             'id': self.id,
             'question_id': self.question_id,

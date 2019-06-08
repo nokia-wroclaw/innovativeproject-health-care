@@ -26,11 +26,11 @@ class LdapConn:
         """Performs exact or non-exact LDAP search by given phrase, in
         specified attributes.
 
-        :param string phrase: phrase to search
-        :param bool exact: whether matches have to be exact
-        :param list attributes: list of attributes to search in
-        :return: list of matches
-        :rtype: list of dicts containing users' attributes
+        :param string phrase: Phrase to search.
+        :param bool exact: Whether matches have to be exact.
+        :param list attributes: List of attributes to search in.
+        :return: List of matches.
+        :rtype: list
         """
 
         if exact is None:
@@ -73,9 +73,9 @@ class LdapConn:
         search of login against login and mail attributes to try to find
         user's correct dn.
 
-        :param string login: user's login or mail
-        :param string password: user's password
-        :return: whether credentials are correct
+        :param string login: User's login or mail.
+        :param string password: User's password.
+        :return: Whether credentials are correct.
         :rtype: bool
         """
 

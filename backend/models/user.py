@@ -28,6 +28,12 @@ class User(db.Model):
 
     @staticmethod
     def from_ldap(data):
+        """Returns user object basing on LDAP response.
+
+        :param dict data: Dict returned from LdapConn.
+        :return: User
+        """
+
         user = User.query.filter_by(id=data['id']).first()
         if user is not None:
             return user
@@ -38,6 +44,11 @@ class User(db.Model):
 
     @staticmethod
     def from_id(id):
+        """Returns user object by id.
+
+        :param int id: Id of the user.
+        :return: User
+        """
         user = User.query.filter_by(id=id).first()
         if user is not None:
             return user
@@ -55,6 +66,10 @@ class User(db.Model):
     def get_if_exists(user_id):
         """Fetches user with given id if it exists, aborts with
         404 status otherwise.
+
+        :param int user_id: Id of the user.
+        :return: User with given id.
+        :rtype: User
         """
 
         user = User.from_id(user_id)
@@ -63,30 +78,60 @@ class User(db.Model):
         return user
 
     def in_db(self):
+        """
+        :return: Whether this user is in db.
+        :rtype: bool
+        """
+
         user = User.query.filter_by(id=self.id).first()
         return True if user is not None else False
 
     def is_admin(self):
+        """
+        :return: Whether this user has an admin role.
+        :rtype: bool
+        """
+
         if self.login in app.config['APP_ADMINS']:
             return True
         return False
 
     def is_editor(self):
+        """
+        :return: Whether this user has an editor role.
+        :rtype: bool
+        """
+
         return self.editor
 
     def is_manager(self):
+        """
+        :return: Whether this user has a manager role.
+        :rtype: bool
+        """
+
         for team in self.teams:
             if team.manager is True:
                 return True
         return False
 
     def is_user(self):
+        """
+        :return: Whether this user has a user role.
+        :rtype: bool
+        """
+
         for team in self.teams:
             if team.manager is not True:
                 return True
         return False
 
     def roles(self):
+        """
+        :return: List of this user's roles.
+        :rtype: list
+        """
+
         roles = []
 
         if self.is_admin():
@@ -101,12 +146,27 @@ class User(db.Model):
         return roles
 
     def team_ids(self):
+        """
+        :return: Ids of the teams this user is a member of.
+        :rtype: list
+        """
+
         return [t.team_id for t in self.teams if t.manager is False]
 
     def managing_ids(self):
+        """
+        :return: Ids of the teams this user is a manager of.
+        :rtype: list
+        """
+
         return [t.team_id for t in self.teams if t.manager is True]
 
     def editing_ids(self):
+        """
+        :return: Ids of the tribes this user is an editor of.
+        :rtype: list
+        """
+
         return [e.id
                 for e in self.editing]
 
@@ -123,6 +183,13 @@ class User(db.Model):
         db.session.commit()
 
     def serialize(self, verbose=False):
+        """Serializes user object.
+
+        :param bool verbose: Whether output should be verbose.
+        :return: Serialized user.
+        :rtype: dict
+        """
+
         data = {
             'id': self.id,
             'login': self.login,

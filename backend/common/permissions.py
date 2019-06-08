@@ -8,6 +8,8 @@ def roles_allowed(roles):
     """Takes a list of roles allowed to access decorated endpoint.
     Aborts with 403 status if user with unauthorized role tries to access
     this endpoint.
+
+    :param list roles: List of roles that should have access to the endpoint.
     """
 
     def roles_allowed_decorator(fn):
