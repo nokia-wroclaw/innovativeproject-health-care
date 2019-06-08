@@ -1,9 +1,10 @@
 from flask import abort, Response, jsonify, request
-from flask_restful import Resource
 from flask_jwt_extended import current_user
+from flask_restful import Resource
 from sqlalchemy import exc
-from backend.common.permissions import roles_allowed
+
 from backend.app import db
+from backend.common.permissions import roles_allowed
 from backend.models import Team, Tribe, TeamUserLink, User
 
 

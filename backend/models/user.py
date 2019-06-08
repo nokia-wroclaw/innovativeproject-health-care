@@ -1,4 +1,5 @@
 from flask import abort
+
 from backend.app import db, app
 from backend.common.ldapconn import LdapConn
 

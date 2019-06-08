@@ -1,6 +1,8 @@
 from functools import wraps
+
 from flask import abort
 from flask_jwt_extended import verify_jwt_in_request, get_jwt_identity
+
 from backend.models import User
 
 

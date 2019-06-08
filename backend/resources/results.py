@@ -1,6 +1,7 @@
 from flask import request, abort, jsonify
 from flask_jwt_extended import current_user
 from flask_restful import Resource
+
 from backend.common.data_manip import trend_matrix
 from backend.common.permissions import roles_allowed
 from backend.models import Team, Survey, Period, Tribe

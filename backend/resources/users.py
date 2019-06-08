@@ -1,11 +1,13 @@
 from datetime import timedelta
+
 from flask import abort, request, jsonify
-from flask_restful import Resource
 from flask_jwt_extended import create_access_token, current_user
-from backend.common.permissions import roles_allowed
-from backend.common.ldapconn import LdapConn
-from backend.models import User, Tribe, Team
+from flask_restful import Resource
+
 from backend.app import app
+from backend.common.ldapconn import LdapConn
+from backend.common.permissions import roles_allowed
+from backend.models import User, Tribe, Team
 
 
 class AuthRes(Resource):

@@ -1,6 +1,8 @@
 from datetime import date
+
 from dateutil.relativedelta import relativedelta
 from flask import abort
+
 from backend.app import db
 from backend.models import Survey, Period, Team, Answer
 
