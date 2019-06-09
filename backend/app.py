@@ -1,11 +1,13 @@
 import os
-from flask import Flask
-from flask_restful import Api
-from flask_jwt_extended import JWTManager
-from flask_sqlalchemy import SQLAlchemy
-from flask_cors import CORS
-from flasgger import Swagger
 from json import load
+
+from flasgger import Swagger
+from flask import Flask
+from flask_cors import CORS
+from flask_jwt_extended import JWTManager
+from flask_restful import Api
+from flask_sqlalchemy import SQLAlchemy
+
 from backend import config
 
 app = Flask(__name__)
@@ -22,8 +24,12 @@ api = Api(app)
 jwt = JWTManager(app)
 db = SQLAlchemy(app)
 
+if app.config['NOTIFY_ENABLE']:
+    from backend.common.notify import schedule_notifications
+    schedule_notifications()
+
 # Need to be imported after creating the jwt object
-from backend.common import jwt_ext  # noqa: E402, F401
+from backend.common import jwt_ext
 # Needs to be imported after creating the db object
 from backend.resources import (users, editors, tribes, teams, surveys, results)  # noqa: E402
 

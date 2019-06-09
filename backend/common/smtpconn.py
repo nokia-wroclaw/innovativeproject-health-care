@@ -31,6 +31,9 @@ class SmtpConn:
         :param string body: Body of the email.
         """
 
+        if recipients is None or len(recipients) == 0:
+            return
+
         sender = app.config['SMTP_MAIL']
         message = MIMEMultipart()
         message['From'] = sender

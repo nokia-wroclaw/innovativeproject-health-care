@@ -53,3 +53,23 @@ SMTP_PORT = 465
 SMTP_MAIL = 'noreply@exmaple.com'
 # Password
 SMTP_PASS = 'password'
+
+# Email notifications
+# Enable notifications
+NOTIFY_ENABLE = True
+# Days of month in which new survey notification will be sent
+NOTIFY_NEW_DAYS = 1
+# Subject of the new survey notification
+NOTIFY_NEW_SUB = "[Healthcheck] New survey for your team"
+# Body of the new survey notification
+NOTIFY_NEW_BODY = """
+    New survey period just started for your team "{team}".\n
+    Please, remember to fill the survey before {end}."""
+# Days of month in which unfilled survey notification will be sent
+NOTIFY_UNFILLED_DAYS = 23
+# Subject of the new survey notification
+NOTIFY_UNFILLED_SUB = "[Healthcheck] Unfilled survey reminder"
+# Body of the new survey notification
+NOTIFY_UNFILLED_BODY = """
+    Current survey period for your team "{team}" is ending.\n
+    Please, remember to fill the survey before {end}."""
