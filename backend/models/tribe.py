@@ -183,7 +183,7 @@ class Tribe(db.Model):
                 .filter(
                     Team.tribe_id == self.id,
                     Answer.date >= date_start,
-                    Answer.date < date_end
+                    Answer.date <= date_end
                 )
                 .order_by(Team.name.asc())
                 .all()
@@ -246,7 +246,7 @@ class Tribe(db.Model):
                 .filter(
                     Team.tribe_id == self.id,
                     Answer.date >= period.date_start,
-                    Answer.date < period.date_end()
+                    Answer.date <= period.date_end()
                 )
                 .order_by(Team.name.asc())
                 .all()

@@ -45,6 +45,7 @@ class Team(db.Model):
         :return: Whether this team has answered.
         :rtype: bool
         """
+
         self.tribe.update_periods()
         period = self.tribe.current_period()
         if period is None:
@@ -97,7 +98,7 @@ class Team(db.Model):
                     Answer.question_id == question.id,
                     Answer.team_id == self.id,
                     Answer.date >= date_start,
-                    Answer.date < date_end
+                    Answer.date <= date_end
                 )
                 .one_or_none()
             )
@@ -140,7 +141,7 @@ class Team(db.Model):
             .filter(
                 Answer.team_id == self.id,
                 Answer.date >= date_start,
-                Answer.date < date_end
+                Answer.date <= date_end
             )
             .all()
         )

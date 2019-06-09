@@ -70,7 +70,7 @@ def notify_unfilled_survey():
         tr.update_periods()
         if tr.current_period() is None:
             continue
-        if tr.current_period().date_end().month == date.today().month + 1:
+        if tr.current_period().date_end().month == date.today().month:
             notify_tribes.append(tr)
 
     for tr in notify_tribes:

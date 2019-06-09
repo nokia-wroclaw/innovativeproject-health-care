@@ -1,5 +1,6 @@
-from datetime import date, timedelta
+from datetime import date
 
+from dateutil.relativedelta import relativedelta
 from flask import abort
 
 from backend.app import db
@@ -20,7 +21,9 @@ class Period(db.Model):
         self.date_start = date_start
 
     def date_end(self):
-        """Fetches date when this periods ends.
+        """Fetches end date of this period.
+
+        End date means the last day of this period.
 
         :return: End date of this period.
         :rtype: date
@@ -37,12 +40,17 @@ class Period(db.Model):
             .first()
         )
 
-        # End of the given period is either start of the next period
-        # or tomorrow if there is no next period
-        date_end = (n_period.date_start if n_period is not None
-                    else date.today() + timedelta(days=1))
+        # Find start of the next period
+        if n_period is not None:
+            # If there is next period
+            next_start = n_period.date_start
+        else:
+            # Calculate from period length if there is no next period
+            period_len = self.tribe.current_survey().period_len
+            next_start = self.date_start + relativedelta(months=period_len)
 
-        return date_end
+        # End date is start day of next period minus one day
+        return next_start - relativedelta(days=1)
 
     def previous(self):
         """Returns period immediately before this period.
