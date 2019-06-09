@@ -43,3 +43,13 @@ LDAP_LOGIN_ATTR = 'uid'
 LDAP_NAME_ATTR = 'cn'
 # Attribute which will be used as user's email adress
 LDAP_MAIL_ATTR = 'mail'
+
+# SMTP server configuration
+# Server URL
+SMTP_URL = 'smtp.example.com'
+# Server port
+SMTP_PORT = 465
+# Email address to login as
+SMTP_MAIL = 'noreply@exmaple.com'
+# Password
+SMTP_PASS = 'password'
