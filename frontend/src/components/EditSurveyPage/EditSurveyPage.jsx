@@ -55,7 +55,7 @@ const EditSurveyPage = ({ user, editing, ...props }) => {
 
 const mapStateToProps = state => ({
   user: state.user.userData,
-  editing: state.user.editing | []
+  editing: state.user.editing || []
 });
 
 export default connect(
