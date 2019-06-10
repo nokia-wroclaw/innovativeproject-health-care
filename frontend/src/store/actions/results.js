@@ -8,9 +8,10 @@ import {
   SET_TRIBE_PERIODS
 } from "./types";
 
-export const setTeamAnswers = team_id => dispatch => {
+export const setTeamAnswers = (team_id, period_id = null) => dispatch => {
+  let period_query = period_id ? `&period=${period_id}` : "";
   return http
-    .get(`${endpoints.results}?type=team&teamid=${team_id}`)
+    .get(`${endpoints.results}?type=team&teamid=${team_id}${period_query}`)
     .then(response => {
       dispatch({
         type: SET_TEAM_ANSWERS,

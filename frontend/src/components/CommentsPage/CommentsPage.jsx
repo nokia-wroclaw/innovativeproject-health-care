@@ -6,9 +6,12 @@ import { setTeamAnswers } from "./../../store/actions/results";
 import Comments from "./Comments";
 import TemplatePage from "../common/TemplatePage/";
 import Loader from "../common/Loader";
+import { setTribePeriods } from "../../store/actions/results";
 
-const CommentsPage = ({ user, managing, ...props }) => {
+const CommentsPage = ({ user, managing, periods, ...props }) => {
   const [currentTeamId, setCurrentTeamId] = useState(undefined);
+  const [currentPeriodId, setCurrentPeriodId] = useState(undefined);
+  const [currentTribeId, setCurrentTribeId] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -19,11 +22,25 @@ const CommentsPage = ({ user, managing, ...props }) => {
     props.setUserManagingDetails(user);
   }, []);
 
+  const fetchAnswers = (team_id, period_id = null) => {
+    setIsLoading(true);
+    props.setTeamAnswers(team_id, period_id).then(() => setIsLoading(false));
+  };
+
   const handleTeamSelect = (e, { value }) => {
     if (value === currentTeamId) return;
-    setIsLoading(true);
     setCurrentTeamId(value);
-    props.setTeamAnswers(value).then(() => setIsLoading(false));
+    fetchAnswers(value);
+    let tribeId = managing.find(t => t.id === value).tribe_id;
+    if (tribeId === currentTribeId) return;
+    setCurrentTribeId(tribeId);
+    props.setTribePeriods(tribeId);
+  };
+
+  const handlePeriodSelect = (e, { value }) => {
+    if (value === currentPeriodId) return;
+    setCurrentPeriodId(value);
+    fetchAnswers(currentTeamId, value);
   };
 
   return (
@@ -41,6 +58,18 @@ const CommentsPage = ({ user, managing, ...props }) => {
           onChange={handleTeamSelect}
           value={currentTeamId}
         />
+        <Dropdown
+          placeholder="Select period"
+          options={periods.map((period, i) => ({
+            key: i,
+            text: period.date_start,
+            value: period.id
+          }))}
+          selection
+          disabled={!currentTeamId}
+          onChange={handlePeriodSelect}
+          value={currentPeriodId}
+        />
         <br />
         <br />
         {!isLoading && currentTeamId ? <Comments /> : <Loader />}
@@ -51,10 +80,11 @@ const CommentsPage = ({ user, managing, ...props }) => {
 
 const mapStateToProps = state => ({
   user: state.user.userData,
-  managing: state.user.userData.managing
+  managing: state.user.userData.managing || [],
+  periods: state.results.tribePeriods || []
 });
 
 export default connect(
   mapStateToProps,
-  { setUserManagingDetails, setTeamAnswers }
+  { setUserManagingDetails, setTeamAnswers, setTribePeriods }
 )(CommentsPage);
