@@ -30,7 +30,7 @@ const ResultsMatrixPage = ({ user, tribes, periods, ...props }) => {
     if (value === currentTribeId) return;
     setCurrentTribeId(value);
     fetchMatrix(value);
-    props.setTribePeriods(value);
+    props.setTribePeriods(value).then(() => setCurrentPeriodId(periods[0].id));
   };
 
   const handlePeriodSelect = (e, { value }) => {
