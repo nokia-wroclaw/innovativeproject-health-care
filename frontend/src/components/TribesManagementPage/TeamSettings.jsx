@@ -9,7 +9,7 @@ import {
   deleteMemberFromTeam,
   updateTeamName
 } from './../../store/actions/teams';
-import { confirmDelete } from './../common/functions';
+import { confirmDialog } from './../common/functions';
 import EditingCard from './../common/EditingCard/EditingCard';
 import '../../styles/common.css';
 
@@ -19,7 +19,7 @@ const TeamSettings = ({ isOpen, team, close, ...props }) => {
   const [newTeamName, setNewTeamName] = useState(team.name);
 
   const handleDeleteTeam = () => {
-    if (confirmDelete()) {
+    if (confirmDialog(team.name)) {
       setDeleteBtnLoading(true);
       props.deleteTeam(team);
     }

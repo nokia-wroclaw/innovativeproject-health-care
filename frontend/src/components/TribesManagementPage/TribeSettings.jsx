@@ -9,7 +9,7 @@ import {
   updateTribeName
 } from './../../store/actions/tribes';
 import { deleteTeam } from '../../store/actions/teams';
-import { confirmDelete } from './../common/functions';
+import { confirmDialog } from './../common/functions';
 import EditingCard from './../common/EditingCard/EditingCard';
 import '../../styles/common.css';
 
@@ -19,7 +19,7 @@ const TribeSettings = ({ isOpen, tribe, close, ...props }) => {
   const [newTribeName, setNewTribeName] = useState(tribe.name);
 
   const handleDeleteTribe = () => {
-    if (confirmDelete()) {
+    if (confirmDialog(tribe.name)) {
       setDeleteBtnLoading(true);
       props.deleteTribe(tribe);
     }

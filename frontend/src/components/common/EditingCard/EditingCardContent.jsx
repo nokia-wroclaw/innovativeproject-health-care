@@ -1,10 +1,10 @@
 import React from "react";
 import { Card, Grid, Icon } from "semantic-ui-react";
-import { confirmDelete } from "./../functions";
+import { confirmDialog } from "./../functions";
 
 export const EditingCardContent = ({ item, onDelete, alertMsg }) => {
   const handleDelete = item => {
-    if (confirmDelete(item.name, alertMsg)) onDelete(item);
+    if (confirmDialog(item.name, alertMsg)) onDelete(item);
   };
 
   return (

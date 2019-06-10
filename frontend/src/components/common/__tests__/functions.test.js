@@ -1,5 +1,5 @@
 import {
-  confirmDelete,
+  confirmDialog,
   isAsync,
   replaceNotLettersWithSpace,
   replaceSpaceWithUnderscore,

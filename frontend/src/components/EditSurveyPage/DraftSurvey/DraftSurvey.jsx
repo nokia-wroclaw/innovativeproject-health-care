@@ -8,6 +8,9 @@ import {
 } from '../../../store/actions/surveys';
 import PeriodSelect from './PeriodSelect';
 import DraftQuestionList from './DraftQuestionList';
+import { confirmDialog } from "../../common/functions";
+
+const confirmMessage = "Are you sure you want to publish this survey?";
 
 const DraftSurvey = ({ tribeId, survey, ...props }) => {
   const [saving, setSaving] = useState(false);
@@ -23,6 +26,7 @@ const DraftSurvey = ({ tribeId, survey, ...props }) => {
   };
 
   const handleSaveAndPublish = () => {
+    if (!confirmDialog(null, confirmMessage)) return;
     setPublishing(true);
     props
       .saveAndPublishDraftSurvey(tribeId, survey)

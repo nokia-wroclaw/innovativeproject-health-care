@@ -3,11 +3,11 @@ import { connect } from "react-redux";
 import QuestionList from "./QuestionList";
 import { deleteSurvey } from "../../store/actions/surveys";
 import { Button, Container, Message } from "semantic-ui-react";
-import { confirmDelete } from "./../common/functions";
+import { confirmDialog } from "./../common/functions";
 
 const PendingSurvey = ({ survey, ...props }) => {
   const handleDelete = () => {
-    if (confirmDelete("survey")) props.deleteSurvey(survey);
+    if (confirmDialog("pending survey")) props.deleteSurvey(survey);
   };
 
   const content = survey.id ? (
