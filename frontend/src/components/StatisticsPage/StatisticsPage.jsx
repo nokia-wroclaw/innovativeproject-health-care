@@ -54,7 +54,7 @@ const StatisticsPage = ({ user, tribes, ...props }) => {
 
 const mapStateToProps = state => ({
   user: state.user.userData,
-  tribes: state.user.userData.tribes || []
+  tribes: state.user.tribes || []
 });
 
 export default connect(

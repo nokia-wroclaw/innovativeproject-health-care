@@ -80,7 +80,7 @@ const CommentsPage = ({ user, managing, periods, ...props }) => {
 
 const mapStateToProps = state => ({
   user: state.user.userData,
-  managing: state.user.userData.managing || [],
+  managing: state.user.managing || [],
   periods: state.results.tribePeriods || []
 });
 

@@ -18,6 +18,7 @@ export default function(state = initialState, action) {
     case SET_USER:
       const menu = auth.getMenu(action.payload);
       return {
+        ...state,
         userData: action.payload,
         menu
       };
@@ -41,35 +42,27 @@ export default function(state = initialState, action) {
       };
 
     case SET_USER_TEAMS_DETAILS:
-      userData = { ...state.userData };
-      userData.teams = action.payload;
       return {
         ...state,
-        userData
+        teams: action.payload
       };
 
     case SET_USER_MANAGING_DETAILS:
-      userData = { ...state.userData };
-      userData.managing = action.payload;
       return {
         ...state,
-        userData
+        managing: action.payload
       };
 
     case SET_USER_TRIBES_DETAILS:
-      userData = { ...state.userData };
-      userData.tribes = action.payload;
       return {
         ...state,
-        userData
+        tribes: action.payload
       };
 
     case SET_USER_EDITING_DETAILS:
-      userData = { ...state.userData };
-      userData.editing = action.payload;
       return {
         ...state,
-        userData
+        editing: action.payload
       };
 
     default:

@@ -64,7 +64,7 @@ const SurveyPage = ({
 
 const mapStateToProps = state => ({
   user: state.user.userData,
-  teams: state.user.userData.teams,
+  teams: state.user.teams || [],
   loading: state.currentSurvey.isLoading,
   currentTeamId: state.currentSurvey.team_id,
   surveyIsActive: !state.results.team.length
