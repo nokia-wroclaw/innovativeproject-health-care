@@ -1,13 +1,8 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Input, Button, Form } from 'semantic-ui-react';
-import { getUsersByName } from '../../../services/inputHints';
-import { handleFetchingError } from './../../../store/actions/general';
-import {
-  replaceNotLettersWithSpace,
-  replaceSpaceWithUnderscore,
-  removeSpaceAtBegening
-} from './../functions';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Input, Button, Form } from "semantic-ui-react";
+import { getUsersByName } from "../../../services/inputHints";
+import { handleFetchingError } from "./../../../store/actions/general";
 
 const lettersCountForFetchingUsers = 4;
 
@@ -16,10 +11,10 @@ class FormWithUsersDataList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      inputValue: '',
+      inputValue: "",
       dataList: [],
       addButtonDisadbed: true,
-      userId: ''
+      userId: ""
     };
     this.dataListRef = React.createRef();
   }
@@ -31,7 +26,7 @@ class FormWithUsersDataList extends Component {
     );
     if (option.length) {
       const userId = [...option[0].attributes].find(
-        ({ name }) => name === 'userid'
+        ({ name }) => name === "userid"
       ).value;
       this.setState({ userId, addButtonDisadbed: false });
     } else this.setState({ addButtonDisadbed: true });
@@ -40,12 +35,8 @@ class FormWithUsersDataList extends Component {
   handleInputChange = async ({ target: input }) => {
     let inputValue = input.value;
     await this.setState({ inputValue });
-
-    inputValue = replaceNotLettersWithSpace(inputValue);
-    inputValue = removeSpaceAtBegening(inputValue);
-    inputValue = replaceSpaceWithUnderscore(inputValue);
-
     if (inputValue.length === lettersCountForFetchingUsers) {
+      inputValue = encodeURIComponent(inputValue);
       getUsersByName(inputValue)
         .then(({ data }) => this.setState({ dataList: data }))
         .catch(error => {
@@ -61,7 +52,7 @@ class FormWithUsersDataList extends Component {
     );
     if (user) {
       this.props.handleClick(user);
-      this.setState({ inputValue: '' });
+      this.setState({ inputValue: "" });
     }
   };
 
@@ -70,14 +61,14 @@ class FormWithUsersDataList extends Component {
       <Form onSubmit={this.handleAddButtonClick}>
         <Form.Field>
           <Input
-            type='text'
-            placeholder='Search...'
+            type="text"
+            placeholder="Search..."
             action
             onChange={this.handleInputChange}
-            list='usersDataList'
+            list="usersDataList"
           >
             <input />
-            <datalist id='usersDataList' ref={this.dataListRef}>
+            <datalist id="usersDataList" ref={this.dataListRef}>
               {this.state.dataList.map(user => (
                 <option
                   value={`${user.name} (${user.login})`}
@@ -87,8 +78,8 @@ class FormWithUsersDataList extends Component {
               ))}
             </datalist>
             <Button
-              type='submit'
-              color='violet'
+              type="submit"
+              color="violet"
               disabled={this.state.addButtonDisadbed}
             >
               {this.props.buttonText}
