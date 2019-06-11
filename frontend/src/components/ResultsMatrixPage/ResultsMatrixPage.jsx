@@ -18,6 +18,10 @@ const ResultsMatrixPage = ({ user, tribes, periods, ...props }) => {
   }, [tribes]);
 
   useEffect(() => {
+    if (periods[0]) setCurrentPeriodId(periods[0].id);
+  }, [periods]);
+
+  useEffect(() => {
     props.setUserTribesDetails(user);
   }, []);
 
@@ -30,7 +34,7 @@ const ResultsMatrixPage = ({ user, tribes, periods, ...props }) => {
     if (value === currentTribeId) return;
     setCurrentTribeId(value);
     fetchMatrix(value);
-    props.setTribePeriods(value).then(() => setCurrentPeriodId(periods[0].id));
+    props.setTribePeriods(value);
   };
 
   const handlePeriodSelect = (e, { value }) => {

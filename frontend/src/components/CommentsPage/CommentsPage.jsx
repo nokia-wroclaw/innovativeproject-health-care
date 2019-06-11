@@ -19,6 +19,10 @@ const CommentsPage = ({ user, managing, periods, ...props }) => {
   }, [managing]);
 
   useEffect(() => {
+    if (periods[0]) setCurrentPeriodId(periods[0].id);
+  }, [periods]);
+
+  useEffect(() => {
     props.setUserManagingDetails(user);
   }, []);
 
@@ -34,7 +38,7 @@ const CommentsPage = ({ user, managing, periods, ...props }) => {
     let tribeId = managing.find(t => t.id === value).tribe_id;
     if (tribeId === currentTribeId) return;
     setCurrentTribeId(tribeId);
-    props.setTribePeriods(tribeId).then(() => setCurrentPeriodId(periods[0].id));
+    props.setTribePeriods(tribeId);
   };
 
   const handlePeriodSelect = (e, { value }) => {
