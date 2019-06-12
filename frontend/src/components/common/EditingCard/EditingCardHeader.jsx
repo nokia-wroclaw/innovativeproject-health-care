@@ -3,10 +3,10 @@ import { Header, Card, Grid, Icon } from "semantic-ui-react";
 import FormWithUsersDataList from "../../common/FormWithUsersDataList/";
 import FormWithSingleInput from "../FormWithSingleInput";
 
-export const EditingCardHeader = ({ title, useUsersForm, onAddBtnClick }) => {
+export const EditingCardHeader = ({ title, useUsersForm, onlyEditors, onAddBtnClick }) => {
   const [showInput, setShowInput] = useState(false);
   const form = useUsersForm ? (
-    <FormWithUsersDataList buttonText="Add" handleClick={onAddBtnClick} />
+    <FormWithUsersDataList onlyEditors={onlyEditors} buttonText="Add" handleClick={onAddBtnClick} />
   ) : (
     <FormWithSingleInput buttonText="Add" handleClick={onAddBtnClick} />
   );

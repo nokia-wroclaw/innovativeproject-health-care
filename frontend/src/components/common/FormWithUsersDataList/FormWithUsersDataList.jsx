@@ -6,7 +6,7 @@ import { handleFetchingError } from "./../../../store/actions/general";
 
 const lettersCountForFetchingUsers = 4;
 
-//props: buttonText, handleClick
+//props: buttonText, handleClick, onlyEditors
 class FormWithUsersDataList extends Component {
   constructor(props) {
     super(props);
@@ -37,7 +37,7 @@ class FormWithUsersDataList extends Component {
     await this.setState({ inputValue });
     if (inputValue.length === lettersCountForFetchingUsers) {
       inputValue = encodeURIComponent(inputValue);
-      getUsersByName(inputValue)
+      getUsersByName(inputValue, this.props.onlyEditors)
         .then(({ data }) => this.setState({ dataList: data }))
         .catch(error => {
           this.props.handleFetchingError(error);
@@ -90,6 +90,10 @@ class FormWithUsersDataList extends Component {
     );
   }
 }
+
+FormWithUsersDataList.defaultProps = {
+  onlyEditors: false
+};
 
 export default connect(
   null,

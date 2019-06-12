@@ -1,7 +1,7 @@
 import { endpoints, http } from "./http";
 
-export const getUsersByName = async phrase => {
-  const URL = `${endpoints.users}?q=${phrase}`;
-  const response = await http.get(URL);
-  return response;
+export const getUsersByName = async (phrase, onlyEditors = false) => {
+  let endpoint = onlyEditors ? endpoints.editors : endpoints.users;
+  const URL = `${endpoint}?q=${phrase}`;
+  return await http.get(URL);
 };
