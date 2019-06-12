@@ -1,24 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { Dropdown, Container, Header } from "semantic-ui-react";
+import { Dropdown, Container } from "semantic-ui-react";
 import { setUserTeamsDetails } from "../../store/actions/user";
-import {
-  setCurrentSurvey,
-  setCurrentSurveyTeamId
-} from "../../store/actions/currentSurvey";
+import { setCurrentSurvey, setCurrentSurveyTeamId } from "../../store/actions/currentSurvey";
 import { setTeamAnswers } from "./../../store/actions/results";
 import Survey from "./Survey";
 import TemplatePage from "../common/TemplatePage/";
 import Loader from "./../common/Loader/";
 
-const SurveyPage = ({
-  user,
-  teams,
-  loading,
-  currentTeamId,
-  surveyIsActive,
-  ...props
-}) => {
+const SurveyPage = ({ user, teams, currentTeamId, surveyIsActive, ...props }) => {
+  const [isLoading, setIsLoading] = useState(false);
+
   useEffect(() => {
     if (teams[0]) handleTeamSelect(null, { value: teams[0].id });
   }, [teams]);
@@ -29,17 +21,15 @@ const SurveyPage = ({
 
   const handleTeamSelect = (e, { value }) => {
     if (value === currentTeamId) return;
-    props.setCurrentSurveyTeamId(value);
-    props.setTeamAnswers(value);
+    setIsLoading(true);
     const { tribe_id } = teams.find(team => team.id === value);
-    props.setCurrentSurvey(tribe_id);
+    let promises = [
+      props.setCurrentSurveyTeamId(value),
+      props.setTeamAnswers(value),
+      props.setCurrentSurvey(tribe_id)
+    ];
+    Promise.all(promises).then(() => setIsLoading(false));
   };
-
-  const content = surveyIsActive ? (
-    <Survey />
-  ) : (
-    <Header as="h5">Survey for this team has been submitted.</Header>
-  );
 
   return (
     <TemplatePage>
@@ -56,7 +46,7 @@ const SurveyPage = ({
           onChange={handleTeamSelect}
           value={currentTeamId}
         />
-        {loading ? <Loader /> : content}
+        {isLoading ? <Loader />  : <Survey />}
       </Container>
     </TemplatePage>
   );
@@ -65,7 +55,6 @@ const SurveyPage = ({
 const mapStateToProps = state => ({
   user: state.user.userData,
   teams: state.user.teams || [],
-  loading: state.currentSurvey.isLoading,
   currentTeamId: state.currentSurvey.team_id,
   surveyIsActive: !state.results.team.length
 });
