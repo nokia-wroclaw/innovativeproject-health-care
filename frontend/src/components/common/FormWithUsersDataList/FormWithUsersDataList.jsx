@@ -13,7 +13,7 @@ class FormWithUsersDataList extends Component {
     this.state = {
       inputValue: "",
       dataList: [],
-      addButtonDisadbed: true,
+      addButtonDisabled: true,
       userId: ""
     };
     this.dataListRef = React.createRef();
@@ -28,8 +28,8 @@ class FormWithUsersDataList extends Component {
       const userId = [...option[0].attributes].find(
         ({ name }) => name === "userid"
       ).value;
-      this.setState({ userId, addButtonDisadbed: false });
-    } else this.setState({ addButtonDisadbed: true });
+      this.setState({ userId, addButtonDisabled: false });
+    } else this.setState({ addButtonDisabled: true });
   };
 
   handleInputChange = async ({ target: input }) => {
@@ -80,7 +80,7 @@ class FormWithUsersDataList extends Component {
             <Button
               type="submit"
               color="violet"
-              disabled={this.state.addButtonDisadbed}
+              disabled={this.state.addButtonDisabled}
             >
               {this.props.buttonText}
             </Button>
