@@ -74,10 +74,6 @@ const chartOptions = {
     display: true,
     position: "top"
   }
-
-  // tooltips: {
-  //   height: 100
-  // }
 };
 
 const Charts = ({ matrix, periods, teams }) => {
