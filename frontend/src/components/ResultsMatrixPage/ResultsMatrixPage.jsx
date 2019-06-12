@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { Container, Dropdown } from "semantic-ui-react";
+import { Container, Dropdown, Grid } from "semantic-ui-react";
 import { setUserTribesDetails } from "../../store/actions/user";
 import { setTribeMatrix, setTribePeriods } from "../../store/actions/results";
 import Loader from "../common/Loader";
@@ -50,43 +50,50 @@ const ResultsMatrixPage = ({ user, tribes, periods, ...props }) => {
       return null;
     }
   };
+
   return (
     <TemplatePage>
       <Container>
-        <br />
-        <Dropdown
-          placeholder="Select tribe"
-          options={tribes.map((tribe, i) => ({
-            key: i,
-            text: tribe.name,
-            value: tribe.id
-          }))}
-          selection
-          onChange={handleTribeSelect}
-          value={currentTribeId}
-        />
-        <Dropdown
-          placeholder="Select period"
-          options={periods.map((period, i) => ({
-            key: i,
-            text: period.date_start,
-            value: period.id
-          }))}
-          selection
-          disabled={!currentTribeId}
-          onChange={handlePeriodSelect}
-          value={currentPeriodId}
-        />
-
-        {isLoading || !currentTribeId ? null : (
-          <React.Fragment>
-            <Statistic label={getCurrentTribeName()} />
-            <br />
-            <br />
-            <Matrix />
-          </React.Fragment>
-        )}
-        {isLoading ? <Loader active inline="centered" /> : null}
+        <Grid stackable padded>
+          <Grid.Row columns={2}>
+            <Grid.Column width={10}>
+              <Dropdown
+                placeholder="Select tribe"
+                options={tribes.map((tribe, i) => ({
+                  key: i,
+                  text: tribe.name,
+                  value: tribe.id
+                }))}
+                selection
+                onChange={handleTribeSelect}
+                value={currentTribeId}
+              />
+              <Dropdown
+                placeholder="Select period"
+                options={periods.map((period, i) => ({
+                  key: i,
+                  text: period.date_start,
+                  value: period.id
+                }))}
+                selection
+                disabled={!currentTribeId}
+                onChange={handlePeriodSelect}
+                value={currentPeriodId}
+              />
+            </Grid.Column>
+            <Grid.Column width={6}>
+              {isLoading || !currentTribeId ? null : (
+                <Statistic label={getCurrentTribeName()} />
+              )}
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row>
+            <Grid.Column style={{ overflow: "auto" }}>
+              {isLoading || !currentTribeId ? null : <Matrix />}
+              {isLoading ? <Loader active inline="centered" /> : null}
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
       </Container>
     </TemplatePage>
   );

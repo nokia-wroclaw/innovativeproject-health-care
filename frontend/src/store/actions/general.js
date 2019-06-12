@@ -21,6 +21,8 @@ export const handleFetchingError = error => dispatch => {
         return;
     }
   } catch {
-    //something went wrong, eg. no internet connection
+    alert(
+      "Something went wrong. Please check your Internet connection and try again."
+    );
   }
 };
