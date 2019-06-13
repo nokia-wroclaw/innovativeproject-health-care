@@ -3,7 +3,7 @@ import {
   setEditors,
   addEditor,
   deleteEditor
-} from "./../../store/actions/editors";
+} from "../../store/actions/editors";
 import { connect } from "react-redux";
 import EditingCard from "../common/EditingCard/EditingCard";
 

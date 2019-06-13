@@ -1,22 +1,18 @@
 import React from "react";
 import { Card, Label } from "semantic-ui-react";
 import { connect } from "react-redux";
-
-const RED = "red";
-const YELLOW = "yellow";
-const GREEN = "green";
-const GREY = "grey";
+import { red, yellow, green, grey } from "../../styles/colors";
 
 const valueToColor = value => {
   switch (value) {
     case 0:
-      return RED;
+      return red;
     case 1:
-      return YELLOW;
+      return yellow;
     case 2:
-      return GREEN;
+      return green;
     default:
-      return GREY;
+      return grey;
   }
 };
 
@@ -34,7 +30,7 @@ const Comments = ({ answers }) => {
           <Card.Content>
             <Card.Header>{item.question}</Card.Header>
             <Card.Meta>
-              <Label color={valueToColor(item.answer)} size={"small"}>
+              <Label color={valueToColor(item.answer)} size="small">
                 Answer: {item.answer}
               </Label>
             </Card.Meta>

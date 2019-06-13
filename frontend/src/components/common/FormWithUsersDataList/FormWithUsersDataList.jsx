@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Input, Button, Form } from "semantic-ui-react";
 import { getUsersByName } from "../../../services/inputHints";
 import { handleFetchingError } from "./../../../store/actions/general";
+import { violet } from "../../../styles/colors";
 
 const lettersCountForFetchingUsers = 4;
 
@@ -79,7 +80,7 @@ class FormWithUsersDataList extends Component {
             </datalist>
             <Button
               type="submit"
-              color="violet"
+              color={violet}
               disabled={this.state.addButtonDisabled}
             >
               {this.props.buttonText}

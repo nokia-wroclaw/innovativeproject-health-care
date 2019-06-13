@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Button, Form } from "semantic-ui-react";
 import Joi from "joi";
-import colors from "../../../styles/colors";
+import * as colors from "../../../styles/colors";
 import { login } from "../../../store/actions/user";
 
 class LoginForm extends Component {

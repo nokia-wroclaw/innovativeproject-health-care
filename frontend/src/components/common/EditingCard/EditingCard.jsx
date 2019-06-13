@@ -13,13 +13,12 @@ const EditingCard = ({
   alertMsg
 }) => {
   return (
-    <Card style={{ margin: "10px" }} className="editing-card">
+    <Card>
       <EditingCardHeader
         title={title}
         useUsersForm={useUsersForm}
         onlyEditors={onlyEditors}
         onAddBtnClick={onAddBtnClick}
-        className="editing-card-header"
       />
       {data.map((item, i) => (
         <EditingCardContent
