@@ -8,8 +8,8 @@ def trend_matrix(new, old):
     Teams and questions present in the old result but not in the old one
     will be ignored.
 
-    :param list new: New results.
-    :param list old: Old results.
+    :param dict new: New results.
+    :param dict old: Old results.
     :return: Matrix of trends.
     :rtype: list
     """
@@ -46,6 +46,9 @@ def trend_matrix(new, old):
         for j in range(len(n_matrix[i])):
             new_val = n_matrix[i][j]
             old_val = translate(i, j)
+
+            if new_val is None:
+                continue
 
             trend = None
             if old_val is None:

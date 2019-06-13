@@ -4,6 +4,7 @@ from dateutil.relativedelta import relativedelta
 from flask import abort
 
 from backend.app import db
+from backend import models
 
 
 class Period(db.Model):
@@ -29,25 +30,13 @@ class Period(db.Model):
         :rtype: date
         """
 
-        # Find next period to determine end of the given period
-        n_period = (
-            Period.query
-            .filter(
-                Period.tribe_id == self.tribe_id,
-                Period.date_start > self.date_start
-            )
-            .order_by(Period.date_start.asc())
-            .first()
-        )
+        # Find survey from that period
+        survey = models.Survey.from_period(self)
+        if survey is None:
+            return None
 
-        # Find start of the next period
-        if n_period is not None:
-            # If there is next period
-            next_start = n_period.date_start
-        else:
-            # Calculate from period length if there is no next period
-            period_len = self.tribe.current_survey().period_len
-            next_start = self.date_start + relativedelta(months=period_len)
+        # Calculate start date of the next survey
+        next_start = self.date_start + relativedelta(months=survey.period_len)
 
         # End date is start day of next period minus one day
         return next_start - relativedelta(days=1)

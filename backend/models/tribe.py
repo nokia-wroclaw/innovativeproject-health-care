@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, datetime
 
 from dateutil.relativedelta import relativedelta
 from flask import abort
@@ -134,13 +134,10 @@ class Tribe(db.Model):
         period object eg. after new month started.
         """
 
-        active_survey = self.active_survey()
-        if active_survey is None:
-            return
-        period_len = active_survey.period_len
-
         while True:
             latest = self.latest_period()
+            survey = Survey.from_period(latest)
+            period_len = survey.period_len
             before = date.today() + relativedelta(months=-period_len)
 
             if latest.date_start > before:

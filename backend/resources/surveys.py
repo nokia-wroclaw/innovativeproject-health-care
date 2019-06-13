@@ -508,7 +508,7 @@ class SurveyAnswersRes(Resource):
 class TribePeriodsRes(Resource):
     """Collection of periods of tribe with specified id."""
 
-    @roles_allowed(['manager', 'user'])
+    @roles_allowed(['editor', 'manager', 'user'])
     def get(self, tribe_id):
         """Get periods of the tribe.
         Roles allowed: manager, user.
