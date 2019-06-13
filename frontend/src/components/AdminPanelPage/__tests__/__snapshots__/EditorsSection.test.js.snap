@@ -21,8 +21,8 @@ ShallowWrapper {
     "nodeType": "function",
     "props": Object {
       "data": undefined,
-      "onAddBtnClick": undefined,
-      "onItemDelete": undefined,
+      "onAddBtnClick": [Function],
+      "onItemDelete": [Function],
       "title": "Editors",
       "useUsersForm": true,
     },
@@ -37,8 +37,8 @@ ShallowWrapper {
       "nodeType": "function",
       "props": Object {
         "data": undefined,
-        "onAddBtnClick": undefined,
-        "onItemDelete": undefined,
+        "onAddBtnClick": [Function],
+        "onItemDelete": [Function],
         "title": "Editors",
         "useUsersForm": true,
       },

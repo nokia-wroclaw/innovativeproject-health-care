@@ -10,9 +10,9 @@ import {
 } from "../actions/types";
 import * as auth from "../../services/auth";
 
-const initialState = {};
 let userData;
 
+const initialState = {};
 export default function(state = initialState, action) {
   switch (action.type) {
     case SET_USER:
