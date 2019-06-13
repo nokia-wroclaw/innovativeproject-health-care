@@ -14,8 +14,7 @@ class LdapConn:
         self.get_attributes = [app.config['LDAP_ID_ATTR'],
                                app.config['LDAP_LOGIN_ATTR'],
                                app.config['LDAP_NAME_ATTR'],
-                               app.config['LDAP_MAIL_ATTR'],
-                               app.config['LDAP_RDN_ATTR']]
+                               app.config['LDAP_MAIL_ATTR']]
         self.auth_attributes = [app.config['LDAP_LOGIN_ATTR'],
                                 app.config['LDAP_MAIL_ATTR']]
         self.server = Server(app.config['LDAP_URL'],
@@ -55,14 +54,14 @@ class LdapConn:
                     attributes=self.get_attributes)
 
         matches = []
-        for match in conn.response:
-            attributes = match['attributes']
+        for match in conn.entries:
+            attributes = match.entry_attributes_as_dict
             matches.append({
                 'id': attributes[app.config['LDAP_ID_ATTR']][0],
                 'login': attributes[app.config['LDAP_LOGIN_ATTR']][0],
                 'name': attributes[app.config['LDAP_NAME_ATTR']][0],
                 'mail': attributes[app.config['LDAP_MAIL_ATTR']][0],
-                'rdn': attributes[app.config['LDAP_RDN_ATTR']][0]
+                'dn': match.entry_dn
             })
 
         return matches
@@ -70,9 +69,8 @@ class LdapConn:
     def authenticate(self, login, password):
         """Verifies given credentials.
 
-        If simple bind of given values fails this method will perform exact
-        search of login against login and mail attributes to try to find
-        user's correct dn.
+        This method performs exact search of provided login against login
+        and mail attributes to find user's dn, then tries to bind to it.
 
         :param string login: User's login or mail.
         :param string password: User's password.
@@ -80,20 +78,11 @@ class LdapConn:
         :rtype: bool
         """
 
-        dn = '%s=%s,%s' % (app.config['LDAP_RDN_ATTR'], login,
-                           app.config['LDAP_BASE_DN'])
-        conn = Connection(self.server, dn, password, read_only=True)
-
-        if conn.bind():
-            return True
-
         matches = self.search(login, True, self.auth_attributes)
-
         if len(matches) != 1:
             return False
+        match = matches[0]
 
-        dn = '%s=%s,%s' % (app.config['LDAP_RDN_ATTR'], matches[0]['rdn'],
-                           app.config['LDAP_BASE_DN'])
-        conn = Connection(self.server, dn, password, read_only=True)
+        conn = Connection(self.server, match['dn'], password, read_only=True)
 
         return conn.bind()
