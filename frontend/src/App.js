@@ -6,7 +6,7 @@ import { isUser, isManager, isEditor, isAdmin } from "./services/auth";
 import HomePage from "./components/HomePage";
 import SurveyPage from "./components/SurveyPage";
 import TribesManagementPage from "./components/TribesManagementPage";
-import AdminPanel from "./components/AdminPanel";
+import AdminPanelPage from "./components/AdminPanelPage";
 import StatisticsPage from "./components/StatisticsPage";
 import ResultsMatrixPage from "./components/ResultsMatrixPage";
 import ActionItemsPage from "./components/ActionItemsPage";
@@ -26,7 +26,7 @@ const App = ({ user, ...props }) => {
         <Switch>
           <ProtectedRoute
             path="/admin_panel"
-            component={AdminPanel}
+            component={AdminPanelPage}
             isAuthenticated={isAdmin(user)}
           />
           <ProtectedRoute

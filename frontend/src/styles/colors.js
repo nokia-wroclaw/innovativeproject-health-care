@@ -1,8 +1,12 @@
-export default {
-  header: "blue",
-  menu: "blue",
-  headerLoginButton: "grey",
-  formLoginButton: "green",
-  red: "#E80000",
-  footer: "black"
-};
+export const header = "blue";
+export const menu = "blue";
+export const headerLoginButton = "grey";
+export const formLoginButton = "green";
+export const footer = "black";
+export const red = "red";
+export const yellow = "yellow";
+export const green = "green";
+export const blue = "blue";
+export const black = "black";
+export const grey = "grey";
+export const violet = "violet";

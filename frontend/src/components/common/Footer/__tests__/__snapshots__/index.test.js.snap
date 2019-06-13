@@ -46,7 +46,6 @@ ShallowWrapper {
           </GridRow>
         </Grid>
       </Container>,
-      "className": "footer",
       "color": "black",
       "padded": true,
       "secondary": true,
@@ -247,7 +246,6 @@ ShallowWrapper {
             </GridRow>
           </Grid>
         </Container>,
-        "className": "footer",
         "color": "black",
         "padded": true,
         "secondary": true,

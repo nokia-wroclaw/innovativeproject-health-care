@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Popup } from "semantic-ui-react";
-import LoginForm from "../common/LoginForm";
-import colors from "../../styles/colors";
+import LoginForm from "../LoginForm";
+import * as colors from "../../../styles/colors";
 
 const LoginButton = () => {
   return (

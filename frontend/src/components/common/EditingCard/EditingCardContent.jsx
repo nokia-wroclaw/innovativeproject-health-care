@@ -1,6 +1,7 @@
 import React from "react";
 import { Card, Grid, Icon } from "semantic-ui-react";
 import { confirmDialog } from "./../functions";
+import { red } from "../../../styles/colors";
 
 export const EditingCardContent = ({ item, onDelete, alertMsg }) => {
   const handleDelete = item => {
@@ -18,7 +19,7 @@ export const EditingCardContent = ({ item, onDelete, alertMsg }) => {
             <Icon
               name="minus square outline"
               onClick={() => handleDelete(item)}
-              color="red"
+              color={red}
               link
             />
           </Grid.Column>

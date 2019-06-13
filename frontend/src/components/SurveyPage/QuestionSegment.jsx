@@ -1,22 +1,27 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { Segment, TextArea, SegmentGroup } from 'semantic-ui-react';
-import { setComment } from './../../store/actions/currentSurvey';
-import Question from './Question';
-import './checkbox.css';
+import React from "react";
+import { connect } from "react-redux";
+import { Segment, TextArea, SegmentGroup } from "semantic-ui-react";
+import { setComment } from "./../../store/actions/currentSurvey";
+import Question from "./Question";
+import "./checkbox.css";
 
 const QuestionSegment = ({ question, ...props }) => {
-  let textareaClassName;
-  switch (question.answer) {
-    case 0:
-      textareaClassName = 'red-outline';
-      break;
-    case 1:
-      textareaClassName = 'yellow-outline';
-      break;
-    default:
-      textareaClassName = '';
-  }
+  const getTextFieldClassName = () => {
+    if (question.comment) return "";
+    switch (question.answer) {
+      case 0:
+        return "red-outline";
+      case 1:
+        return "yellow-outline";
+      default:
+        return "";
+    }
+  };
+
+  const isCommentRequired = () => {
+    if (question.answer === 0 || question.answer === 1) return true;
+    return false;
+  };
 
   return (
     <React.Fragment>
@@ -26,9 +31,9 @@ const QuestionSegment = ({ question, ...props }) => {
         </Segment>
         <Segment attached>
           <TextArea
-            placeholder='Tell us more'
-            className={textareaClassName}
-            required={textareaClassName}
+            placeholder="Tell us more"
+            className={getTextFieldClassName()}
+            required={isCommentRequired()}
             value={question.comment}
             onChange={(e, { value }) => {
               props.setComment(question.id, value);
