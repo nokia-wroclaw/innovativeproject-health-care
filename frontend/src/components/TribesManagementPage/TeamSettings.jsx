@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
-import { Modal, Button, Container, Input } from 'semantic-ui-react';
+import React, { useState } from "react";
+import { connect } from "react-redux";
+import { Modal, Button, Container, Input, Grid } from "semantic-ui-react";
 import {
   deleteTeam,
   addManagerToTeam,
@@ -8,10 +8,10 @@ import {
   addMemberToTeam,
   deleteMemberFromTeam,
   updateTeamName
-} from './../../store/actions/teams';
-import { confirmDialog } from './../common/functions';
-import EditingCard from './../common/EditingCard/EditingCard';
-import '../../styles/common.css';
+} from "./../../store/actions/teams";
+import { confirmDialog } from "./../common/functions";
+import EditingCard from "./../common/EditingCard/EditingCard";
+import "../../styles/common.css";
 
 const TeamSettings = ({ isOpen, team, close, ...props }) => {
   const [deleteBtnLoading, setDeleteBtnLoading] = useState(false);
@@ -46,44 +46,50 @@ const TeamSettings = ({ isOpen, team, close, ...props }) => {
   return (
     <Modal open={isOpen}>
       <Modal.Header>
-        <Input
-          label={{ icon: 'edit' }}
-          labelPosition='right corner'
-          defaultValue={team.name}
-          onChange={({ target }) => setNewTeamName(target.value)}
-        />
-        <Button
-          icon='trash alternate'
-          labelPosition='left'
-          floated='right'
-          content='Delete Team'
-          basic
-          negative
-          onClick={handleDeleteTeam}
-          loading={deleteBtnLoading}
-        />
+        <Grid stackable>
+          <Grid.Column width={8}>
+            <Input
+              label={{ icon: "edit" }}
+              labelPosition="right corner"
+              defaultValue={team.name}
+              onChange={({ target }) => setNewTeamName(target.value)}
+            />
+          </Grid.Column>
+          <Grid.Column width={8}>
+            <Button
+              icon="trash alternate"
+              labelPosition="left"
+              floated="right"
+              content="Delete Team"
+              basic
+              negative
+              onClick={handleDeleteTeam}
+              loading={deleteBtnLoading}
+            />
+          </Grid.Column>
+        </Grid>
       </Modal.Header>
 
       <Modal.Content>
-        <Container textAlign='left'>
-          <div className='flex-space-evenly-align-start'>
+        <Container textAlign="left">
+          <div className="flex-space-evenly-align-start">
             <EditingCard
               data={team.managers ? team.managers : []}
-              title='Managers'
+              title="Managers"
               useUsersForm={true}
               onAddBtnClick={handleAddManagerToTeam}
               onItemDelete={handleDeleteManagerFromTeam}
             />
             <EditingCard
               data={team.members ? team.members : []}
-              title='Members'
+              title="Members"
               useUsersForm={true}
               onAddBtnClick={handleAddMemberToTeam}
               onItemDelete={handleDeleteMemberFromTeam}
             />
           </div>
         </Container>
-        <Container textAlign='center'>
+        <Container textAlign="center">
           <Button onClick={handleSaveAndClose} primary loading={saveBtnLoading}>
             Save and close
           </Button>

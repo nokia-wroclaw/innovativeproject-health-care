@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
-import { Modal, Button, Container, Input } from 'semantic-ui-react';
+import React, { useState } from "react";
+import { connect } from "react-redux";
+import { Modal, Button, Container, Input, Grid } from "semantic-ui-react";
 import {
   deleteTribe,
   addEditorToTribe,
   deleteEditorFromTribe,
   addTeamToTribe,
   updateTribeName
-} from './../../store/actions/tribes';
-import { deleteTeam } from '../../store/actions/teams';
-import { confirmDialog } from './../common/functions';
-import EditingCard from './../common/EditingCard/EditingCard';
-import '../../styles/common.css';
+} from "./../../store/actions/tribes";
+import { deleteTeam } from "../../store/actions/teams";
+import { confirmDialog } from "./../common/functions";
+import EditingCard from "./../common/EditingCard/EditingCard";
+import "../../styles/common.css";
 
 const TribeSettings = ({ isOpen, tribe, close, ...props }) => {
   const [deleteBtnLoading, setDeleteBtnLoading] = useState(false);
@@ -46,43 +46,49 @@ const TribeSettings = ({ isOpen, tribe, close, ...props }) => {
   return (
     <Modal open={isOpen}>
       <Modal.Header>
-        <Input
-          label={{ icon: 'edit' }}
-          labelPosition='right corner'
-          defaultValue={tribe.name}
-          onChange={({ target }) => setNewTribeName(target.value)}
-        />
-        <Button
-          icon='trash alternate'
-          labelPosition='left'
-          floated='right'
-          content='Delete Tribe'
-          basic
-          negative
-          onClick={handleDeleteTribe}
-          loading={deleteBtnLoading}
-        />
+        <Grid stackable>
+          <Grid.Column width={8}>
+            <Input
+              label={{ icon: "edit" }}
+              labelPosition="right corner"
+              defaultValue={tribe.name}
+              onChange={({ target }) => setNewTribeName(target.value)}
+            />
+          </Grid.Column>
+          <Grid.Column width={8}>
+            <Button
+              icon="trash alternate"
+              labelPosition="left"
+              floated="right"
+              content="Delete Tribe"
+              basic
+              negative
+              onClick={handleDeleteTribe}
+              loading={deleteBtnLoading}
+            />
+          </Grid.Column>
+        </Grid>
       </Modal.Header>
 
       <Modal.Content>
-        <Container textAlign='left'>
-          <div className='flex-space-evenly-align-start'>
+        <Container textAlign="left">
+          <div className="flex-space-evenly-align-start">
             <EditingCard
               data={tribe.editors ? tribe.editors : []}
-              title='Tribe editors'
+              title="Tribe editors"
               useUsersForm={true}
               onAddBtnClick={handleAddEditorToTribe}
               onItemDelete={handleDeleteEditorFromTribe}
             />
             <EditingCard
               data={tribe.teams ? tribe.teams : []}
-              title='Teams'
+              title="Teams"
               onAddBtnClick={handleAddTeamToTribe}
               onItemDelete={handleDeleteTeamFromTribe}
             />
           </div>
         </Container>
-        <Container textAlign='center'>
+        <Container textAlign="center">
           <Button onClick={handleSaveAndClose} primary loading={saveBtnLoading}>
             Save and close
           </Button>
