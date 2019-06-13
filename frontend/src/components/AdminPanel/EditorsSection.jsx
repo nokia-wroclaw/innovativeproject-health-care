@@ -6,6 +6,7 @@ import {
 } from "./../../store/actions/editors";
 import { connect } from "react-redux";
 import EditingCard from "../common/EditingCard/EditingCard";
+import { revalidateUser } from "../../services/auth"
 
 export const EditorsSection = props => {
   useEffect(() => {
@@ -17,8 +18,8 @@ export const EditorsSection = props => {
       data={props.editors}
       title="Editors"
       useUsersForm={true}
-      onAddBtnClick={props.addEditor}
-      onItemDelete={props.deleteEditor}
+      onAddBtnClick={u => revalidateUser(u, props.addEditor(u))}
+      onItemDelete={u => revalidateUser(u, props.deleteEditor(u))}
     />
   );
 };
