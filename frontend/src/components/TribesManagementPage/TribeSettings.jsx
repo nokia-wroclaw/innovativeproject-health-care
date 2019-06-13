@@ -77,6 +77,7 @@ const TribeSettings = ({ isOpen, tribe, close, ...props }) => {
               data={tribe.editors ? tribe.editors : []}
               title="Tribe editors"
               useUsersForm={true}
+              onlyEditors={true}
               onAddBtnClick={handleAddEditorToTribe}
               onItemDelete={handleDeleteEditorFromTribe}
             />

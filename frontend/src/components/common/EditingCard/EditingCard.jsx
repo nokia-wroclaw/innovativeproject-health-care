@@ -7,6 +7,7 @@ const EditingCard = ({
   data,
   title,
   useUsersForm,
+  onlyEditors,
   onAddBtnClick,
   onItemDelete,
   alertMsg
@@ -16,6 +17,7 @@ const EditingCard = ({
       <EditingCardHeader
         title={title}
         useUsersForm={useUsersForm}
+        onlyEditors={onlyEditors}
         onAddBtnClick={onAddBtnClick}
         className="editing-card-header"
       />
