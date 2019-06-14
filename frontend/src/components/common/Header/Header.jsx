@@ -29,7 +29,7 @@ class Header extends Component {
               <Grid.Row>
                 <Grid.Column mobile={16} tablet={10} computer={10}>
                   <SemanticHeader size="huge" textAlign="left" inverted>
-                    Squad health care
+                    Squad Health Care
                   </SemanticHeader>
                 </Grid.Column>
                 <Grid.Column mobile={16} tablet={6} computer={6}>
