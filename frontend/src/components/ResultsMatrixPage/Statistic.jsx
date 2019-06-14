@@ -19,7 +19,7 @@ const countStatistic = matrix => {
     oneDimension = oneDimension.filter(item => item !== null);
     const sum = oneDimension.reduce((total, num) => total + num);
     const max = oneDimension.length * 2;
-    return _.round((sum / max) * 100, 2);
+    return _.round((sum / max) * 100);
   } catch {
     return null;
   }
