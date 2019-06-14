@@ -9,10 +9,10 @@ import {
   updateTribeName
 } from "./../../store/actions/tribes";
 import { deleteTeam } from "../../store/actions/teams";
+import { revalidateUser } from "../../store/actions/user";
 import { confirmDialog } from "./../common/functions";
 import EditingCard from "./../common/EditingCard/EditingCard";
 import "../../styles/common.css";
-import { revalidateUser } from "../../services/auth"
 
 const TribeSettings = ({ isOpen, tribe, close, ...props }) => {
   const [deleteBtnLoading, setDeleteBtnLoading] = useState(false);
@@ -27,16 +27,15 @@ const TribeSettings = ({ isOpen, tribe, close, ...props }) => {
   };
 
   const handleAddEditorToTribe = user =>
-    revalidateUser(user, props.addEditorToTribe(tribe, user));
+    props.revalidateUser(user, props.addEditorToTribe(tribe, user));
 
   const handleDeleteEditorFromTribe = user =>
-    revalidateUser(user, props.deleteEditorFromTribe(tribe, user));
+    props.revalidateUser(user, props.deleteEditorFromTribe(tribe, user));
 
   const handleAddTeamToTribe = teamName =>
     props.addTeamToTribe(tribe, teamName);
 
-  const handleDeleteTeamFromTribe = team =>
-    props.deleteTeam(team);
+  const handleDeleteTeamFromTribe = team => props.deleteTeam(team);
 
   const handleSaveAndClose = async () => {
     setSaveBtnLoading(true);
@@ -114,6 +113,7 @@ export default connect(
     deleteEditorFromTribe,
     addTeamToTribe,
     deleteTeam,
-    updateTribeName
+    updateTribeName,
+    revalidateUser
   }
 )(TribeSettings);

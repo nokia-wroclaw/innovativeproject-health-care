@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { Container, Dropdown } from "semantic-ui-react";
+import { Container, Dropdown, Message } from "semantic-ui-react";
 import { setSurveys } from "./../../store/actions/surveys";
 import TemplatePage from "../common/TemplatePage/";
 import SurveysTab from "./SurveysTab";
@@ -12,18 +12,32 @@ const EditSurveyPage = ({ user, editing, ...props }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if (editing[0]) handleTribeSelect(null, { value: editing[0].id });
-  }, [editing]);
+    setIsLoading(true);
+    props.setUserEditingDetails(user).then(() => setIsLoading(false));
+  }, []);
 
   useEffect(() => {
-    props.setUserEditingDetails(user);
-  }, []);
+    if (editing[0]) handleTribeSelect(null, { value: editing[0].id });
+    else setCurrentTribeId(undefined);
+  }, [editing]);
 
   const handleTribeSelect = (e, { value }) => {
     if (value === currentTribeId) return;
     setIsLoading(true);
     setCurrentTribeId(value);
     props.setSurveys(value).then(() => setIsLoading(false));
+  };
+
+  const getContent = () => {
+    if (!isLoading && currentTribeId)
+      return <SurveysTab tribeId={currentTribeId} />;
+    else if (isLoading || editing.length)
+      return <Loader active inline="centered" />;
+    return (
+      <Message>
+        You need to be assigned as editor to a tribe to define surveys.
+      </Message>
+    );
   };
 
   return (
@@ -43,11 +57,7 @@ const EditSurveyPage = ({ user, editing, ...props }) => {
         />
         <br />
         <br />
-        {!isLoading && currentTribeId ? (
-          <SurveysTab tribeId={currentTribeId} />
-        ) : (
-          <Loader active inline="centered" />
-        )}
+        {getContent()}
       </Container>
     </TemplatePage>
   );

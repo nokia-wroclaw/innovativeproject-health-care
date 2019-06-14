@@ -2,8 +2,6 @@ import _ from "lodash";
 import axios from "axios";
 import { endpoints } from "./http";
 import jwtDecode from "jwt-decode";
-import { updateUserData } from "../store/actions/user"
-import store from "../store"
 
 const setToken = token => sessionStorage.setItem("token", token);
 const removeToken = () => sessionStorage.removeItem("token");
@@ -71,7 +69,7 @@ export const getMenu = user => {
   try {
     if (user.roles.includes("user")) menu = [...menu, ...userMenu];
     if (user.roles.includes("manager")) menu = [...menu, ...managerMenu];
-    if (user.roles.includes("editor") && user.editing.length) menu = [...menu, ...editorMenu];
+    if (user.roles.includes("editor")) menu = [...menu, ...editorMenu];
     if (user.roles.includes("admin")) menu = [...menu, ...adminMenu];
   } catch {}
   return _.uniqBy(menu, "path");
@@ -106,13 +104,5 @@ export const isUser = user => {
     return user.roles.includes("user");
   } catch {
     return false;
-  }
-};
-
-export const revalidateUser = (user, promise) => {
-  let state = store.getState();
-  let currentUser = state.user.userData;
-  if (user.id === currentUser.id) {
-    promise.then(() => store.dispatch(updateUserData(currentUser)));
   }
 };

@@ -9,10 +9,10 @@ import {
   deleteMemberFromTeam,
   updateTeamName
 } from "./../../store/actions/teams";
+import { revalidateUser } from "../../store/actions/user";
 import { confirmDialog } from "./../common/functions";
 import EditingCard from "./../common/EditingCard/EditingCard";
 import "../../styles/common.css";
-import { revalidateUser } from "../../services/auth"
 
 const TeamSettings = ({ isOpen, team, close, ...props }) => {
   const [deleteBtnLoading, setDeleteBtnLoading] = useState(false);
@@ -27,16 +27,16 @@ const TeamSettings = ({ isOpen, team, close, ...props }) => {
   };
 
   const handleAddManagerToTeam = user =>
-    revalidateUser(user, props.addManagerToTeam(team, user));
+    props.revalidateUser(user, props.addManagerToTeam(team, user));
 
   const handleDeleteManagerFromTeam = user =>
-    revalidateUser(user, props.deleteManagerFromTeam(team, user));
+    props.revalidateUser(user, props.deleteManagerFromTeam(team, user));
 
   const handleAddMemberToTeam = user =>
-    revalidateUser(user, props.addMemberToTeam(team, user));
+    props.revalidateUser(user, props.addMemberToTeam(team, user));
 
   const handleDeleteMemberFromTeam = user =>
-    revalidateUser(user, props.deleteMemberFromTeam(team, user));
+    props.revalidateUser(user, props.deleteMemberFromTeam(team, user));
 
   const handleSaveAndClose = async () => {
     setSaveBtnLoading(true);
@@ -114,6 +114,7 @@ export default connect(
     deleteManagerFromTeam,
     addMemberToTeam,
     deleteMemberFromTeam,
-    updateTeamName
+    updateTeamName,
+    revalidateUser
   }
 )(TeamSettings);

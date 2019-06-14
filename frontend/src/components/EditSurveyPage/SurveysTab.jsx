@@ -1,15 +1,15 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { Tab } from 'semantic-ui-react';
-import ActiveSurvey from './ActiveSurvey';
-import DraftSurvey from './DraftSurvey/';
-import PendingSurvey from './PendingSurvey';
-import Loader from './../common/Loader/';
+import React from "react";
+import { connect } from "react-redux";
+import { Tab } from "semantic-ui-react";
+import ActiveSurvey from "./ActiveSurvey";
+import DraftSurvey from "./DraftSurvey/";
+import PendingSurvey from "./PendingSurvey";
+import Loader from "./../common/Loader/";
 
 const SurveysTab = ({ tribeId, surveys }) => {
   const panes = [
     {
-      menuItem: 'Active survey',
+      menuItem: "Active survey",
       render: () => (
         <Tab.Pane>
           {surveys.areLoading ? <Loader /> : <ActiveSurvey />}
@@ -17,7 +17,7 @@ const SurveysTab = ({ tribeId, surveys }) => {
       )
     },
     {
-      menuItem: 'Pending survey',
+      menuItem: "Pending survey",
       render: () => (
         <Tab.Pane>
           {surveys.areLoading ? <Loader /> : <PendingSurvey />}
@@ -25,7 +25,7 @@ const SurveysTab = ({ tribeId, surveys }) => {
       )
     },
     {
-      menuItem: 'Draft',
+      menuItem: "Draft",
       render: () => (
         <Tab.Pane>
           {surveys.areLoading ? <Loader /> : <DraftSurvey tribeId={tribeId} />}

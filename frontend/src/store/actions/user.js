@@ -50,6 +50,13 @@ export const updateUserData = user => dispatch => {
     .catch(error => dispatch(handleFetchingError(error)));
 };
 
+export const revalidateUser = (user, promise) => dispatch => {
+  let currentUser = auth.getUserData();
+  if (user.id === currentUser.id) {
+    promise.then(() => dispatch(updateUserData(currentUser)));
+  }
+};
+
 export const setMenuOption = optionName => ({
   type: OPTION_SELECTED,
   payload: optionName

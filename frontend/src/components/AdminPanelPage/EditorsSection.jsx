@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
+import { connect } from "react-redux";
 import {
   setEditors,
   addEditor,
   deleteEditor
 } from "../../store/actions/editors";
-import { connect } from "react-redux";
+import { revalidateUser } from "../../store/actions/user";
 import EditingCard from "../common/EditingCard/EditingCard";
-import { revalidateUser } from "../../services/auth"
 
 export const EditorsSection = props => {
   useEffect(() => {
@@ -18,8 +18,8 @@ export const EditorsSection = props => {
       data={props.editors}
       title="Editors"
       useUsersForm={true}
-      onAddBtnClick={u => revalidateUser(u, props.addEditor(u))}
-      onItemDelete={u => revalidateUser(u, props.deleteEditor(u))}
+      onAddBtnClick={u => props.revalidateUser(u, props.addEditor(u))}
+      onItemDelete={u => props.revalidateUser(u, props.deleteEditor(u))}
     />
   );
 };
@@ -30,5 +30,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { setEditors, addEditor, deleteEditor }
+  { setEditors, addEditor, deleteEditor, revalidateUser }
 )(EditorsSection);
