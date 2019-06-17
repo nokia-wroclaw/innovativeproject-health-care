@@ -52,7 +52,7 @@ export const updateUserData = user => dispatch => {
 
 export const revalidateUser = (user, promise) => dispatch => {
   let currentUser = auth.getUserData();
-  if (user.id === currentUser.id) {
+  if (parseInt(user.id) === currentUser.id) {
     promise.then(() => dispatch(updateUserData(currentUser)));
   }
 };
