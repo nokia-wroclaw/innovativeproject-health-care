@@ -134,6 +134,10 @@ class Tribe(db.Model):
         period object eg. after new month started.
         """
 
+        # Nothing to update if tribe doesn't have an active survey
+        if not self.active_survey():
+            return
+
         while True:
             latest = self.latest_period()
             survey = Survey.from_period(latest)
