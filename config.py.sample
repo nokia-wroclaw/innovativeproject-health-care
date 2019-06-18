@@ -47,10 +47,16 @@ LDAP_MAIL_ATTR = 'mail'
 SMTP_URL = 'smtp.example.com'
 # Server port
 SMTP_PORT = 465
-# Email address to login as
-SMTP_MAIL = 'noreply@exmaple.com'
-# Password
+# Whether to use STARTTLS
+SMTP_STARTTLS = False
+# Whether to use SSL
+SMTP_SSL = True
+# SMTP AUTH user
+SMTP_USER = 'noreply@srednia.com'
+# SMTP AUTH password
 SMTP_PASS = 'password'
+# Email address to login as
+SMTP_MAIL = 'noreply@srednia.com'
 
 # Email notifications
 # Enable notifications

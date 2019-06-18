@@ -1,5 +1,4 @@
 import smtplib
-import ssl
 from email.header import Header
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -14,11 +13,18 @@ class SmtpConn:
         """Opens SMTP connection.
         """
 
-        self.context = ssl.create_default_context()
-        self.conn = smtplib.SMTP_SSL(app.config['SMTP_URL'],
-                                     app.config['SMTP_PORT'],
-                                     self.context)
-        self.conn.login(app.config['SMTP_MAIL'], app.config['SMTP_PASS'])
+        if app.config['SMTP_SSL']:
+            self.conn = smtplib.SMTP_SSL(app.config['SMTP_URL'],
+                                         app.config['SMTP_PORT'])
+        else:
+            self.conn = smtplib.SMTP(app.config['SMTP_URL'],
+                                     app.config['SMTP_PORT'])
+
+        if app.config['SMTP_USER'] and app.config['SMTP_PASS']:
+            self.conn.login(app.config['SMTP_MAIL'], app.config['SMTP_PASS'])
+
+        if app.config['SMTP_STARTTLS']:
+            self.conn.starttls()
 
     def send(self, recipients, subject, body):
         """Sends an email.
