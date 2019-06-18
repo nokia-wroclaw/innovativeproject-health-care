@@ -10,6 +10,7 @@ from backend import models
 class Period(db.Model):
 
     __tablename__ = 'periods'
+    __table_args__ = (db.UniqueConstraint('tribe_id', 'date_start'),)
 
     id = db.Column(db.Integer, primary_key=True)
     tribe_id = db.Column(db.Integer, db.ForeignKey('tribes.id'))
