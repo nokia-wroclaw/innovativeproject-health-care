@@ -8,7 +8,7 @@ class Question(db.Model):
     __tablename__ = 'questions'
 
     id = db.Column(db.Integer, primary_key=True)
-    question = db.Column(db.String)
+    question = db.Column(db.String, nullable=False)
 
     surveys = db.relationship('SurveyQuestionLink',
                               back_populates='question',

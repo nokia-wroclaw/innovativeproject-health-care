@@ -88,7 +88,8 @@ class TribeSurveysRes(Resource):
 
         # Process questions
         for q in questions:
-            if 'id' in q and 'value' in q and 'order' in q:
+            if ('id' in q and 'value' in q and 'order' in q and
+                    len(q['value']) != 0):
                 # If both id and content are given update the existing question
                 question = Question.get_if_exists(q['id'])
                 question.question = q['value']
