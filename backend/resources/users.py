@@ -36,14 +36,14 @@ class AuthRes(Resource):
 
         # If user didn't send credentials
         if not credentials:
-            abort(401)
+            abort(401, 'Invalid username or password.')
 
         auth = self.ldap.authenticate(credentials.username,
                                       credentials.password)
 
         # If credentials are incorrect
         if not auth:
-            abort(401)
+            abort(401, 'Invalid username or password.')
 
         # Retrieve user data from LDAP and create user object
         ldap_user = self.ldap.search(credentials.username, True)[0]
@@ -51,7 +51,10 @@ class AuthRes(Resource):
 
         # Abort if user is not in db and is not an admin
         if (user.in_db() or user.is_admin()) is False:
-            abort(401)
+            abort(401, 'Sorry but currently you are not authorized to access\
+                        SQUAD HEALTH CARE application. Please contact with \
+                        your tribe change agent for details or/and \
+                        access rights.')
 
         exp = app.config['JWT_EXP']
         token = create_access_token(user, expires_delta=timedelta(hours=exp))
