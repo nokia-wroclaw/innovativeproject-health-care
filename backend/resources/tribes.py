@@ -71,6 +71,14 @@ class TribesRes(Resource):
           - tribes
         security:
           - bearerAuth: []
+        parameters:
+          - in: query
+            name: depth
+            description: "Allows fetching full depth tribes data, meaning\
+              returned list of tribes will contain full editors info, full\
+              teams info and full info of those team's managers and members."
+            schema:
+              type: string
         responses:
           200:
             description: Success.
@@ -81,7 +89,24 @@ class TribesRes(Resource):
         if current_user.is_admin() is False:
             tribes = [t for t in tribes if current_user.id in t.editors_ids()]
 
-        response = jsonify([t.serialize() for t in tribes])
+        tribes_ret = []
+        if 'depth' in request.args and request.args['depth'] == 'full':
+            for tr in tribes:
+                tribe = tr.serialize()
+                tribe['editors'] = [e.serialize() for e in tr.editors]
+                tribe['teams'] = []
+                for tm in tr.teams:
+                    team = tm.serialize()
+                    team['managers'] = [u.user.serialize() for u in tm.users
+                                        if u.manager is True]
+                    team['members'] = [u.user.serialize() for u in tm.users
+                                       if u.manager is False]
+                    tribe['teams'].append(team)
+                tribes_ret.append(tribe)
+        else:
+            tribes_ret = [t.serialize() for t in tribes]
+
+        response = jsonify(tribes_ret)
         response.status_code = 200
         return response
 
