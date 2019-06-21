@@ -6,11 +6,7 @@ const ProtectedRoute = ({ component: Component, isAuthenticated, ...rest }) => {
     <Route
       {...rest}
       render={props =>
-        isAuthenticated ? (
-          <Component {...props} />
-        ) : (
-          <Redirect to="/pageNotFound" />
-        )
+        isAuthenticated ? <Component {...props} /> : <Redirect to="/" />
       }
     />
   );

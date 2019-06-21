@@ -1,77 +1,66 @@
-import React, { useEffect } from "react";
+import React, { useLayoutEffect } from "react";
 import { Switch, Route } from "react-router-dom";
 import { connect } from "react-redux";
 import { setUserFromSessionStorage } from "./store/actions/user";
 import { isUser, isManager, isEditor, isAdmin } from "./services/auth";
+import routes from "./static/routeURLs";
 import HomePage from "./components/HomePage";
 import SurveyPage from "./components/SurveyPage";
 import TribesManagementPage from "./components/TribesManagementPage";
 import AdminPanelPage from "./components/AdminPanelPage";
 import StatisticsPage from "./components/StatisticsPage";
 import ResultsMatrixPage from "./components/ResultsMatrixPage";
-import ActionItemsPage from "./components/ActionItemsPage";
 import CommentsPage from "./components/CommentsPage";
 import EditSurveyPage from "./components/EditSurveyPage";
 import ProtectedRoute from "./components/common/ProtectedRoute/index";
-import PageNotFound from "./components/PageNotFound/index";
 
 const App = ({ user, ...props }) => {
-  useEffect(() => {
+  useLayoutEffect(() => {
     props.setUserFromSessionStorage();
   }, []);
-
   return (
     <React.Fragment>
       {user ? (
         <Switch>
           <ProtectedRoute
-            path="/admin_panel"
+            path={routes.adminPanel}
             component={AdminPanelPage}
             isAuthenticated={isAdmin(user)}
           />
           <ProtectedRoute
-            path="/tribes_management"
+            path={routes.tribesManagement}
             component={TribesManagementPage}
             isAuthenticated={isEditor(user) || isAdmin(user)}
           />
           <ProtectedRoute
-            path="/tribe_overview"
+            path={routes.resultsMatrix}
             component={ResultsMatrixPage}
             isAuthenticated={isUser(user) || isManager(user) || isEditor(user)}
           />
           <ProtectedRoute
-            path="/fill_survey"
+            path={routes.fillSurvey}
             component={SurveyPage}
             isAuthenticated={isUser(user)}
           />
           <ProtectedRoute
-            path="/statistics"
+            path={routes.statistics}
             component={StatisticsPage}
             isAuthenticated={isUser(user) || isManager(user) || isEditor(user)}
           />
           <ProtectedRoute
-            path="/action_items"
-            component={ActionItemsPage}
-            isAuthenticated={isUser(user)}
-          />
-          <ProtectedRoute
-            path="/users_comments"
+            path={routes.comments}
             component={CommentsPage}
             isAuthenticated={isManager(user)}
           />
           <ProtectedRoute
-            path="/edit_survey"
+            path={routes.editSurvey}
             component={EditSurveyPage}
             isAuthenticated={isEditor(user)}
           />
-          <Route path="/pageNotFound" component={PageNotFound} />
-          <Route path="/" component={HomePage} />
+          <Route path={routes.homePage} component={HomePage} />
         </Switch>
       ) : (
-        <Switch>
-          <Route path="/pageNotFound" component={PageNotFound} />
-          <Route path="/" component={HomePage} />
-        </Switch>
+        <Route path={routes.homePage} component={HomePage} />
       )}
     </React.Fragment>
   );
