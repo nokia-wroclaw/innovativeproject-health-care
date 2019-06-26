@@ -14,7 +14,7 @@ import { handleFetchingError } from "./general";
 
 export const setTribes = () => dispatch => {
   return http
-    .get(endpoints.tribes)
+    .get(`${endpoints.tribes}?depth=full`)
     .then(response => {
       dispatch({
         type: SET_TRIBES,
@@ -66,10 +66,12 @@ export const addTribe = name => dispatch => {
       name
     })
     .then(response => {
+      const tribe = response.data;
       dispatch({
         type: ADD_TRIBE,
-        payload: response.data
+        payload: tribe
       });
+      dispatch(setTribeEditors(tribe));
     })
     .catch(error => {
       dispatch(handleFetchingError(error));

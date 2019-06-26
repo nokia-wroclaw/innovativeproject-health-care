@@ -101,12 +101,8 @@ const TribeSettings = ({ isOpen, tribe, close, ...props }) => {
   );
 };
 
-const mapStateToProps = state => ({
-  tribes: state.tribes
-});
-
 export default connect(
-  mapStateToProps,
+  null,
   {
     deleteTribe,
     addEditorToTribe,
