@@ -102,12 +102,8 @@ const TeamSettings = ({ isOpen, team, close, ...props }) => {
   );
 };
 
-const mapStateToProps = state => ({
-  tribes: state.tribes
-});
-
 export default connect(
-  mapStateToProps,
+  null,
   {
     deleteTeam,
     addManagerToTeam,

@@ -37,7 +37,9 @@ describe("async actions", () => {
     await store.dispatch(actions.setTribes());
     expect(store.getActions()).toEqual(expectedActions);
     expect(mockAxios.get).toHaveBeenCalledTimes(httpCallCount.get);
-    expect(mockAxios.get).toHaveBeenLastCalledWith(endpoints.tribes);
+    expect(mockAxios.get).toHaveBeenLastCalledWith(
+      `${endpoints.tribes}?depth=full`
+    );
   });
 
   it("setTribeEditors should create SET_TRIBE_EDITORS when fetching tribe's editors has been done", async () => {
