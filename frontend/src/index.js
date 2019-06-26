@@ -6,7 +6,6 @@ import history from "./history";
 import App from "./App";
 import store from "./store";
 import * as serviceWorker from "./serviceWorker";
-// import "semantic-ui-css/semantic.min.css";
 import "font-awesome/css/font-awesome.min.css";
 import './semantic/dist/semantic.min.css';
 
