@@ -14,8 +14,9 @@ const mergeQuestionsAnswers = (questions, answers) => {
     return {
       ...q,
       answer: answers[i] ? answers[i].answer : null,
-      comment: answers[i] && answers[i].comment != null ? answers[i].comment : ""
-    }
+      comment:
+        answers[i] && answers[i].comment != null ? answers[i].comment : ""
+    };
   });
 };
 
@@ -45,20 +46,23 @@ const Survey = ({ questions, answers, survey, ...props }) => {
   };
 
   let data = mergeQuestionsAnswers(questions, answers);
+  const isSubmitted = !!answers.length;
 
   return questions && questions.length ? (
     <React.Fragment>
-      {answers.length ? (
-        <Message>
-          This survey is already submitted, and thus read-only.
-        </Message>
+      {isSubmitted ? (
+        <Message>This survey is already submitted, and thus read-only.</Message>
       ) : null}
-      <Faces/>
+      <Faces />
       <Form onSubmit={handleSubmit}>
         {data.map(question => (
-          <QuestionSegment question={question} key={question.id}/>
+          <QuestionSegment
+            question={question}
+            key={question.id}
+            disabled={isSubmitted}
+          />
         ))}
-        {!answers.length ? (
+        {isSubmitted ? null : (
           <Form.Field className="flex-center">
             <Button
               type="submit"
@@ -69,7 +73,7 @@ const Survey = ({ questions, answers, survey, ...props }) => {
               Submit
             </Button>
           </Form.Field>
-        ) : null}
+        )}
       </Form>
     </React.Fragment>
   ) : (
