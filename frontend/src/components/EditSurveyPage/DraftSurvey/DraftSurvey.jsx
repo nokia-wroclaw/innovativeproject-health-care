@@ -1,16 +1,17 @@
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
-import { Button, Container } from 'semantic-ui-react';
+import React, { useState } from "react";
+import { connect } from "react-redux";
+import { Button, Container } from "semantic-ui-react";
 import {
   setDraftSurveyPeriod,
   saveDraftSurvey,
   saveAndPublishDraftSurvey
-} from '../../../store/actions/surveys';
-import PeriodSelect from './PeriodSelect';
-import DraftQuestionList from './DraftQuestionList';
+} from "../../../store/actions/surveys";
+import PeriodSelect from "./PeriodSelect";
+import DraftQuestionList from "./DraftQuestionList";
 import { confirmDialog } from "../../common/functions";
 
 const confirmMessage = "Are you sure you want to publish this survey?";
+const successMessage = "Your survey has been successfully published!";
 
 const DraftSurvey = ({ tribeId, survey, ...props }) => {
   const [saving, setSaving] = useState(false);
@@ -28,16 +29,17 @@ const DraftSurvey = ({ tribeId, survey, ...props }) => {
   const handleSaveAndPublish = () => {
     if (!confirmDialog(null, confirmMessage)) return;
     setPublishing(true);
-    props
-      .saveAndPublishDraftSurvey(tribeId, survey)
-      .then(() => setPublishing(false));
+    props.saveAndPublishDraftSurvey(tribeId, survey).then(() => {
+      setPublishing(false);
+      alert(successMessage);
+    });
   };
 
   return (
     <React.Fragment>
       <PeriodSelect value={survey.period_len} onChange={handlePeriodSelect} />
       <DraftQuestionList />
-      <Container textAlign='center'>
+      <Container textAlign="center">
         <Button.Group>
           <Button onClick={handleSaveDraft} loading={saving}>
             Save draft
