@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import uuid from "uuid/v4";
 import { connect } from "react-redux";
 import { Input, Button, Form } from "semantic-ui-react";
 import { getUsersByName } from "../../../services/inputHints";
@@ -11,6 +12,7 @@ const lettersCountForFetchingUsers = 4;
 class FormWithUsersDataList extends Component {
   constructor(props) {
     super(props);
+    this.dataListId = `usersDataList${uuid()}`;
     this.state = {
       inputValue: "",
       dataList: [],
@@ -66,10 +68,10 @@ class FormWithUsersDataList extends Component {
             placeholder="Search..."
             action
             onChange={this.handleInputChange}
-            list="usersDataList"
+            list={this.dataListId}
           >
             <input />
-            <datalist id="usersDataList" ref={this.dataListRef}>
+            <datalist id={this.dataListId} ref={this.dataListRef}>
               {this.state.dataList.map(user => (
                 <option
                   value={`${user.name} (${user.login})`}
