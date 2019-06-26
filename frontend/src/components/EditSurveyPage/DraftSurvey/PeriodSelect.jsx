@@ -1,38 +1,38 @@
-import React from 'react';
-import { Dropdown, Container } from 'semantic-ui-react';
+import React from "react";
+import { Dropdown, Message } from "semantic-ui-react";
 
 const PeriodSelect = ({ value, onChange }) => {
   const options = [
     {
-      text: 'a month',
+      text: "a month",
       value: 1
     },
     {
-      text: 'in 2 months',
+      text: "in 2 months",
       value: 2
     },
     {
-      text: 'in 3 months',
+      text: "in 3 months",
       value: 3
     },
     {
-      text: 'in 4 months',
+      text: "in 4 months",
       value: 4
     },
     {
-      text: 'in 5 months',
+      text: "in 5 months",
       value: 5
     },
     {
-      text: 'in 6 months',
+      text: "in 6 months",
       value: 6
     }
   ];
   return (
-    <Container>
+    <Message>
       <span>Ask teams to fill this survey once </span>
       <Dropdown
-        placeholder='Select tribe'
+        placeholder="Select tribe"
         options={options.map(option => ({
           key: option.value,
           text: option.text,
@@ -42,7 +42,7 @@ const PeriodSelect = ({ value, onChange }) => {
         onChange={onChange}
         value={value}
       />
-    </Container>
+    </Message>
   );
 };
 
