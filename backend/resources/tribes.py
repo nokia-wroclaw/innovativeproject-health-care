@@ -96,6 +96,8 @@ class TribesRes(Resource):
                 tribe['editors'] = [e.serialize() for e in tr.editors]
                 tribe['teams'] = []
                 for tm in tr.teams:
+                    if tm.deleted:
+                        continue
                     team = tm.serialize()
                     team['managers'] = [u.user.serialize() for u in tm.users
                                         if u.manager is True]
