@@ -13,7 +13,7 @@ const EditingCard = ({
   alertMsg
 }) => {
   return (
-    <Card>
+    <Card style={{ margin: "0.5em" }}>
       <EditingCardHeader
         title={title}
         useUsersForm={useUsersForm}

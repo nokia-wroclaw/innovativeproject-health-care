@@ -2,7 +2,14 @@ import _ from "lodash";
 import axios from "axios";
 import { endpoints } from "./http";
 import jwtDecode from "jwt-decode";
+import routes from "../static/routeURLs";
 
+const roles = {
+  user: "user",
+  manager: "manager",
+  editor: "editor",
+  admin: "admin"
+};
 const setToken = token => sessionStorage.setItem("token", token);
 const removeToken = () => sessionStorage.removeItem("token");
 export const getToken = () => sessionStorage.getItem("token");
@@ -40,44 +47,43 @@ export const login = async (username, password) => {
 export const logout = () => removeToken();
 
 const userMenu = [
-  { name: "Results", path: "/tribe_overview" },
-  { name: "Statistics", path: "/statistics" },
-  { name: "Fill survey", path: "/fill_survey" },
-  { name: "Action items", path: "/action_items" }
+  { name: "Results", path: routes.resultsMatrix },
+  { name: "Statistics", path: routes.statistics },
+  { name: "Fill survey", path: routes.fillSurvey }
 ];
 
 const managerMenu = [
-  { name: "Results", path: "/tribe_overview" },
-  { name: "Statistics", path: "/statistics" },
-  { name: "Comments", path: "/users_comments" }
+  { name: "Results", path: routes.resultsMatrix },
+  { name: "Statistics", path: routes.statistics },
+  { name: "Comments", path: routes.comments }
 ];
 
 const editorMenu = [
-  { name: "Edit survey", path: "/edit_survey" },
-  { name: "Tribes management", path: "/tribes_management" },
-  { name: "Results", path: "/tribe_overview" },
-  { name: "Statistics", path: "/statistics" }
+  { name: "Results", path: routes.resultsMatrix },
+  { name: "Statistics", path: routes.statistics },
+  { name: "Edit survey", path: routes.editSurvey },
+  { name: "Tribes management", path: routes.tribesManagement }
 ];
 
 const adminMenu = [
-  { name: "Admin panel", path: "/admin_panel" },
-  { name: "Tribes management", path: "/tribes_management" }
+  { name: "Tribes management", path: routes.tribesManagement },
+  { name: "Admin panel", path: routes.adminPanel }
 ];
 
 export const getMenu = user => {
   let menu = [];
   try {
-    if (user.roles.includes("user")) menu = [...menu, ...userMenu];
-    if (user.roles.includes("manager")) menu = [...menu, ...managerMenu];
-    if (user.roles.includes("editor")) menu = [...menu, ...editorMenu];
-    if (user.roles.includes("admin")) menu = [...menu, ...adminMenu];
+    if (user.roles.includes(roles.user)) menu = [...menu, ...userMenu];
+    if (user.roles.includes(roles.manager)) menu = [...menu, ...managerMenu];
+    if (user.roles.includes(roles.editor)) menu = [...menu, ...editorMenu];
+    if (user.roles.includes(roles.admin)) menu = [...menu, ...adminMenu];
   } catch {}
   return _.uniqBy(menu, "path");
 };
 
 export const isAdmin = user => {
   try {
-    return user.roles.includes("admin");
+    return user.roles.includes(roles.admin);
   } catch {
     return false;
   }
@@ -85,7 +91,7 @@ export const isAdmin = user => {
 
 export const isEditor = user => {
   try {
-    return user.roles.includes("editor");
+    return user.roles.includes(roles.editor);
   } catch {
     return false;
   }
@@ -93,7 +99,7 @@ export const isEditor = user => {
 
 export const isManager = user => {
   try {
-    return user.roles.includes("manager");
+    return user.roles.includes(roles.manager);
   } catch {
     return false;
   }
@@ -101,7 +107,7 @@ export const isManager = user => {
 
 export const isUser = user => {
   try {
-    return user.roles.includes("user");
+    return user.roles.includes(roles.user);
   } catch {
     return false;
   }

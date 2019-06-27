@@ -5,7 +5,7 @@ import { setComment } from "./../../store/actions/currentSurvey";
 import Question from "./Question";
 import "./checkbox.css";
 
-const QuestionSegment = ({ question, ...props }) => {
+const QuestionSegment = ({ question, disabled, ...props }) => {
   const getTextFieldClassName = () => {
     if (question.comment) return "";
     switch (question.answer) {
@@ -31,10 +31,11 @@ const QuestionSegment = ({ question, ...props }) => {
         </Segment>
         <Segment attached>
           <TextArea
-            placeholder="Tell us more"
+            placeholder={disabled ? "No comment provided" : "Tell us more"}
             className={getTextFieldClassName()}
             required={isCommentRequired()}
             value={question.comment}
+            disabled={disabled}
             onChange={(e, { value }) => {
               props.setComment(question.id, value);
             }}

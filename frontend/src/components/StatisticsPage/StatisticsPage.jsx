@@ -42,11 +42,8 @@ const StatisticsPage = ({ user, tribes, ...props }) => {
           value={currentTribeId}
         />
         <br />
-        {!isLoading && currentTribeId ? (
-          <Charts />
-        ) : (
-          <Loader active inline="centered" />
-        )}
+        {isLoading || !currentTribeId ? null : <Charts />}
+        {isLoading ? <Loader active inline="centered" /> : null}
       </Container>
     </TemplatePage>
   );

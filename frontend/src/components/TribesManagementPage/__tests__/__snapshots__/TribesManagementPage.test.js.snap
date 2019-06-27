@@ -39,51 +39,13 @@ ShallowWrapper {
             }
           }
         >
-          <AddTribePopup />
           <Header
             as="h3"
           >
             Your tribes
           </Header>
         </Item>
-        <Accordion
-          className="tribes-accordion"
-          exclusive={false}
-          fluid={true}
-          panels={
-            Array [
-              Object {
-                "content": Object {
-                  "content": <Connect(TribeDetails)
-                    tribe={
-                      Object {
-                        "id": 1,
-                        "name": "tribe1",
-                      }
-                    }
-                  />,
-                },
-                "key": 1,
-                "title": "tribe1",
-              },
-              Object {
-                "content": Object {
-                  "content": <Connect(TribeDetails)
-                    tribe={
-                      Object {
-                        "id": 2,
-                        "name": "tribe2",
-                      }
-                    }
-                  />,
-                },
-                "key": 2,
-                "title": "tribe2",
-              },
-            ]
-          }
-          styled={true}
-        />
+        <Loader />
       </Container>,
     },
     "ref": null,
@@ -100,51 +62,13 @@ ShallowWrapper {
               }
             }
           >
-            <AddTribePopup />
             <Header
               as="h3"
             >
               Your tribes
             </Header>
           </Item>,
-          <Accordion
-            className="tribes-accordion"
-            exclusive={false}
-            fluid={true}
-            panels={
-              Array [
-                Object {
-                  "content": Object {
-                    "content": <Connect(TribeDetails)
-                      tribe={
-                        Object {
-                          "id": 1,
-                          "name": "tribe1",
-                        }
-                      }
-                    />,
-                  },
-                  "key": 1,
-                  "title": "tribe1",
-                },
-                Object {
-                  "content": Object {
-                    "content": <Connect(TribeDetails)
-                      tribe={
-                        Object {
-                          "id": 2,
-                          "name": "tribe2",
-                        }
-                      }
-                    />,
-                  },
-                  "key": 2,
-                  "title": "tribe2",
-                },
-              ]
-            }
-            styled={true}
-          />,
+          <Loader />,
         ],
       },
       "ref": null,
@@ -155,7 +79,7 @@ ShallowWrapper {
           "nodeType": "function",
           "props": Object {
             "children": Array [
-              <AddTribePopup />,
+              null,
               <Header
                 as="h3"
               >
@@ -168,15 +92,7 @@ ShallowWrapper {
           },
           "ref": null,
           "rendered": Array [
-            Object {
-              "instance": null,
-              "key": undefined,
-              "nodeType": "function",
-              "props": Object {},
-              "ref": null,
-              "rendered": null,
-              "type": [Function],
-            },
+            null,
             Object {
               "instance": null,
               "key": undefined,
@@ -196,42 +112,7 @@ ShallowWrapper {
           "instance": null,
           "key": undefined,
           "nodeType": "function",
-          "props": Object {
-            "className": "tribes-accordion",
-            "exclusive": false,
-            "fluid": true,
-            "panels": Array [
-              Object {
-                "content": Object {
-                  "content": <Connect(TribeDetails)
-                    tribe={
-                      Object {
-                        "id": 1,
-                        "name": "tribe1",
-                      }
-                    }
-                  />,
-                },
-                "key": 1,
-                "title": "tribe1",
-              },
-              Object {
-                "content": Object {
-                  "content": <Connect(TribeDetails)
-                    tribe={
-                      Object {
-                        "id": 2,
-                        "name": "tribe2",
-                      }
-                    }
-                  />,
-                },
-                "key": 2,
-                "title": "tribe2",
-              },
-            ],
-            "styled": true,
-          },
+          "props": Object {},
           "ref": null,
           "rendered": null,
           "type": [Function],
@@ -255,51 +136,13 @@ ShallowWrapper {
               }
             }
           >
-            <AddTribePopup />
             <Header
               as="h3"
             >
               Your tribes
             </Header>
           </Item>
-          <Accordion
-            className="tribes-accordion"
-            exclusive={false}
-            fluid={true}
-            panels={
-              Array [
-                Object {
-                  "content": Object {
-                    "content": <Connect(TribeDetails)
-                      tribe={
-                        Object {
-                          "id": 1,
-                          "name": "tribe1",
-                        }
-                      }
-                    />,
-                  },
-                  "key": 1,
-                  "title": "tribe1",
-                },
-                Object {
-                  "content": Object {
-                    "content": <Connect(TribeDetails)
-                      tribe={
-                        Object {
-                          "id": 2,
-                          "name": "tribe2",
-                        }
-                      }
-                    />,
-                  },
-                  "key": 2,
-                  "title": "tribe2",
-                },
-              ]
-            }
-            styled={true}
-          />
+          <Loader />
         </Container>,
       },
       "ref": null,
@@ -316,51 +159,13 @@ ShallowWrapper {
                 }
               }
             >
-              <AddTribePopup />
               <Header
                 as="h3"
               >
                 Your tribes
               </Header>
             </Item>,
-            <Accordion
-              className="tribes-accordion"
-              exclusive={false}
-              fluid={true}
-              panels={
-                Array [
-                  Object {
-                    "content": Object {
-                      "content": <Connect(TribeDetails)
-                        tribe={
-                          Object {
-                            "id": 1,
-                            "name": "tribe1",
-                          }
-                        }
-                      />,
-                    },
-                    "key": 1,
-                    "title": "tribe1",
-                  },
-                  Object {
-                    "content": Object {
-                      "content": <Connect(TribeDetails)
-                        tribe={
-                          Object {
-                            "id": 2,
-                            "name": "tribe2",
-                          }
-                        }
-                      />,
-                    },
-                    "key": 2,
-                    "title": "tribe2",
-                  },
-                ]
-              }
-              styled={true}
-            />,
+            <Loader />,
           ],
         },
         "ref": null,
@@ -371,7 +176,7 @@ ShallowWrapper {
             "nodeType": "function",
             "props": Object {
               "children": Array [
-                <AddTribePopup />,
+                null,
                 <Header
                   as="h3"
                 >
@@ -384,15 +189,7 @@ ShallowWrapper {
             },
             "ref": null,
             "rendered": Array [
-              Object {
-                "instance": null,
-                "key": undefined,
-                "nodeType": "function",
-                "props": Object {},
-                "ref": null,
-                "rendered": null,
-                "type": [Function],
-              },
+              null,
               Object {
                 "instance": null,
                 "key": undefined,
@@ -412,42 +209,7 @@ ShallowWrapper {
             "instance": null,
             "key": undefined,
             "nodeType": "function",
-            "props": Object {
-              "className": "tribes-accordion",
-              "exclusive": false,
-              "fluid": true,
-              "panels": Array [
-                Object {
-                  "content": Object {
-                    "content": <Connect(TribeDetails)
-                      tribe={
-                        Object {
-                          "id": 1,
-                          "name": "tribe1",
-                        }
-                      }
-                    />,
-                  },
-                  "key": 1,
-                  "title": "tribe1",
-                },
-                Object {
-                  "content": Object {
-                    "content": <Connect(TribeDetails)
-                      tribe={
-                        Object {
-                          "id": 2,
-                          "name": "tribe2",
-                        }
-                      }
-                    />,
-                  },
-                  "key": 2,
-                  "title": "tribe2",
-                },
-              ],
-              "styled": true,
-            },
+            "props": Object {},
             "ref": null,
             "rendered": null,
             "type": [Function],

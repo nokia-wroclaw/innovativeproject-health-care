@@ -42,21 +42,22 @@ const Matrix = ({ matrix, questions, teams, trends }) => {
       <Table.Header>
         <Table.Row>
           <Table.HeaderCell />
-          {teams.map(team => (
-            <Table.HeaderCell key={team.id} textAlign="center">
-              {team.name}
+          {questions.map(question => (
+            <Table.HeaderCell key={question.id} textAlign="center">
+              {question.value}
             </Table.HeaderCell>
           ))}
         </Table.Row>
       </Table.Header>
 
       <Table.Body>
-        {questions.map((question, i) => (
-          <Table.Row key={question.id}>
-            <Table.Cell>{question.value}</Table.Cell>
-            {teams.map((team, j) => (
-              <Table.Cell key={team.id} textAlign="center">
-                {getIcon(matrix[j][i], trends[j][i])}
+        {teams.map((team, i) => (
+          <Table.Row key={team.id}>
+            <Table.Cell>{team.name}</Table.Cell>
+
+            {questions.map((question, j) => (
+              <Table.Cell key={question.id} textAlign="center">
+                {getIcon(matrix[i][j], trends[i][j])}
               </Table.Cell>
             ))}
           </Table.Row>

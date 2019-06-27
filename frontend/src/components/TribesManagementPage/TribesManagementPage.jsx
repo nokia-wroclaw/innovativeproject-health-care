@@ -1,14 +1,17 @@
-import React, { useLayoutEffect } from 'react';
-import { connect } from 'react-redux';
-import { Accordion, Container, Header, Item } from 'semantic-ui-react';
-import { setTribes } from './../../store/actions/tribes';
-import TemplatePage from '../common/TemplatePage/';
-import TribeDetails from './TribeDetails';
-import AddTribePopup from './AddTribePopup';
+import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import { Accordion, Container, Header, Item } from "semantic-ui-react";
+import { setTribes } from "./../../store/actions/tribes";
+import TemplatePage from "../common/TemplatePage/";
+import TribeDetails from "./TribeDetails";
+import AddTribePopup from "./AddTribePopup";
+import Loader from "./../common/Loader";
 
 export const TribesManagementPage = props => {
-  useLayoutEffect(() => {
-    props.setTribes();
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    props.setTribes().finally(() => setIsLoading(false));
   }, []);
 
   const tribePanels = [
@@ -25,17 +28,21 @@ export const TribesManagementPage = props => {
   return (
     <TemplatePage>
       <Container>
-        <Item style={{ margin: '1em 0' }}>
-          <AddTribePopup />
-          <Header as='h3'>Your tribes</Header>
+        <Item style={{ margin: "1em 0" }}>
+          {isLoading ? null : <AddTribePopup />}
+          <Header as="h3">Your tribes</Header>
         </Item>
-        <Accordion
-          className='tribes-accordion'
-          fluid
-          styled
-          panels={tribePanels}
-          exclusive={false}
-        />
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <Accordion
+            className="tribes-accordion"
+            fluid
+            styled
+            panels={tribePanels}
+            exclusive={false}
+          />
+        )}
       </Container>
     </TemplatePage>
   );
