@@ -1,8 +1,7 @@
-FROM node:latest
+FROM node:11
 WORKDIR /srv/www/frontend
-COPY ./frontend/package.json ./frontend/package-lock.json ./
-RUN npm install
 COPY ./frontend .
+RUN npm install
 RUN npm run build
 
 FROM nginx:latest
