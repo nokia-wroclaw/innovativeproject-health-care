@@ -4,7 +4,7 @@ import {
   Grid,
   Header as SemanticHeader,
   Segment,
-  Container
+  Container,
 } from "semantic-ui-react";
 import * as colors from "../../../styles/colors";
 import LoginButton from "./LoginButton";
@@ -13,6 +13,7 @@ import Menu from "../Menu";
 import LogoutButton from "./LogoutButton";
 import { Link } from "react-router-dom";
 import routes from "../../../static/routeURLs";
+import "./header.css";
 
 const Header = ({ user }) => {
   return (
@@ -22,26 +23,19 @@ const Header = ({ user }) => {
         vertical
         color={colors.header}
         padded="very"
-        style={{ boxShadow: "0 2px 8px rgba(0, 0, 0, 0.2)" }}
+        style={{ boxShadow: "0 2px 8px rgba(0, 0, 0, 0.2)", paddingTop: "35px", paddingBottom: "15px" }}
       >
-        <Container>
+        <Container className="main-header">
           <Grid columns={2}>
             <Grid.Row>
-              <Grid.Column mobile={16} tablet={10} computer={10}>
-                <Link to={routes.homePage}>
-                  <SemanticHeader size="huge" textAlign="left" inverted>
-                    Squad Health Care
-                  </SemanticHeader>
-                </Link>
-              </Grid.Column>
-              <Grid.Column mobile={16} tablet={6} computer={6}>
+              <Grid.Column mobile={16} tablet={6} computer={6} floated="right" className="login-container">
                 {user ? (
                   <Container textAlign="right">
                     <UserDisplayName />
-                    <LogoutButton />
+                    <LogoutButton/>
                   </Container>
                 ) : (
-                  <LoginButton />
+                  <LoginButton/>
                 )}
               </Grid.Column>
             </Grid.Row>
