@@ -46,7 +46,7 @@ const TribeSettings = ({ isOpen, tribe, close, ...props }) => {
   };
 
   return (
-    <Modal open={isOpen}>
+    <Modal open={isOpen} onClose={close}>
       <Modal.Header>
         <Grid stackable>
           <Grid.Column width={8}>
