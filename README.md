@@ -28,11 +28,11 @@ Ratings of all teams in a given tribe are visible for all users related to that 
 ### Running
 Using images from Docker Hub:
 
-    docker-compse up -d
+    docker-compose up -d
     
 You can also build images yourself:
 
-    docker-compse build
+    docker-comopse build
 
 ## Developer documentation
 Developer documentation is available on [project Wiki](https://github.com/nokia-wroclaw/innovativeproject-health-care/wiki/Squad-Health-Care-App-Wiki).
