@@ -1,7 +1,13 @@
 import React from "react";
-import { Line } from "react-chartjs-2";
+import { Line, Chart } from "react-chartjs-2";
 import { connect } from "react-redux";
 import { Header } from "semantic-ui-react";
+
+let clicks = 0;
+let timeout;
+const delay = 200;
+
+let defaultOnClick = Chart.defaults.global.legend.onClick;
 
 const chartColors = [
   "red",
@@ -72,9 +78,58 @@ const chartOptions = {
   },
   legend: {
     display: true,
-    position: "top"
-  }
+    position: "top",
+    onClick: function(e, clickedItem) {
+        clicks += 1;
+        let chart = this.chart;
+        timeout = setTimeout(function() {
+          if(clicks === 1) {
+            defaultOnClick.call(chart, e, clickedItem);
+          }
+          else {
+            clearTimeout(timeout);
+            var index = clickedItem.datasetIndex;
+            var ci = chart;
+            var isHidden = (ci.getDatasetMeta(index).hidden === null) ? false : ci.getDatasetMeta(index).hidden;       
+            var anyOthersHidden = false;
+            var allOthersHidden = true;
+            
+            ci.data.datasets.forEach(function(e, i) {
+              var meta = ci.getDatasetMeta(i);
+              if (i !== index) {
+                if (meta.hidden) {
+                  anyOthersHidden = true;
+                } else {
+                  allOthersHidden = false;
+                }
+              }
+            });
+
+            if (isHidden && allOthersHidden) {
+              ci.getDatasetMeta(index).hidden = null;
+            } else { 
+            ci.data.datasets.forEach(function(e, i) {
+              var meta = ci.getDatasetMeta(i);
+
+              if (i !== index) {
+                if (anyOthersHidden && !allOthersHidden) {
+                  meta.hidden = true;
+                } else {
+                  meta.hidden = meta.hidden === null ? !meta.hidden : null;
+                }
+              } else {
+                meta.hidden = null;
+              }
+            });
+            }
+            ci.update();
+          }
+          clicks = 0;
+        }, delay)
+      }
+    },
 };
+
 
 const Charts = ({ matrix, periods, teams }) => {
   matrix = matrixToPercent(matrix, 2);
@@ -113,7 +168,7 @@ const Charts = ({ matrix, periods, teams }) => {
         <Line
           data={allTeamsData}
           options={{ ...chartOptions, maintainAspectRatio: false }}
-        />
+          />
       </div>
     </React.Fragment>
   );
