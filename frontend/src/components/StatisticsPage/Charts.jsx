@@ -9,25 +9,22 @@ const delay = 200;
 
 let defaultOnClick = Chart.defaults.global.legend.onClick;
 
-const chartColors = [
-  "red",
-  "orange",
-  "olive",
-  "green",
-  "teal",
-  "blue",
-  "violet",
-  "purple",
-  "pink",
-  "brown",
-  "grey",
-  "black",
-  "yellow"
-];
+const getRandomIntInclusive = (min, max) => {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
-const intToColor = i => {
-  return chartColors[i % chartColors.length];
-};
+const generateRandomColors = (n) => {
+  var colors = []
+  for(var i=0; i<n; i++) {
+    var hue = Math.floor(Math.random() * 340);
+    var saturation = getRandomIntInclusive(80, 100);
+    var lightness = getRandomIntInclusive(40, 50);
+    colors.push(`hsla(${hue}, ${saturation}%, ${lightness}%, 1)`);
+  }
+  return colors;
+}
 
 const matrixToPercent = (matrix, max) => {
   return matrix.map(row => {
@@ -133,14 +130,15 @@ const chartOptions = {
 
 const Charts = ({ matrix, periods, teams }) => {
   matrix = matrixToPercent(matrix, 2);
+  const colorsArray = generateRandomColors(matrix.length);
 
   let allTeamsData = {
     labels: periods.map(p => p.date_start),
     datasets: teams.map((team, i) => ({
       label: team.name,
       data: matrix[i],
-      borderColor: intToColor(i),
-      pointBackgroundColor: intToColor(i)
+      borderColor: colorsArray[i],
+      pointBackgroundColor: colorsArray[i]
     }))
   };
 
