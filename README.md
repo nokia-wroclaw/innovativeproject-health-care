@@ -3,6 +3,8 @@
 
 ![App screenshot](readme-image.png)
 
+Originally developed by [Bazyli Cyran](https://github.com/bcyran), [Agata Toczyńska](https://github.com/agatatocz) and [Paweł Komorowski](https://github.com/PawelKomorowski)
+
 ## The idea
 Squad Health Care App, inspired by [Spotify](https://labs.spotify.com/2014/09/16/squad-health-check-model/), is an all-in-one solution for monitoring employees satisfaction. It allows managers to create surveys in which teams rate their satisfaction in certain areas such as "Teamwork" or "Delivering value". Aside from gathering data, the app also visualizes it in easy to understand form, allowing managers to quickly assess their department's current health and its trends. We belive this solution will help to promote open discussion about problems and, as a result, will create more friendly workplaces.
 
