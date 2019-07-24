@@ -15,14 +15,23 @@ const getRandomIntInclusive = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+const shuffleArray = (array) => {
+  for(let i=0; i < array.length - 1; i++) {
+    const j = getRandomIntInclusive(0, array.length - 1);
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+}
+
 const generateRandomColors = (n) => {
-  var colors = []
-  for(var i=0; i<n; i++) {
-    var hue = Math.floor(Math.random() * 340);
-    var saturation = getRandomIntInclusive(80, 100);
-    var lightness = getRandomIntInclusive(40, 50);
+  let colors = []
+  const unit = Math.floor(360 / n);
+  for(let i=0; i<n; i++) {
+    let hue = i * unit;
+    let saturation = getRandomIntInclusive(80, 100);
+    let lightness = getRandomIntInclusive(40, 50);
     colors.push(`hsla(${hue}, ${saturation}%, ${lightness}%, 1)`);
   }
+  shuffleArray(colors);
   return colors;
 }
 
@@ -85,14 +94,14 @@ const chartOptions = {
           }
           else {
             clearTimeout(timeout);
-            var index = clickedItem.datasetIndex;
-            var ci = chart;
-            var isHidden = (ci.getDatasetMeta(index).hidden === null) ? false : ci.getDatasetMeta(index).hidden;       
-            var anyOthersHidden = false;
-            var allOthersHidden = true;
+            let index = clickedItem.datasetIndex;
+            let ci = chart;
+            let isHidden = (ci.getDatasetMeta(index).hidden === null) ? false : ci.getDatasetMeta(index).hidden;       
+            let anyOthersHidden = false;
+            let allOthersHidden = true;
             
             ci.data.datasets.forEach(function(e, i) {
-              var meta = ci.getDatasetMeta(i);
+              let meta = ci.getDatasetMeta(i);
               if (i !== index) {
                 if (meta.hidden) {
                   anyOthersHidden = true;
@@ -106,7 +115,7 @@ const chartOptions = {
               ci.getDatasetMeta(index).hidden = null;
             } else { 
             ci.data.datasets.forEach(function(e, i) {
-              var meta = ci.getDatasetMeta(i);
+              let meta = ci.getDatasetMeta(i);
 
               if (i !== index) {
                 if (anyOthersHidden && !allOthersHidden) {
