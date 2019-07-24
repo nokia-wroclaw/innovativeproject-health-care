@@ -1,0 +1,26 @@
+@media (min-width: 700px) {
+    .main-header {
+        background-image: url(/logo_full.svg);
+        background-size: cover;
+        height: 155px;
+    }
+}
+
+@media (max-width: 700px) and (min-width: 360px) {
+    .main-header {
+        background-image: url(/logo_full.svg);
+        background-size: cover;
+    }
+    .login-container {
+        padding-bottom: 10px;
+    }
+}
+
+
+@media (max-width: 360px) {
+    .main-header {
+        background-image: url(/logo.svg);
+        background-size: cover;
+        height: 100%;
+    }
+}

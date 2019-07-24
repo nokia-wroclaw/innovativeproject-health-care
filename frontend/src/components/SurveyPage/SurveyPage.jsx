@@ -12,12 +12,22 @@ const SurveyPage = ({ user, teams, currentTeamId, surveyIsActive, ...props }) =>
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if (teams[0]) handleTeamSelect(null, { value: teams[0].id });
+    if (teams[0]) initialTeamSelect();
   }, [teams]);
 
   useEffect(() => {
     props.setUserTeamsDetails(user);
   }, []);
+
+  const initialTeamSelect = () => {
+    setIsLoading(true);
+    let promises = [
+      props.setCurrentSurveyTeamId(teams[0].id),
+      props.setTeamAnswers(teams[0].id),
+      props.setCurrentSurvey(teams[0].tribe_id)
+    ];
+    Promise.all(promises).then(() => setIsLoading(false));
+  }
 
   const handleTeamSelect = (e, { value }) => {
     if (value === currentTeamId) return;
