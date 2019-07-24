@@ -31,7 +31,7 @@ if app.config['NOTIFY_ENABLE']:
 # Need to be imported after creating the jwt object
 from backend.common import jwt_ext
 # Needs to be imported after creating the db object
-from backend.resources import (users, editors, tribes, teams, surveys, results)  # noqa: E402
+from backend.resources import (users, editors, tribes, teams, surveys, results, actions)  # noqa: E402
 
 # Create db schema if it doesn't exist
 db.create_all()
@@ -65,6 +65,8 @@ api.add_resource(surveys.SurveyRes, '/surveys/<survey_id>')
 api.add_resource(surveys.SurveyAnswersRes, '/surveys/<survey_id>/answers')
 api.add_resource(surveys.TribePeriodsRes, '/tribes/<tribe_id>/periods')
 api.add_resource(results.ResultsRes, '/results')
+api.add_resource(actions.ActionsRes, '/answers/<answer_id>/actions')
+api.add_resource(actions.ActionRes, '/actions/<action_id>')
 
 
 if __name__ == '__main__':

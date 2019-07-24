@@ -1,0 +1,10 @@
+.selector {
+  :global(.input) {
+    width: 100% !important;
+    input {
+      -webkit-border-radius: .28571429rem !important;
+      -moz-border-radius: .28571429rem !important;
+      border-radius: .28571429rem !important;
+    }
+  }
+}

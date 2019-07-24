@@ -13,7 +13,9 @@ export const endpoints = {
   tribes: "/tribes",
   teams: "/teams",
   surveys: "/surveys",
-  results: "/results"
+  results: "/results",
+  actions: '/actions',
+  answers: '/answers',
 };
 
 let instance = axios.create({

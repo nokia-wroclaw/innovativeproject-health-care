@@ -1,7 +1,10 @@
 import React from "react";
-import { Card, Label } from "semantic-ui-react";
+import { Card, Label, Item } from "semantic-ui-react";
 import { connect } from "react-redux";
 import { red, yellow, green, grey } from "../../styles/colors";
+
+import styles from './Comments.module.scss';
+import { ActionItems } from "./ActionItems";
 
 const valueToColor = value => {
   switch (value) {
@@ -24,21 +27,24 @@ const Comments = ({ answers }) => {
   }
 
   return items.length > 0 ? (
-    <Card.Group>
+    <Item.Group divided>
       {items.map((item, i) => (
-        <Card key={i}>
-          <Card.Content>
-            <Card.Header>{item.question}</Card.Header>
-            <Card.Meta>
-              <Label color={valueToColor(item.answer)} size="small">
-                Answer: {item.answer}
+        <Item key={i}>
+          <Item.Image className={styles.image}>
+              <Label className={styles.answer} size='massive' circular color={valueToColor(item.answer)}>
+                {item.answer}
               </Label>
-            </Card.Meta>
+          </Item.Image>
+          <Item.Content>
+            <Item.Header>{item.question}</Item.Header>
             <Card.Description>{item.comment}</Card.Description>
-          </Card.Content>
-        </Card>
+            <Item.Extra>
+              <ActionItems answerId={item.id} teamId={item.team_id} actionItems={item.actions} />
+            </Item.Extra>
+          </Item.Content>
+        </Item>
       ))}
-    </Card.Group>
+    </Item.Group>
   ) : (
     <p>No comments to show.</p>
   );

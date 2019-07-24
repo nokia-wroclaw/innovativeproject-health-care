@@ -14,6 +14,7 @@ class Answer(db.Model):
 
     question = db.relationship('Question', lazy='joined')
     team = db.relationship('Team', lazy='select')
+    actions = db.relationship('Action', lazy='joined')
 
     def __init__(self, question_id, team_id, date, answer):
         self.question_id = question_id

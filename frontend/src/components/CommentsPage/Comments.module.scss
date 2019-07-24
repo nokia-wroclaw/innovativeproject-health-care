@@ -1,0 +1,9 @@
+.image {
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+
+  .answer {
+    margin-top: 20px !important;
+  }
+}

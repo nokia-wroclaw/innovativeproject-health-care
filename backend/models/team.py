@@ -110,7 +110,10 @@ class Team(db.Model):
                 'question': question.question,
                 'question_id': question.id,
                 'answer': answer.answer,
-                'comment': answer.comment
+                'comment': answer.comment,
+                'id': answer.id,
+                'team_id': answer.team_id,
+                'actions': [a.serialize() for a in answer.actions]
             }
             answers.append(result)
 
