@@ -28,8 +28,9 @@ const Comments = ({ answers }) => {
       {items.map((item, i) => (
         <Card key={i}>
           <Card.Content>
-            <Card.Header>{item.question}</Card.Header>
+            <Card.Header>{item.subject}</Card.Header>
             <Card.Meta>
+              <p>{item.question}</p>              
               <Label color={valueToColor(item.answer)} size="small">
                 Answer: {item.answer}
               </Label>

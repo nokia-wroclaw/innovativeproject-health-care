@@ -6,7 +6,8 @@ const Question = ({ question }) => {
   return (
     <Grid>
       <Grid.Column mobile={10} tablet={13} computer={13}>
-        <Header as='h5'>{question.value}</Header>
+        <Header as='h5' style={{ marginBottom: 0 }}>{question.subject}</Header>
+        <p>{question.value}</p>
       </Grid.Column>
       <Grid.Column mobile={6} tablet={3} computer={3}>
         <div className='flex-space-evenly'>

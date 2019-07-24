@@ -2,39 +2,49 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import { Segment, Button, Input, Icon, Form } from "semantic-ui-react";
 import { addQuestionToDraftSurvey } from "../../../store/actions/surveys";
+import "./questionInput.css";
 
 const AddQuestionForm = props => {
   const [newQuestion, setNewQuestion] = useState("");
+  const [subject, setQuestionSubject] = useState("");
 
   const handleAddQuestion = () => {
-    props.addQuestionToDraftSurvey(newQuestion);
+    props.addQuestionToDraftSurvey(newQuestion, subject);
     setNewQuestion("");
+    setQuestionSubject("");
   };
 
   return (
     <Segment>
       <Form onSubmit={handleAddQuestion}>
-        <Input
-          type="text"
-          placeholder="New question..."
-          action
-          fluid
-          icon
-          iconPosition="left"
-          value={newQuestion}
-          onChange={(e, { value }) => {
-            setNewQuestion(value);
-          }}
-        >
-          <Icon name="edit" />
-          <input />
-          <Button
-            type="submit"
-            color="green"
-            icon="add"
-            disabled={!newQuestion}
+        <Form.Group style={{ margin: 0 }}>
+          <Form.Field>
+            <Icon name="edit" style={{ marginTop: "10px" }} />
+          </Form.Field>
+          <Form.Input 
+            placeholder="Subject"
+            value={subject}
+            onChange={(e, { value }) => {
+              setQuestionSubject(value)}}
+            width={3}
           />
-        </Input>
+          <Form.Input 
+            placeholder="New question"
+            value={newQuestion}
+            onChange={(e, { value }) => {
+              setNewQuestion(value)}}
+            width={13}
+          />
+          <Form.Field width={1}>
+            <Button
+              type="submit"
+              color="green"
+              floated='right'
+              icon="add"
+              disabled={!newQuestion || !subject}
+            />
+          </Form.Field>
+        </Form.Group>
       </Form>
     </Segment>
   );

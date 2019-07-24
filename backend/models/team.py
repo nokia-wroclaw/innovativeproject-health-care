@@ -107,6 +107,7 @@ class Team(db.Model):
 
             result = {
                 'order': l.order,
+                'subject': question.subject,
                 'question': question.question,
                 'question_id': question.id,
                 'answer': answer.answer,

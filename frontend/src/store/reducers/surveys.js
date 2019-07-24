@@ -83,7 +83,8 @@ export default function(state = initialState, action) {
     case ADD_QUESTION_TO_DRAFT_SURVEY:
       draft = { ...state.draft };
       draft.questions.push({
-        value: action.payload,
+        subject: action.payload.subject,
+        value: action.payload.value,
         order: draft.questions.length + 1
       });
       return {
@@ -121,14 +122,18 @@ export default function(state = initialState, action) {
     case UPDATE_QUESTION_IN_DRAFT_SURVEY:
       draft = { ...state.draft };
 
-      if (action.payload.id)
-        draft.questions.find(
-          question => question.id === action.payload.id
-        ).value = action.payload.value;
-      else if (action.payload.order)
-        draft.questions.find(
-          question => question.order === action.payload.order
-        ).value = action.payload.value;
+      if (action.payload.id) {
+        let q = draft.questions.find(
+          question => question.id === action.payload.id);
+        q.value = action.payload.value;
+        q.subject = action.payload.subject;
+      }
+      else if (action.payload.order) {
+        let q = draft.questions.find(
+          question => question.order === action.payload.order);
+        q.value = action.payload.value;
+        q.subject = action.payload.subject;
+      }
       return {
         ...state,
         draft

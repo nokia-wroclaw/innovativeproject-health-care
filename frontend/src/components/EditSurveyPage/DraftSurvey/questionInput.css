@@ -1,0 +1,14 @@
+@media (max-width: 760px) {
+    div.fields > div {
+        padding: 5px;
+    }
+    i.edit {
+        padding-left: 10px;
+    }
+}
+
+@media (min-width: 760px) and (max-width: 995px) {
+    div.field > button.floated.button {
+        margin-bottom: 5px;
+    }
+}

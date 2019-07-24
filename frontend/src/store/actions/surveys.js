@@ -52,12 +52,12 @@ export const setDraftSurvey = draft_survey => ({
   payload: draft_survey
 });
 
-export const addQuestionToDraftSurvey = question_text => ({
+export const addQuestionToDraftSurvey = (question_text, subject) => ({
   type: ADD_QUESTION_TO_DRAFT_SURVEY,
-  payload: question_text
+  payload: { value: question_text, subject}
 });
 
-export const deleteQuestionFromDraftSurvey = question => ({
+export const deleteQuestionFromDraftSurvey = (question) => ({
   type: DELETE_QUESTION_FROM_DRAFT_SURVEY,
   payload: question
 });
