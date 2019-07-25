@@ -15,7 +15,7 @@ export const endpoints = {
   surveys: "/surveys",
   results: "/results",
   actions: '/actions',
-  answers: '/answers',
+  answers: '/answers'
 };
 
 let instance = axios.create({

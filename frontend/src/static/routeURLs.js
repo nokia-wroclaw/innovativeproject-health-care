@@ -6,5 +6,6 @@ export default {
   comments: "/users_comments",
   editSurvey: "/edit_survey",
   tribesManagement: "/tribes_management",
-  adminPanel: "/admin_panel"
+  adminPanel: "/admin_panel",
+  answersManagement: "/answers_management"
 };

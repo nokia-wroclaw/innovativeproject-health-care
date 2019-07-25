@@ -5,7 +5,7 @@ from sqlalchemy import exc
 
 from backend.app import db
 from backend.common.permissions import roles_allowed
-from backend.models import Team, Tribe, TeamUserLink, User
+from backend.models import Team, Tribe, TeamUserLink, User, Answer
 
 
 class TeamsRes(Resource):
@@ -623,4 +623,27 @@ class TeamUserRes(Resource):
 
         response = Response()
         response.status_code = 204
+        return response
+
+
+class TeamAnswersRes(Resource):
+
+    @roles_allowed(['admin'])
+    def get(self, team_id):
+        answers = Answer.query.filter_by(team_id=team_id).order_by(Answer.date.desc()).all()
+        response = jsonify([ans.serialize() for ans in answers])
+        response.status_code = 200
+        return response
+
+    @roles_allowed(['admin'])
+    def delete(self, team_id):
+        args = request.args
+        if 'date' not in args:
+            abort(400)
+
+        db.session.query(Answer).filter_by(team_id=team_id, date=args['date']).delete()
+        db.session.commit()
+
+        response = Response()
+        response.status_code = 200
         return response

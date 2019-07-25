@@ -1,3 +1,6 @@
+import {map, get, keyBy} from 'lodash/fp';
+import {createSelector} from 'reselect';
+
 import {
   SET_TRIBES,
   SET_TRIBE_EDITORS,
@@ -182,3 +185,17 @@ export default function(state = initialState, action) {
       return state;
   }
 }
+
+export const getTribesForSelector = createSelector(
+  get('tribes'),
+  map(tribe => ({
+    ...tribe,
+    text: tribe.name,
+    value: tribe.id
+  }))
+);
+
+export const getTribesById = createSelector(
+  get('tribes'),
+  keyBy('id')
+);
