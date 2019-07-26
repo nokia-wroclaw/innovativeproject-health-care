@@ -2,6 +2,7 @@ import React from "react";
 import { Line, Chart } from "react-chartjs-2";
 import { connect } from "react-redux";
 import { Header } from "semantic-ui-react";
+import { random, shuffle} from "lodash";
 
 let clicks = 0;
 let timeout;
@@ -9,30 +10,16 @@ const delay = 200;
 
 let defaultOnClick = Chart.defaults.global.legend.onClick;
 
-const getRandomIntInclusive = (min, max) => {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-const shuffleArray = (array) => {
-  for(let i=0; i < array.length - 1; i++) {
-    const j = getRandomIntInclusive(0, array.length - 1);
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-}
-
 const generateRandomColors = (n) => {
   let colors = []
   const unit = Math.floor(360 / n);
   for(let i=0; i<n; i++) {
     let hue = i * unit;
-    let saturation = getRandomIntInclusive(80, 100);
-    let lightness = getRandomIntInclusive(40, 50);
+    let saturation = random(80, 100);
+    let lightness = random(30, 60);
     colors.push(`hsla(${hue}, ${saturation}%, ${lightness}%, 1)`);
   }
-  shuffleArray(colors);
-  return colors;
+  return shuffle(colors);;
 }
 
 const matrixToPercent = (matrix, max) => {
@@ -87,16 +74,15 @@ const chartOptions = {
     position: "top",
     onClick: function(e, clickedItem) {
         clicks += 1;
-        let chart = this.chart;
-        timeout = setTimeout(function() {
+        timeout = setTimeout(() => {
           if(clicks === 1) {
-            defaultOnClick.call(chart, e, clickedItem);
+            defaultOnClick.call(this.chart, e, clickedItem);
           }
           else {
             clearTimeout(timeout);
-            let index = clickedItem.datasetIndex;
-            let ci = chart;
-            let isHidden = (ci.getDatasetMeta(index).hidden === null) ? false : ci.getDatasetMeta(index).hidden;       
+            const index = clickedItem.datasetIndex;
+            let ci = this.chart;
+            const isHidden = (ci.getDatasetMeta(index).hidden === null) ? false : ci.getDatasetMeta(index).hidden;       
             let anyOthersHidden = false;
             let allOthersHidden = true;
             
