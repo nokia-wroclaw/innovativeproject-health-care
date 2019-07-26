@@ -1,0 +1,45 @@
+.headerCell {
+  height: 140px;
+  text-align: left !important; 
+  background: #f9fafb;
+}
+
+.headerSpan {
+  display: block;
+  transform: rotate(-90deg);
+  margin-top: 20px;
+}
+
+.matrixHeader {
+  height: 151px;
+  position: sticky !important;
+  top: 30px;
+  display: block;
+  width: 1100px; 
+  overflow: auto;
+}
+
+.cell {
+  min-width: 100px;
+  max-width: 100px;
+  padding: .5em 1em; 
+  text-align: center; 
+  border: 1px solid rgba(34, 36, 38, 0.15); 
+}
+
+.firstColumn {
+  min-width: 120px;
+  background: #f9fafb;
+}
+
+.cornerCell {
+  min-width: 120px;
+  border-top: 1px solid transparent;
+  border-left: 1px solid transparent;
+  background: white;
+}
+.matrixBody {
+  display: block;
+  width: 1100px;
+  overflow: auto;
+}

@@ -1,6 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Table, Icon } from "semantic-ui-react";
+import { Table, Icon, Container, Sticky } from "semantic-ui-react";
+import {ScrollSync, ScrollSyncPane} from "react-scroll-sync";
+import './matrix.css';
 
 const RED = "red";
 const YELLOW = "yellow";
@@ -38,33 +40,43 @@ const getIcon = (value, trend) => {
 
 const Matrix = ({ matrix, questions, teams, trends }) => {
   return (
-    <Table definition unstackable>
-      <Table.Header>
-        <Table.Row>
-          <Table.HeaderCell />
-          {questions.map(question => (
-            <Table.HeaderCell key={question.id} textAlign="center">
-              {question.value}
-            </Table.HeaderCell>
-          ))}
-        </Table.Row>
-      </Table.Header>
+  <ScrollSync>
+      <table style={{ width: 1100, borderCollapse: 'collapse' }}>
 
-      <Table.Body>
-        {teams.map((team, i) => (
-          <Table.Row key={team.id}>
-            <Table.Cell>{team.name}</Table.Cell>
+        <ScrollSyncPane group="horizontal">
+          <thead className="matrixHeader">
+            <tr>
+            <th className=" cell cornerCell"/>
+            {questions.map(question => (
+              <th key={question.id} className="headerCell cell">
+                <span className="headerSpan">
+                  {question.subject}
 
-            {questions.map((question, j) => (
-              <Table.Cell key={question.id} textAlign="center">
-                {getIcon(matrix[i][j], trends[i][j])}
-              </Table.Cell>
+                </span>
+              </th>
             ))}
-          </Table.Row>
-        ))}
-      </Table.Body>
-    </Table>
-  );
+            </tr>
+          </thead>
+        </ScrollSyncPane>
+
+        <ScrollSyncPane group={["horizontal", "vertical"]}>
+          <tbody className="matrixBody">
+            {teams.map((team, i) => (
+              <tr key={team.id}>
+                <td className="cell firstColumn">{team.name}</td>
+                {questions.map((question, j) => (
+                  <td key={question.id} className="cell">
+                    {getIcon(matrix[i][j], trends[i][j])}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </ScrollSyncPane>
+
+      </table>
+  </ScrollSync>
+);
 };
 
 const mapStateToProps = state => ({

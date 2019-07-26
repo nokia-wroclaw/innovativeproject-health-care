@@ -88,7 +88,7 @@ const ResultsMatrixPage = ({ user, tribes, periods, ...props }) => {
             </Grid.Column>
           </Grid.Row>
           <Grid.Row>
-            <Grid.Column style={{ overflow: "auto" }}>
+            <Grid.Column>
               {isLoading || !currentTribeId ? null : <Matrix />}
               {isLoading ? <Loader active inline="centered" /> : null}
             </Grid.Column>
