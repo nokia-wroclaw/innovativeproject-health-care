@@ -1,27 +1,26 @@
 import React from "react";
-import { Line } from "react-chartjs-2";
+import { Line, Chart } from "react-chartjs-2";
 import { connect } from "react-redux";
 import { Header } from "semantic-ui-react";
+import { random, shuffle} from "lodash";
 
-const chartColors = [
-  "red",
-  "orange",
-  "olive",
-  "green",
-  "teal",
-  "blue",
-  "violet",
-  "purple",
-  "pink",
-  "brown",
-  "grey",
-  "black",
-  "yellow"
-];
+let clicks = 0;
+let timeout;
+const delay = 200;
 
-const intToColor = i => {
-  return chartColors[i % chartColors.length];
-};
+let defaultOnClick = Chart.defaults.global.legend.onClick;
+
+const generateRandomColors = (n) => {
+  let colors = []
+  const unit = Math.floor(360 / n);
+  for(let i=0; i<n; i++) {
+    let hue = i * unit;
+    let saturation = random(80, 100);
+    let lightness = random(30, 60);
+    colors.push(`hsla(${hue}, ${saturation}%, ${lightness}%, 1)`);
+  }
+  return shuffle(colors);;
+}
 
 const matrixToPercent = (matrix, max) => {
   return matrix.map(row => {
@@ -72,20 +71,69 @@ const chartOptions = {
   },
   legend: {
     display: true,
-    position: "top"
-  }
+    position: "top",
+    onClick: function(e, clickedItem) {
+        clicks += 1;
+        timeout = setTimeout(() => {
+          if(clicks === 1) {
+            defaultOnClick.call(this.chart, e, clickedItem);
+          }
+          else {
+            clearTimeout(timeout);
+            const index = clickedItem.datasetIndex;
+            let ci = this.chart;
+            const isHidden = (ci.getDatasetMeta(index).hidden === null) ? false : ci.getDatasetMeta(index).hidden;       
+            let anyOthersHidden = false;
+            let allOthersHidden = true;
+            
+            ci.data.datasets.forEach(function(e, i) {
+              let meta = ci.getDatasetMeta(i);
+              if (i !== index) {
+                if (meta.hidden) {
+                  anyOthersHidden = true;
+                } else {
+                  allOthersHidden = false;
+                }
+              }
+            });
+
+            if (isHidden && allOthersHidden) {
+              ci.getDatasetMeta(index).hidden = null;
+            } else { 
+            ci.data.datasets.forEach(function(e, i) {
+              let meta = ci.getDatasetMeta(i);
+
+              if (i !== index) {
+                if (anyOthersHidden && !allOthersHidden) {
+                  meta.hidden = true;
+                } else {
+                  meta.hidden = meta.hidden === null ? !meta.hidden : null;
+                }
+              } else {
+                meta.hidden = null;
+              }
+            });
+            }
+            ci.update();
+          }
+          clicks = 0;
+        }, delay)
+      }
+    },
 };
+
 
 const Charts = ({ matrix, periods, teams }) => {
   matrix = matrixToPercent(matrix, 2);
+  const colorsArray = generateRandomColors(matrix.length);
 
   let allTeamsData = {
     labels: periods.map(p => p.date_start),
     datasets: teams.map((team, i) => ({
       label: team.name,
       data: matrix[i],
-      borderColor: intToColor(i),
-      pointBackgroundColor: intToColor(i)
+      borderColor: colorsArray[i],
+      pointBackgroundColor: colorsArray[i]
     }))
   };
 
@@ -113,7 +161,7 @@ const Charts = ({ matrix, periods, teams }) => {
         <Line
           data={allTeamsData}
           options={{ ...chartOptions, maintainAspectRatio: false }}
-        />
+          />
       </div>
     </React.Fragment>
   );
