@@ -39,7 +39,7 @@ const AddQuestionForm = props => {
             <Button
               type="submit"
               color="green"
-              floated='right'
+              floated="right"
               icon="add"
               disabled={!newQuestion || !subject}
             />

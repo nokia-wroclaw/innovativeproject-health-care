@@ -88,22 +88,22 @@ class TribeSurveysRes(Resource):
 
         # Process questions
         for q in questions:
-            if ('id' in q and 'subject' in q and 'value' in q and 'order' in q and
-                    len(q['value']) != 0):
-                # If id, subject and content are given update the existing question
-                question = Question.get_if_exists(q['id'])
-                question.subject = q['subject']
-                question.question = q['value']
-                db.session.add(question)
-                db.session.flush()
+            if all([prop in q for prop in ['id', 'value', 'order']]):
+                if len(q.get('value', '')) != 0:
+                    # If id, subject and content are given update the existing question
+                    question = Question.get_if_exists(q['id'])
+                    question.subject = q['subject']
+                    question.question = q['value']
+                    db.session.add(question)
+                    db.session.flush()
+                else:
+                    # If question has only its content and subject then create it
+                    question = Question(q['subject'], q['value'])
+                    db.session.add(question)
+                    db.session.flush()
             elif 'id' in q and 'order' in q:
                 # If question has only id try to find it in db
                 question = Question.get_if_exists(q['id'])
-            elif 'subject' in q and 'value' in q and 'order' in q:
-                # If question has only its content and subject then create it
-                question = Question(q['subject'], q['value'])
-                db.session.add(question)
-                db.session.flush()
             else:
                 # Abort if there is no id or content
                 db.session.rollback()

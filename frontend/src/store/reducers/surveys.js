@@ -123,13 +123,13 @@ export default function(state = initialState, action) {
       draft = { ...state.draft };
 
       if (action.payload.id) {
-        let q = draft.questions.find(
+        const q = draft.questions.find(
           question => question.id === action.payload.id);
         q.value = action.payload.value;
         q.subject = action.payload.subject;
       }
       else if (action.payload.order) {
-        let q = draft.questions.find(
+        const q = draft.questions.find(
           question => question.order === action.payload.order);
         q.value = action.payload.value;
         q.subject = action.payload.subject;

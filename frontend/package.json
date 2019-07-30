@@ -44,6 +44,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "babel-preset-react-app": "^7.0.0",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.12.1",
     "gulp": "^3.9.1",
