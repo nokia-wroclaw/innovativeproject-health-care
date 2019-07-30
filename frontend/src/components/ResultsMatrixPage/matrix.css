@@ -30,6 +30,7 @@
 .firstColumn {
   min-width: 120px;
   background: #f9fafb;
+  font-weight: bold;
 }
 
 .cornerCell {
@@ -42,4 +43,12 @@
   display: block;
   width: 1100px;
   overflow: auto;
+}
+
+.hoveredHeader {
+  background: #ecececf8;
+}
+
+.hoveredCell {
+  background: #f3f3f3f8;
 }

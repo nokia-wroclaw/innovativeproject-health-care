@@ -28,7 +28,13 @@ ShallowWrapper {
         >
           <Header
             as="h5"
+            style={
+              Object {
+                "marginBottom": 0,
+              }
+            }
           />
+          <p />
         </GridColumn>,
         <GridColumn
           computer={3}
@@ -67,26 +73,50 @@ ShallowWrapper {
         "key": undefined,
         "nodeType": "function",
         "props": Object {
-          "children": <Header
-            as="h5"
-          />,
+          "children": Array [
+            <Header
+              as="h5"
+              style={
+                Object {
+                  "marginBottom": 0,
+                }
+              }
+            />,
+            <p />,
+          ],
           "computer": 13,
           "mobile": 10,
           "tablet": 13,
         },
         "ref": null,
-        "rendered": Object {
-          "instance": null,
-          "key": undefined,
-          "nodeType": "function",
-          "props": Object {
-            "as": "h5",
-            "children": undefined,
+        "rendered": Array [
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "function",
+            "props": Object {
+              "as": "h5",
+              "children": undefined,
+              "style": Object {
+                "marginBottom": 0,
+              },
+            },
+            "ref": null,
+            "rendered": null,
+            "type": [Function],
           },
-          "ref": null,
-          "rendered": null,
-          "type": [Function],
-        },
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "children": undefined,
+            },
+            "ref": null,
+            "rendered": null,
+            "type": "p",
+          },
+        ],
         "type": [Function],
       },
       Object {
@@ -214,7 +244,13 @@ ShallowWrapper {
           >
             <Header
               as="h5"
+              style={
+                Object {
+                  "marginBottom": 0,
+                }
+              }
             />
+            <p />
           </GridColumn>,
           <GridColumn
             computer={3}
@@ -253,26 +289,50 @@ ShallowWrapper {
           "key": undefined,
           "nodeType": "function",
           "props": Object {
-            "children": <Header
-              as="h5"
-            />,
+            "children": Array [
+              <Header
+                as="h5"
+                style={
+                  Object {
+                    "marginBottom": 0,
+                  }
+                }
+              />,
+              <p />,
+            ],
             "computer": 13,
             "mobile": 10,
             "tablet": 13,
           },
           "ref": null,
-          "rendered": Object {
-            "instance": null,
-            "key": undefined,
-            "nodeType": "function",
-            "props": Object {
-              "as": "h5",
-              "children": undefined,
+          "rendered": Array [
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "function",
+              "props": Object {
+                "as": "h5",
+                "children": undefined,
+                "style": Object {
+                  "marginBottom": 0,
+                },
+              },
+              "ref": null,
+              "rendered": null,
+              "type": [Function],
             },
-            "ref": null,
-            "rendered": null,
-            "type": [Function],
-          },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": undefined,
+              },
+              "ref": null,
+              "rendered": null,
+              "type": "p",
+            },
+          ],
           "type": [Function],
         },
         Object {
@@ -410,6 +470,8 @@ ShallowWrapper {
         },
       },
     },
+    Symbol(enzyme.__providerValues__): undefined,
   },
+  Symbol(enzyme.__providerValues__): Map {},
 }
 `;
