@@ -13,11 +13,15 @@ const Matrix = ({ questions, teams }) => {
           <thead className="matrixHeader">
             <tr>
             <th className=" cell cornerCell"/>
+            <th className=" cell headerCell">
+              <span className="headerSpan">
+                Percentage result
+              </span>
+            </th>
             {questions.map(question => (
-              <th key={question.id} className="headerCell cell">
+              <th key={question.id} className="cell headerCell">
                 <span className="headerSpan">
                   {question.subject}
-
                 </span>
               </th>
             ))}

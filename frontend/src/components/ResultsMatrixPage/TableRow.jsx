@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { connect } from "react-redux";
 import { Icon } from "semantic-ui-react";
+import { round } from "lodash";
 import './matrix.css';
 
 const RED = "red";
@@ -37,19 +38,40 @@ const getIcon = (value, trend) => {
   }
 };
 
+const getPercentageResult = (results) => {
+  try {
+    const items = results.filter(item => item !== null);
+
+    if (items.length > 0) {
+      const sum = items.reduce((total, n) => total + n);
+      const size = items.length;
+      return round((sum / size) * 50);
+    }
+    return null;
+  }
+  catch {
+    return null;
+  }
+};
+
 const TableRow = ({team, row, questions, matrix, trends}) => {
   const [hovered, setHovered] = useState(false);
+  let percentageResult = getPercentageResult(matrix[row]);
+
   const highlightOn = useCallback((e) => {
     setHovered(true);
-  })
+  });
   const highlightOff = useCallback((e) => {
     setHovered(false);
-  })
+  });
 
   return(
     <tr onMouseEnter={highlightOn} onMouseLeave={highlightOff}>
       <td className={"cell firstColumn " + (hovered ? "hoveredHeader" : "")}>
         {team.name}
+      </td>
+      <td className={"cell " + (hovered ? "hoveredCell" : "")} style={{fontWeight: "bold"}}>
+        { percentageResult ? percentageResult + "%" : "-" }
       </td>
       {questions.map((question, j) => (
         <td key={question.id} className={"cell " + (hovered ? "hoveredCell" : "")}>

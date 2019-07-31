@@ -34,7 +34,17 @@ ShallowWrapper {
               }
             }
           />
-          <p />
+          <span />
+          <span
+            style={
+              Object {
+                "color": "rgb(235, 40, 40)",
+                "fontSize": "x-large",
+              }
+            }
+          >
+            
+          </span>
         </GridColumn>,
         <GridColumn
           computer={3}
@@ -82,7 +92,17 @@ ShallowWrapper {
                 }
               }
             />,
-            <p />,
+            <span />,
+            <span
+              style={
+                Object {
+                  "color": "rgb(235, 40, 40)",
+                  "fontSize": "x-large",
+                }
+              }
+            >
+              
+            </span>,
           ],
           "computer": 13,
           "mobile": 10,
@@ -114,7 +134,22 @@ ShallowWrapper {
             },
             "ref": null,
             "rendered": null,
-            "type": "p",
+            "type": "span",
+          },
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "children": "",
+              "style": Object {
+                "color": "rgb(235, 40, 40)",
+                "fontSize": "x-large",
+              },
+            },
+            "ref": null,
+            "rendered": "",
+            "type": "span",
           },
         ],
         "type": [Function],
@@ -250,7 +285,17 @@ ShallowWrapper {
                 }
               }
             />
-            <p />
+            <span />
+            <span
+              style={
+                Object {
+                  "color": "rgb(235, 40, 40)",
+                  "fontSize": "x-large",
+                }
+              }
+            >
+              
+            </span>
           </GridColumn>,
           <GridColumn
             computer={3}
@@ -298,7 +343,17 @@ ShallowWrapper {
                   }
                 }
               />,
-              <p />,
+              <span />,
+              <span
+                style={
+                  Object {
+                    "color": "rgb(235, 40, 40)",
+                    "fontSize": "x-large",
+                  }
+                }
+              >
+                
+              </span>,
             ],
             "computer": 13,
             "mobile": 10,
@@ -330,7 +385,22 @@ ShallowWrapper {
               },
               "ref": null,
               "rendered": null,
-              "type": "p",
+              "type": "span",
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": "",
+                "style": Object {
+                  "color": "rgb(235, 40, 40)",
+                  "fontSize": "x-large",
+                },
+              },
+              "ref": null,
+              "rendered": "",
+              "type": "span",
             },
           ],
           "type": [Function],

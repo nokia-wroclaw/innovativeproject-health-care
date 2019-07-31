@@ -20,8 +20,8 @@
 }
 
 .cell {
-  min-width: 100px;
-  max-width: 100px;
+  min-width: 80px;
+  max-width: 80px;
   padding: .5em 1em; 
   text-align: center; 
   border: 1px solid rgba(34, 36, 38, 0.15); 
