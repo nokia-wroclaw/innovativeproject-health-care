@@ -2,7 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 import {
   Grid,
-  Header as SemanticHeader,
   Segment,
   Container,
 } from "semantic-ui-react";
@@ -11,8 +10,6 @@ import LoginButton from "./LoginButton";
 import UserDisplayName from "./UserDisplayName";
 import Menu from "../Menu";
 import LogoutButton from "./LogoutButton";
-import { Link } from "react-router-dom";
-import routes from "../../../static/routeURLs";
 import "./header.css";
 
 const Header = ({ user }) => {

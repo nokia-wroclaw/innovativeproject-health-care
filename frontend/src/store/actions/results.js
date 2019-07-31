@@ -72,3 +72,21 @@ export const setTribePeriods = tribe_id => dispatch => {
       dispatch(handleFetchingError(error));
     });
 };
+
+export const addActionItem = (actionItem, answerId) => async dispatch => {
+  try {
+    await http.post(`${endpoints.answers}/${answerId}/actions`, actionItem);
+    dispatch(setTeamAnswers(actionItem.team_id));
+  } catch (error) {
+    dispatch(handleFetchingError(error));
+  }
+};
+
+export const removeActionItem = actionItem => async dispatch => {
+  try {
+    await http.delete(`${endpoints.actions}/${actionItem.id}`);
+    dispatch(setTeamAnswers(actionItem.team_id));
+  } catch (error) {
+    dispatch(handleFetchingError(error));
+  }
+};
