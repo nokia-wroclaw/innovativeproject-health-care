@@ -12,7 +12,7 @@ const QuestionSegment = ({ question, disabled, ...props }) => {
       case 0:
         return "red-outline";
       case 1:
-        return "yellow-outline";
+        return "red-outline";
       default:
         return "";
     }
