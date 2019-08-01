@@ -6,6 +6,7 @@ import tribesReducer from './tribes&teams';
 import generalReducer from './general';
 import surveysReducer from './surveys';
 import resultsReducer from './results'
+import answersReducer from './answers';
 
 export default combineReducers({
   user: userReducer,
@@ -14,5 +15,6 @@ export default combineReducers({
   currentSurvey: currentSurveyReducer,
   general: generalReducer,
   surveys: surveysReducer,
-  results: resultsReducer
+  results: resultsReducer,
+  answers: answersReducer
 });

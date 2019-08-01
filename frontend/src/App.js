@@ -13,6 +13,7 @@ import ResultsMatrixPage from "./components/ResultsMatrixPage";
 import CommentsPage from "./components/CommentsPage";
 import EditSurveyPage from "./components/EditSurveyPage";
 import ProtectedRoute from "./components/common/ProtectedRoute/index";
+import { AnswersManagementPage } from "./components/AnswersManagementPage/AnswersManagementPage";
 
 const App = ({ user, ...props }) => {
   useLayoutEffect(() => {
@@ -56,6 +57,11 @@ const App = ({ user, ...props }) => {
             path={routes.editSurvey}
             component={EditSurveyPage}
             isAuthenticated={isEditor(user)}
+          />
+          <ProtectedRoute
+            path={routes.answersManagement}
+            component={AnswersManagementPage}
+            isAuthenticated={isManager(user)}
           />
           <Route path={routes.homePage} component={HomePage} />
         </Switch>

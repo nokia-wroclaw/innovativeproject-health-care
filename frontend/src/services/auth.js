@@ -67,7 +67,8 @@ const editorMenu = [
 
 const adminMenu = [
   { name: "Tribes management", path: routes.tribesManagement },
-  { name: "Admin panel", path: routes.adminPanel }
+  { name: "Admin panel", path: routes.adminPanel },
+  { name: "Answers management", path: routes.answersManagement }
 ];
 
 export const getMenu = user => {
