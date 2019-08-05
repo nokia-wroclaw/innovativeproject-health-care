@@ -28,20 +28,11 @@ ShallowWrapper {
         >
           <Header
             as="h5"
-            style={
-              Object {
-                "marginBottom": 0,
-              }
-            }
+            className="questionHeader"
           />
           <span />
           <span
-            style={
-              Object {
-                "color": "rgb(235, 40, 40)",
-                "fontSize": "x-large",
-              }
-            }
+            className="requiredField"
           >
             
           </span>
@@ -86,20 +77,11 @@ ShallowWrapper {
           "children": Array [
             <Header
               as="h5"
-              style={
-                Object {
-                  "marginBottom": 0,
-                }
-              }
+              className="questionHeader"
             />,
             <span />,
             <span
-              style={
-                Object {
-                  "color": "rgb(235, 40, 40)",
-                  "fontSize": "x-large",
-                }
-              }
+              className="requiredField"
             >
               
             </span>,
@@ -117,9 +99,7 @@ ShallowWrapper {
             "props": Object {
               "as": "h5",
               "children": undefined,
-              "style": Object {
-                "marginBottom": 0,
-              },
+              "className": "questionHeader",
             },
             "ref": null,
             "rendered": null,
@@ -142,10 +122,7 @@ ShallowWrapper {
             "nodeType": "host",
             "props": Object {
               "children": "",
-              "style": Object {
-                "color": "rgb(235, 40, 40)",
-                "fontSize": "x-large",
-              },
+              "className": "requiredField",
             },
             "ref": null,
             "rendered": "",
@@ -279,20 +256,11 @@ ShallowWrapper {
           >
             <Header
               as="h5"
-              style={
-                Object {
-                  "marginBottom": 0,
-                }
-              }
+              className="questionHeader"
             />
             <span />
             <span
-              style={
-                Object {
-                  "color": "rgb(235, 40, 40)",
-                  "fontSize": "x-large",
-                }
-              }
+              className="requiredField"
             >
               
             </span>
@@ -337,20 +305,11 @@ ShallowWrapper {
             "children": Array [
               <Header
                 as="h5"
-                style={
-                  Object {
-                    "marginBottom": 0,
-                  }
-                }
+                className="questionHeader"
               />,
               <span />,
               <span
-                style={
-                  Object {
-                    "color": "rgb(235, 40, 40)",
-                    "fontSize": "x-large",
-                  }
-                }
+                className="requiredField"
               >
                 
               </span>,
@@ -368,9 +327,7 @@ ShallowWrapper {
               "props": Object {
                 "as": "h5",
                 "children": undefined,
-                "style": Object {
-                  "marginBottom": 0,
-                },
+                "className": "questionHeader",
               },
               "ref": null,
               "rendered": null,
@@ -393,10 +350,7 @@ ShallowWrapper {
               "nodeType": "host",
               "props": Object {
                 "children": "",
-                "style": Object {
-                  "color": "rgb(235, 40, 40)",
-                  "fontSize": "x-large",
-                },
+                "className": "requiredField",
               },
               "ref": null,
               "rendered": "",

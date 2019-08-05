@@ -32,9 +32,9 @@ const DraftQuestion = ({ question, ...props }) => {
   return (
     <Segment>
       <Form>
-        <Form.Group style={{ margin: 0 }}>
+        <Form.Group className="questionGroup">
           <Form.Field>
-            <Icon name="edit" style={{ marginTop: "10px" }} />
+            <Icon name="edit" className="editIcon" />
           </Form.Field>
           <Form.Input 
             value={question.subject}

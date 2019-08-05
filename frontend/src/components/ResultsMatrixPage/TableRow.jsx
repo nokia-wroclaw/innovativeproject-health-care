@@ -70,7 +70,7 @@ const TableRow = ({team, row, questions, matrix, trends}) => {
       <td className={"cell firstColumn " + (hovered ? "hoveredHeader" : "")}>
         {team.name}
       </td>
-      <td className={"cell " + (hovered ? "hoveredCell" : "")} style={{fontWeight: "bold"}}>
+      <td className={"cell " + (hovered ? "hoveredCell" : "")}>
         { percentageResult ? percentageResult + "%" : "-" }
       </td>
       {questions.map((question, j) => (

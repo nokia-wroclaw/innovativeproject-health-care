@@ -6,18 +6,6 @@ import Question from "./Question";
 import "./checkbox.css";
 
 const QuestionSegment = ({ question, disabled, ...props }) => {
-  const getTextFieldClassName = () => {
-    if (question.comment) return "";
-    switch (question.answer) {
-      case 0:
-        return "red-outline";
-      case 1:
-        return "red-outline";
-      default:
-        return "";
-    }
-  };
-
   const isCommentRequired = () => {
     if (question.answer === 0 || question.answer === 1) return true;
     return false;
@@ -25,14 +13,14 @@ const QuestionSegment = ({ question, disabled, ...props }) => {
 
   return (
     <React.Fragment>
-      <SegmentGroup style={{ marginBottom: 10 }}>
+      <SegmentGroup>
         <Segment>
           <Question question={question} />
         </Segment>
         <Segment attached>
           <TextArea
             placeholder={disabled ? "No comment provided" : "Tell us more"}
-            className={getTextFieldClassName()}
+            className={question.comment ? "" : (question.answer < 2 ? "red-outline" : "")}
             required={isCommentRequired()}
             value={question.comment}
             disabled={disabled}
