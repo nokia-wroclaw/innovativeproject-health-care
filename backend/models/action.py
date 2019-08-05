@@ -8,7 +8,7 @@ class Action(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     team_id = db.Column(db.Integer, db.ForeignKey('teams.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    answer_id = db.Column(db.Integer, db.ForeignKey('answers.id'))
+    answer_id = db.Column(db.Integer, db.ForeignKey('answers.id', ondelete='CASCADE', onupdate='CASCADE'))
     date = db.Column(db.Date)
     message = db.Column(db.Text)
     is_completed = db.Column(db.Boolean)
