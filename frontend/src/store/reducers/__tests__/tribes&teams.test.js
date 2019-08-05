@@ -468,7 +468,7 @@ describe("tribes reducer", () => {
   });
   //----------------------------------------------------------
   describe("should handle DELETE_TEAM", () => {
-    it("should find given team in tribes array and delete it", () => {
+    it("should find given team in tribes array and set deleted on true", () => {
       expect(
         reducer([...mockStructure], {
           type: types.DELETE_TEAM,
@@ -477,7 +477,13 @@ describe("tribes reducer", () => {
       ).toEqual([
         {
           ...mockTribes[0],
-          teams: []
+          teams: [{
+            id: 1,
+            name: "team 1",
+            tribe_id: 1,
+            deleted: true,
+            deleted_at: null
+          }]
         },
         {
           ...mockTribes[1],
@@ -517,7 +523,9 @@ describe("tribes reducer", () => {
             {
               id: 1,
               name: "new team name",
-              tribe_id: 1
+              tribe_id: 1,
+              deleted: false,
+              deleted_at: null
             }
           ]
         },
@@ -847,6 +855,43 @@ describe("tribes reducer", () => {
     });
   });
 });
+//----------------------------------------------------------
+describe("should handle RESTORE_TEAM", () => {
+  it("should find given team in tribes array and set deleted on flase", () => {
+    expect(
+      reducer([...mockStructure], {
+        type: types.RESTORE_TEAM,
+        payload: { team: mockTeams[0] }
+      })
+    ).toEqual([
+      {
+        ...mockTribes[0],
+        teams: [{ ...mockTeams[0] }]
+      },
+      {
+        ...mockTribes[1],
+        teams: [{ ...mockTeams[1] }]
+      }
+    ]);
+  });
+  it("should do nothing when there are no tribes", () => {
+    expect(
+      reducer([], {
+        type: types.RESTORE_TEAM,
+        payload: { team: mockTeams[0] }
+      })
+    ).toEqual([]);
+  });
+  it("should do nothing when given team does not exist", () => {
+    expect(
+      reducer([...mockStructure], {
+        type: types.RESTORE_TEAM,
+        payload: { team: { id: 3, name: "not existing name" } }
+      })
+    ).toEqual([...mockStructure]);
+  });
+});
+//----------------------------------------------------------
 
 describe("help functions", () => {
   beforeEach(() => {

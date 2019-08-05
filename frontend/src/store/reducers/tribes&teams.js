@@ -18,7 +18,8 @@ import {
   ADD_MANAGER_TO_TEAM,
   DELETE_MANAGER_FROM_TEAM,
   ADD_MEMBER_TO_TEAM,
-  DELETE_MEMBER_FROM_TEAM
+  DELETE_MEMBER_FROM_TEAM,
+  RESTORE_TEAM
 } from '../actions/types';
 
 export const findTribe = (tribes, targetTribe) => {
@@ -130,12 +131,19 @@ export default function(state = initialState, action) {
 
     case DELETE_TEAM:
       tribes = [...state];
+   
       targetTribe = tribes.find(
         tribe => tribe.id === action.payload.team.tribe_id
       );
+
       if (targetTribe)
-        targetTribe.teams = targetTribe.teams.filter(
-          team => team.id !== action.payload.team.id
+        targetTribe.teams = targetTribe.teams.map(
+          team => {
+            if (team.id === action.payload.team.id) {
+              team.deleted = true;
+            }
+            return team;
+          } 
         );
       return tribes;
 
@@ -179,6 +187,12 @@ export default function(state = initialState, action) {
         targetTeam.members = targetTeam.members.filter(
           user => user.id !== action.payload.user.id
         );
+      return tribes;
+
+    case RESTORE_TEAM:
+      tribes = [...state];
+      targetTeam = findTeam(tribes, action.payload.team);
+      if (targetTeam) targetTeam.deleted = action.payload.team.deleted;
       return tribes;
 
     default:

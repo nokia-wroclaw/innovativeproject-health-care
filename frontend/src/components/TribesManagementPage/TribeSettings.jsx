@@ -8,17 +8,22 @@ import {
   addTeamToTribe,
   updateTribeName
 } from "./../../store/actions/tribes";
-import { deleteTeam } from "../../store/actions/teams";
+import { deleteTeam, restoreTeamToTribe } from "../../store/actions/teams";
 import { revalidateUser } from "../../store/actions/user";
 import { confirmDialog } from "./../common/functions";
 import EditingCard from "./../common/EditingCard/EditingCard";
+import RestoreTeam from "./RestoreTeam";
 import "../../styles/common.css";
 
 const TribeSettings = ({ isOpen, tribe, close, ...props }) => {
   const [deleteBtnLoading, setDeleteBtnLoading] = useState(false);
   const [saveBtnLoading, setSaveBtnLoading] = useState(false);
   const [newTribeName, setNewTribeName] = useState(tribe.name);
+  const [openRestoreTeam, setOpenRestoreTeam] = useState(false);
+  const [newTeamName, setNewTeamName] = useState("");
 
+  const activeTeams = tribe.teams.filter(team => team.deleted === false);
+  
   const handleDeleteTribe = () => {
     if (confirmDialog(tribe.name)) {
       setDeleteBtnLoading(true);
@@ -27,13 +32,26 @@ const TribeSettings = ({ isOpen, tribe, close, ...props }) => {
   };
 
   const handleAddEditorToTribe = user =>
-    props.revalidateUser(user, props.addEditorToTribe(tribe, user));
-
+  props.revalidateUser(user, props.addEditorToTribe(tribe, user));
+  
   const handleDeleteEditorFromTribe = user =>
-    props.revalidateUser(user, props.deleteEditorFromTribe(tribe, user));
-
-  const handleAddTeamToTribe = teamName =>
-    props.addTeamToTribe(tribe, teamName);
+  props.revalidateUser(user, props.deleteEditorFromTribe(tribe, user));
+  
+  const handleAddTeamToTribe = async (teamName) => {
+    const teamsNames = [...tribe.teams.map(team => team.name)];
+    const activeTeamsNames = [...activeTeams.map(team => team.name)];
+    
+    if (activeTeamsNames.includes(teamName)) {
+      alert("Can't create team. Team with this name already exists.");
+    }
+    else if (!teamsNames.includes(teamName)) {
+      await props.addTeamToTribe(tribe, teamName);
+    }
+    else {
+      setNewTeamName(teamName);
+      setOpenRestoreTeam(true);
+    }
+  };
 
   const handleDeleteTeamFromTribe = team => props.deleteTeam(team);
 
@@ -73,6 +91,12 @@ const TribeSettings = ({ isOpen, tribe, close, ...props }) => {
       </Modal.Header>
 
       <Modal.Content>
+        <RestoreTeam
+          isOpen={openRestoreTeam}
+          tribe={tribe}
+          teamName={newTeamName}
+          close={() => setOpenRestoreTeam(false)}
+        />
         <Container textAlign="left">
           <div className="flex-space-evenly-align-start">
             <EditingCard
@@ -84,7 +108,7 @@ const TribeSettings = ({ isOpen, tribe, close, ...props }) => {
               onItemDelete={handleDeleteEditorFromTribe}
             />
             <EditingCard
-              data={tribe.teams ? tribe.teams : []}
+              data={activeTeams ? activeTeams : []}
               title="Teams"
               onAddBtnClick={handleAddTeamToTribe}
               onItemDelete={handleDeleteTeamFromTribe}
@@ -110,6 +134,7 @@ export default connect(
     addTeamToTribe,
     deleteTeam,
     updateTribeName,
-    revalidateUser
+    revalidateUser,
+    restoreTeamToTribe
   }
 )(TribeSettings);

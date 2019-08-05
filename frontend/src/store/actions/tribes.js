@@ -14,7 +14,7 @@ import { handleFetchingError } from "./general";
 
 export const setTribes = () => dispatch => {
   return http
-    .get(`${endpoints.tribes}?depth=full`)
+    .get(`${endpoints.tribes}?depth=full&includeAll=true`)
     .then(response => {
       dispatch({
         type: SET_TRIBES,

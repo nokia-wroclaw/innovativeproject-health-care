@@ -24,12 +24,16 @@ export const getMockData = () => {
     {
       id: 1,
       name: "team 1",
-      tribe_id: 1
+      tribe_id: 1,
+      deleted: false,
+      deleted_at: null
     },
     {
       id: 2,
       name: "team 2",
-      tribe_id: 2
+      tribe_id: 2,
+      deleted: false,
+      deleted_at: null
     }
   ];
   mockStructure = [
@@ -40,7 +44,9 @@ export const getMockData = () => {
         {
           id: 1,
           name: "team 1",
-          tribe_id: 1
+          tribe_id: 1,
+          deleted: false,
+          deleted_at: null
         }
       ]
     },
@@ -51,7 +57,9 @@ export const getMockData = () => {
         {
           id: 2,
           name: "team 2",
-          tribe_id: 2
+          tribe_id: 2,
+          deleted: false,
+          deleted_at: null
         }
       ]
     }
