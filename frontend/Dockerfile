@@ -2,6 +2,7 @@ FROM node:11
 WORKDIR /srv/www/frontend
 COPY ./frontend .
 RUN npm install
+RUN npm rebuild node-sass
 RUN npm run build
 
 FROM nginx:latest

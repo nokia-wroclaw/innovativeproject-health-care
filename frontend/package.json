@@ -31,6 +31,7 @@
     "uuid": "^3.3.2"
   },
   "scripts": {
+    "postinstall": "npm rebuild node-sass",
     "build-semantic": "cd src/semantic && gulp build-css build-assets",
     "watch-semantic": "cd src/semantic && npm run build-semantic && gulp watch",
     "start": "npm run build-semantic && react-scripts start",
