@@ -1,0 +1,55 @@
+.headerCell {
+  height: 140px;
+  text-align: left !important; 
+  background: #f9fafb;
+}
+
+.headerSpan {
+  display: block;
+  transform: rotate(-90deg);
+  margin-top: 20px;
+}
+
+.matrixHeader {
+  height: 151px;
+  position: sticky !important;
+  top: 30px;
+  display: block;
+  width: 1100px; 
+  overflow: auto;
+}
+
+.cell {
+  min-width: 80px;
+  max-width: 80px;
+  padding: .5em 1em; 
+  text-align: center; 
+  border: 1px solid rgba(34, 36, 38, 0.15); 
+  font-weight: bold;
+}
+
+.firstColumn {
+  min-width: 120px;
+  background: #f9fafb;
+  font-weight: bold;
+}
+
+.cornerCell {
+  min-width: 120px;
+  border-top: 1px solid transparent;
+  border-left: 1px solid transparent;
+  background: white;
+}
+.matrixBody {
+  display: block;
+  width: 1100px;
+  overflow: auto;
+}
+
+.hoveredHeader {
+  background: #ecececf8;
+}
+
+.hoveredCell {
+  background: #f3f3f3f8;
+}

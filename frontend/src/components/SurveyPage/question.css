@@ -1,0 +1,8 @@
+.requiredField {
+    color: rgb(235, 40, 40);
+    font-size: x-large;
+}
+
+.questionHeader {
+    margin-bottom: 0 !important;
+}

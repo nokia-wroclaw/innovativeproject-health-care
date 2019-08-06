@@ -36,7 +36,8 @@ const Comments = ({ answers }) => {
               </Label>
           </Item.Image>
           <Item.Content>
-            <Item.Header>{item.question}</Item.Header>
+            <Item.Header>{item.subject}</Item.Header>
+            <p>{item.question}</p>  
             <Card.Description>{item.comment}</Card.Description>
             <Item.Extra>
               <ActionItems answerId={item.id} teamId={item.team_id} actionItems={item.actions} />

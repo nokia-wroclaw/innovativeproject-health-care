@@ -8,6 +8,7 @@ class Question(db.Model):
     __tablename__ = 'questions'
 
     id = db.Column(db.Integer, primary_key=True)
+    subject = db.Column(db.String, nullable=False)
     question = db.Column(db.String, nullable=False)
 
     surveys = db.relationship('SurveyQuestionLink',
@@ -15,7 +16,8 @@ class Question(db.Model):
                               lazy='select',
                               cascade='all, delete, delete-orphan')
 
-    def __init__(self, question):
+    def __init__(self, subject, question):
+        self.subject = subject
         self.question = question
 
     @staticmethod
@@ -42,6 +44,7 @@ class Question(db.Model):
 
         data = {
             'id': self.id,
+            'subject': self.subject,
             'value': self.question,
         }
         return data

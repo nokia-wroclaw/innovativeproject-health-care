@@ -7,7 +7,7 @@ const QuestionList = ({ survey }) => {
       {survey.questions
         ? survey.questions.map(question => (
             <Segment key={question.id}>
-              <Header as='h4'>{`${question.order}. ${question.value}`}</Header>
+              <Header as='h4'>{`${question.order}. ${question.subject} - ${question.value}`}</Header>
             </Segment>
           ))
         : null}
