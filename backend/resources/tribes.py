@@ -83,7 +83,7 @@ class TribesRes(Resource):
           200:
             description: Success.
         """
-        include_all= True if ('includeAll' in request.args and request.args['includeAll']=='true') else False
+        include_all= bool('includeAll' in request.args and request.args['includeAll']=='true')
 
         tribes = Tribe.query.order_by(Tribe.name).all()
 

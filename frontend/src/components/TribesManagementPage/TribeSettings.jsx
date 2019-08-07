@@ -32,10 +32,10 @@ const TribeSettings = ({ isOpen, tribe, close, ...props }) => {
   };
 
   const handleAddEditorToTribe = user =>
-  props.revalidateUser(user, props.addEditorToTribe(tribe, user));
+    props.revalidateUser(user, props.addEditorToTribe(tribe, user));
   
   const handleDeleteEditorFromTribe = user =>
-  props.revalidateUser(user, props.deleteEditorFromTribe(tribe, user));
+    props.revalidateUser(user, props.deleteEditorFromTribe(tribe, user));
   
   const handleAddTeamToTribe = async (teamName) => {
     const teamsNames = [...tribe.teams.map(team => team.name)];
