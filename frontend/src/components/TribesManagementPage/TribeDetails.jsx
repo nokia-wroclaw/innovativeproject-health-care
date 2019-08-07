@@ -9,8 +9,9 @@ const TribeDetails = ({ tribe }) => {
 
   let teamPanels = [];
   try {
+    const activeTeams = tribe.teams.filter(team => team.deleted === false);
     teamPanels = [
-      ...tribe.teams.map(team => {
+      ...activeTeams.map(team => {
         const details = <TeamDetails team={team} />;
         return {
           key: team.id,

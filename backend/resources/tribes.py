@@ -83,6 +83,7 @@ class TribesRes(Resource):
           200:
             description: Success.
         """
+        include_all= bool('includeAll' in request.args and request.args['includeAll']=='true')
 
         tribes = Tribe.query.order_by(Tribe.name).all()
 
@@ -96,7 +97,7 @@ class TribesRes(Resource):
                 tribe['editors'] = [e.serialize() for e in tr.editors]
                 tribe['teams'] = []
                 for tm in tr.teams:
-                    if tm.deleted:
+                    if not include_all and tm.deleted:
                         continue
                     team = tm.serialize()
                     team['managers'] = [u.user.serialize() for u in tm.users

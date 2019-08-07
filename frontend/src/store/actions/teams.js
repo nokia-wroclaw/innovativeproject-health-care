@@ -6,7 +6,8 @@ import {
   ADD_MANAGER_TO_TEAM,
   DELETE_MANAGER_FROM_TEAM,
   ADD_MEMBER_TO_TEAM,
-  DELETE_MEMBER_FROM_TEAM
+  DELETE_MEMBER_FROM_TEAM,
+  RESTORE_TEAM
 } from "./types";
 import { endpoints, http } from "../../services/http";
 import { handleFetchingError } from "./general";
@@ -130,4 +131,18 @@ export const deleteMemberFromTeam = (team, user) => dispatch => {
     .catch(error => {
       dispatch(handleFetchingError(error));
     });
+};
+
+export const restoreTeamToTribe = team => dispatch => {
+  return http
+    .patch(`${endpoints.teams}/${team.id}`, { restore: true })
+    .then(response => {
+      dispatch({
+        type: RESTORE_TEAM,
+        payload: { team: response.data }
+      });
+    })
+    .catch(error => {
+      dispatch(handleFetchingError(error));
+    })
 };

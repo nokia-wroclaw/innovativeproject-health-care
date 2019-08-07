@@ -2,6 +2,7 @@ from flask import abort, Response, jsonify, request
 from flask_jwt_extended import current_user
 from flask_restful import Resource
 from sqlalchemy import exc
+from datetime import date
 
 from backend.app import db
 from backend.common.permissions import roles_allowed
@@ -232,17 +233,24 @@ class TeamRes(Resource):
             description: Team with requested id doesn't exist.
         """
 
-        team = Team.get_if_exists(team_id)
-        Tribe.validate_access(team.tribe_id, current_user)
-
         json = request.get_json()
 
-        if 'name' in json:
-            team.name = json['name']
+        if 'restore' in json:
+            team = Team.get_from_deleted(team_id)
+            Tribe.validate_access(team.tribe_id, current_user)
+            
+            team.deleted = False
 
-        if 'tribe_id' in json:
-            Tribe.get_if_exists(json['tribe_id'])
-            team.tribe_id = json['tribe_id']
+        else:
+            team = Team.get_if_exists(team_id)
+            Tribe.validate_access(team.tribe_id, current_user)
+            
+            if 'name' in json:
+                team.name = json['name']
+
+            if 'tribe_id' in json:
+                Tribe.get_if_exists(json['tribe_id'])
+                team.tribe_id = json['tribe_id']
 
         try:
             db.session.add(team)
@@ -284,6 +292,7 @@ class TeamRes(Resource):
         Tribe.validate_access(team.tribe_id, current_user)
         team.users.clear()
         team.deleted = True
+        team.deleted_at = date.today()
 
         try:
             db.session.add(team)

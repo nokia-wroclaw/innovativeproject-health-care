@@ -13,6 +13,7 @@ class Team(db.Model):
     tribe_id = db.Column(db.Integer, db.ForeignKey('tribes.id'))
     name = db.Column(db.String(64))
     deleted = db.Column(db.Boolean, default=False)
+    deleted_at = db.Column(db.Date, nullable=True)
 
     tribe = db.relationship('Tribe', back_populates='teams', lazy='joined')
     actions = db.relationship('Action', back_populates='team', lazy='select')
@@ -35,6 +36,21 @@ class Team(db.Model):
         """
 
         team = Team.query.filter_by(id=team_id, deleted=False).first()
+        if team is None:
+            abort(404, 'Could not find team with given id.')
+        return team
+
+    @staticmethod
+    def get_from_deleted(team_id):
+        """Fetches team with given id from deleted teams, aborts with
+        404 status otherwise.
+
+        :param int team_id: Id of the team.
+        :return: Team with specified id.
+        :rtype: Team
+        """
+
+        team = Team.query.filter_by(id=team_id, deleted=True).first()
         if team is None:
             abort(404, 'Could not find team with given id.')
         return team
@@ -168,5 +184,7 @@ class Team(db.Model):
             'id': self.id,
             'tribe_id': self.tribe_id,
             'name': self.name,
+            'deleted': self.deleted,
+            'deleted_at': self.deleted_at.isoformat() if self.deleted_at else None
         }
         return data

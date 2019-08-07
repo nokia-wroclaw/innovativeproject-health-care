@@ -38,7 +38,7 @@ describe("async actions", () => {
     expect(store.getActions()).toEqual(expectedActions);
     expect(mockAxios.get).toHaveBeenCalledTimes(httpCallCount.get);
     expect(mockAxios.get).toHaveBeenLastCalledWith(
-      `${endpoints.tribes}?depth=full`
+      `${endpoints.tribes}?depth=full&includeAll=true`
     );
   });
 

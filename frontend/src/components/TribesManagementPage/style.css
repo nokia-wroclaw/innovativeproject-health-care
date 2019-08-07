@@ -7,3 +7,15 @@
   background-color: rgba(0, 0, 0, 0.02) !important;
   border: 1px #aaa solid !important;
 }
+
+.hovered {
+  background: #f3f3f3f8 !important;
+}
+
+.clicked {
+  background: #ecececf8 !important;
+}
+
+.buttonsContainer {
+  padding-bottom: 30px;
+}
