@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
+import {DateTime} from 'luxon';
 import { Container, Dropdown } from "semantic-ui-react";
 import { setUserManagingDetails } from "../../store/actions/user";
 import { setTeamAnswers } from "./../../store/actions/results";
@@ -66,7 +67,7 @@ const CommentsPage = ({ user, managing, periods, ...props }) => {
           placeholder="Select period"
           options={periods.map((period, i) => ({
             key: i,
-            text: period.date_start,
+            text: DateTime.fromISO(period.date_start).toFormat('MMMM yyyy'),
             value: period.id
           }))}
           selection

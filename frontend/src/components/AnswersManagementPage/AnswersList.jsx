@@ -22,7 +22,7 @@ export const AnswersListComponent = ({ answers, teamId, removeAnswer }) => {
               <Button negative circular icon='trash' onClick={handleDelete(date)} />
             </List.Content>
             <List.Header>
-              { DateTime.fromISO(date).toFormat('yyyy-MM') }
+              { DateTime.fromISO(date).toFormat('MMMM yyyy') }
             </List.Header>
 
           </List.Item>
