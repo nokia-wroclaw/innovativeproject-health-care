@@ -7,6 +7,7 @@ from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 from flask_restful import Api
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 
 from backend import config
 
@@ -23,6 +24,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://%s:%s@%s:%s/%s' % \
 api = Api(app)
 jwt = JWTManager(app)
 db = SQLAlchemy(app)
+migrate = Migrate(app, db)
+
 
 if app.config['NOTIFY_ENABLE']:
     from backend.common.notify import schedule_notifications

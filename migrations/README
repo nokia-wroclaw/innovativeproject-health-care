@@ -1,0 +1,10 @@
+Generic single-database configuration.
+
+Generating migration:
+$ flask db migrate
+
+Applying migration:
+$ flask db upgrade
+
+More informations:
+https://flask-migrate.readthedocs.io/
