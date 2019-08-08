@@ -637,7 +637,7 @@ class TeamUserRes(Resource):
 
 class TeamAnswersRes(Resource):
 
-    @roles_allowed(['admin'])
+    @roles_allowed(['admin', 'editor', 'manager'])
     def get(self, team_id):
         answers = Answer.query.filter_by(team_id=team_id).order_by(Answer.date.desc()).all()
         response = jsonify([ans.serialize() for ans in answers])

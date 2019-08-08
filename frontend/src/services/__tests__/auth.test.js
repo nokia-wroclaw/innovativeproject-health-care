@@ -75,14 +75,14 @@ describe('isUser should return true when given object has "roles" array property
 });
 
 describe("getMenu should return menu depending on user's role", () => {
-  it('sholud return 4-element array for object.roles=["user"]', () => {
+  it('sholud return 3-element array for object.roles=["user"]', () => {
     expect(auth.getMenu(user1).length).toEqual(3);
   });
-  it('sholud return 3-element array for object.roles=["manager"]', () => {
-    expect(auth.getMenu({ roles: ["manager"] }).length).toEqual(3);
+  it('sholud return 4-element array for object.roles=["manager"]', () => {
+    expect(auth.getMenu({ roles: ["manager"] }).length).toEqual(4);
   });
-  it('sholud return 4-element array for object.roles=["editor"]', () => {
-    expect(auth.getMenu({ roles: ["editor"] }).length).toEqual(4);
+  it('sholud return 5-element array for object.roles=["editor"]', () => {
+    expect(auth.getMenu({ roles: ["editor"] }).length).toEqual(5);
   });
   it('sholud return 3-element array for object.roles=["admin"]', () => {
     expect(auth.getMenu({ roles: ["admin"] }).length).toEqual(3);
