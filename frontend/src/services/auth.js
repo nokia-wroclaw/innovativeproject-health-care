@@ -55,14 +55,16 @@ const userMenu = [
 const managerMenu = [
   { name: "Results", path: routes.resultsMatrix },
   { name: "Statistics", path: routes.statistics },
-  { name: "Comments", path: routes.comments }
+  { name: "Comments", path: routes.comments },
+  { name: "Answers management", path: routes.answersManagement }
 ];
 
 const editorMenu = [
   { name: "Results", path: routes.resultsMatrix },
   { name: "Statistics", path: routes.statistics },
   { name: "Edit survey", path: routes.editSurvey },
-  { name: "Tribes management", path: routes.tribesManagement }
+  { name: "Tribes management", path: routes.tribesManagement },
+  { name: "Answers management", path: routes.answersManagement }
 ];
 
 const adminMenu = [
