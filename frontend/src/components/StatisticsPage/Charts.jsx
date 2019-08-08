@@ -1,5 +1,6 @@
 import React from "react";
 import { Line, Chart } from "react-chartjs-2";
+import {DateTime} from 'luxon';
 import { connect } from "react-redux";
 import { Header } from "semantic-ui-react";
 import { random, shuffle} from "lodash";
@@ -128,7 +129,7 @@ const Charts = ({ matrix, periods, teams }) => {
   const colorsArray = generateRandomColors(matrix.length);
 
   let allTeamsData = {
-    labels: periods.map(p => p.date_start),
+    labels: periods.map(p => DateTime.fromISO(p.date_start).toFormat('MMMM yyyy')),
     datasets: teams.map((team, i) => ({
       label: team.name,
       data: matrix[i],
