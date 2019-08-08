@@ -6,8 +6,9 @@ import './matrix.css';
 
 const Matrix = ({ questions, teams }) => {
   return (
+  <div className="tableContainer">
   <ScrollSync>
-      <table style={{ width: 1100, borderCollapse: 'collapse' }}>
+      <table style={{ borderCollapse: 'collapse' }}>
 
         <ScrollSyncPane group="horizontal">
           <thead className="matrixHeader">
@@ -39,6 +40,7 @@ const Matrix = ({ questions, teams }) => {
 
       </table>
   </ScrollSync>
+  </div>
 );
 };
 
