@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
+import {DateTime} from "luxon";
 import { Container, Dropdown, Grid } from "semantic-ui-react";
 import { setUserTribesDetails } from "../../store/actions/user";
 import { setTribeMatrix, setTribePeriods } from "../../store/actions/results";
@@ -72,7 +73,7 @@ const ResultsMatrixPage = ({ user, tribes, periods, ...props }) => {
                 placeholder="Select period"
                 options={periods.map((period, i) => ({
                   key: i,
-                  text: period.date_start,
+                  text: DateTime.fromISO(period.date_start).toFormat('MMMM yyyy'),
                   value: period.id
                 }))}
                 selection
