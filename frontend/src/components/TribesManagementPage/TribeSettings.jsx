@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
+import {get} from 'lodash';
 import { Modal, Button, Container, Input, Grid } from "semantic-ui-react";
 import {
   deleteTribe,
@@ -22,7 +23,7 @@ const TribeSettings = ({ isOpen, tribe, close, ...props }) => {
   const [openRestoreTeam, setOpenRestoreTeam] = useState(false);
   const [newTeamName, setNewTeamName] = useState("");
 
-  const activeTeams = tribe.teams.filter(team => team.deleted === false);
+  const activeTeams = get(tribe, 'teams', []).filter(team => team.deleted === false);
   
   const handleDeleteTribe = () => {
     if (confirmDialog(tribe.name)) {
@@ -38,7 +39,7 @@ const TribeSettings = ({ isOpen, tribe, close, ...props }) => {
     props.revalidateUser(user, props.deleteEditorFromTribe(tribe, user));
   
   const handleAddTeamToTribe = async (teamName) => {
-    const teamsNames = [...tribe.teams.map(team => team.name)];
+    const teamsNames = [...get(tribe, 'teams', []).map(team => team.name)];
     const activeTeamsNames = [...activeTeams.map(team => team.name)];
     
     if (activeTeamsNames.includes(teamName)) {
