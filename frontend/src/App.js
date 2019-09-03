@@ -61,7 +61,7 @@ const App = ({ user, ...props }) => {
           <ProtectedRoute
             path={routes.answersManagement}
             component={AnswersManagementPage}
-            isAuthenticated={isManager(user)}
+            isAuthenticated={isManager(user) || isEditor(user) || isAdmin(user)}
           />
           <Route path={routes.homePage} component={HomePage} />
         </Switch>
