@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from "react";
 import { connect } from "react-redux";
+import {get} from 'lodash';
 import { Modal, Button, Container, Segment, Message, SegmentGroup } from "semantic-ui-react";
 import {
     addTeamToTribe,
@@ -10,7 +11,7 @@ import {
 import "../../styles/common.css";
 
 const RestoreTeam = ({ isOpen, tribe, teamName, close, ...props }) => {
-    const deletedTeams = tribe.teams.filter(team => team.deleted === true);
+    const deletedTeams = get(tribe, 'teams', []).filter(team => team.deleted === true);
     const [selectedTeam, selectTeam] = useState(null);
     const [hovered, setHovered] = useState(null);
 
