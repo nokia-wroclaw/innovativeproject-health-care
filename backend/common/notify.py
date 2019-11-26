@@ -28,8 +28,6 @@ def notify_new_period():
     survey period started this month.
     """
 
-    mailserver = SmtpConn()
-
     # Find tribes with period starting this month
     notify_tribes = []
     for tr in Tribe.query.all():
@@ -38,6 +36,8 @@ def notify_new_period():
             continue
         if tr.current_period().date_start.month == date.today().month:
             notify_tribes.append(tr)
+
+    mailserver = SmtpConn()
 
     # For all those tribes
     for tr in notify_tribes:
@@ -62,8 +62,6 @@ def notify_unfilled_survey():
     ends this month and survey isn't filled yet.
     """
 
-    mailserver = SmtpConn()
-
     # Find tribes with period starting this month
     notify_tribes = []
     for tr in Tribe.query.all():
@@ -72,6 +70,8 @@ def notify_unfilled_survey():
             continue
         if tr.current_period().date_end().month == date.today().month:
             notify_tribes.append(tr)
+
+    mailserver = SmtpConn()
 
     for tr in notify_tribes:
         end = tr.current_period().date_end()
