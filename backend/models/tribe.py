@@ -168,27 +168,12 @@ class Tribe(db.Model):
         if date_start > date.today():
             return None
 
-        if period == self.current_period():
-            # If current period is requested use current list of teams
-            teams = (
-                Team.query
-                .filter_by(tribe_id=self.id, deleted=False)
-                .order_by(Team.name.asc())
-                .all()
-            )
-        else:
-            # Otherwise create list of teams basing on the answers
-            teams = (
-                Team.query
-                .join(Team.answers)
-                .filter(
-                    Team.tribe_id == self.id,
-                    Answer.date >= date_start,
-                    Answer.date <= date_end
-                )
-                .order_by(Team.name.asc())
-                .all()
-            )
+        teams = (
+            Team.query
+            .filter_by(tribe_id=self.id, deleted=False)
+            .order_by(Team.name.asc())
+            .all()
+        )
 
         survey = Survey.from_period(period)
         questions = survey.questions
