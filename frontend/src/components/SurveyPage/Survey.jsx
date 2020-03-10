@@ -20,7 +20,7 @@ const mergeQuestionsAnswers = (questions, answers) => {
   });
 };
 
-const Survey = ({ questions, answers, survey, ...props }) => {
+const Survey = ({ questions, answers, survey, periodId, ...props }) => {
   const [btnLoading, setBtnLoading] = useState(false);
   const validate = () => {
     const allQuestionsAnswered = questions.every(
@@ -39,7 +39,7 @@ const Survey = ({ questions, answers, survey, ...props }) => {
 
   const handleSubmit = () => {
     setBtnLoading(true);
-    props.sendFilledSurvey(survey).then(() => {
+    props.sendFilledSurvey(survey, periodId).then(() => {
       setBtnLoading(false);
       props.setTeamAnswers(survey.team_id);
     });

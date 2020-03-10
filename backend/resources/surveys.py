@@ -438,6 +438,8 @@ class SurveyAnswersRes(Resource):
 
         survey = Survey.query.filter_by(id=survey_id).one_or_none()
 
+        args = request.args
+
         # If survey if given id does not exist or is not published
         if (survey is None or survey.draft is True or
                 survey.date > date.today()):
@@ -458,8 +460,8 @@ class SurveyAnswersRes(Resource):
             abort(403)
 
         # Check if there is no answers for this team in this period
-        if team.answered():
-            abort(400, 'Only one answer per team is allowed.')
+#         if team.answered():
+#             abort(400, 'Only one answer per team is allowed.')
 
         # Validate the answers
         for a in answers:
@@ -487,7 +489,14 @@ class SurveyAnswersRes(Resource):
 
         # Answer objects list
         answer_obj = []
-        today = date.today()
+
+        if 'period_id' in args:
+            period = Period.query.filter_by(id=args['period_id'], tribe_id=team.tribe_id).one()
+            print (period)
+            today = period.date_start
+        else:
+            today = date.today()
+
         # For all answers
         for a in answers:
             answer = Answer(a['question_id'], team.id, today, a['answer'])

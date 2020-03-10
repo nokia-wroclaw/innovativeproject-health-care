@@ -45,7 +45,7 @@ export const setComment = (questionId, comment) => ({
   payload: { questionId, comment }
 });
 
-export const sendFilledSurvey = survey => dispatch => {
+export const sendFilledSurvey = (survey, periodId) => dispatch => {
   const answers = survey.questions.map(question => ({
     question_id: question.id,
     answer: question.answer,
@@ -58,8 +58,10 @@ export const sendFilledSurvey = survey => dispatch => {
     answers
   };
 
+  const periodQuery = periodId ? `?period_id=${periodId}` : '';
+
   return http
-    .post(`${endpoints.surveys}/${survey.id}/answers`, body)
+    .post(`${endpoints.surveys}/${survey.id}/answers${periodQuery}`, body)
     .then(response => {
       console.log(response);
     })
