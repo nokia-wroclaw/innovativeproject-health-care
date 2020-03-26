@@ -19,7 +19,7 @@ import {
   DELETE_MANAGER_FROM_TEAM,
   ADD_MEMBER_TO_TEAM,
   DELETE_MEMBER_FROM_TEAM,
-  RESTORE_TEAM
+  RESTORE_TEAM, ADD_MANAGEMENT_TO_TRIBE
 } from '../actions/types';
 
 export const findTribe = (tribes, targetTribe) => {
@@ -118,6 +118,15 @@ export default function(state = initialState, action) {
         targetTribe.editors = targetTribe.editors.filter(
           editor => editor.id !== action.payload.editor.id
         );
+      return tribes;
+
+    case ADD_MANAGEMENT_TO_TRIBE:
+      tribes = [...state];
+      targetTribe = findTribe(tribes, action.payload.tribe);
+      if (targetTribe) {
+        if (!targetTribe.managements) targetTribe.managements = [];
+        uniquePush(targetTribe.managements, action.payload.managements);
+      }
       return tribes;
 
     case ADD_TEAM_TO_TRIBE:

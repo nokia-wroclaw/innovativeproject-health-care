@@ -24,6 +24,9 @@ class Tribe(db.Model):
     editors = db.relationship('User', back_populates='editing',
                               secondary='editors', lazy='joined',
                               order_by='User.full_name')
+    management = db.relationship('User', back_populates='editing',
+                                  secondary='management', lazy='joined',
+                                  order_by='User.full_name')
 
     def __init__(self, name):
         self.name = name
@@ -51,6 +54,14 @@ class Tribe(db.Model):
         """
 
         return [e.id for e in self.editors]
+
+    def management_ids(self):
+        """
+        :return: Ids of management of this tribe.
+        :rtype: list
+        """
+
+        return [e.id for e in self.management]
 
     def draft_survey(self):
         """
@@ -293,6 +304,7 @@ class Tribe(db.Model):
             return data
         extra = {
             'editors': self.editors_ids(),
+            'management': self.management_ids(),
             'teams': self.teams_ids(),
             'surveys': self.surveys_ids(),
         }

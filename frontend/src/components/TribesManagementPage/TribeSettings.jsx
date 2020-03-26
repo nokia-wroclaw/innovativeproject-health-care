@@ -7,7 +7,8 @@ import {
   addEditorToTribe,
   deleteEditorFromTribe,
   addTeamToTribe,
-  updateTribeName
+  updateTribeName,
+  addManagementToTribe
 } from "./../../store/actions/tribes";
 import { deleteTeam, restoreTeamToTribe } from "../../store/actions/teams";
 import { revalidateUser } from "../../store/actions/user";
@@ -34,6 +35,9 @@ const TribeSettings = ({ isOpen, tribe, close, ...props }) => {
 
   const handleAddEditorToTribe = user =>
     props.revalidateUser(user, props.addEditorToTribe(tribe, user));
+
+  const handleAddManagementToTribe = user =>
+    props.revalidateUser(user, props.addManagementToTribe(tribe, user));
   
   const handleDeleteEditorFromTribe = user =>
     props.revalidateUser(user, props.deleteEditorFromTribe(tribe, user));
@@ -114,6 +118,13 @@ const TribeSettings = ({ isOpen, tribe, close, ...props }) => {
               onAddBtnClick={handleAddTeamToTribe}
               onItemDelete={handleDeleteTeamFromTribe}
             />
+            <EditingCard
+                data={tribe.management ? tribe.management : []}
+                title="Management"
+                useUsersForm={true}
+                onAddBtnClick={handleAddManagementToTribe}
+                onItemDelete={handleDeleteTeamFromTribe}
+            />
           </div>
         </Container>
         <Container textAlign="center">
@@ -136,6 +147,8 @@ export default connect(
     deleteTeam,
     updateTribeName,
     revalidateUser,
-    restoreTeamToTribe
+    restoreTeamToTribe,
+    addManagementToTribe
+
   }
 )(TribeSettings);

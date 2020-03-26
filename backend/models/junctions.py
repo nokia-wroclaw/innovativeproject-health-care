@@ -13,8 +13,10 @@ class TeamUserLink(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'),
                         primary_key=True)
     manager = db.Column(db.Boolean, primary_key=True)
+    management = db.Column(db.Boolean, primary_key=True)
     team = db.relationship('Team', back_populates='users', lazy='joined')
     user = db.relationship('User', back_populates='teams', lazy='joined')
+
 
 
 class SurveyQuestionLink(db.Model):
@@ -37,6 +39,17 @@ class SurveyQuestionLink(db.Model):
     question = db.relationship('Question', back_populates='surveys',
                                lazy='joined')
 
+
+management = db.Table('management',
+                   db.Column('tribe_id',
+                             db.Integer,
+                             db.ForeignKey('tribes.id'),
+                             primary_key=True),
+                   db.Column('user_id',
+                             db.Integer,
+                             db.ForeignKey('users.id'),
+                             primary_key=True)
+                   )
 
 editors = db.Table('editors',
                    db.Column('tribe_id',

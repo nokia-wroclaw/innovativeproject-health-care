@@ -49,7 +49,6 @@ class TribesRes(Resource):
 
         if current_user.is_editor():
             tribe.editors.append(current_user)
-
         try:
             db.session.add(tribe)
             db.session.commit()

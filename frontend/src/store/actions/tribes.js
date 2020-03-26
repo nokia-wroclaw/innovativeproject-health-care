@@ -7,7 +7,7 @@ import {
   UPDATE_TRIBE_NAME,
   ADD_EDITOR_TO_TRIBE,
   DELETE_EDITOR_FROM_TRIBE,
-  ADD_TEAM_TO_TRIBE
+  ADD_TEAM_TO_TRIBE, ADD_MANAGEMENT_TO_TRIBE
 } from "./types";
 import { endpoints, http } from "../../services/http";
 import { handleFetchingError } from "./general";
@@ -132,6 +132,20 @@ export const deleteEditorFromTribe = (tribe, editor) => dispatch => {
     .catch(error => {
       dispatch(handleFetchingError(error));
     });
+};
+
+export const addManagementToTribe = (tribe, management) => dispatch => {
+  return http
+      .put(`${endpoints.tribes}/${tribe.id}/managements/${management.id}`)
+      .then(() => {
+        dispatch({
+          type: ADD_MANAGEMENT_TO_TRIBE,
+          payload: { tribe, management }
+        });
+      })
+      .catch(error => {
+        dispatch(handleFetchingError(error));
+      });
 };
 
 export const addTeamToTribe = (tribe, team_name) => dispatch => {
