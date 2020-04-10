@@ -4,6 +4,7 @@ from flask import abort
 
 from backend.app import db
 from backend.models import Answer, Survey
+from dateutil.relativedelta import relativedelta
 
 
 class Team(db.Model):
@@ -55,7 +56,7 @@ class Team(db.Model):
             abort(404, 'Could not find team with given id.')
         return team
 
-    def answered(self):
+    def answered(self, start_date):
         """Checks if this team submitted answered to the current survey.
 
         :return: Whether this team has answered.
@@ -64,6 +65,8 @@ class Team(db.Model):
 
         self.tribe.update_periods()
         period = self.tribe.current_period()
+        end_date = (start_date + relativedelta(months=1)).replace(day=1)
+        end_date.replace(day=1)
         if period is None:
             return False
 
@@ -73,7 +76,8 @@ class Team(db.Model):
                 .where(
                     db.and_(
                         Answer.team_id == self.id,
-                        Answer.date >= period.date_start
+                        Answer.date >= start_date,
+                        Answer.date < end_date
                     )
                 )
             )
