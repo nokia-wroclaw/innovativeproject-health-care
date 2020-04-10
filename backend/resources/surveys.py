@@ -459,9 +459,15 @@ class SurveyAnswersRes(Resource):
                 team.tribe_id != survey.tribe_id):
             abort(403)
 
+        if 'period_id' in args:
+            period = Period.query.filter_by(id=args['period_id'], tribe_id=team.tribe_id).one()
+            today = period.date_start
+        else:
+            today = date.today()
+
         # Check if there is no answers for this team in this period
-#         if team.answered():
-#             abort(400, 'Only one answer per team is allowed.')
+        if team.answered(today):
+            abort(400, 'Only one answer per team is allowed.')
 
         # Validate the answers
         for a in answers:
@@ -490,12 +496,6 @@ class SurveyAnswersRes(Resource):
         # Answer objects list
         answer_obj = []
 
-        if 'period_id' in args:
-            period = Period.query.filter_by(id=args['period_id'], tribe_id=team.tribe_id).one()
-            print (period)
-            today = period.date_start
-        else:
-            today = date.today()
 
         # For all answers
         for a in answers:
